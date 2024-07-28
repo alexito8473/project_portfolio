@@ -12,6 +12,7 @@ enum AppTheme {
         return AppTheme.LIGHT;
     }
   }
+
   ThemeData getTheme() {
     switch (this) {
       case AppTheme.LIGHT:
@@ -20,24 +21,32 @@ enum AppTheme {
         return ThemeData.dark();
     }
   }
+
   Icon getIcon() {
     switch (this) {
       case AppTheme.LIGHT:
-        return Icon(Icons.light_mode);
+        return const Icon(Icons.light_mode,size: 30.0,);
       case AppTheme.DARK:
-        return Icon(Icons.dark_mode);
+        return const Icon(Icons.dark_mode,size: 30.0);
     }
   }
 }
 
 class AppThemeState {
   final AppTheme appTheme;
-  const AppThemeState({required this.appTheme});
-  factory AppThemeState.init() {
-    return const AppThemeState(appTheme: AppTheme.LIGHT);
+  final SharedPreferences prefs;
+  const AppThemeState({required this.appTheme, required this.prefs});
+  factory AppThemeState.init(
+      {required AppTheme appTheme, required SharedPreferences prefs}) {
+    return AppThemeState(
+      appTheme: appTheme,
+      prefs: prefs,
+    );
   }
 
-  AppThemeState copyWith({required AppTheme? appTheme}) {
-    return AppThemeState(appTheme: appTheme ?? this.appTheme);
+  AppThemeState copyWitch(
+      {required AppTheme? appTheme, required SharedPreferences? prefs}) {
+    return AppThemeState(
+        appTheme: appTheme ?? this.appTheme, prefs: prefs ?? this.prefs);
   }
 }
