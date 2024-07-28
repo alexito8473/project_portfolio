@@ -15,11 +15,11 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.19.0
-  geolocator: ^9.0.2
+  url_launcher: ^6.0.20
+  flutter_svg_icons: ^0.0.1+4
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^3.0.0
 flutter:
   uses-material-design: true
@@ -27,6 +27,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/personal.jpeg
+    - assets/svg/linkedin.svg
+    - assets/svg/github.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
