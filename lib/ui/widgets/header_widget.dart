@@ -6,10 +6,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:html' as html;
 
 class HeaderWidget extends StatelessWidget {
   final Size size;
   const HeaderWidget({super.key, required this.size});
+
+  void downloadFile(String url, String filename) {
+    final anchor = html.AnchorElement(href: url)
+      ..setAttribute('download', filename)
+      ..click();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,18 +67,31 @@ class HeaderWidget extends StatelessWidget {
           ],
         ),
         Container(
-          margin: EdgeInsets.only(top: size.height*0.1),
-          width: size.width*0.4,
-          color: Colors.red,
-          child: Text(AppLocalizations.of(context)!.aboutMe,style: TextStyle(fontSize: 40),),
-        ),
+            margin: EdgeInsets.only(top: size.height * 0.02),
+            width: size.width * 0.4,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: size.width * 0.2,
+                  child: Text(
+                    AppLocalizations.of(context)!.aboutMe,
+                    style: TextStyle(fontSize: 40),
+                  ),
+                ),
+                const ButtonDownloadPdf()
+              ],
+            )),
         Container(
-          margin: EdgeInsets.only(top: size.height*0.02),
-          width: size.width*0.4,
-          color: Colors.red,
-          child: Text("Soy estuando de",style: TextStyle(fontSize: 40),),
+          margin: EdgeInsets.only(top: size.height * 0.02),
+          width: size.width * 0.4,
+          child: Text(
+            AppLocalizations.of(context)!.aboutMeDescription,
+            style: const TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+            textAlign: TextAlign.justify,
+          ),
         )
-
       ],
     );
   }
@@ -103,5 +123,34 @@ class IconButtonNavigator extends StatelessWidget {
             color: secondColor ? color : null,
             icon: SvgIconData(iconUri,
                 colorSource: SvgColorSource.specialColors)));
+  }
+}
+
+class ButtonDownloadPdf extends StatelessWidget {
+  const ButtonDownloadPdf({super.key});
+  void downloadFile() {
+    html.AnchorElement(href: "assets/pdf/Currículum_Alejandro_Aguilar.pdf")
+      ..setAttribute('download', "Curriculum_Alejandro_Aguilar")
+      ..click();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () => downloadFile(),
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blue, // Color del texto
+          shadowColor: Colors.blueAccent, // Color de la sombra
+          elevation: 5, // Elevación
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0), // Forma del botón
+          ),
+          padding: const EdgeInsets.symmetric(
+              horizontal: 30, vertical: 15), // Padding
+        ),
+        child: Text(AppLocalizations.of(context)!.downloadCV,
+          style: const TextStyle(fontSize: 16),
+        ));
   }
 }

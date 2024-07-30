@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             locale: context.watch<AppLocaleBloc>().state.locale.getLocal(),
-            supportedLocales: const [Locale("en"), Locale("es")],
+            supportedLocales: const [Locale("en", ""), Locale("es", "")],
             debugShowCheckedModeBanner: false,
             title: 'Porfolio Alejandro',
             theme: state.appTheme.getTheme(),
