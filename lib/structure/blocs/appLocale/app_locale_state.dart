@@ -13,6 +13,19 @@ enum AppLocale {
     }
   }
 
+  String flags() {
+    switch (this) {
+      case AppLocale.SPANISH:
+        return "🇪🇸";
+      case AppLocale.ENGLISH:
+        return "🏴󠁧󠁢󠁥󠁮󠁧󠁿";
+    }
+  }
+
+  String getFlagsAndLenguajeCode() {
+    return "${flags()} ${getLenguajeCode()}";
+  }
+
   AppLocale reverse() {
     switch (this) {
       case AppLocale.SPANISH:

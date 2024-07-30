@@ -1,5 +1,9 @@
 {
   "aboutMe": "About me",
   "aboutMeDescription":  "I am passionate about programming, I define myself as a person concerned about learning and continuous training. I have the skills to be distinguished in my sector. I am a constant worker, who likes to correctly follow the guidelines in development and with a good attitude to solve difficult situations. In my free time I am constantly looking for new and better technologies in the field of programming.",
-  "downloadCV": "Download CV"
+  "downloadCV": "Download CV",
+  "technologies": "Technologies",
+  "comingSoon": "Coming soon ... ",
+  "practices": " Programmer intern",
+  "workExperience": "Work experience"
 }
