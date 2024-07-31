@@ -40,7 +40,7 @@ enum AppLocale {
   }
 
   static AppLocale selectAppLocale(Locale locale) {
-    if (locale.countryCode == const Locale("es").countryCode) {
+    if (locale.languageCode == const Locale("es").languageCode) {
       return AppLocale.SPANISH;
     }
     return AppLocale.ENGLISH;

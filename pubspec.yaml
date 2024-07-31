@@ -19,6 +19,8 @@ dependencies:
   flutter_svg_icons: ^0.0.1+4
   animated_background: ^2.0.0
   lecle_bubble_timeline: ^0.0.1+1
+  google_fonts: ^6.2.1
+  animate_on_hover: ^1.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -39,6 +41,9 @@ flutter:
     - assets/images/python.png
     - assets/images/kotlin.png
     - assets/images/nextPort.png
+    - assets/images/sprint.png
+    - assets/images/flutter.png
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

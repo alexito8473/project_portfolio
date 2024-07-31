@@ -1,7 +1,5 @@
 import 'dart:math';
 import 'package:animated_background/animated_background.dart';
-import 'package:animated_background/particles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../structure/blocs/appTheme/app_theme_bloc.dart';
@@ -89,9 +87,9 @@ class CustomParticle extends ParticleBehaviour {
     for (Particle p in particles!) {
       // speed assignment is better done this way, to prevent calculation of square roots if not needed
       double speedSqr = p.speedSqr;
-      if (speedSqr > maxSpeedSqr)
+      if (speedSqr > maxSpeedSqr) {
         p.speed = options.spawnMaxSpeed;
-      else if (speedSqr < minSpeedSqr) p.speed = options.spawnMinSpeed;
+      } else if (speedSqr < minSpeedSqr) p.speed = options.spawnMinSpeed;
 
       // TODO: handle opacity change
 

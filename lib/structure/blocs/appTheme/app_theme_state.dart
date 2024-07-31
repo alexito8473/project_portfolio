@@ -18,6 +18,9 @@ enum AppTheme {
       case AppTheme.LIGHT:
         return ThemeData.from(
             useMaterial3: true,
+            textTheme: GoogleFonts.texturinaTextTheme(
+                Typography.blackCupertino
+            ),
             colorScheme: ColorScheme(
                 brightness: Brightness.light,
                 primary: Colors.blueAccent,
@@ -26,23 +29,24 @@ enum AppTheme {
                 onSecondary: Colors.blue,
                 error: Colors.white,
                 onError: Colors.white,
-                surface: Colors.grey.shade50,
+                surface: Colors.grey.shade100,
                 onSurface: Colors.black));
-
       case AppTheme.DARK:
         return ThemeData.from(
             useMaterial3: true,
+            textTheme: GoogleFonts.texturinaTextTheme(
+                Typography.whiteCupertino
+            ),
             colorScheme: const ColorScheme(
                 brightness: Brightness.dark,
                 primary: Colors.grey,
-                onPrimary: Colors.red,
-                secondary: Colors.red,
-                onSecondary: Colors.red,
+                onPrimary: Colors.white,
+                secondary: Colors.white,
+                onSecondary: Colors.white,
                 error: Colors.white,
                 onError: Colors.white,
                 surface: Colors.black,
                 onSurface: Colors.white));
-        return ThemeData.dark(useMaterial3: true);
     }
   }
 

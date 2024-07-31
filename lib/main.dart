@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
                   AppThemeBloc(appTheme: selectMode(brightness), prefs: prefs)),
           BlocProvider(
               create: (context) => AppLocaleBloc(
-                  locale: AppLocale.selectAppLocale(ui.window.locale)))
+                  locale: AppLocale.selectAppLocale(ui.window.locale))),
         ],
         child:
             BlocBuilder<AppThemeBloc, AppThemeState>(builder: (context, state) {
@@ -51,15 +51,17 @@ class MyApp extends StatelessWidget {
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate
             ],
             locale: context.watch<AppLocaleBloc>().state.locale.getLocal(),
             supportedLocales: const [Locale("en", ""), Locale("es", "")],
             debugShowCheckedModeBanner: false,
             title: 'Porfolio Alejandro',
             theme: state.appTheme.getTheme(),
-            home: const HomeScreen(),
+            home:  const HomeScreen(),
           );
         }));
   }
 }
+
+

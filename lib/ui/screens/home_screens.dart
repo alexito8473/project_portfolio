@@ -1,16 +1,12 @@
-import 'dart:math';
-
 import 'package:animated_background/animated_background.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
-
 import '../../models/CustomParticle.dart';
-import '../../models/Technology.dart';
-import '../widgets/education_widget.dart';
+import '../utils/CreateListTechnology.dart';
+import '../widgets/works_widget.dart';
 import '../widgets/header_widget.dart';
 import '../widgets/listTechnology_widget.dart';
 
@@ -22,78 +18,143 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
-  List<Technology> listTechnology = [
-    const Technology(
-        name: "Java",
-        progress: 80,
-        urlIcon: "assets/images/java.png",
-        color: Color.fromRGBO(224, 31, 34, 1)),
-    const Technology(
-        name: "Python",
-        progress: 30,
-        urlIcon: "assets/images/python.png",
-        color: Color.fromRGBO(48, 105, 152, 1)),
-    const Technology(
-        name: "Dart",
-        progress: 70,
-        urlIcon: "assets/images/dart.png",
-        color: Color.fromRGBO(1, 117, 194, 1)),
-    const Technology(
-        name: "C#",
-        progress: 60,
-        urlIcon: "assets/images/c#.png",
-        color: Color.fromRGBO(155, 89, 182, 1)),
-    const Technology(
-        name: "PHP",
-        progress: 60,
-        urlIcon: "assets/images/php.png",
-        color: Color.fromRGBO(97, 124, 190, 1)),
-    const Technology(
-        name: "Kotlin",
-        progress: 75,
-        urlIcon: "assets/images/kotlin.png",
-        color: Color.fromRGBO(241, 142, 0, 1)),
-  ];
+  final Duration _durationAnimation = const Duration(milliseconds: 300);
+  final ScrollController _scrollController = ScrollController();
+  List<GlobalKey> listGlobalKey = [GlobalKey(), GlobalKey(), GlobalKey()];
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void scrollToItem(GlobalKey key) {
+    Scrollable.ensureVisible(
+      key.currentContext!,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.linear,
+    );
+  }
+
+  Widget? navigationUp({required bool haveTopNavigation, required Size size}) {
+    if (!haveTopNavigation) {
+      return null;
+    }
+    return Container(
+        height: 80,
+        margin: EdgeInsets.only(
+          left: size.width * 0.34,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
+                onPressed: () {
+                  scrollToItem(listGlobalKey[0]);
+                },
+                icon: Text(AppLocalizations.of(context)!.aboutMe,
+                    style: const TextStyle(fontSize: 25))),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: IconButton(
+                  onPressed: () {
+                    scrollToItem(listGlobalKey[1]);
+                  },
+                  icon: Text(AppLocalizations.of(context)!.technologies,
+                      style: const TextStyle(fontSize: 25))),
+            ),
+            IconButton(
+                onPressed: () {
+                  scrollToItem(listGlobalKey[2]);
+                },
+                icon: Text(AppLocalizations.of(context)!.workExperience,
+                    style: const TextStyle(fontSize: 25))),
+          ],
+        ));
+  }
+
+  Widget? navigationBottom({required bool haveNavigation, required Size size}) {
+    if (haveNavigation) {
+      return null;
+    }
+    return Container(
+      decoration:
+          const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+      margin: EdgeInsets.only(
+          bottom: 20, left: size.width * 0.1, right: size.width * 0.1),
+      child: BottomNavigationBar(
+        elevation: 20,
+        fixedColor: Colors.blue,
+        unselectedItemColor: Colors.blue,
+        onTap: (value) {
+          scrollToItem(listGlobalKey[value]);
+        },
+        backgroundColor: Colors.white,
+        items: const [
+          BottomNavigationBarItem(
+            label: "Sobre mi",
+            icon: Icon(Icons.add),
+          ),
+          BottomNavigationBarItem(
+            label: "Tecnologias",
+            icon: Icon(Icons.add),
+          ),
+          BottomNavigationBarItem(
+            label: "hola",
+            icon: Icon(Icons.add),
+          )
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    bool isMobile = size.width > 700;
-    double space = isMobile ? size.width * 0.15 : size.width * 0.05;
+    bool isTopNavigation = size.width > 1050;
+    bool isMobile = size.width > 750;
+    double spacePadding = isMobile ? size.width * 0.03 : size.width * 0.01;
     double spaceFinal =
         size.width > 1200 ? size.width * 0.6 : size.width * 0.75;
+
     return Scaffold(
+        extendBody: true,
+        bottomNavigationBar:
+            navigationBottom(haveNavigation: isTopNavigation, size: size),
         appBar: AppBar(
+          flexibleSpace:
+              navigationUp(haveTopNavigation: isTopNavigation, size: size),
           shadowColor: Colors.black,
           toolbarHeight: 80,
           title: AnimatedPadding(
-              duration: const Duration(milliseconds: 500),
-              padding: EdgeInsets.only(left: space),
-              child: const Text("Software developer")),
+              duration: _durationAnimation,
+              padding: EdgeInsets.only(left: spacePadding),
+              child: const Text(
+                "Software developer",
+                style: TextStyle(fontSize: 30),
+              )),
           actions: [
+            IconButton(
+                onPressed: () {
+                  context.read<AppLocaleBloc>().add(ChangeLocalEvent());
+                },
+                icon: Text(
+                    context
+                        .watch<AppLocaleBloc>()
+                        .state
+                        .locale
+                        .getLenguajeCode(),
+                    style: const TextStyle(fontSize: 25))),
             AnimatedPadding(
-                duration: const Duration(milliseconds: 500),
-                padding: EdgeInsets.only(left: space),
-                child: IconButton(
-                    onPressed: () {
-                      context.read<AppLocaleBloc>().add(ChangeLocalEvent());
-                    },
-                    icon: Text(
-                        context
-                            .watch<AppLocaleBloc>()
-                            .state
-                            .locale
-                            .getLenguajeCode(),
-                        style: const TextStyle(fontSize: 25)))),
-            AnimatedPadding(
-              duration: const Duration(milliseconds: 600),
-              padding: EdgeInsets.only(left: size.width * 0.01, right: space),
+              duration: _durationAnimation,
+              padding:
+                  EdgeInsets.only(left: size.width * 0.01, right: spacePadding),
               child: IconButton(
                   onPressed: () {
                     context.read<AppThemeBloc>().add(ChangeThemeEvent());
                   },
                   icon: context.watch<AppThemeBloc>().state.appTheme.getIcon()),
-            )
+            ),
           ],
         ),
         body: SizedBox(
@@ -103,27 +164,28 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
                 behaviour: CustomParticle().setOptions(context),
                 vsync: this,
                 child: SingleChildScrollView(
+                  controller: _scrollController,
                   child: Column(
                     children: [
                       HeaderWidget(
+                        key: listGlobalKey[0],
                         size: size,
                         spaceFinal: spaceFinal,
                         isMobile: isMobile,
+                        durationAnimation: _durationAnimation,
                       ),
                       TechnologyWidget(
+                        key: listGlobalKey[1],
                         size: size,
                         spaceFinal: spaceFinal,
-                        listTechnology: listTechnology,
+                        listTechnology: createListTechnology(context),
+                        durationAnimation: _durationAnimation,
                       ),
-                      EducationWidget(spaceFinal: spaceFinal, size: size,),
-                      SizedBox(
-                        height: size.height * 0.2,
-                      ),
-                      SizedBox(
-                        height: size.height * 0.2,
-                      ),
-                      SizedBox(
-                        height: size.height * 0.2,
+                      EducationWidget(
+                        key: listGlobalKey[2],
+                        spaceFinal: spaceFinal,
+                        size: size,
+                        isMobile: isMobile,
                       ),
                       SizedBox(
                         height: size.height * 0.2,
