@@ -87,12 +87,12 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: IconButton(
                   onPressed: () {
-                    scrollToItem(listGlobalKey[1]);
+                    scrollToItem(listGlobalKey[3]);
                   },
                   icon: Text("Proyect", style: const TextStyle(fontSize: 25))),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {scrollToItem(listGlobalKey[4]);},
               icon: Text("Contact to me", style: const TextStyle(fontSize: 25)),
             ),
           ],
@@ -106,13 +106,12 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
     if (haveNavigation) {
       return null;
     }
-
     double fount = isMobile ? 20 : 10;
     double margin = isMobile ? size.width * 0.1 : size.width * 0.03;
     Color background =
         context.watch<AppThemeBloc>().state.appTheme == AppTheme.LIGHT
-            ? Colors.grey.withOpacity(.95)
-            : const Color.fromRGBO(0, 0, 139, 1);
+            ? Colors.grey.shade700
+            : Colors.blue.shade900;
     AppLocalizations language = AppLocalizations.of(context)!;
     return Container(
         decoration: const BoxDecoration(
