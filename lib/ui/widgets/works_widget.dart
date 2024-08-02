@@ -18,7 +18,7 @@ class EducationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(top: size.height * 0.05),
+        padding: EdgeInsets.only(top: size.height * 0.05,bottom: size.height * 0.05),
         child: Column(
           children: [
             Container(

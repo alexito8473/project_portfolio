@@ -20,7 +20,7 @@ class HeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(top: size.height * 0.04),
+        padding: EdgeInsets.only(top: size.height * 0.04,bottom: size.height * 0.04),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
