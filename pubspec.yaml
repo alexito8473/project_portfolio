@@ -33,6 +33,7 @@ flutter:
     - assets/images/personal.jpeg
     - assets/svg/linkedin.svg
     - assets/svg/github.svg
+    - assets/svg/languageCode.svg
     - assets/pdf/Currículum_Alejandro_Aguilar.pdf
     - assets/images/java.png
     - assets/images/php.png

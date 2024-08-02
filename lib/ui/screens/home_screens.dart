@@ -2,6 +2,7 @@ import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 import '../../models/CustomParticle.dart';
@@ -20,11 +21,51 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
   final Duration _durationAnimation = const Duration(milliseconds: 300);
   final ScrollController _scrollController = ScrollController();
-  List<GlobalKey> listGlobalKey = [GlobalKey(), GlobalKey(), GlobalKey()];
+  final List<GlobalKey> listGlobalKey = [GlobalKey(), GlobalKey(), GlobalKey()];
+  int _currentSectionIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
+    _scrollController.removeListener(_onScroll);
     super.dispose();
+  }
+
+  void _onScroll() {
+    RenderBox itemBox1 =
+        listGlobalKey[0].currentContext!.findRenderObject() as RenderBox;
+    RenderBox itemBox2 =
+        listGlobalKey[1].currentContext!.findRenderObject() as RenderBox;
+    RenderBox itemBox3 =
+        listGlobalKey[2].currentContext!.findRenderObject() as RenderBox;
+
+    double itemPosition1 = itemBox1.localToGlobal(Offset.zero).dy;
+    double itemPosition2 = itemBox2.localToGlobal(Offset.zero).dy;
+    double itemPosition3 = itemBox3.localToGlobal(Offset.zero).dy;
+
+    double screenHeight = MediaQuery.sizeOf(context).height;
+    if (itemPosition1 < screenHeight / 2 && itemPosition1 > -screenHeight / 2) {
+      _updateSectionIndex(0);
+    } else if (itemPosition2 < screenHeight / 2 &&
+        itemPosition2 > -screenHeight / 2) {
+      _updateSectionIndex(1);
+    } else if (itemPosition3 < screenHeight / 2 &&
+        itemPosition3 > -screenHeight / 2) {
+      _updateSectionIndex(2);
+    }
+  }
+
+  void _updateSectionIndex(int index) {
+    if (index != _currentSectionIndex) {
+      setState(() {
+        _currentSectionIndex = index;
+      });
+    }
   }
 
   void scrollToItem(GlobalKey key) {
@@ -77,35 +118,62 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
     if (haveNavigation) {
       return null;
     }
+
+    Color background =
+        context.watch<AppThemeBloc>().state.appTheme == AppTheme.LIGHT
+            ? Colors.grey.withOpacity(.8)
+            : const Color.fromRGBO(0, 0, 139, 1).withOpacity(.8);
+    AppLocalizations language = AppLocalizations.of(context)!;
     return Container(
-      decoration:
-          const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-      margin: EdgeInsets.only(
-          bottom: 20, left: size.width * 0.1, right: size.width * 0.1),
-      child: BottomNavigationBar(
-        elevation: 20,
-        fixedColor: Colors.blue,
-        unselectedItemColor: Colors.blue,
-        onTap: (value) {
-          scrollToItem(listGlobalKey[value]);
-        },
-        backgroundColor: Colors.white,
-        items: const [
-          BottomNavigationBarItem(
-            label: "Sobre mi",
-            icon: Icon(Icons.add),
+        decoration: const BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        margin: EdgeInsets.only(
+            bottom: 10, left: size.width * 0.1, right: size.width * 0.1),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.shifting,
+            elevation: 40,
+            fixedColor: Colors.white,
+            showSelectedLabels: true,
+            currentIndex: _currentSectionIndex,
+            onTap: (value) {
+              scrollToItem(listGlobalKey[value]);
+            },
+            landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
+            useLegacyColorScheme: true,
+            items: [
+              BottomNavigationBarItem(
+                backgroundColor: background,
+                label: language.aboutMe,
+                icon: Icon(
+                  Icons.person,
+                  color:
+                      _currentSectionIndex == 0 ? Colors.white : Colors.black,
+                ),
+              ),
+              BottomNavigationBarItem(
+                backgroundColor: background,
+                label: language.technologies,
+                icon: SvgIcon(
+                    color:
+                        _currentSectionIndex == 1 ? Colors.white : Colors.black,
+                    icon: const SvgIconData("assets/svg/languageCode.svg",
+                        colorSource: SvgColorSource.specialColors)),
+              ),
+              BottomNavigationBarItem(
+                backgroundColor: background,
+                label: language.experience,
+                icon: Icon(
+                  Icons.computer,
+                  color:
+                      _currentSectionIndex == 2 ? Colors.white : Colors.black,
+                ),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            label: "Tecnologias",
-            icon: Icon(Icons.add),
-          ),
-          BottomNavigationBarItem(
-            label: "hola",
-            icon: Icon(Icons.add),
-          )
-        ],
-      ),
-    );
+        ));
   }
 
   @override
