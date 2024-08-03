@@ -7,5 +7,8 @@
   "practices": " Programmer intern",
   "workExperience": "Work experience",
   "experience": "Experience",
-  "javaExperience": "I have been studying Java for 2 years and I have a good foundation for using it."
+  "myExperience": "My experience using",
+  "javaExperience": "During two years of training in a Higher Degree, I have developed a solid command of Java, following the best programming practices. I have worked on projects ranging from desktop applications to web applications, always applying principles of modularity, code reuse and design patterns.",
+  "pythonExperience": "I have started developing my Python skills as part of my training, and although I am still in the early stages, I have already acquired a solid foundation in this language. As I progress, I focus on learning best practices and applying what I have learned to more complex projects.",
+  "dartExperience":"I have been learning and working with the Dart programming language for a year now, and in this time I have managed to reach a solid level. I have applied my knowledge in several projects, especially in the development of mobile applications with Flutter."
 }

@@ -7,5 +7,8 @@
   "practices": " Programador en practicas",
   "workExperience": "Experiencia laboral",
   "experience": "Experiencia",
-  "javaExperience": "He estado estudiando durante 2 años estudiando java y poseo unas buenas bases para su uso."
+  "myExperience": "Mi Experiencia usando",
+  "javaExperience": "Durante dos años de formación en un Grado Superior, he desarrollado un sólido dominio de Java, siguiendo las mejores prácticas de programación. He trabajado en proyectos que van desde aplicaciones de escritorio hasta aplicaciones web, siempre aplicando principios de modularidad, reutilización de código y patrones de diseño.",
+  "pythonExperience": "He comenzado a desarrollar mis habilidades en Python como parte de mi formación, y aunque aún estoy en una fase inicial, ya he adquirido una base sólida en este lenguaje. A medida que avanzo, me enfoco en aprender buenas prácticas y en aplicar lo aprendido en proyectos más complejos.",
+  "dartExperience": "Llevo un año aprendiendo y trabajando con el lenguaje de programación Dart, y en este tiempo he logrado alcanzar un nivel sólido. He aplicado mis conocimientos en varios proyectos, especialmente en el desarrollo de aplicaciones móviles con Flutter."
 }

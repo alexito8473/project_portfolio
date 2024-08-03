@@ -7,6 +7,7 @@ import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 import '../../models/CustomParticle.dart';
+import '../../models/Technology.dart';
 import '../utils/CreateListTechnology.dart';
 import '../widgets/works_widget.dart';
 import '../widgets/header_widget.dart';
@@ -22,6 +23,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
   final Duration _durationAnimation = const Duration(milliseconds: 300);
   final ScrollController _scrollController = ScrollController();
+  late List<Technology> listTechnology=createListTechnology(context);
+
   final List<GlobalKey> listGlobalKey = [
     GlobalKey(),
     GlobalKey(),
@@ -92,7 +95,9 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
                   icon: Text("Proyect", style: const TextStyle(fontSize: 25))),
             ),
             IconButton(
-              onPressed: () {scrollToItem(listGlobalKey[4]);},
+              onPressed: () {
+                scrollToItem(listGlobalKey[4]);
+              },
               icon: Text("Contact to me", style: const TextStyle(fontSize: 25)),
             ),
           ],
@@ -177,7 +182,7 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
     bool isMobile = size.width > 750;
     double spacePadding = isMobile ? size.width * 0.03 : size.width * 0.01;
     double spaceFinal =
-        size.width > 1200 ? size.width * 0.6 : size.width * 0.75;
+        size.width > 1200 ? size.width * 0.7 : size.width * 0.75;
     return Scaffold(
         extendBody: true,
         bottomNavigationBar: navigationBottom(
@@ -240,8 +245,8 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
                         key: listGlobalKey[1],
                         size: size,
                         spaceFinal: spaceFinal,
-                        listTechnology: createListTechnology(context),
-                        durationAnimation: _durationAnimation,
+                        listTechnology: listTechnology,
+                        durationAnimation: _durationAnimation, isMobile: isMobile,
                       ),
                       EducationWidget(
                         key: listGlobalKey[2],

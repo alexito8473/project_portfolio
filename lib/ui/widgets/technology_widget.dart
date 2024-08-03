@@ -1,16 +1,20 @@
 import 'package:animate_on_hover/animate_on_hover.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../models/Technology.dart';
 
 class TechnologyView extends StatelessWidget {
   final Size size;
   final Technology technology;
+  final bool isMobile;
   const TechnologyView(
-      {super.key, required this.size, required this.technology});
+      {super.key,
+      required this.size,
+      required this.technology,
+      required this.isMobile});
 
   void createFrame(BuildContext context) {
     showDialog(
@@ -21,13 +25,15 @@ class TechnologyView extends StatelessWidget {
                 ? Colors.black
                 : Colors.white;
         return AlertDialog(
-          shadowColor:context.watch<AppThemeBloc>().state.appTheme == AppTheme.DARK
-              ?Colors.white10
-              : Colors.black12 ,
+          shadowColor:
+              context.watch<AppThemeBloc>().state.appTheme == AppTheme.DARK
+                  ? Colors.white10
+                  : Colors.black12,
           content: Container(
+
               padding: const EdgeInsets.all(10),
-              width: 400,
-              height: 300,
+              width: 350,
+              height: isMobile ? 350 : 430,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   gradient: LinearGradient(
@@ -48,8 +54,8 @@ class TechnologyView extends StatelessWidget {
               child: Stack(
                 children: [
                   Positioned(
-                      bottom: 10,
-                      left: 10,
+                      bottom: 5,
+                      left: 5,
                       child: Container(
                         width: 80,
                         height: 80,
@@ -58,13 +64,36 @@ class TechnologyView extends StatelessWidget {
                                 fit: BoxFit.contain,
                                 image: AssetImage(technology.urlIcon))),
                       )),
-                  Column(children: [
-                    Text(
-                      ' Mi Experiencia usando ${technology.name}',
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                    Text(technology.description)
-                  ])
+                  Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 5),
+                      child: Column(children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: AutoSizeText(
+                                maxLines: 2,
+                                '${AppLocalizations.of(context)!.myExperience} ${technology.name}',
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(Icons.close))
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: AutoSizeText(
+                            maxLines: 12,
+                            technology.description,
+                            style: const TextStyle(fontSize: 15),
+                            textAlign: TextAlign.justify,
+                          ),
+                        )
+                      ]))
                 ],
               )),
           backgroundColor: Colors.transparent,
@@ -82,33 +111,31 @@ class TechnologyView extends StatelessWidget {
     return GestureDetector(
         onTap: () => createFrame(context),
         child: Container(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
+          margin: const EdgeInsets.only(top: 10),
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
                   stops: const [
-                0.5,
-                0.5,
-                0.9,
-                0.9
+                0.38,
+                0.38,
+                0.85,
+                0.85
               ],
                   colors: [
                 Colors.transparent,
-                technology.color,
-                technology.color,
+                technology.color.withOpacity(0.8),
+                technology.color.withOpacity(0.8),
                 Colors.transparent,
               ])),
-          width: 300,
-          height: 150,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
+          width: 260,
+          height: 120,
+          child:
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
+                    margin: const EdgeInsets.only(right: 30),
                     width: 80,
                     height: 80,
                     decoration: BoxDecoration(
@@ -116,45 +143,12 @@ class TechnologyView extends StatelessWidget {
                             fit: BoxFit.contain,
                             image: AssetImage(technology.urlIcon))),
                   ),
-                  Text(
+                    AutoSizeText(maxLines: 1,
                     technology.name,
-                    style: const TextStyle(fontSize: 26),
+                    style: const TextStyle(fontSize: 22),
                   )
                 ],
               ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-                  child: Tooltip(
-                      padding: const EdgeInsets.all(10),
-                      message: "${technology.progress}%",
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                strokeAlign: 0,
-                                color: Colors.transparent, // Color del borde
-                                width: 3.0, // Ancho del borde
-                              ),
-                              borderRadius: BorderRadius.circular(
-                                  5.0), // Radio del borde (opcional)
-                            ),
-                            child: LinearProgressIndicator(
-                              backgroundColor: context
-                                          .watch<AppThemeBloc>()
-                                          .state
-                                          .appTheme ==
-                                      AppTheme.DARK
-                                  ? Colors.white.withOpacity(0.8)
-                                  : Colors.grey.withOpacity(0.5),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(30)),
-                              color: Colors.deepOrangeAccent.withOpacity(0.9),
-                              value: technology.progress / 100,
-                            ),
-                          ))))
-            ],
-          ),
         )).increaseSizeOnHover(1.1);
   }
 }
