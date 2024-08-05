@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../structure/blocs/appTheme/app_theme_bloc.dart';
 
 class CustomParticle extends ParticleBehaviour {
@@ -12,19 +11,18 @@ class CustomParticle extends ParticleBehaviour {
     super.paint,
   });
 
-  CustomParticle setOptions(BuildContext context) {
-    bool control =
-        context.watch<AppThemeBloc>().state.appTheme == AppTheme.LIGHT;
+  CustomParticle setOptions(AppThemeState state) {
+    bool isDarkMode = state.appTheme == AppTheme.LIGHT;
     options = ParticleOptions(
       baseColor: Colors.blue,
-      opacityChangeRate: 0.25,
-      minOpacity: control ? 0.05 : 0.1,
-      maxOpacity: control ? 0.1 : 0.4,
-      spawnMinSpeed: 30.0,
-      spawnMaxSpeed: 80.0,
-      spawnMinRadius: 7.0,
-      spawnMaxRadius: 15.0,
-      particleCount: 50,
+      opacityChangeRate: 0.20,
+      minOpacity: isDarkMode ? 0.05 : 0.1,
+      maxOpacity: isDarkMode ? 0.1 : 0.4,
+      spawnMinSpeed: 20.0,
+      spawnMaxSpeed: 60.0,
+      spawnMinRadius: 5.0,
+      spawnMaxRadius: 12.0,
+      particleCount: 10,
     );
     return this;
   }

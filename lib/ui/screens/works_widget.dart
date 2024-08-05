@@ -18,7 +18,8 @@ class EducationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(top: size.height * 0.05,bottom: size.height * 0.05),
+        padding: EdgeInsets.only(
+            top: size.height * 0.05, bottom: size.height * 0.05),
         child: Column(
           children: [
             Container(
@@ -50,32 +51,32 @@ class EducationWidget extends StatelessWidget {
                   title: 'NextPort AI',
                   subtitle: AppLocalizations.of(context)!.practices,
                   icon: InkWell(
-                    onTap: (){
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const AlertDialog(
-                            content:  Stack(
-                                  children: [
-                                    Column(children: [
-                                      Text(
-                                        ' Mi Experiencia usando ',
-                                        style: const TextStyle(fontSize: 20),
-                                      ),
-                                      Text("technology.description")
-                                    ])
-                                  ],
-                                ),
-                           // Controla la sombra para el efecto de elevación
-                          );
-                        },
-                      );
-                    },
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AlertDialog(
+                              content: Stack(
+                                children: [
+                                  Column(children: [
+                                    Text(
+                                      ' Mi Experiencia usando ',
+                                      style: const TextStyle(fontSize: 20),
+                                    ),
+                                    Text("technology.description")
+                                  ])
+                                ],
+                              ),
+                              // Controla la sombra para el efecto de elevación
+                            );
+                          },
+                        );
+                      },
                       child: const Icon(
-                    Icons.directions_boat,
-                    color: Colors.black,
-                    size: 50,
-                  )).increaseSizeOnHover(1.2),
+                        Icons.directions_boat,
+                        color: Colors.black,
+                        size: 50,
+                      )).increaseSizeOnHover(1.2),
                   bubbleColor: Colors.green,
                   titleStyle: TextStyle(
                       fontSize: isMobile ? 25.0 : 19.0,

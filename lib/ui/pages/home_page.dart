@@ -6,12 +6,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
-import '../../models/CustomParticle.dart';
 import '../../models/Technology.dart';
+import '../screens/listTechnology_screens.dart';
 import '../utils/CreateListTechnology.dart';
-import '../widgets/works_widget.dart';
-import '../widgets/header_widget.dart';
-import '../widgets/listTechnology_widget.dart';
+import '../screens/listProject_screens.dart';
+import '../screens/works_widget.dart';
+import '../screens/header_screens.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,11 +20,25 @@ class HomeScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _HomeScreen();
 }
 
-class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreen extends State<HomeScreen>  {
   final Duration _durationAnimation = const Duration(milliseconds: 300);
   final ScrollController _scrollController = ScrollController();
-  late List<Technology> listTechnology=createListTechnology(context);
-
+  final List<Technology> listTechnology = createListTechnology();
+  late List<Technology> listTechnologyMobile = listTechnology
+      .where((element) => element.typeLanguage == TypeLanguage.MOBILE)
+      .toList();
+  late List<Technology> listTechnologyBackend = listTechnology
+      .where((element) => element.typeLanguage == TypeLanguage.BACKEND)
+      .toList();
+  late List<Technology> listTechnologyFrontend = listTechnology
+      .where((element) => element.typeLanguage == TypeLanguage.FRONTEND)
+      .toList();
+  late List<Technology> listTechnologyLearning = listTechnology
+      .where((element) => element.typeLanguage == TypeLanguage.LEARNING)
+      .toList();
+  late List<Technology> listTechnologyTools = listTechnology
+      .where((element) => element.typeLanguage == TypeLanguage.TOOLS)
+      .toList();
   final List<GlobalKey> listGlobalKey = [
     GlobalKey(),
     GlobalKey(),
@@ -32,11 +46,6 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
     GlobalKey(),
     GlobalKey()
   ];
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -92,14 +101,16 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
                   onPressed: () {
                     scrollToItem(listGlobalKey[3]);
                   },
-                  icon: Text("Proyect", style: const TextStyle(fontSize: 25))),
+                  icon: const Text("Project",
+                      style:  TextStyle(fontSize: 25))),
             ),
             IconButton(
               onPressed: () {
                 scrollToItem(listGlobalKey[4]);
               },
-              icon: Text("Contact to me", style: const TextStyle(fontSize: 25)),
-            ),
+              icon: const Text("Contact to me",
+                  style:  TextStyle(fontSize: 25)),
+            )
           ],
         ));
   }
@@ -113,10 +124,6 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
     }
     double fount = isMobile ? 20 : 10;
     double margin = isMobile ? size.width * 0.1 : size.width * 0.03;
-    Color background =
-        context.watch<AppThemeBloc>().state.appTheme == AppTheme.LIGHT
-            ? Colors.grey.shade700
-            : Colors.blue.shade900;
     AppLocalizations language = AppLocalizations.of(context)!;
     return Container(
         decoration: const BoxDecoration(
@@ -124,55 +131,60 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
             borderRadius: BorderRadius.all(Radius.circular(20))),
         margin: EdgeInsets.only(bottom: 10, left: margin, right: margin),
         child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(22)),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            iconSize: 20,
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white,
-            backgroundColor: background,
-            selectedFontSize: fount,
-            unselectedFontSize: fount,
-            onTap: (value) => scrollToItem(listGlobalKey[value]),
-            items: [
-              BottomNavigationBarItem(
-                label: language.aboutMe,
-                icon: const Icon(
-                  Icons.person,
-                  color: Colors.white,
-                ),
-              ),
-              BottomNavigationBarItem(
-                label: language.technologies,
-                icon: const SvgIcon(
-                    color: Colors.white,
-                    icon: const SvgIconData("assets/svg/languageCode.svg",
-                        colorSource: SvgColorSource.specialColors)),
-              ),
-              BottomNavigationBarItem(
-                label: language.experience,
-                icon: const Icon(
-                  Icons.computer,
-                  color: Colors.white,
-                ),
-              ),
-              BottomNavigationBarItem(
-                label: language.experience,
-                icon: const Icon(
-                  Icons.computer,
-                  color: Colors.white,
-                ),
-              ),
-              BottomNavigationBarItem(
-                label: language.experience,
-                icon: const Icon(
-                  Icons.computer,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ));
+            borderRadius: const BorderRadius.all(Radius.circular(22)),
+            child: BlocBuilder<AppThemeBloc, AppThemeState>(
+              builder: (context, state) {
+                return BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  iconSize: 20,
+                  selectedItemColor: Colors.white,
+                  unselectedItemColor: Colors.white,
+                  backgroundColor: state.appTheme == AppTheme.LIGHT
+                      ? Colors.grey.shade700
+                      : Colors.blue.shade900,
+                  selectedFontSize: fount,
+                  unselectedFontSize: fount,
+                  onTap: (value) => scrollToItem(listGlobalKey[value]),
+                  items: [
+                    BottomNavigationBarItem(
+                      label: language.aboutMe,
+                      icon: const Icon(
+                        Icons.person,
+                        color: Colors.white,
+                      ),
+                    ),
+                    BottomNavigationBarItem(
+                      label: language.technologies,
+                      icon: const SvgIcon(
+                          color: Colors.white,
+                          icon: SvgIconData("assets/svg/languageCode.svg",
+                              colorSource: SvgColorSource.specialColors)),
+                    ),
+                    BottomNavigationBarItem(
+                      label: language.experience,
+                      icon: const Icon(
+                        Icons.computer,
+                        color: Colors.white,
+                      ),
+                    ),
+                    BottomNavigationBarItem(
+                      label: language.experience,
+                      icon: const Icon(
+                        Icons.computer,
+                        color: Colors.white,
+                      ),
+                    ),
+                    BottomNavigationBarItem(
+                      label: language.experience,
+                      icon: const Icon(
+                        Icons.computer,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                );
+              },
+            )));
   }
 
   @override
@@ -182,7 +194,7 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
     bool isMobile = size.width > 750;
     double spacePadding = isMobile ? size.width * 0.03 : size.width * 0.01;
     double spaceFinal =
-        size.width > 1200 ? size.width * 0.7 : size.width * 0.75;
+        size.width > 1200 ? size.width * 0.7 : size.width * 0.70;
     return Scaffold(
         extendBody: true,
         bottomNavigationBar: navigationBottom(
@@ -227,12 +239,10 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
         body: SizedBox(
             width: size.width,
             height: size.height,
-            child: AnimatedBackground(
-                behaviour: CustomParticle().setOptions(context),
-                vsync: this,
-                child: SingleChildScrollView(
-                  controller: _scrollController,
-                  child: Column(
+            child: BlocBuilder<AppThemeBloc, AppThemeState>(
+              builder: (context, state) {
+                return  ListView(
+                    controller: _scrollController,
                     children: [
                       HeaderWidget(
                         key: listGlobalKey[0],
@@ -245,8 +255,13 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
                         key: listGlobalKey[1],
                         size: size,
                         spaceFinal: spaceFinal,
-                        listTechnology: listTechnology,
-                        durationAnimation: _durationAnimation, isMobile: isMobile,
+                        isMobile: isMobile,
+                        listTechnologyTools: listTechnologyTools,
+                        durationAnimation: _durationAnimation,
+                        lisTechnologyMobile: listTechnologyMobile,
+                        lisTechnologyBackend: listTechnologyBackend,
+                        lisTechnologyFrontend: listTechnologyFrontend,
+                        lisTechnologyLearning: listTechnologyLearning,
                       ),
                       EducationWidget(
                         key: listGlobalKey[2],
@@ -254,11 +269,12 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
                         size: size,
                         isMobile: isMobile,
                       ),
-                      EducationWidget(
+                      ListProjectWidget(
                         key: listGlobalKey[3],
-                        spaceFinal: spaceFinal,
-                        size: size,
+                        durationAnimation: _durationAnimation,
                         isMobile: isMobile,
+                        size: size,
+                        spaceFinal: spaceFinal,
                       ),
                       EducationWidget(
                         key: listGlobalKey[4],
@@ -269,11 +285,9 @@ class _HomeScreen extends State<HomeScreen> with TickerProviderStateMixin {
                       SizedBox(
                         height: size.height * 0.2,
                       ),
-                      SizedBox(
-                        height: size.height * 0.2,
-                      ),
                     ],
-                  ),
-                ))));
+                );
+              },
+            )));
   }
 }

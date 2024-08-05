@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
-import 'package:proyect_porfolio/ui/screens/home_screens.dart';
+import 'package:proyect_porfolio/ui/pages/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui' as ui;
@@ -58,10 +58,8 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Porfolio Alejandro',
             theme: state.appTheme.getTheme(),
-            home:  const HomeScreen(),
+            home: const HomeScreen(),
           );
         }));
   }
 }
-
-

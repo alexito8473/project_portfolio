@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 
-import 'customButtom_widget.dart';
+import '../widgets/customButtom_widget.dart';
 
 class HeaderWidget extends StatelessWidget {
   final Size size;
@@ -20,7 +20,8 @@ class HeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(top: size.height * 0.04,bottom: size.height * 0.04),
+        padding: EdgeInsets.only(
+            top: size.height * 0.04, bottom: size.height * 0.04),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,10 +32,7 @@ class HeaderWidget extends StatelessWidget {
               direction: !isMobile ? Axis.vertical : Axis.horizontal,
               alignment: WrapAlignment.center,
               children: [
-                const CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    maxRadius: 120,
-                    backgroundImage: AssetImage("assets/images/personal.jpeg")),
+                const AvatarImage(),
                 SizedBox(
                     width: 400,
                     child: Column(
@@ -80,13 +78,12 @@ class HeaderWidget extends StatelessWidget {
                 margin: EdgeInsets.only(top: size.height * 0.02),
                 width: spaceFinal,
                 child: Wrap(
-                  spacing: 10,
-                  runSpacing: 20,
-                  crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 10,
+                    runSpacing: 20,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     alignment: WrapAlignment.spaceBetween,
                     runAlignment: WrapAlignment.center,
                     children: [
-
                       Text(
                         AppLocalizations.of(context)!.aboutMe,
                         style: const TextStyle(fontSize: 40),
@@ -105,5 +102,48 @@ class HeaderWidget extends StatelessWidget {
                 ))
           ],
         ));
+  }
+}
+
+class AvatarImage extends StatefulWidget {
+  const AvatarImage({super.key});
+
+  @override
+  State<AvatarImage> createState() => _AvatarImageState();
+}
+
+class _AvatarImageState extends State<AvatarImage> {
+  double _scale = 1;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: 250,
+        height: 250,
+        decoration: BoxDecoration(
+            image: const DecorationImage(
+                image: AssetImage("assets/images/personal.jpeg")),
+            borderRadius: BorderRadius.circular(200)),
+        child: MouseRegion(
+            onEnter: (_) {
+              setState(() {
+                _scale = 1.1;
+              });
+            },
+            onExit: (_) {
+              setState(() {
+                _scale = 1.0;
+              });
+            },
+            child: ClipOval(
+                // Hace que la imagen sea redonda
+                child: AnimatedScale(
+                    scale: _scale,
+                    duration: const Duration(milliseconds: 300),
+                    child: Image.asset(
+                      "assets/images/personal.jpeg",
+                      scale: _scale,
+                      width: 250,
+                      height: 250,
+                    )))));
   }
 }

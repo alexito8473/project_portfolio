@@ -20,87 +20,92 @@ class TechnologyView extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        Color background =
-            context.watch<AppThemeBloc>().state.appTheme == AppTheme.DARK
-                ? Colors.black
-                : Colors.white;
-        return AlertDialog(
-          shadowColor:
-              context.watch<AppThemeBloc>().state.appTheme == AppTheme.DARK
+        return BlocBuilder<AppThemeBloc, AppThemeState>(
+          builder: (context, state) {
+            Color background =
+                state.appTheme == AppTheme.DARK ? Colors.black : Colors.white;
+            return AlertDialog(
+              shadowColor: state.appTheme == AppTheme.DARK
                   ? Colors.white10
                   : Colors.black12,
-          content: Container(
-
-              padding: const EdgeInsets.all(10),
-              width: 350,
-              height: isMobile ? 350 : 430,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.bottomRight,
-                      stops: const [
-                        0.6,
-                        0.6,
-                        0.95,
-                        0.95
-                      ],
-                      colors: [
-                        background,
-                        technology.color,
-                        technology.color,
-                        background,
-                      ])),
-              child: Stack(
-                children: [
-                  Positioned(
-                      bottom: 5,
-                      left: 5,
-                      child: Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.contain,
-                                image: AssetImage(technology.urlIcon))),
-                      )),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 5),
-                      child: Column(children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: AutoSizeText(
-                                maxLines: 2,
-                                '${AppLocalizations.of(context)!.myExperience} ${technology.name}',
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                            ),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(Icons.close))
-                          ],
-                        ),
+              content: Container(
+                width: 350,
+                height: isMobile ? 380 : 430,
+                decoration: BoxDecoration(
+                    color: background, borderRadius: BorderRadius.circular(10)),
+                child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: RadialGradient(
+                            center: Alignment.topLeft,
+                            radius: isMobile ? 1.4 : 1.8,
+                            stops: const [
+                              0.8,
+                              0.8,
+                              1,
+                              1
+                            ],
+                            colors: [
+                              background,
+                              technology.color.withOpacity(0.5),
+                              technology.color.withOpacity(0.5),
+                              background,
+                            ])),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                            bottom: 5,
+                            left: 5,
+                            child: Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.contain,
+                                      image: AssetImage(technology.urlIcon))),
+                            )),
                         Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: AutoSizeText(
-                            maxLines: 12,
-                            technology.description,
-                            style: const TextStyle(fontSize: 15),
-                            textAlign: TextAlign.justify,
-                          ),
-                        )
-                      ]))
-                ],
-              )),
-          backgroundColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0.0),
-          ),
-          elevation: 24.0, // Controla la sombra para el efecto de elevación
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 5),
+                            child: Column(children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: AutoSizeText(
+                                      maxLines: 2,
+                                      '${AppLocalizations.of(context)!.myExperience} ${technology.name}',
+                                      style: const TextStyle(fontSize: 20),
+                                    ),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      icon: const Icon(Icons.close))
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: AutoSizeText(
+                                  maxLines: 12,
+                                  technology.typeDescription
+                                      .getDescription(context),
+                                  style: const TextStyle(fontSize: 15),
+                                  textAlign: TextAlign.justify,
+                                ),
+                              )
+                            ]))
+                      ],
+                    )),
+              ),
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(0.0),
+              ),
+              elevation: 24.0, // Controla la sombra para el efecto de elevación
+            );
+          },
         );
       },
     );
@@ -117,8 +122,8 @@ class TechnologyView extends StatelessWidget {
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
                   stops: const [
-                0.38,
-                0.38,
+                0.40,
+                0.40,
                 0.85,
                 0.85
               ],
@@ -130,25 +135,25 @@ class TechnologyView extends StatelessWidget {
               ])),
           width: 260,
           height: 120,
-          child:
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 30),
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.contain,
-                            image: AssetImage(technology.urlIcon))),
-                  ),
-                    AutoSizeText(maxLines: 1,
-                    technology.name,
-                    style: const TextStyle(fontSize: 22),
-                  )
-                ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 31),
+                child: Image.asset(
+                  technology.urlIcon,
+                  fit: BoxFit.contain,
+                  width: 75,
+                  height: 70
+                ),
               ),
+              AutoSizeText(
+                maxLines: 1,
+                technology.name,
+                style: const TextStyle(fontSize: 22),
+              )
+            ],
+          ),
         )).increaseSizeOnHover(1.1);
   }
 }
