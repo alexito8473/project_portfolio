@@ -1,38 +1,83 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 
 import '../widgets/customButtom_widget.dart';
 
 class HeaderWidget extends StatelessWidget {
   final Size size;
-  final double spaceFinal;
   final bool isMobile;
   final Duration durationAnimation;
   const HeaderWidget(
       {super.key,
       required this.size,
-      required this.spaceFinal,
       required this.isMobile,
       required this.durationAnimation});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(
-            top: size.height * 0.04, bottom: size.height * 0.04),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Wrap(
+      padding: EdgeInsets.only(
+          top: size.height * 0.04,
+          bottom: size.height * 0.04,
+          left: size.width * 0.1,
+          right: size.width * .1),
+      child: isMobile
+          ? Column(
+              children: [
+                const CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 125,
+                    backgroundImage: AssetImage("assets/images/personal.jpeg")),
+                SizedBox(
+                    width: 400,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Alejandro Aguilar",
+                            style: TextStyle(fontSize: 40),
+                          ),
+                          Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButtonNavigator(
+                                  uri: Uri.parse(
+                                      'https://github.com/alexito8473'),
+                                  color: context
+                                              .watch<AppThemeBloc>()
+                                              .state
+                                              .appTheme ==
+                                          AppTheme.LIGHT
+                                      ? Colors.black
+                                      : Colors.white,
+                                  tooltip: 'Github',
+                                  iconUri: 'assets/svg/github.svg',
+                                  secondColor: true,
+                                ),
+                                IconButtonNavigator(
+                                  uri: Uri.parse(
+                                      'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
+                                  color: Colors.blue,
+                                  tooltip: 'Linkedin',
+                                  iconUri: 'assets/svg/linkedin.svg',
+                                  secondColor: false,
+                                )
+                              ])
+                        ]))
+              ],
+            )
+          : Wrap(
               crossAxisAlignment: WrapCrossAlignment.center,
               runAlignment: WrapAlignment.center,
-              direction: !isMobile ? Axis.vertical : Axis.horizontal,
               alignment: WrapAlignment.center,
               children: [
-                const AvatarImage(),
+                const CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 125,
+                    backgroundImage: AssetImage("assets/images/personal.jpeg")),
                 SizedBox(
                     width: 400,
                     child: Column(
@@ -73,77 +118,6 @@ class HeaderWidget extends StatelessWidget {
                         ]))
               ],
             ),
-            AnimatedContainer(
-                duration: durationAnimation,
-                margin: EdgeInsets.only(top: size.height * 0.02),
-                width: spaceFinal,
-                child: Wrap(
-                    spacing: 10,
-                    runSpacing: 20,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    alignment: WrapAlignment.spaceBetween,
-                    runAlignment: WrapAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.aboutMe,
-                        style: const TextStyle(fontSize: 40),
-                      ),
-                      const ButtonDownloadPdf()
-                    ])),
-            AnimatedContainer(
-                duration: durationAnimation,
-                margin: EdgeInsets.only(top: size.height * 0.02),
-                width: spaceFinal,
-                child: Text(
-                  AppLocalizations.of(context)!.aboutMeDescription,
-                  style: const TextStyle(
-                      fontSize: 20, fontStyle: FontStyle.italic),
-                  textAlign: TextAlign.justify,
-                ))
-          ],
-        ));
-  }
-}
-
-class AvatarImage extends StatefulWidget {
-  const AvatarImage({super.key});
-
-  @override
-  State<AvatarImage> createState() => _AvatarImageState();
-}
-
-class _AvatarImageState extends State<AvatarImage> {
-  double _scale = 1;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        width: 250,
-        height: 250,
-        decoration: BoxDecoration(
-            image: const DecorationImage(
-                image: AssetImage("assets/images/personal.jpeg")),
-            borderRadius: BorderRadius.circular(200)),
-        child: MouseRegion(
-            onEnter: (_) {
-              setState(() {
-                _scale = 1.1;
-              });
-            },
-            onExit: (_) {
-              setState(() {
-                _scale = 1.0;
-              });
-            },
-            child: ClipOval(
-                // Hace que la imagen sea redonda
-                child: AnimatedScale(
-                    scale: _scale,
-                    duration: const Duration(milliseconds: 300),
-                    child: Image.asset(
-                      "assets/images/personal.jpeg",
-                      scale: _scale,
-                      width: 250,
-                      height: 250,
-                    )))));
+    );
   }
 }

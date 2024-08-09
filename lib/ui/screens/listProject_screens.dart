@@ -5,7 +5,12 @@ class ListProjectWidget extends StatelessWidget {
   final bool isMobile;
   final Size size;
   final double spaceFinal;
-  const ListProjectWidget({super.key, required this.durationAnimation, required this.isMobile, required this.size, required this.spaceFinal});
+  const ListProjectWidget(
+      {super.key,
+      required this.durationAnimation,
+      required this.isMobile,
+      required this.size,
+      required this.spaceFinal});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +19,7 @@ class ListProjectWidget extends StatelessWidget {
       width: spaceFinal,
       duration: durationAnimation,
       child: const Column(
-        children: [
-        ],
+        children: [],
       ),
     );
   }

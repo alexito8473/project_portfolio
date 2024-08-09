@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import '../../models/Technology.dart';
 
@@ -50,7 +49,7 @@ List<Technology> createListTechnology() {
     const Technology(
         name: "Android",
         urlIcon: "assets/images/programLanguage/android.png",
-        color: Color.fromRGBO(151, 192, 36, 1),
+        color: const Color.fromRGBO(151, 192, 36, 1),
         typeLanguage: TypeLanguage.MOBILE,
         typeDescription: TypeDescription.JAVA),
     const Technology(

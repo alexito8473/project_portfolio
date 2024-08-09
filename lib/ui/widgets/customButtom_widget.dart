@@ -37,7 +37,7 @@ class ButtonDownloadPdf extends StatelessWidget {
   const ButtonDownloadPdf({super.key});
   void downloadFile() {
     html.AnchorElement(href: "assets/pdf/Currículum_Alejandro_Aguilar.pdf")
-      ..setAttribute('download', "Curriculum_Alejandro_Aguilar")
+      ..setAttribute('download', "Curriculum_Alejandro_Aguilar.pdf")
       ..click();
   }
 
