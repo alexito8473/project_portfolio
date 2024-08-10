@@ -1,8 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 
-import '../widgets/customButtom_widget.dart';
+import '../widgets/customButton_widget.dart';
 
 class HeaderWidget extends StatelessWidget {
   final Size size;
@@ -16,6 +17,10 @@ class HeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color backgroundImage =
+        context.watch<AppThemeBloc>().state.appTheme == AppTheme.LIGHT
+            ? Colors.white
+            : Colors.black;
     return Padding(
       padding: EdgeInsets.only(
           top: size.height * 0.04,
@@ -25,18 +30,19 @@ class HeaderWidget extends StatelessWidget {
       child: isMobile
           ? Column(
               children: [
-                const CircleAvatar(
-                    backgroundColor: Colors.white,
+                 CircleAvatar(
+                    backgroundColor: backgroundImage,
                     radius: 125,
-                    backgroundImage: AssetImage("assets/images/personal.jpeg")),
+                    backgroundImage:const  AssetImage("assets/images/personal.jpeg")),
                 SizedBox(
                     width: 400,
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text(
+                          const AutoSizeText(
                             "Alejandro Aguilar",
+                            maxLines: 1,
                             style: TextStyle(fontSize: 40),
                           ),
                           Row(
@@ -74,10 +80,10 @@ class HeaderWidget extends StatelessWidget {
               runAlignment: WrapAlignment.center,
               alignment: WrapAlignment.center,
               children: [
-                const CircleAvatar(
-                    backgroundColor: Colors.white,
+                 CircleAvatar(
+                    backgroundColor: backgroundImage,
                     radius: 125,
-                    backgroundImage: AssetImage("assets/images/personal.jpeg")),
+                    backgroundImage: const AssetImage("assets/images/personal.jpeg")),
                 SizedBox(
                     width: 400,
                     child: Column(

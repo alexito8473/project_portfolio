@@ -43,8 +43,10 @@ class MyApp extends StatelessWidget {
     }
   }
 
-  void preCacheImage(List<Technology> listTechnology, BuildContext context) async {
-    await precacheImage(const AssetImage("assets/images/personal.jpeg"), context);
+  void preCacheImage(
+      List<Technology> listTechnology, BuildContext context) async {
+    await precacheImage(
+        const AssetImage("assets/images/personal.jpeg"), context);
     for (int i = 0; i < listTechnology.length; i++) {
       await precacheImage(AssetImage(listTechnology[i].urlIcon), context);
     }
@@ -77,6 +79,10 @@ class MyApp extends StatelessWidget {
                 listTechnologyTools: listTechnology
                     .where(
                         (element) => element.typeLanguage == TypeLanguage.TOOLS)
+                    .toList(),
+                listTechnologyServers: listTechnology
+                    .where((element) =>
+                        element.typeLanguage == TypeLanguage.SERVERS)
                     .toList()),
           ),
           BlocProvider(
@@ -100,7 +106,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Porfolio Alejandro',
             theme: state.appTheme.getTheme(),
-            home: HomeScreen(),
+            home: HomePage(),
           );
         }));
   }

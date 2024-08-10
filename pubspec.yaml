@@ -22,7 +22,6 @@ dependencies:
   google_fonts: ^6.2.1
   animate_on_hover: ^1.0.2
   auto_size_text: ^3.0.0
-  banner_carousel: ^1.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -37,11 +36,17 @@ flutter:
     - assets/svg/linkedin.svg
     - assets/svg/github.svg
     - assets/svg/languageCode.svg
+    - assets/svg/project.svg
 
     - assets/images/personal.jpeg
     - assets/images/git.png
     - assets/images/github.png
     - assets/images/intelIj.png
+    - assets/images/projects/tasty/1.png
+    - assets/images/projects/tasty/2.png
+    - assets/images/projects/tasty/3.png
+    - assets/images/projects/tasty/4.png
+    - assets/images/projects/tasty/5.png
 
     - assets/images/programLanguage/java.png
     - assets/images/programLanguage/android.png
@@ -56,8 +61,9 @@ flutter:
     - assets/images/programLanguage/kotlin.png
     - assets/images/programLanguage/sprint.png
     - assets/images/programLanguage/flutter.png
-
-  #   - images/a_dot_ham.jpeg
+    - assets/images/programLanguage/mysql.png
+    - assets/images/programLanguage/mongoDb.png
+    - assets/images/programLanguage/firebase.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

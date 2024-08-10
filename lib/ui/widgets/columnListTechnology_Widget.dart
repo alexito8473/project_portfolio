@@ -1,4 +1,5 @@
 import 'package:animate_on_hover/animate_on_hover.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:proyect_porfolio/ui/widgets/technology_widget.dart';
@@ -24,7 +25,7 @@ class ColumnListTechnologyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 260,
+      width: 280,
       child: ExpansionTile(
           collapsedShape: beveledRectangleBorder,
           shape: beveledRectangleBorder,
@@ -33,9 +34,10 @@ class ColumnListTechnologyWidget extends StatelessWidget {
           title: Padding(
               padding: const EdgeInsets.only(left: 36),
               child: Center(
-                  child: Text(
+                  child: AutoSizeText(
                 title,
-                style: const TextStyle(fontSize: 30),
+                maxLines: 1,
+                style: const TextStyle(fontSize: 24),
               ))),
           collapsedIconColor: Colors.transparent,
           children: List.generate(listTechnology.length, (index) {

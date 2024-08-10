@@ -36,19 +36,19 @@ class TechnologyView extends StatelessWidget {
                 technology.color,
                 Colors.transparent,
               ])),
-          width: 260,
+          width: 280,
           height: 120,
           child: Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 35),
+                padding: const EdgeInsets.only(right: 45),
                 child: Image.asset(technology.urlIcon,
-                    fit: BoxFit.contain, width: 75, height: 70),
+                    fit: BoxFit.contain, width: 60, height: 60),
               ),
               AutoSizeText(
                 maxLines: 1,
                 technology.name,
-                style: const TextStyle(fontSize: 22),
+                style: const TextStyle(fontSize: 20),
               )
             ],
           ),

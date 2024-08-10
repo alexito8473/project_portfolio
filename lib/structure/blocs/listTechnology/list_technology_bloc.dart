@@ -14,14 +14,14 @@ class ListTechnologyBloc
     required listTechnologyFrontend,
     required listTechnologyLearning,
     required listTechnologyTools,
+    required listTechnologyServers,
   }) : super(ListTechnologyState(
             listTechnologyMobile: listTechnologyMobile,
             listTechnologyBackend: listTechnologyBackend,
             listTechnologyFrontend: listTechnologyFrontend,
             listTechnologyLearning: listTechnologyLearning,
-            listTechnologyTools: listTechnologyTools)) {
+            listTechnologyTools: listTechnologyTools, listTechnologyServers: listTechnologyServers)) {
     on<ListTechnologyEvent>((event, emit) {
-      // TODO: implement event handler
     });
   }
 }

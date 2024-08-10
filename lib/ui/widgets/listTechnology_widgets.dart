@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/listTechnology/list_technology_bloc.dart';
 import '../../models/Technology.dart';
 import '../../structure/blocs/appTheme/app_theme_bloc.dart';
-import '../widgets/columnListTechnology_Widget.dart';
+import 'columnListTechnology_Widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TechnologyWidget extends StatelessWidget {
@@ -120,8 +120,8 @@ class TechnologyWidget extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.only(
             top: size.height * 0.05,
-            right: size.width * 0.12,
-            left: size.width * 0.12),
+            right: size.width * 0.15,
+            left: size.width * 0.15),
         child: BlocBuilder<ListTechnologyBloc, ListTechnologyState>(
           builder: (context, state) {
             if (!isMobile) {
@@ -134,7 +134,7 @@ class TechnologyWidget extends StatelessWidget {
                     listTechnology: state.listTechnologyMobile,
                     isMobile: isMobile,
                     size: size,
-                    title: 'Mobile',
+                    title: AppLocalizations.of(context)!.mobile,
                     beveledRectangleBorder: beveledRectangleBorder,
                     createFrame: createFrame,
                   ),
@@ -158,7 +158,7 @@ class TechnologyWidget extends StatelessWidget {
                     listTechnology: state.listTechnologyLearning,
                     isMobile: isMobile,
                     size: size,
-                    title: 'Learning',
+                    title: AppLocalizations.of(context)!.learning,
                     beveledRectangleBorder: beveledRectangleBorder,
                     createFrame: createFrame,
                   ),
@@ -166,7 +166,15 @@ class TechnologyWidget extends StatelessWidget {
                     listTechnology: state.listTechnologyTools,
                     isMobile: isMobile,
                     size: size,
-                    title: 'Tools',
+                    title: AppLocalizations.of(context)!.tools,
+                    beveledRectangleBorder: beveledRectangleBorder,
+                    createFrame: createFrame,
+                  ),
+                  ColumnListTechnologyWidget(
+                    listTechnology: state.listTechnologyServers,
+                    isMobile: isMobile,
+                    size: size,
+                    title: AppLocalizations.of(context)!.server,
                     beveledRectangleBorder: beveledRectangleBorder,
                     createFrame: createFrame,
                   ),
@@ -179,7 +187,7 @@ class TechnologyWidget extends StatelessWidget {
                   listTechnology: state.listTechnologyMobile,
                   isMobile: isMobile,
                   size: size,
-                  title: 'Mobile',
+                  title: AppLocalizations.of(context)!.mobile,
                   beveledRectangleBorder: beveledRectangleBorder,
                   createFrame: createFrame,
                 ),
@@ -207,7 +215,7 @@ class TechnologyWidget extends StatelessWidget {
                       listTechnology: state.listTechnologyLearning,
                       isMobile: isMobile,
                       size: size,
-                      title: 'Learning',
+                      title: AppLocalizations.of(context)!.learning,
                       beveledRectangleBorder: beveledRectangleBorder,
                       createFrame: createFrame,
                     )),
@@ -215,10 +223,20 @@ class TechnologyWidget extends StatelessWidget {
                   listTechnology: state.listTechnologyTools,
                   isMobile: isMobile,
                   size: size,
-                  title: 'Tools',
+                  title: AppLocalizations.of(context)!.tools,
                   beveledRectangleBorder: beveledRectangleBorder,
                   createFrame: createFrame,
                 ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: ColumnListTechnologyWidget(
+                      listTechnology: state.listTechnologyServers,
+                      isMobile: isMobile,
+                      size: size,
+                      title: AppLocalizations.of(context)!.server,
+                      beveledRectangleBorder: beveledRectangleBorder,
+                      createFrame: createFrame,
+                    )),
               ],
             );
           },

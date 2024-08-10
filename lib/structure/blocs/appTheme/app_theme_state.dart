@@ -21,7 +21,7 @@ enum AppTheme {
             textTheme: GoogleFonts.texturinaTextTheme(
                 Typography.blackCupertino
             ),
-            colorScheme: ColorScheme(
+            colorScheme: const ColorScheme(
                 brightness: Brightness.light,
                 primary: Colors.blueAccent,
                 onPrimary: Colors.blue,
@@ -29,7 +29,7 @@ enum AppTheme {
                 onSecondary: Colors.blue,
                 error: Colors.white,
                 onError: Colors.white,
-                surface: Colors.grey.shade100,
+                surface: Colors.white,
                 onSurface: Colors.black));
       case AppTheme.DARK:
         return ThemeData.from(

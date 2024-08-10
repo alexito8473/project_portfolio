@@ -15,13 +15,13 @@ List<Technology> createListTechnology() {
         urlIcon: "assets/images/programLanguage/python.png",
         color: Color.fromRGBO(48, 105, 152, 1),
         typeLanguage: TypeLanguage.LEARNING,
-        typeDescription: TypeDescription.JAVA),
+        typeDescription: TypeDescription.PYTHON),
     const Technology(
         name: ".Net MAUI",
         urlIcon: "assets/images/programLanguage/maui.png",
         color: Color.fromRGBO(160, 139, 232, 1),
         typeLanguage: TypeLanguage.MOBILE,
-        typeDescription: TypeDescription.JAVA),
+        typeDescription: TypeDescription.NET_MAUI),
     const Technology(
         name: "PHP",
         urlIcon: "assets/images/programLanguage/php.png",
@@ -33,7 +33,7 @@ List<Technology> createListTechnology() {
         urlIcon: "assets/images/programLanguage/kotlin.png",
         color: Color.fromRGBO(241, 142, 0, 1),
         typeLanguage: TypeLanguage.BACKEND,
-        typeDescription: TypeDescription.JAVA),
+        typeDescription: TypeDescription.KOTLIN),
     const Technology(
         name: "Sprint Boot",
         urlIcon: "assets/images/programLanguage/sprint.png",
@@ -51,7 +51,7 @@ List<Technology> createListTechnology() {
         urlIcon: "assets/images/programLanguage/android.png",
         color: const Color.fromRGBO(151, 192, 36, 1),
         typeLanguage: TypeLanguage.MOBILE,
-        typeDescription: TypeDescription.JAVA),
+        typeDescription: TypeDescription.ANDROID),
     const Technology(
         name: "HTML",
         urlIcon: "assets/images/programLanguage/html.png",
@@ -87,6 +87,24 @@ List<Technology> createListTechnology() {
         urlIcon: "assets/images/intelIj.png",
         color: Color.fromRGBO(18, 124, 239, 1),
         typeLanguage: TypeLanguage.TOOLS,
+        typeDescription: TypeDescription.JAVA),
+    const Technology(
+        name: "MySQL",
+        urlIcon: "assets/images/programLanguage/mysql.png",
+        color: Color.fromRGBO(0, 116, 143, 1),
+        typeLanguage: TypeLanguage.SERVERS,
+        typeDescription: TypeDescription.JAVA),
+    const Technology(
+        name: "MongoDb",
+        urlIcon: "assets/images/programLanguage/mongoDb.png",
+        color: Color.fromRGBO(87, 174, 71, 1),
+        typeLanguage: TypeLanguage.SERVERS,
+        typeDescription: TypeDescription.JAVA),
+    const Technology(
+        name: "Firebase",
+        urlIcon: "assets/images/programLanguage/firebase.png",
+        color: Color.fromRGBO(255, 196, 0, 1),
+        typeLanguage: TypeLanguage.SERVERS,
         typeDescription: TypeDescription.JAVA),
   ];
 }
