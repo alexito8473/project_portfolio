@@ -22,6 +22,7 @@ dependencies:
   google_fonts: ^6.2.1
   animate_on_hover: ^1.0.2
   auto_size_text: ^3.0.0
+  dropdown_button2: ^2.3.9
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -33,37 +34,35 @@ flutter:
   assets:
     - assets/pdf/Currículum_Alejandro_Aguilar.pdf
 
+    - assets/images/personal.webp
+
     - assets/svg/linkedin.svg
     - assets/svg/github.svg
     - assets/svg/languageCode.svg
     - assets/svg/project.svg
+    - assets/svg/git.svg
+    - assets/svg/intellij.svg
+    - assets/images/projects/tasty/1.webp
+    - assets/images/projects/tasty/2.webp
+    - assets/images/projects/tasty/3.webp
+    - assets/images/projects/tasty/4.webp
+    - assets/images/projects/tasty/5.webp
 
-    - assets/images/personal.jpeg
-    - assets/images/git.png
-    - assets/images/github.png
-    - assets/images/intelIj.png
-    - assets/images/projects/tasty/1.png
-    - assets/images/projects/tasty/2.png
-    - assets/images/projects/tasty/3.png
-    - assets/images/projects/tasty/4.png
-    - assets/images/projects/tasty/5.png
-
-    - assets/images/programLanguage/java.png
-    - assets/images/programLanguage/android.png
-    - assets/images/programLanguage/maui.png
-    - assets/images/programLanguage/html.png
-    - assets/images/programLanguage/css.png
-    - assets/images/programLanguage/javascript.png
-    - assets/images/programLanguage/php.png
-    - assets/images/programLanguage/c#.png
-    - assets/images/programLanguage/dart.png
-    - assets/images/programLanguage/python.png
-    - assets/images/programLanguage/kotlin.png
-    - assets/images/programLanguage/sprint.png
-    - assets/images/programLanguage/flutter.png
-    - assets/images/programLanguage/mysql.png
-    - assets/images/programLanguage/mongoDb.png
-    - assets/images/programLanguage/firebase.png
+    - assets/svg/programLanguage/java.svg
+    - assets/svg/programLanguage/android.svg
+    - assets/svg/programLanguage/maui.svg
+    - assets/svg/programLanguage/html.svg
+    - assets/svg/programLanguage/css.svg
+    - assets/svg/programLanguage/javascript.svg
+    - assets/svg/programLanguage/php.svg
+    - assets/svg/programLanguage/dart.svg
+    - assets/svg/programLanguage/python.svg
+    - assets/svg/programLanguage/kotlin.svg
+    - assets/svg/programLanguage/spring.svg
+    - assets/svg/programLanguage/flutter.svg
+    - assets/svg/programLanguage/mysql.svg
+    - assets/svg/programLanguage/mongoDb.svg
+    - assets/svg/programLanguage/firebase.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

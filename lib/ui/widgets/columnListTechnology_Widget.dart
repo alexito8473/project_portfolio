@@ -12,7 +12,8 @@ class ColumnListTechnologyWidget extends StatelessWidget {
   final Size size;
   final String title;
   final BeveledRectangleBorder beveledRectangleBorder;
-  final Function createFrame;
+  final Function createDialogTechnology;
+  final bool isDarkMode;
   const ColumnListTechnologyWidget(
       {super.key,
       required this.listTechnology,
@@ -20,7 +21,8 @@ class ColumnListTechnologyWidget extends StatelessWidget {
       required this.size,
       required this.title,
       required this.beveledRectangleBorder,
-      required this.createFrame});
+      required this.createDialogTechnology,
+      required this.isDarkMode});
 
   @override
   Widget build(BuildContext context) {
@@ -31,21 +33,21 @@ class ColumnListTechnologyWidget extends StatelessWidget {
           shape: beveledRectangleBorder,
           iconColor: Colors.transparent,
           childrenPadding: const EdgeInsets.all(10),
-          title: Padding(
-              padding: const EdgeInsets.only(left: 36),
-              child: Center(
+          tilePadding: const EdgeInsets.only(left: 36,top: 4,bottom: 6),
+          title: Center(
                   child: AutoSizeText(
                 title,
                 maxLines: 1,
                 style: const TextStyle(fontSize: 24),
-              ))),
+              )),
           collapsedIconColor: Colors.transparent,
           children: List.generate(listTechnology.length, (index) {
             return TechnologyView(
               size: size,
               technology: listTechnology[index],
               isMobile: isMobile,
-              createFrame: createFrame,
+              createFrame: createDialogTechnology,
+              isDarkMode: isDarkMode,
             ).increaseSizeOnHover(1.1);
           })),
     );

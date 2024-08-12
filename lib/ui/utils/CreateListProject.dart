@@ -3,44 +3,44 @@ import '../../models/Project.dart';
 List<Project> createListProject() {
   return [
     const Project(
-        name: "TastyDashProject",
+        name: "TastyDash",
         imgUrl: [
-          "assets/images/projects/tasty/1.png",
-          "assets/images/projects/tasty/2.png",
-          "assets/images/projects/tasty/3.png",
-          "assets/images/projects/tasty/4.png",
-          "assets/images/projects/tasty/5.png",
+          "assets/images/projects/tasty/1.webp",
+          "assets/images/projects/tasty/2.webp",
+          "assets/images/projects/tasty/3.webp",
+          "assets/images/projects/tasty/4.webp",
+          "assets/images/projects/tasty/5.webp",
         ],
         description: 'Prueba de fuego',
         imgIconLanguage: [
-          "assets/images/programLanguage/flutter.png",
-          "assets/images/programLanguage/dart.png",
-          "assets/images/programLanguage/firebase.png",
-          "assets/images/intelIj.png",
+          "assets/svg/programLanguage/flutter.svg",
+          "assets/svg/programLanguage/dart.svg",
+          "assets/svg/programLanguage/firebase.svg",
+          "assets/svg/intellij.svg",
         ]),
     const Project(
         name: "TastyDashProject",
         imgUrl: [
-          "assets/images/projects/tasty/1.png",
-          "assets/images/projects/tasty/2.png",
-          "assets/images/projects/tasty/3.png",
-          "assets/images/projects/tasty/4.png",
-          "assets/images/projects/tasty/5.png",
+          "assets/images/projects/tasty/1.webp",
+          "assets/images/projects/tasty/2.webp",
+          "assets/images/projects/tasty/3.webp",
+          "assets/images/projects/tasty/4.webp",
+          "assets/images/projects/tasty/5.webp",
         ],
         description: 'Prueba de fuego',
         imgIconLanguage: [
-          "assets/images/programLanguage/android.png",
+          "assets/svg/programLanguage/android.svg",
         ]),
     const Project(
         name: "TastyDashProject",
         imgUrl: [
-          "assets/images/projects/tasty/1.png",
-          "assets/images/projects/tasty/2.png",
-          "assets/images/projects/tasty/3.png",
-          "assets/images/projects/tasty/4.png",
-          "assets/images/projects/tasty/5.png",
+          "assets/images/projects/tasty/1.webp",
+          "assets/images/projects/tasty/2.webp",
+          "assets/images/projects/tasty/3.webp",
+          "assets/images/projects/tasty/4.webp",
+          "assets/images/projects/tasty/5.webp",
         ],
         description: 'Prueba de fuego',
-        imgIconLanguage: ["assets/images/programLanguage/android.png"]),
+        imgIconLanguage: ["assets/svg/programLanguage/android.svg"]),
   ];
 }

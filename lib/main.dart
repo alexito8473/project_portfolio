@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:proyect_porfolio/models/Technology.dart';
 import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
-import 'package:proyect_porfolio/structure/blocs/listTechnology/list_technology_bloc.dart';
+import 'package:proyect_porfolio/structure/cubits/listTechnology/list_technology_cubit.dart';
 import 'package:proyect_porfolio/ui/pages/home_page.dart';
 import 'package:proyect_porfolio/ui/utils/CreateListTechnology.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,23 +43,13 @@ class MyApp extends StatelessWidget {
     }
   }
 
-  void preCacheImage(
-      List<Technology> listTechnology, BuildContext context) async {
-    await precacheImage(
-        const AssetImage("assets/images/personal.jpeg"), context);
-    for (int i = 0; i < listTechnology.length; i++) {
-      await precacheImage(AssetImage(listTechnology[i].urlIcon), context);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
-    preCacheImage(listTechnology, context);
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => ListTechnologyBloc(
+            create: (context) => ListTechnologyCubit(
                 listTechnologyMobile: listTechnology
                     .where((element) =>
                         element.typeLanguage == TypeLanguage.MOBILE)
@@ -90,7 +80,8 @@ class MyApp extends StatelessWidget {
                   AppThemeBloc(appTheme: selectMode(brightness), prefs: prefs)),
           BlocProvider(
               create: (context) => AppLocaleBloc(
-                  locale: AppLocale.selectAppLocale(ui.window.locale))),
+                  locale: AppLocale.selectAppLocale(
+                      ui.PlatformDispatcher.instance.locale))),
         ],
         child:
             BlocBuilder<AppThemeBloc, AppThemeState>(builder: (context, state) {
@@ -104,7 +95,7 @@ class MyApp extends StatelessWidget {
             locale: context.watch<AppLocaleBloc>().state.locale.getLocal(),
             supportedLocales: const [Locale("en", ""), Locale("es", "")],
             debugShowCheckedModeBanner: false,
-            title: 'Porfolio Alejandro',
+            title: 'Portafolio Alejandro',
             theme: state.appTheme.getTheme(),
             home: HomePage(),
           );

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 
 import '../../models/Project.dart';
 
@@ -84,10 +85,12 @@ class ProjectWidget extends StatelessWidget {
                                   children: List.generate(
                                     project.imgIconLanguage.length,
                                     (index) {
-                                      return Image.asset(
-                                        project.imgIconLanguage[index],
-                                        width: 40,
-                                        height: 40,
+                                      return SvgIcon(
+                                        icon: SvgIconData(
+                                            project.imgIconLanguage[index],
+                                            colorSource:
+                                                SvgColorSource.specialColors),
+                                        size: 45,
                                       );
                                     },
                                   )),
@@ -156,10 +159,12 @@ class ProjectWidget extends StatelessWidget {
                                 children: List.generate(
                                   project.imgIconLanguage.length,
                                   (index) {
-                                    return Image.asset(
-                                      project.imgIconLanguage[index],
-                                      width: 40,
-                                      height: 40,
+                                    return  SvgIcon(
+                                      icon: SvgIconData(
+                                          project.imgIconLanguage[index],
+                                          colorSource:
+                                          SvgColorSource.specialColors),
+                                      size: 60,
                                     );
                                   },
                                 ))),
@@ -175,7 +180,6 @@ class ProjectWidget extends StatelessWidget {
                             children: List.generate(3, (index) {
                               return Image.asset(
                                 project.imgUrl[index],
-                                fit: BoxFit.contain,
                                 width: size.width * 0.13,
                               );
                             }))))

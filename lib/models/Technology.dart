@@ -1,7 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+enum TypeLanguage { BACKEND, FRONTEND, MOBILE, TOOLS, LEARNING, SERVERS;
 
-enum TypeLanguage { BACKEND, FRONTEND, MOBILE, TOOLS, LEARNING, SERVERS }
+  String getTitle(BuildContext context){
+    switch(this){
+      case TypeLanguage.BACKEND:
+        return "Backend";
+      case TypeLanguage.FRONTEND:
+        return "Frontend";
+      case TypeLanguage.MOBILE:
+        return AppLocalizations.of(context)!.mobile;
+      case TypeLanguage.TOOLS:
+        return AppLocalizations.of(context)!.tools;
+      case TypeLanguage.LEARNING:
+        return AppLocalizations.of(context)!.learning;
+      case TypeLanguage.SERVERS:
+        return AppLocalizations.of(context)!.server;
+    }
+  }}
 
 enum TypeDescription {
   JAVA,

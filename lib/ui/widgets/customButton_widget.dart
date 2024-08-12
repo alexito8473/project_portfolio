@@ -3,8 +3,7 @@ import 'dart:html' as html;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:io' show Platform;
-
+import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class IconButtonNavigator extends StatelessWidget {
@@ -40,13 +39,9 @@ class ButtonDownloadPdf extends StatelessWidget {
   const ButtonDownloadPdf({super.key});
 
   void downloadFile() async {
-    const url = 'assets/pdf/Currículum_Alejandro_Aguilar.pdf';
-    if (await canLaunchUrlString(url)) {
-      await launchUrlString(url, mode: LaunchMode.externalApplication);
-    }
-      html.AnchorElement(href: url)
-        ..setAttribute('download', "Curriculum_Alejandro_Aguilar.pdf")
-        ..click();
+    html.AnchorElement(href: 'assets/pdf/Currículum_Alejandro_Aguilar.pdf')
+      ..setAttribute('download', "Curriculum_Alejandro_Aguilar.pdf")
+      ..click();
   }
 
   @override
