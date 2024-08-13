@@ -3,7 +3,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg_icons/flutter_svg_icons.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 import 'package:proyect_porfolio/ui/utils/CreateListProject.dart';
@@ -43,7 +43,6 @@ class HomePage extends StatelessWidget {
     if (!haveNavigation) {
       return null;
     }
-    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     EdgeInsets paddingOfButtons =
         const EdgeInsets.symmetric(horizontal: 20, vertical: 10);
     EdgeInsets paddingButtons = const EdgeInsets.symmetric(horizontal: 10);
@@ -51,45 +50,20 @@ class HomePage extends StatelessWidget {
         height: 70,
         margin: EdgeInsets.only(left: (size.width * 0.32) - 100),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            IconButton(
-                padding: paddingOfButtons,
-                onPressed: () => scrollToItem(listGlobalKey[0]),
-                icon: AutoSizeText(appLocalizations.aboutMe,
-                    maxLines: 1, style: const TextStyle(fontSize: 25))),
-            Padding(
-              padding: paddingButtons,
-              child: IconButton(
-                  padding: paddingOfButtons,
-                  onPressed: () {
-                    scrollToItem(listGlobalKey[1]);
-                  },
-                  icon: AutoSizeText(appLocalizations.technologies,
-                      maxLines: 1, style: const TextStyle(fontSize: 25))),
-            ),
-            IconButton(
-                padding: paddingOfButtons,
-                onPressed: () => scrollToItem(listGlobalKey[2]),
-                icon: AutoSizeText(appLocalizations.workExperience,
-                    maxLines: 1, style: const TextStyle(fontSize: 25))),
-            Padding(
-              padding: paddingButtons,
-              child: IconButton(
-                  padding: paddingOfButtons,
-                  onPressed: () => scrollToItem(listGlobalKey[3]),
-                  icon: AutoSizeText(appLocalizations.projects,
-                      maxLines: 1, style: const TextStyle(fontSize: 25))),
-            ),
-            IconButton(
-              padding: paddingOfButtons,
-              onPressed: () => scrollToItem(listGlobalKey[4]),
-              icon: const AutoSizeText("Contact me",
-                  maxLines: 1, style: TextStyle(fontSize: 25)),
-            )
-          ],
-        ));
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: List.generate(MenuItems.values.length, (index) {
+              return Padding(
+                padding: index % 2 == 0 ? paddingButtons : EdgeInsets.zero,
+                child: IconButton(
+                    padding: paddingOfButtons,
+                    onPressed: () => scrollToItem(listGlobalKey[index]),
+                    icon: AutoSizeText(
+                        MenuItems.values[index].getTitle(context),
+                        maxLines: 1,
+                        style: const TextStyle(fontSize: 25))),
+              );
+            })));
   }
 
   PreferredSizeWidget appBarNavigation(
@@ -205,10 +179,9 @@ class HomePage extends StatelessWidget {
                     Positioned(
                         bottom: 5,
                         left: 5,
-                        child: SvgIcon(
-                          icon: SvgIconData(technology.urlIcon,
-                              colorSource: SvgColorSource.specialColors),
-                          size: 60,
+                        child: SvgPicture.asset(
+                          technology.urlIcon,
+                          width: 60,
                         )),
                     Padding(
                         padding: const EdgeInsets.symmetric(
@@ -259,7 +232,7 @@ class HomePage extends StatelessWidget {
     Size size = MediaQuery.sizeOf(context);
     bool isTopNavigation = size.width > 1450;
     bool isMobile = size.width < 500;
-    bool bannerBackground = size.width < 580;
+    bool bannerBackground = size.width < 750;
     return BlocBuilder<AppThemeBloc, AppThemeState>(builder: (context, state) {
       bool isDarkMode = state.appTheme == AppTheme.DARK;
       return isMobile

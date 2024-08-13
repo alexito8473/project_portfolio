@@ -16,6 +16,6 @@ class TitleHome extends StatelessWidget {
     return Container(
         padding: EdgeInsets.only(top: size.height * 0.05,bottom: size.height * 0.05 ),
         width: spaceFinal,
-        child: AutoSizeText(title,maxLines: 1, style: const TextStyle(fontSize: 40)));
+        child: Text(title, style: const TextStyle(fontSize: 40)));
   }
 }

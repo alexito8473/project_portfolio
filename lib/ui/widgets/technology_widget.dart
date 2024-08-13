@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_icons/flutter_svg_icons.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../models/Technology.dart';
 
 class TechnologyView extends StatelessWidget {
@@ -9,13 +9,14 @@ class TechnologyView extends StatelessWidget {
   final bool isMobile;
   final bool isDarkMode;
   final Function createFrame;
-  const TechnologyView(
-      {super.key,
-      required this.size,
-      required this.technology,
-      required this.isMobile,
-      required this.createFrame,
-      required this.isDarkMode});
+  const TechnologyView({
+    super.key,
+    required this.size,
+    required this.technology,
+    required this.isMobile,
+    required this.createFrame,
+    required this.isDarkMode,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +46,14 @@ class TechnologyView extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(right: 45),
-                child: SvgIcon(
-                  icon: SvgIconData(technology.urlIcon,
-                      colorSource: SvgColorSource.specialColors),
-                  size: 60,
+                child: SvgPicture.asset(
+                  technology.urlIcon,
+                  color: technology.changeColor
+                      ? isDarkMode
+                          ? Colors.white
+                          : Colors.black
+                      : null,
+                  width: 60,
                 ),
               ),
               AutoSizeText(

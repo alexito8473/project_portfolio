@@ -31,7 +31,10 @@ class MyApp extends StatelessWidget {
       this.isLightMode,
       required this.prefs,
       required this.listTechnology});
-
+  final List<Locale> localeLanguage = const [
+    Locale("en", ""),
+    Locale("es", "")
+  ];
   AppTheme selectMode(Brightness brightness) {
     switch (isLightMode) {
       case true:
@@ -43,9 +46,15 @@ class MyApp extends StatelessWidget {
     }
   }
 
+  void preCacheImage(BuildContext context) async {
+    await precacheImage(
+        const AssetImage("assets/images/personal.webp"), context);
+  }
+
   @override
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
+    preCacheImage(context);
     return MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -93,8 +102,7 @@ class MyApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate
             ],
             locale: context.watch<AppLocaleBloc>().state.locale.getLocal(),
-            supportedLocales: const [Locale("en", ""), Locale("es", "")],
-            debugShowCheckedModeBanner: false,
+            supportedLocales: localeLanguage,
             title: 'Portafolio Alejandro',
             theme: state.appTheme.getTheme(),
             home: HomePage(),

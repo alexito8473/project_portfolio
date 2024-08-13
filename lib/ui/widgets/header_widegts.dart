@@ -26,13 +26,13 @@ class HeaderWidget extends StatelessWidget {
         runAlignment: WrapAlignment.center,
         alignment: WrapAlignment.center,
         children: [
-          ClipOval(
+          RepaintBoundary(
+              child: ClipOval(
             child: Image.asset(
               "assets/images/personal.webp",
-              width:  isMobile ? 160 : 220,
+              width: isMobile ? 160 : 220,
             ),
-          )
-          ,
+          )),
           SizedBox(
               width: 400,
               child: Column(
@@ -44,10 +44,11 @@ class HeaderWidget extends StatelessWidget {
                       maxLines: 1,
                       style: TextStyle(fontSize: 40),
                     ),
-                    Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                    RepaintBoundary(
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
                           IconButtonNavigator(
                             uri: Uri.parse('https://github.com/alexito8473'),
                             color: isDarkMode ? Colors.white : Colors.black,
@@ -63,7 +64,7 @@ class HeaderWidget extends StatelessWidget {
                             iconUri: 'assets/svg/linkedin.svg',
                             secondColor: false,
                           )
-                        ])
+                        ]))
                   ])),
           Container(
               margin: EdgeInsets.only(
@@ -86,8 +87,8 @@ class HeaderWidget extends StatelessWidget {
               width: size.width * 0.7,
               child: Text(
                 AppLocalizations.of(context)!.aboutMeDescription,
-                style:
-                     TextStyle(fontSize: isMobile ? 18 : 20, fontStyle: FontStyle.italic),
+                style: TextStyle(
+                    fontSize: isMobile ? 18 : 20, fontStyle: FontStyle.italic),
                 textAlign: TextAlign.justify,
               )),
         ],

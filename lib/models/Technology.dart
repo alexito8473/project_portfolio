@@ -26,7 +26,17 @@ enum TypeDescription {
   PYTHON,
   NET_MAUI,
   ANDROID,
-  KOTLIN;
+  KOTLIN,
+  HTML,
+  CSS,
+  MYSQL,
+  MONGO_DB,
+  FIREBASE,
+  GIT,
+  GITHUB,
+  INTELLIJ,
+  SPRING,
+  JAVASCRIPT;
 
   String getDescription(BuildContext context) {
     switch (this) {
@@ -44,6 +54,26 @@ enum TypeDescription {
         return AppLocalizations.of(context)!.androidExperience;
       case TypeDescription.KOTLIN:
         return AppLocalizations.of(context)!.kotlinExperience;
+      case TypeDescription.HTML:
+        return AppLocalizations.of(context)!.htmlExperience;
+      case TypeDescription.CSS:
+        return AppLocalizations.of(context)!.cssExperience;
+      case TypeDescription.MYSQL:
+        return AppLocalizations.of(context)!.mysqlExperience;
+      case TypeDescription.MONGO_DB:
+        return AppLocalizations.of(context)!.mongoExperience;
+      case TypeDescription.FIREBASE:
+        return AppLocalizations.of(context)!.firebaseExperience;
+      case TypeDescription.GIT:
+        return AppLocalizations.of(context)!.gitExperience;
+      case TypeDescription.GITHUB:
+        return AppLocalizations.of(context)!.gitHubExperience;
+      case TypeDescription.INTELLIJ:
+        return AppLocalizations.of(context)!.intelIjExperience;
+      case TypeDescription.SPRING:
+        return AppLocalizations.of(context)!.springExperience;
+      case TypeDescription.JAVASCRIPT:
+        return AppLocalizations.of(context)!.javaScriptExperience;
     }
   }
 }
@@ -54,10 +84,11 @@ class Technology {
   final Color color;
   final TypeLanguage typeLanguage;
   final TypeDescription typeDescription;
+  final bool changeColor;
   const Technology(
       {required this.name,
       required this.urlIcon,
       required this.color,
       required this.typeLanguage,
-      required this.typeDescription});
+      required this.typeDescription,required this.changeColor});
 }

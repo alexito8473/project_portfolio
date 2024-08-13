@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 
 enum MenuItems {
   ABOUT_ME,
+  PROJECT,
   TECHNOLOGY,
   EXPERIENCE,
-  PROJECT,
   CONTACT_ME;
 
   String getTitle(BuildContext context) {
@@ -28,17 +29,18 @@ enum MenuItems {
   StatelessWidget getIcon() {
     switch (this) {
       case MenuItems.ABOUT_ME:
-        return const Icon(Icons.person);
+        return const Icon(
+          Icons.person,
+          size: 25,
+        );
       case MenuItems.TECHNOLOGY:
-        return const SvgIcon(icon: SvgIconData("assets/svg/languageCode.svg"));
+        return const SvgIcon(icon: SvgIconData( "assets/svg/languageCode.svg"));
       case MenuItems.EXPERIENCE:
-        return const Icon(Icons.computer);
+        return const Icon(Icons.computer, size: 25,);
       case MenuItems.PROJECT:
-        return const SvgIcon(
-            icon: SvgIconData("assets/svg/project.svg",
-                colorSource: SvgColorSource.iconThemeColor));
+        return const SvgIcon(icon: SvgIconData( "assets/svg/project.svg"));
       case MenuItems.CONTACT_ME:
-        return const Icon(Icons.computer);
+        return const Icon(Icons.computer, size: 25,);
     }
   }
 

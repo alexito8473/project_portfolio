@@ -4,6 +4,7 @@
   "downloadCV": "Download CV",
   "technologies": "Technologies",
   "comingSoon": "Coming soon ",
+  "contact_me": "Contact me",
   "practices": " Programmer intern",
   "workExperience": "Work experience",
   "projects": "Projects",
@@ -19,5 +20,15 @@
   "flutterExperience": "I have been working intensively with Flutter for a year, during which I have acquired an advanced level in the development of multiplatform applications. I have done professional internships using this framework, which has allowed me to apply my knowledge in real projects, optimizing user interfaces and managing efficient business logic.",
   "androidExperience": "I have been working with Android development for a year, gaining a solid understanding of building native apps. My passion for learning has led me to explore various areas of Android development, from creating intuitive user interfaces to API integration and local database management",
   "phpExperience": "I have acquired a solid knowledge of PHP, thanks to my intensive learning during the Higher Degree. This educational environment has provided me with a solid foundation in backend web development, allowing me to manage databases, develop dynamic applications",
-  "kotlinExperience": "I started learning Kotlin as a result of my work with Android development, quickly becoming familiar with its modern and concise syntax. As I delved deeper into its use for mobile applications, I have also begun to explore its capabilities for backend development."
+  "kotlinExperience": "I started learning Kotlin as a result of my work with Android development, quickly becoming familiar with its modern and concise syntax. As I delved deeper into its use for mobile applications, I have also begun to explore its capabilities for backend development.",
+  "htmlExperience": "I have studied HTML for several years in my higher education, which has allowed me to develop a solid level. I am able to create and structure web pages with a clear understanding of the essential tags and elements, optimizing the code for a clear and efficient presentation.",
+  "cssExperience":"I have studied CSS for several years in my higher education, which has allowed me to acquire a good command of it. I can design and style web pages, handling properties and selectors accurately to achieve a visually appealing and well-structured design.",
+  "mysqlExperience":"I have studied MySQL for several years in my higher education, which has allowed me to develop a good command of SQL. I have experience using SQL with PostgreSQL and connecting databases to Java applications, allowing me to handle complex queries and manage data efficiently in integrated environments.",
+  "mongoExperience":"I have been learning MongoDB for less than a year, getting familiar with its syntax and operation. Although my experience is recent, I have a good understanding of how to manage NoSQL databases and work with JSON documents to store and query data in a flexible way.",
+  "firebaseExperience":"I have worked with Firebase on several projects, including my undergraduate thesis, and have performed tests using its Realtime Database functionality. I have experience integrating Firebase to manage authentication, real-time data storage, and synchronization across web and mobile applications.",
+  "gitExperience":"In my undergraduate degree, I learned how to use Git, focusing on version management and branch consistency. I understand how to manage repositories, make commits, and manage branches to efficiently collaborate on projects, ensuring strong and organized version control.",
+  "gitHubExperience":"During my undergraduate degree, I learned how to use GitHub and I use it constantly for my projects. I have experience in repository management, team collaboration, and using tools like pull requests and issues to maintain an organized and efficient workflow.",
+  "intelIjExperience":"IntelliJ is the code editing platform I use regularly. I feel comfortable working in this environment, taking advantage of its tools and features to develop projects efficiently and productively.",
+  "springExperience":"I have a basic understanding of Spring Boot, but I am in the process of learning more to develop backend applications. As I gain more experience, I plan to delve deeper into its functionalities and capabilities to create robust and efficient solutions.",
+  "javaScriptExperience":"I currently have a basic understanding of JavaScript, but I am in the process of learning more to improve my web development skills. I am working on gaining a deeper understanding of the language and its applications in creating interactive and dynamic interfaces."
 }

@@ -47,8 +47,12 @@ class HomeDesktopScreens extends StatefulWidget {
 class _HomeDesktopScreensState extends State<HomeDesktopScreens>
     with TickerProviderStateMixin {
   @override
+  void dispose() {
+    widget.scrollController.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
-    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
 
     return Scaffold(
         appBar: widget.appBarNavigation,
@@ -56,14 +60,14 @@ class _HomeDesktopScreensState extends State<HomeDesktopScreens>
             behaviour: RandomParticleBehaviour(
                 options: ParticleOptions(
               baseColor: Colors.blue,
-              opacityChangeRate: 0.25,
-              minOpacity: widget.isDarkMode ? 0.1 : 0.05,
-              maxOpacity: widget.isDarkMode ? 0.4 : 0.1,
+              opacityChangeRate: 0.30,
+              minOpacity: widget.isDarkMode ? 0.11 : 0.08,
+              maxOpacity: widget.isDarkMode ? 0.45 : 0.13,
               spawnMinSpeed: 20.0,
               spawnMaxSpeed: 30.0,
               spawnMinRadius: 7.0,
               spawnMaxRadius: 30.0,
-              particleCount: 15,
+              particleCount: 20,
             )),
             vsync: this,
             child: SingleChildScrollView(
@@ -76,33 +80,28 @@ class _HomeDesktopScreensState extends State<HomeDesktopScreens>
                       isDarkMode: widget.isDarkMode,
                       isMobile: false,
                     ),
-                    LitTechnology(
+                    ListProject(
                       key: widget.listGlobalKey[1],
+                      size: widget.size,
+                      listProject: widget.listProject,
+                      isTopNavigation: widget.isTopNavigation,
+                      isMobile: false,
+                      bannerBackground: widget.bannerBackground, isDarkMode: widget.isDarkMode,
+                    ),
+                    LitTechnology(
+                      key: widget.listGlobalKey[2],
                       size: widget.size,
                       isMobile: false,
                       isDarkMode: widget.isDarkMode,
                       createDialogTechnology: widget.createDialogTechnology,
                     ),
                     EducationWidget(
-                      key: widget.listGlobalKey[2],
-                      size: widget.size,
-                      isMobile: false,
-                    ),
-                    ListProject(
                       key: widget.listGlobalKey[3],
                       size: widget.size,
-                      listProject: widget.listProject,
-                      isTopNavigation: widget.isTopNavigation,
                       isMobile: false,
-                      bannerBackground: widget.bannerBackground,
-                    ),
-                    TitleHome(
-                      key: widget.listGlobalKey[4],
-                      size: widget.size,
-                      spaceFinal: widget.size.width * 0.70,
-                      title: "aaaaaaa",
                     ),
                     EducationWidget(
+                      key: widget.listGlobalKey[4],
                       size: widget.size,
                       isMobile: false,
                     ),

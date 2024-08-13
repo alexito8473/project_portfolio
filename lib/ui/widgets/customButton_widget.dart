@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:html' as html;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_svg_icons/flutter_svg_icons.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class IconButtonNavigator extends StatelessWidget {
   final Uri uri;
@@ -28,10 +26,11 @@ class IconButtonNavigator extends StatelessWidget {
         tooltip: tooltip,
         color: color,
         onPressed: () async => await launchUrl(uri),
-        icon: SvgIcon(
-            color: secondColor ? color : null,
-            icon: SvgIconData(iconUri,
-                colorSource: SvgColorSource.specialColors)));
+        icon: SvgPicture.asset(
+          iconUri,
+          color: secondColor ? color : null,
+          width: 40,
+        ));
   }
 }
 
@@ -57,7 +56,7 @@ class ButtonDownloadPdf extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.0), // Forma del botón
           ),
           padding: const EdgeInsets.symmetric(
-              horizontal: 30, vertical: 15), // Padding
+              horizontal: 20, vertical: 15), // Padding
         ),
         child: Text(
           AppLocalizations.of(context)!.downloadCV,
