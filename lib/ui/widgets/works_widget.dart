@@ -5,7 +5,6 @@ import 'package:lecle_bubble_timeline/models/timeline_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'titleCustom.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EducationWidget extends StatelessWidget {
   final Size size;
@@ -23,8 +22,7 @@ class EducationWidget extends StatelessWidget {
               children: [
                 TitleHome(
                   size: size,
-                  spaceFinal: size.width * 0.70,
-                  title: AppLocalizations.of(context)!.workExperience,
+                  title: AppLocalizations.of(context)!.workExperience, isMobile: isMobile,
                 ),
                 BubbleTimeline(
                   bubbleSize: !isMobile ? 150 : 100,

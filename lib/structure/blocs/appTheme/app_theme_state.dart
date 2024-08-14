@@ -10,7 +10,7 @@ enum AppTheme {
       ? ThemeData.from(
           useMaterial3: true,
           textTheme: GoogleFonts.texturinaTextTheme(Typography.blackCupertino),
-          colorScheme:  ColorScheme(
+          colorScheme: const ColorScheme(
               brightness: Brightness.light,
               primary: Colors.blueAccent,
               onPrimary: Colors.blue,
@@ -50,7 +50,7 @@ class AppThemeState {
       prefs: prefs,
     );
   }
-
+  bool isDarkMode() => appTheme == AppTheme.DARK;
   AppThemeState copyWitch(
       {required AppTheme? appTheme, required SharedPreferences? prefs}) {
     return AppThemeState(

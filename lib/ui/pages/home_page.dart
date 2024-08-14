@@ -70,7 +70,6 @@ class HomePage extends StatelessWidget {
       {required bool isTopNavigation,
       required bool isMobile,
       required Size size,
-      required bool isDarkMode,
       required BuildContext context}) {
     return AppBar(
       flexibleSpace: topNavigation(
@@ -81,7 +80,7 @@ class HomePage extends StatelessWidget {
           duration: const Duration(milliseconds: 300),
           padding: EdgeInsets.only(left: size.width * 0.04),
           child: const AutoSizeText(
-            "Software developer",
+            "Full Stack Developer",
             style: TextStyle(fontSize: 30),
             maxLines: 1,
           )),
@@ -97,9 +96,8 @@ class HomePage extends StatelessWidget {
                 left: size.width * 0.01,
                 right: !isTopNavigation && !isMobile ? 0 : size.width * 0.04),
             child: IconButton(
-                onPressed: () {
-                  context.read<AppThemeBloc>().add(ChangeThemeEvent());
-                },
+                onPressed: () =>
+                    context.read<AppThemeBloc>().add(ChangeThemeEvent()),
                 icon: context.watch<AppThemeBloc>().state.appTheme.getIcon())),
         if (!isTopNavigation && !isMobile)
           Padding(
@@ -126,12 +124,12 @@ class HomePage extends StatelessWidget {
                   },
                   barrierColor: Colors.black.withOpacity(0.4),
                   dropdownStyleData: DropdownStyleData(
-                    width: 160,
+                    width: 170,
                     useSafeArea: true,
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
-                      color: isDarkMode
+                      color: context.watch<AppThemeBloc>().state.isDarkMode()
                           ? Colors.grey.shade700
                           : Colors.blue.shade900,
                     ),
@@ -156,15 +154,16 @@ class HomePage extends StatelessWidget {
             decoration: BoxDecoration(
                 color: background, borderRadius: BorderRadius.circular(10)),
             child: Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    gradient: RadialGradient(
-                        center: Alignment.topLeft,
-                        radius: !isMobile ? 1.4 : 1.8,
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        transform: const GradientRotation(0.3),
                         stops: const [
-                          0.8,
-                          0.8,
+                          0.85,
+                          0.85,
                           1,
                           1
                         ],
@@ -172,48 +171,44 @@ class HomePage extends StatelessWidget {
                           background,
                           technology.color.withOpacity(0.5),
                           technology.color.withOpacity(0.5),
-                          background,
+                          background
                         ])),
-                child: Stack(
+                child: Column(
                   children: [
-                    Positioned(
-                        bottom: 5,
-                        left: 5,
+                    SizedBox(
+                        height: 40,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: AutoSizeText(
+                                maxLines: 2,
+                                '${AppLocalizations.of(context)!.myExperience} ${technology.name}',
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(Icons.close))
+                          ],
+                        )),
+                    Expanded(
+                        child: Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: AutoSizeText(
+                        technology.typeDescription.getDescription(context),
+                        style: const TextStyle(fontSize: 15),
+                        textAlign: TextAlign.justify,
+                      ),
+                    )),
+                    Container(
+                        height: 60,
+                        alignment: Alignment.bottomLeft,
                         child: SvgPicture.asset(
                           technology.urlIcon,
                           width: 60,
                         )),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 5),
-                        child: Column(children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: AutoSizeText(
-                                  maxLines: 2,
-                                  '${AppLocalizations.of(context)!.myExperience} ${technology.name}',
-                                  style: const TextStyle(fontSize: 20),
-                                ),
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: const Icon(Icons.close))
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: AutoSizeText(
-                              maxLines: 11,
-                              technology.typeDescription
-                                  .getDescription(context),
-                              style: const TextStyle(fontSize: 15),
-                              textAlign: TextAlign.justify,
-                            ),
-                          )
-                        ]))
                   ],
                 )),
           ),
@@ -232,41 +227,33 @@ class HomePage extends StatelessWidget {
     Size size = MediaQuery.sizeOf(context);
     bool isTopNavigation = size.width > 1450;
     bool isMobile = size.width < 500;
-    bool bannerBackground = size.width < 750;
-    return BlocBuilder<AppThemeBloc, AppThemeState>(builder: (context, state) {
-      bool isDarkMode = state.appTheme == AppTheme.DARK;
-      return isMobile
-          ? HomeMobileScreens(
-              appBarNavigation: appBarNavigation(
-                  isTopNavigation: isTopNavigation,
-                  size: size,
-                  context: context,
-                  isMobile: true,
-                  isDarkMode: isDarkMode),
-              isTopNavigation: isTopNavigation,
-              size: size,
-              isDarkMode: isDarkMode,
-              createDialogTechnology: createDialogTechnology,
-              listProject: listProject,
-              bannerBackground: bannerBackground,
-            )
-          : HomeDesktopScreens(
-              scrollToItem: scrollToItem,
-              scrollController: _scrollController,
-              appBarNavigation: appBarNavigation(
-                  isTopNavigation: isTopNavigation,
-                  size: size,
-                  context: context,
-                  isMobile: false,
-                  isDarkMode: isDarkMode),
-              listGlobalKey: listGlobalKey,
-              isTopNavigation: isTopNavigation,
-              size: size,
-              isDarkMode: isDarkMode,
-              createDialogTechnology: createDialogTechnology,
-              listProject: listProject,
-              bannerBackground: bannerBackground,
-            );
-    });
+    bool bannerBackground = size.width < 600;
+    return isMobile
+        ? HomeMobileScreens(
+            appBarNavigation: appBarNavigation(
+                isTopNavigation: isTopNavigation,
+                size: size,
+                context: context,
+                isMobile: true),
+            isTopNavigation: isTopNavigation,
+            size: size,
+            createDialogTechnology: createDialogTechnology,
+            listProject: listProject,
+            bannerBackground: bannerBackground,
+          )
+        : HomeDesktopScreens(
+            scrollController: _scrollController,
+            appBarNavigation: appBarNavigation(
+                isTopNavigation: isTopNavigation,
+                size: size,
+                context: context,
+                isMobile: false),
+            listGlobalKey: listGlobalKey,
+            isTopNavigation: isTopNavigation,
+            size: size,
+            createDialogTechnology: createDialogTechnology,
+            listProject: listProject,
+            bannerBackground: bannerBackground,
+          );
   }
 }

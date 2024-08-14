@@ -1,6 +1,8 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 import '../../models/Item.dart';
 import '../../models/Project.dart';
 import '../widgets/header_widegts.dart';
@@ -14,14 +16,12 @@ class HomeMobileScreens extends StatefulWidget {
   final List<Project> listProject;
   final bool isTopNavigation;
   final Size size;
-  final bool isDarkMode;
   final bool bannerBackground;
   const HomeMobileScreens(
       {super.key,
       required this.appBarNavigation,
       required this.isTopNavigation,
       required this.size,
-      required this.isDarkMode,
       required this.createDialogTechnology,
       required this.listProject,
       required this.bannerBackground});
@@ -32,15 +32,9 @@ class HomeMobileScreens extends StatefulWidget {
 
 class _HomeMobileScreensState extends State<HomeMobileScreens>
     with TickerProviderStateMixin {
-  late Color colorIcon;
-  @override
-  void initState() {
-    colorIcon = widget.isDarkMode ? Colors.white : Colors.black;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
     return DefaultTabController(
         length: 5,
         child: Scaffold(
@@ -49,7 +43,7 @@ class _HomeMobileScreensState extends State<HomeMobileScreens>
                     height: 60,
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                      color: widget.isDarkMode
+                      color: isDarkMode
                           ? Colors.grey.shade700
                           : Colors.blue.shade900,
                       borderRadius: const BorderRadius.only(
@@ -57,7 +51,7 @@ class _HomeMobileScreensState extends State<HomeMobileScreens>
                           topRight: Radius.circular(15)),
                     ),
                     child: TabBar(
-                      dividerColor: widget.isDarkMode
+                      dividerColor: isDarkMode
                           ? Colors.grey.shade700
                           : Colors.blue.shade900,
                       tabs: List.generate(
@@ -78,8 +72,8 @@ class _HomeMobileScreensState extends State<HomeMobileScreens>
                     options: ParticleOptions(
                   baseColor: Colors.blue,
                   opacityChangeRate: 0.3,
-                  minOpacity: widget.isDarkMode ? 0.15 : 0.08,
-                  maxOpacity: widget.isDarkMode ? 0.40 : 0.15,
+                  minOpacity: isDarkMode ? 0.15 : 0.08,
+                  maxOpacity: isDarkMode ? 0.40 : 0.15,
                   spawnMinSpeed: 15.0,
                   spawnMaxSpeed: 25.0,
                   spawnMinRadius: 6.0,
@@ -92,22 +86,20 @@ class _HomeMobileScreensState extends State<HomeMobileScreens>
                     SingleChildScrollView(
                       child: HeaderWidget(
                         size: widget.size,
-                        isDarkMode: widget.isDarkMode,
                         isMobile: true,
                       ),
                     ),
                     ListProject(
-                        size: widget.size,
-                        listProject: widget.listProject,
-                        isTopNavigation: widget.isTopNavigation,
-                        isMobile: true,
-                        bannerBackground: widget.bannerBackground, isDarkMode:widget.isDarkMode,
-                      ),
+                      size: widget.size,
+                      listProject: widget.listProject,
+                      isTopNavigation: widget.isTopNavigation,
+                      isMobile: true,
+                      bannerBackground: widget.bannerBackground,
+                    ),
                     SingleChildScrollView(
                       child: LitTechnology(
                         size: widget.size,
                         isMobile: true,
-                        isDarkMode: widget.isDarkMode,
                         createDialogTechnology: widget.createDialogTechnology,
                       ),
                     ),

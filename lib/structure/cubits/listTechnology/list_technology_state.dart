@@ -7,14 +7,11 @@ class ListTechnologyState {
   final List<Technology> listTechnologyLearning;
   final List<Technology> listTechnologyTools;
   final List<Technology> listTechnologyServers;
-  ListTechnologyState({
-    required this.listTechnologyMobile,
-    required this.listTechnologyBackend,
-    required this.listTechnologyFrontend,
-    required this.listTechnologyLearning,
-    required this.listTechnologyTools,
-    required this.listTechnologyServers
-  });
+  ListTechnologyState(
+      {required this.listTechnologyMobile,
+      required this.listTechnologyBackend,
+      required this.listTechnologyFrontend,
+      required this.listTechnologyLearning,
+      required this.listTechnologyTools,
+      required this.listTechnologyServers});
 }
-
-

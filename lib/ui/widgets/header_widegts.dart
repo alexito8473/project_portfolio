@@ -1,16 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 import '../widgets/customButton_widget.dart';
 
 class HeaderWidget extends StatelessWidget {
   final Size size;
-  final bool isDarkMode;
   final bool isMobile;
   const HeaderWidget(
       {super.key,
       required this.size,
-      required this.isDarkMode,
       required this.isMobile});
 
   @override
@@ -51,7 +51,7 @@ class HeaderWidget extends StatelessWidget {
                             children: [
                           IconButtonNavigator(
                             uri: Uri.parse('https://github.com/alexito8473'),
-                            color: isDarkMode ? Colors.white : Colors.black,
+                            color: context.watch<AppThemeBloc>().state.isDarkMode() ? Colors.white : Colors.black,
                             tooltip: 'Github',
                             iconUri: 'assets/svg/github.svg',
                             secondColor: true,

@@ -4,47 +4,18 @@ enum AppLocale {
   SPANISH(),
   ENGLISH();
 
-  Locale getLocal() {
-    switch (this) {
-      case AppLocale.SPANISH:
-        return const Locale("es");
-      case AppLocale.ENGLISH:
-        return const Locale("en");
-    }
-  }
+  Locale getLocal() =>
+      this == AppLocale.SPANISH ? const Locale("es") : const Locale("en");
 
-  String flags() {
-    switch (this) {
-      case AppLocale.SPANISH:
-        return "🇪🇸";
-      case AppLocale.ENGLISH:
-        return "🏴󠁧󠁢󠁥󠁮󠁧󠁿";
-    }
-  }
+  AppLocale reverse() =>
+      this == AppLocale.SPANISH ? AppLocale.ENGLISH : AppLocale.SPANISH;
 
-  String getFlagsAndLenguajeCode() {
-    return "${flags()} ${getLenguajeCode()}";
-  }
+  String getLenguajeCode() => getLocal().languageCode;
 
-  AppLocale reverse() {
-    switch (this) {
-      case AppLocale.SPANISH:
-        return AppLocale.ENGLISH;
-      case AppLocale.ENGLISH:
-        return AppLocale.SPANISH;
-    }
-  }
-
-  String getLenguajeCode() {
-    return getLocal().languageCode;
-  }
-
-  static AppLocale selectAppLocale(Locale locale) {
-    if (locale.languageCode == const Locale("es").languageCode) {
-      return AppLocale.SPANISH;
-    }
-    return AppLocale.ENGLISH;
-  }
+  static AppLocale selectAppLocale(Locale locale) =>
+      locale.languageCode == const Locale("es").languageCode
+          ? AppLocale.SPANISH
+          : AppLocale.ENGLISH;
 }
 
 class AppLocaleState {

@@ -27,7 +27,7 @@ class ContainerProjectWidget extends StatelessWidget {
             listUrlIcon: project.imgIconLanguage,
             size: size,
             title: project.name,
-            description: project.description,
+            description: project.projectDescription.getDescription(context), isMobile: isMobile,
           )
         : ProjectWithImageWidget(
             urlImage: project.imgUrl[0],
@@ -35,7 +35,7 @@ class ContainerProjectWidget extends StatelessWidget {
             listUrlIcon: project.imgIconLanguage,
             size: size,
             title: project.name,
-            description: project.description);
+            description: project.projectDescription.getDescription(context));
   }
 }
 
@@ -45,22 +45,24 @@ class ProjectWidget extends StatelessWidget {
   final Size size;
   final String title;
   final String description;
+  final bool isMobile;
   const ProjectWidget(
       {super.key,
       required this.bannerBackground,
       required this.listUrlIcon,
       required this.size,
       required this.title,
-      required this.description});
+      required this.description, required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 700,
+        width: 300,
+        height: 480,
+        margin: EdgeInsets.only(bottom: isMobile?size.height*.1:0),
         decoration: BoxDecoration(
             color: Colors.grey.withOpacity(0.5),
             borderRadius: BorderRadius.circular(20)),
-        margin: EdgeInsets.only(bottom: size.height * 0.1),
         child: Padding(
             padding: const EdgeInsets.all(15),
             child: Column(
@@ -138,13 +140,12 @@ class ProjectWithImageWidget extends StatelessWidget {
         width: 600,
         height: 480,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-        margin: EdgeInsets.only(bottom: size.height * 0.1),
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Container(
             decoration: BoxDecoration(
                 color: Colors.grey.withOpacity(0.4),
                 borderRadius: BorderRadius.circular(20)),
-            width: 310,
+            width: 300,
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

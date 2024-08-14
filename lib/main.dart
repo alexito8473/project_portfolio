@@ -11,6 +11,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui' as ui;
 
+AppTheme selectMode(Brightness brightness, bool? isLightMode) {
+  switch (isLightMode) {
+    case true:
+      return AppTheme.LIGHT;
+    case false:
+      return AppTheme.DARK;
+    case null:
+      return brightness == Brightness.dark ? AppTheme.DARK : AppTheme.LIGHT;
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -31,20 +42,6 @@ class MyApp extends StatelessWidget {
       this.isLightMode,
       required this.prefs,
       required this.listTechnology});
-  final List<Locale> localeLanguage = const [
-    Locale("en", ""),
-    Locale("es", "")
-  ];
-  AppTheme selectMode(Brightness brightness) {
-    switch (isLightMode) {
-      case true:
-        return AppTheme.LIGHT;
-      case false:
-        return AppTheme.DARK;
-      case null:
-        return brightness == Brightness.dark ? AppTheme.DARK : AppTheme.LIGHT;
-    }
-  }
 
   void preCacheImage(BuildContext context) async {
     await precacheImage(
@@ -85,8 +82,8 @@ class MyApp extends StatelessWidget {
                     .toList()),
           ),
           BlocProvider(
-              create: (context) =>
-                  AppThemeBloc(appTheme: selectMode(brightness), prefs: prefs)),
+              create: (context) => AppThemeBloc(
+                  appTheme: selectMode(brightness, isLightMode), prefs: prefs)),
           BlocProvider(
               create: (context) => AppLocaleBloc(
                   locale: AppLocale.selectAppLocale(
@@ -95,18 +92,17 @@ class MyApp extends StatelessWidget {
         child:
             BlocBuilder<AppThemeBloc, AppThemeState>(builder: (context, state) {
           return MaterialApp(
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate
-            ],
-            locale: context.watch<AppLocaleBloc>().state.locale.getLocal(),
-            supportedLocales: localeLanguage,
-            title: 'Portafolio Alejandro',
-            theme: state.appTheme.getTheme(),
-            home: HomePage(),
-          );
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate
+              ],
+              locale: context.watch<AppLocaleBloc>().state.locale.getLocal(),
+              supportedLocales: const [Locale("en", ""), Locale("es", "")],
+              title: 'Portafolio Alejandro',
+              theme: state.appTheme.getTheme(),
+              home: HomePage());
         }));
   }
 }

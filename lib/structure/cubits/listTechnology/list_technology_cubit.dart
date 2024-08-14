@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import '../../../models/Technology.dart';
 
@@ -21,8 +20,8 @@ class ListTechnologyCubit extends Cubit<ListTechnologyState> {
             listTechnologyTools: listTechnologyTools,
             listTechnologyServers: listTechnologyServers));
 
-  List<Technology> getTypeLanguageList(TypeLanguage typeLanguage){
-    switch(typeLanguage){
+  List<Technology> getTypeLanguageList(TypeLanguage typeLanguage) {
+    switch (typeLanguage) {
       case TypeLanguage.BACKEND:
         return state.listTechnologyBackend;
       case TypeLanguage.FRONTEND:

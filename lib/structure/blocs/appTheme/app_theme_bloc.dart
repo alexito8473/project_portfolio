@@ -11,7 +11,8 @@ class AppThemeBloc extends Bloc<AppThemeEvent, AppThemeState> {
   AppThemeBloc({required AppTheme appTheme, required SharedPreferences prefs})
       : super(AppThemeState.init(appTheme: appTheme, prefs: prefs)) {
     on<ChangeThemeEvent>((event, emit) async {
-      await prefs.setBool('isLightMode', state.appTheme.reverse() == AppTheme.LIGHT);
+      await prefs.setBool(
+          'isLightMode', state.appTheme.reverse() == AppTheme.LIGHT);
       emit(AppThemeState(
           appTheme: state.appTheme.reverse(), prefs: state.prefs));
     });

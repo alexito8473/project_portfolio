@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-enum TypeLanguage { BACKEND, FRONTEND, MOBILE, TOOLS, LEARNING, SERVERS;
 
-  String getTitle(BuildContext context){
-    switch(this){
+enum TypeLanguage {
+  BACKEND,
+  FRONTEND,
+  MOBILE,
+  TOOLS,
+  LEARNING,
+  SERVERS;
+
+  String getTitle(BuildContext context) {
+    switch (this) {
       case TypeLanguage.BACKEND:
         return "Backend";
       case TypeLanguage.FRONTEND:
@@ -17,7 +24,8 @@ enum TypeLanguage { BACKEND, FRONTEND, MOBILE, TOOLS, LEARNING, SERVERS;
       case TypeLanguage.SERVERS:
         return AppLocalizations.of(context)!.server;
     }
-  }}
+  }
+}
 
 enum TypeDescription {
   JAVA,
@@ -90,5 +98,6 @@ class Technology {
       required this.urlIcon,
       required this.color,
       required this.typeLanguage,
-      required this.typeDescription,required this.changeColor});
+      required this.typeDescription,
+      required this.changeColor});
 }
