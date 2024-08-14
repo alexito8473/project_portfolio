@@ -124,5 +124,12 @@ List<Technology> createListTechnology() {
         typeLanguage: TypeLanguage.SERVERS,
         typeDescription: TypeDescription.FIREBASE,
         changeColor: false),
+    const Technology(
+        name: "Eclipse",
+        urlIcon: "assets/svg/eclipse.svg",
+        color: Color.fromRGBO(255, 196, 0, 1),
+        typeLanguage: TypeLanguage.TOOLS,
+        typeDescription: TypeDescription.FIREBASE,
+        changeColor: false),
   ];
 }

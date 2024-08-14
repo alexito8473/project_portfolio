@@ -17,8 +17,8 @@ class HeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          top: size.height * 0.04,
-          bottom: size.height * 0.05,
+          top:!isMobile?size.height * 0.07: size.height * 0.04,
+                    bottom: size.height * 0.05,
           left: size.width * 0.1,
           right: size.width * .1),
       child: Wrap(
@@ -68,7 +68,7 @@ class HeaderWidget extends StatelessWidget {
                   ])),
           Container(
               margin: EdgeInsets.only(
-                  top: size.height * 0.02, bottom: size.height * 0.02),
+                  top: size.height * 0.08, bottom: size.height * 0.02),
               width: size.width * 0.70,
               child: Wrap(
                   spacing: 10,
@@ -83,15 +83,17 @@ class HeaderWidget extends StatelessWidget {
                     ),
                     const ButtonDownloadPdf()
                   ])),
-          SizedBox(
+          AnimatedContainer(
+            padding: EdgeInsets.only(bottom: size.height*.06,top: size.height*.03),
               width: size.width * 0.7,
+              duration: const Duration(milliseconds: 300),
               child: Text(
                 AppLocalizations.of(context)!.aboutMeDescription,
                 style: TextStyle(
                     fontSize: isMobile ? 18 : 20, fontStyle: FontStyle.italic),
                 textAlign: TextAlign.justify,
               )),
-        ],
+                  ],
       ),
     );
   }

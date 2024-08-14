@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:html' as html;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../structure/blocs/appTheme/app_theme_bloc.dart';
 
 class IconButtonNavigator extends StatelessWidget {
   final Uri uri;
@@ -62,5 +65,28 @@ class ButtonDownloadPdf extends StatelessWidget {
           AppLocalizations.of(context)!.downloadCV,
           style: const TextStyle(fontSize: 16),
         ));
+  }
+}
+
+class ButtonGithubProject extends StatelessWidget {
+  final Size size;
+  final Uri uri;
+  const ButtonGithubProject({super.key, required this.size, required this.uri});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.only(left: 10),
+        width: 80,
+        height: 60,
+        child: FloatingActionButton(
+            onPressed: () async => await launchUrl(uri),
+            child: SvgPicture.asset(
+              color: context.watch<AppThemeBloc>().state.isDarkMode()
+                  ? Colors.white
+                  : Colors.black,
+              "assets/svg/github.svg",
+              width: 50,
+            )));
   }
 }

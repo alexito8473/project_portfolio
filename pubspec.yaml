@@ -40,16 +40,18 @@ flutter:
 
     - assets/svg/linkedin.svg
     - assets/svg/github.svg
+    - assets/svg/eclipse.svg
     - assets/svg/languageCode.svg
     - assets/svg/project.svg
     - assets/svg/git.svg
     - assets/svg/intellij.svg
+
     - assets/images/projects/tasty/1.webp
     - assets/images/projects/tasty/2.webp
     - assets/images/projects/tasty/3.webp
     - assets/images/projects/tasty/4.webp
     - assets/images/projects/tasty/5.webp
-
+    - assets/images/projects/goReversi/1.webp
     - assets/svg/programLanguage/java.svg
     - assets/svg/programLanguage/android.svg
     - assets/svg/programLanguage/maui.svg

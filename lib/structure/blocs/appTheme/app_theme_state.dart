@@ -15,6 +15,7 @@ enum AppTheme {
               primary: Colors.blueAccent,
               onPrimary: Colors.blue,
               secondary: Colors.blue,
+              primaryContainer: Colors.blueAccent,
               onSecondary: Colors.blue,
               error: Colors.white,
               onError: Colors.white,

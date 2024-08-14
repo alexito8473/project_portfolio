@@ -44,7 +44,8 @@ enum TypeDescription {
   GITHUB,
   INTELLIJ,
   SPRING,
-  JAVASCRIPT;
+  JAVASCRIPT,
+  ECLIPSE;
 
   String getDescription(BuildContext context) {
     switch (this) {
@@ -81,6 +82,10 @@ enum TypeDescription {
       case TypeDescription.SPRING:
         return AppLocalizations.of(context)!.springExperience;
       case TypeDescription.JAVASCRIPT:
+        return AppLocalizations.of(context)!.javaScriptExperience;
+      case TypeDescription.ECLIPSE:
+        //Falta arreglarlo
+
         return AppLocalizations.of(context)!.javaScriptExperience;
     }
   }

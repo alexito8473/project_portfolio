@@ -130,8 +130,8 @@ class HomePage extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
                       color: context.watch<AppThemeBloc>().state.isDarkMode()
-                          ? Colors.grey.shade700
-                          : Colors.blue.shade900,
+                          ? Colors.grey.shade800
+                          : Colors.blueAccent,
                     ),
                   ),
                 ),

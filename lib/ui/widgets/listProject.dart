@@ -42,7 +42,7 @@ class ListProject extends StatelessWidget {
                     slideBuilder: (index) {
                       return GestureDetector(
                           onTap: () {},
-                          child: ContainerProjectWidget(
+                          child: ProjectWidget(
                             size: size,
                             project: listProject[index],
                             changeBanner: isTopNavigation,
@@ -73,7 +73,7 @@ class ListProject extends StatelessWidget {
                     listProject.length,
                     (index) {
                       return RepaintBoundary(
-                          child: ContainerProjectWidget(
+                          child: ProjectWidget(
                         size: size,
                         project: listProject[index],
                         changeBanner: isTopNavigation,
