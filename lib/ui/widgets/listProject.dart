@@ -30,9 +30,9 @@ class ListProject extends StatelessWidget {
       children: [
         RepaintBoundary(
             child: TitleHome(
-          size: size,
-          title: AppLocalizations.of(context)!.projects, isMobile: isMobile
-        )),
+                size: size,
+                title: AppLocalizations.of(context)!.projects,
+                isMobile: isMobile)),
         isMobile
             ? Expanded(
                 child: Padding(
@@ -56,7 +56,9 @@ class ListProject extends StatelessWidget {
                     // ZoomOutSlideTransform()
                     slideIndicator: CircularSlideIndicator(
                       indicatorBackgroundColor:
-                          context.watch<AppThemeBloc>().state.isDarkMode() ? Colors.white : Colors.grey,
+                          context.watch<AppThemeBloc>().state.isDarkMode()
+                              ? Colors.white
+                              : Colors.grey,
                       currentIndicatorColor: Colors.red,
                       padding: const EdgeInsets.only(bottom: 32),
                     ),
@@ -64,10 +66,10 @@ class ListProject extends StatelessWidget {
               ))
             : Container(
                 margin: EdgeInsets.only(top: size.height * 0.05),
-                width: size.width * 0.9,
+                width: size.width * 0.83,
                 child: Wrap(
-                  spacing: 10,
-                  runSpacing: size.height*.07,
+                  spacing: 40,
+                  runSpacing: size.height * .07,
                   alignment: WrapAlignment.center,
                   children: List.generate(
                     listProject.length,
@@ -80,7 +82,7 @@ class ListProject extends StatelessWidget {
                         isMobile: isMobile,
                         bannerBackground: bannerBackground,
                         isLtr: index % 2 == 0,
-                      ).increaseSizeOnHover(1.05));
+                      ));
                     },
                   ),
                 ),

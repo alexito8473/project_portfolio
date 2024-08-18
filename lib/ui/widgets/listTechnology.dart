@@ -23,15 +23,18 @@ class LitTechnology extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          EdgeInsets.only(right: size.width * 0.15, left: size.width * 0.15),
+          EdgeInsets.symmetric(horizontal: size.width * 0.15,vertical: isMobile?0:size.height * 0.15),
       child: Column(children: [
         TitleHome(
           size: size,
-          title: AppLocalizations.of(context)!.technologies,
+          title: AppLocalizations.of(context)!.knowledge,
           isMobile: isMobile,
         ),
         RepaintBoundary(
-            child: Wrap(
+            child: Padding(
+                padding:
+                EdgeInsets.only(top: isMobile?0:100),
+                child:Wrap(
                 spacing: 20,
                 alignment: WrapAlignment.center,
                 runSpacing: 30,
@@ -44,7 +47,7 @@ class LitTechnology extends StatelessWidget {
                         isMobile: isMobile,
                         size: size,
                         title: TypeLanguage.values[index].getTitle(context),
-                        createDialogTechnology: createDialogTechnology)))),
+                        createDialogTechnology: createDialogTechnology))))),
       ]),
     );
   }

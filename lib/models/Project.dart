@@ -28,5 +28,6 @@ class Project {
       required this.imgUrl,
       required this.projectDescription,
       required this.imgIconLanguage,
-      required this.repositoryUrl, required this.isApplicationMobile});
+      required this.repositoryUrl,
+      required this.isApplicationMobile});
 }

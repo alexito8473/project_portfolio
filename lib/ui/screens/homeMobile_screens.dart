@@ -12,15 +12,15 @@ import '../widgets/works_widget.dart';
 
 class HomeMobileScreens extends StatefulWidget {
   final Function createDialogTechnology;
-  final PreferredSizeWidget appBarNavigation;
+  final Widget topNavigation;
   final List<Project> listProject;
-  final bool isTopNavigation;
+  final bool activeNavigationTop;
   final Size size;
   final bool bannerBackground;
   const HomeMobileScreens(
       {super.key,
-      required this.appBarNavigation,
-      required this.isTopNavigation,
+      required this.topNavigation,
+      required this.activeNavigationTop,
       required this.size,
       required this.createDialogTechnology,
       required this.listProject,
@@ -66,7 +66,11 @@ class _HomeMobileScreensState extends State<HomeMobileScreens>
                         },
                       ),
                     ))),
-            appBar: widget.appBarNavigation,
+            appBar: AppBar(
+              flexibleSpace: widget.topNavigation,
+              shadowColor: Colors.black,
+              toolbarHeight:  60 ,
+            ),
             body: AnimatedBackground(
                 behaviour: RandomParticleBehaviour(
                     options: ParticleOptions(
@@ -89,10 +93,16 @@ class _HomeMobileScreensState extends State<HomeMobileScreens>
                         isMobile: true,
                       ),
                     ),
+                    SingleChildScrollView(
+                      child: EducationWidget(
+                        size: widget.size,
+                        isMobile: true,
+                      ),
+                    ),
                     ListProject(
                       size: widget.size,
                       listProject: widget.listProject,
-                      isTopNavigation: widget.isTopNavigation,
+                      isTopNavigation: widget.activeNavigationTop,
                       isMobile: true,
                       bannerBackground: widget.bannerBackground,
                     ),
@@ -108,9 +118,6 @@ class _HomeMobileScreensState extends State<HomeMobileScreens>
                         size: widget.size,
                         isMobile: true,
                       ),
-                    ),
-                    Container(
-                      color: Colors.transparent,
                     ),
                   ],
                 ))));

@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -36,108 +35,120 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget? topNavigation(
+  Widget topNavigation(
       {required Size size,
-      required bool haveNavigation,
-      required BuildContext context}) {
-    if (!haveNavigation) {
-      return null;
-    }
+      required bool activeNavigationTop,
+      required BuildContext context,
+      required bool isMobile}) {
     EdgeInsets paddingOfButtons =
         const EdgeInsets.symmetric(horizontal: 20, vertical: 10);
     EdgeInsets paddingButtons = const EdgeInsets.symmetric(horizontal: 10);
-    return Container(
-        height: 70,
-        margin: EdgeInsets.only(left: (size.width * 0.32) - 100),
+    return SizedBox(
+        height: isMobile ? 60 : 90,
         child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: List.generate(MenuItems.values.length, (index) {
-              return Padding(
-                padding: index % 2 == 0 ? paddingButtons : EdgeInsets.zero,
-                child: IconButton(
-                    padding: paddingOfButtons,
-                    onPressed: () => scrollToItem(listGlobalKey[index]),
-                    icon: AutoSizeText(
-                        MenuItems.values[index].getTitle(context),
-                        maxLines: 1,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+                width: isMobile ? 250 : null,
+                padding: EdgeInsets.only(left: size.width * 0.030),
+                child: const AutoSizeText(
+                  "Full Stack Developer",
+                  style: TextStyle(fontSize: 30),
+                  maxLines: 1,
+                )),
+            if (activeNavigationTop)
+              Expanded(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: List.generate(MenuItems.values.length, (index) {
+                        return Padding(
+                          padding:
+                              index % 2 == 0 ? paddingButtons : EdgeInsets.zero,
+                          child: IconButton(
+                              padding: paddingOfButtons,
+                              onPressed: () =>
+                                  scrollToItem(listGlobalKey[index]),
+                              icon: AutoSizeText(
+                                  MenuItems.values[index].getTitle(context),
+                                  maxLines: 1,
+                                  style: const TextStyle(fontSize: 25))),
+                        );
+                      }))),
+            Row(
+              children: [
+                IconButton(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                    onPressed: () =>
+                        context.read<AppLocaleBloc>().add(ChangeLocalEvent()),
+                    icon: Text(
+                        context
+                            .watch<AppLocaleBloc>()
+                            .state
+                            .locale
+                            .getLenguajeCode(),
                         style: const TextStyle(fontSize: 25))),
-              );
-            })));
-  }
-
-  PreferredSizeWidget appBarNavigation(
-      {required bool isTopNavigation,
-      required bool isMobile,
-      required Size size,
-      required BuildContext context}) {
-    return AppBar(
-      flexibleSpace: topNavigation(
-          size: size, haveNavigation: isTopNavigation, context: context),
-      shadowColor: Colors.black,
-      toolbarHeight: isMobile ? 60 : 80,
-      title: AnimatedPadding(
-          duration: const Duration(milliseconds: 300),
-          padding: EdgeInsets.only(left: size.width * 0.04),
-          child: const AutoSizeText(
-            "Full Stack Developer",
-            style: TextStyle(fontSize: 30),
-            maxLines: 1,
-          )),
-      actions: [
-        IconButton(
-            onPressed: () =>
-                context.read<AppLocaleBloc>().add(ChangeLocalEvent()),
-            icon: Text(
-                context.watch<AppLocaleBloc>().state.locale.getLenguajeCode(),
-                style: const TextStyle(fontSize: 25))),
-        Padding(
-            padding: EdgeInsets.only(
-                left: size.width * 0.01,
-                right: !isTopNavigation && !isMobile ? 0 : size.width * 0.04),
-            child: IconButton(
-                onPressed: () =>
-                    context.read<AppThemeBloc>().add(ChangeThemeEvent()),
-                icon: context.watch<AppThemeBloc>().state.appTheme.getIcon())),
-        if (!isTopNavigation && !isMobile)
-          Padding(
-              padding: EdgeInsets.only(
-                  left: size.width * 0.01, right: size.width * 0.04),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  customButton: const Icon(
-                    Icons.list,
-                    size: 38,
-                  ),
-                  items: List.generate(
-                    MenuItems.values.length,
-                    (index) {
-                      return DropdownMenuItem<int>(
-                          value: index,
-                          child: MenuItems.values[index].buildItem(context));
-                    },
-                  ),
-                  onChanged: (value) {
-                    if (value != null) {
-                      scrollToItem(listGlobalKey[value]);
-                    }
-                  },
-                  barrierColor: Colors.black.withOpacity(0.4),
-                  dropdownStyleData: DropdownStyleData(
-                    width: 170,
-                    useSafeArea: true,
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: context.watch<AppThemeBloc>().state.isDarkMode()
-                          ? Colors.grey.shade800
-                          : Colors.blueAccent,
-                    ),
-                  ),
-                ),
-              ))
-      ],
-    );
+                Padding(
+                    padding: EdgeInsets.only(
+                        left: size.width * 0.01,
+                        right: !activeNavigationTop && !isMobile
+                            ? 0
+                            : size.width * 0.04),
+                    child: IconButton(
+                        onPressed: () => context
+                            .read<AppThemeBloc>()
+                            .add(ChangeThemeEvent()),
+                        icon: context
+                            .watch<AppThemeBloc>()
+                            .state
+                            .appTheme
+                            .getIcon())),
+                if (!activeNavigationTop && !isMobile)
+                  Padding(
+                      padding: EdgeInsets.only(
+                          left: size.width * 0.01, right: size.width * 0.04),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          customButton: const Icon(
+                            Icons.list,
+                            size: 38,
+                          ),
+                          items: List.generate(
+                            MenuItems.values.length,
+                            (index) {
+                              return DropdownMenuItem<int>(
+                                  value: index,
+                                  child: MenuItems.values[index]
+                                      .buildItem(context));
+                            },
+                          ),
+                          onChanged: (value) {
+                            if (value != null) {
+                              scrollToItem(listGlobalKey[value]);
+                            }
+                          },
+                          barrierColor: Colors.black.withOpacity(0.4),
+                          dropdownStyleData: DropdownStyleData(
+                            width: 170,
+                            useSafeArea: true,
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              color: context
+                                      .watch<AppThemeBloc>()
+                                      .state
+                                      .isDarkMode()
+                                  ? Colors.grey.shade800
+                                  : Colors.blueAccent,
+                            ),
+                          ),
+                        ),
+                      ))
+              ],
+            )
+          ],
+        ));
   }
 
   void createDialogTechnology(BuildContext context, Technology technology,
@@ -225,35 +236,35 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    bool isTopNavigation = size.width > 1450;
+    bool activeNavigationTop = size.width > 1450;
     bool isMobile = size.width < 500;
     bool bannerBackground = size.width < 600;
     return isMobile
         ? HomeMobileScreens(
-            appBarNavigation: appBarNavigation(
-                isTopNavigation: isTopNavigation,
-                size: size,
-                context: context,
-                isMobile: true),
-            isTopNavigation: isTopNavigation,
+            activeNavigationTop: activeNavigationTop,
             size: size,
             createDialogTechnology: createDialogTechnology,
             listProject: listProject,
             bannerBackground: bannerBackground,
+            topNavigation: topNavigation(
+                size: size,
+                activeNavigationTop: activeNavigationTop,
+                context: context,
+                isMobile: true),
           )
         : HomeDesktopScreens(
             scrollController: _scrollController,
-            appBarNavigation: appBarNavigation(
-                isTopNavigation: isTopNavigation,
-                size: size,
-                context: context,
-                isMobile: false),
             listGlobalKey: listGlobalKey,
-            isTopNavigation: isTopNavigation,
+            activeNavigationTop: activeNavigationTop,
             size: size,
             createDialogTechnology: createDialogTechnology,
             listProject: listProject,
             bannerBackground: bannerBackground,
+            topNavigation: topNavigation(
+                size: size,
+                activeNavigationTop: activeNavigationTop,
+                context: context,
+                isMobile: false),
           );
   }
 }

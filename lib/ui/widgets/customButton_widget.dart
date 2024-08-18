@@ -13,13 +13,14 @@ class IconButtonNavigator extends StatelessWidget {
   final String tooltip;
   final String iconUri;
   final bool secondColor;
+  final bool overSideWidth;
   const IconButtonNavigator(
       {super.key,
       required this.uri,
       required this.color,
       required this.tooltip,
       required this.iconUri,
-      required this.secondColor});
+      required this.secondColor, required this.overSideWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +33,14 @@ class IconButtonNavigator extends StatelessWidget {
         icon: SvgPicture.asset(
           iconUri,
           color: secondColor ? color : null,
-          width: 40,
+          width: overSideWidth?60:40,
         ));
   }
 }
 
 class ButtonDownloadPdf extends StatelessWidget {
-  const ButtonDownloadPdf({super.key});
+  final bool overSideWidth;
+  const ButtonDownloadPdf({super.key, required this.overSideWidth});
 
   void downloadFile() async {
     html.AnchorElement(href: 'assets/pdf/Currículum_Alejandro_Aguilar.pdf')
@@ -52,18 +54,18 @@ class ButtonDownloadPdf extends StatelessWidget {
         onPressed: () => downloadFile(),
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
-          backgroundColor: Colors.blue, // Color del texto
-          shadowColor: Colors.blueAccent, // Color de la sombra
+          backgroundColor: Colors.blue,
+          shadowColor: Colors.blueAccent,
           elevation: 5, // Elevación
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0), // Forma del botón
+            borderRadius: BorderRadius.circular(20.0),
           ),
           padding: const EdgeInsets.symmetric(
-              horizontal: 20, vertical: 15), // Padding
+              horizontal: 15, vertical: 15),
         ),
         child: Text(
           AppLocalizations.of(context)!.downloadCV,
-          style: const TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: overSideWidth?25:14),
         ));
   }
 }

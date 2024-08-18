@@ -24,7 +24,9 @@ class EducationWidget extends StatelessWidget {
                   size: size,
                   title: AppLocalizations.of(context)!.workExperience, isMobile: isMobile,
                 ),
-                BubbleTimeline(
+            Padding(
+              padding: EdgeInsets.only(top: isMobile?0:80),
+              child:BubbleTimeline(
                   bubbleSize: !isMobile ? 150 : 100,
                   items: [
                     TimelineItem(
@@ -59,7 +61,7 @@ class EducationWidget extends StatelessWidget {
                   ],
                   stripColor: Colors.teal,
                   dividerCircleColor: Colors.white,
-                )
+                ))
               ],
             )));
   }

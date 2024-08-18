@@ -12,18 +12,18 @@ import '../widgets/works_widget.dart';
 class HomeDesktopScreens extends StatefulWidget {
   final Function createDialogTechnology;
   final ScrollController scrollController;
-  final PreferredSizeWidget appBarNavigation;
+  final Widget topNavigation;
   final List<GlobalKey> listGlobalKey;
   final List<Project> listProject;
-  final bool isTopNavigation;
+  final bool activeNavigationTop;
   final Size size;
   final bool bannerBackground;
   const HomeDesktopScreens(
       {super.key,
       required this.scrollController,
-      required this.appBarNavigation,
+      required this.topNavigation,
       required this.listGlobalKey,
-      required this.isTopNavigation,
+      required this.activeNavigationTop,
       required this.size,
       required this.createDialogTechnology,
       required this.listProject,
@@ -45,7 +45,11 @@ class _HomeDesktopScreensState extends State<HomeDesktopScreens>
   Widget build(BuildContext context) {
     bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
     return Scaffold(
-        appBar: widget.appBarNavigation,
+        appBar:AppBar(
+          flexibleSpace: widget.topNavigation,
+          shadowColor: Colors.black,
+          toolbarHeight: 90,
+        ),
         body: AnimatedBackground(
             behaviour: RandomParticleBehaviour(
                 options: ParticleOptions(
@@ -57,7 +61,7 @@ class _HomeDesktopScreensState extends State<HomeDesktopScreens>
               spawnMaxSpeed: 30.0,
               spawnMinRadius: 7.0,
               spawnMaxRadius: 30.0,
-              particleCount: 20,
+              particleCount: 15,
             )),
             vsync: this,
             child: SingleChildScrollView(
@@ -69,31 +73,33 @@ class _HomeDesktopScreensState extends State<HomeDesktopScreens>
                       size: widget.size,
                       isMobile: false,
                     ),
+                    EducationWidget(
+                      key: widget.listGlobalKey[1],
+                      size: widget.size,
+                      isMobile: false,
+                    ),
                     ListProject(
-                        key: widget.listGlobalKey[1],
+                        key: widget.listGlobalKey[2],
                         size: widget.size,
                         listProject: widget.listProject,
-                        isTopNavigation: widget.isTopNavigation,
+                        isTopNavigation: widget.activeNavigationTop,
                         isMobile: false,
                         bannerBackground: widget.bannerBackground),
                     LitTechnology(
-                      key: widget.listGlobalKey[2],
-                      size: widget.size,
-                      isMobile: false,
-                      createDialogTechnology: widget.createDialogTechnology,
-                    ),
-                    EducationWidget(
                       key: widget.listGlobalKey[3],
                       size: widget.size,
                       isMobile: false,
+                      createDialogTechnology: widget.createDialogTechnology,
                     ),
                     EducationWidget(
                       key: widget.listGlobalKey[4],
                       size: widget.size,
                       isMobile: false,
                     ),
-                    SizedBox(
-                      height: widget.size.height * 0.2,
+                    Container(
+                      color: Colors.grey.shade700,
+                      margin: const EdgeInsets.only(top: 80),
+                      height: 100,
                     ),
                   ],
                 ))));

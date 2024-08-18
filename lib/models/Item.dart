@@ -4,17 +4,17 @@ import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 
 enum MenuItems {
   ABOUT_ME,
-  PROJECT,
-  TECHNOLOGY,
   EXPERIENCE,
+  PROJECT,
+  KNOWLEDGE,
   CONTACT_ME;
 
   String getTitle(BuildContext context) {
     switch (this) {
       case MenuItems.ABOUT_ME:
         return AppLocalizations.of(context)!.aboutMe;
-      case MenuItems.TECHNOLOGY:
-        return AppLocalizations.of(context)!.technologies;
+      case MenuItems.KNOWLEDGE:
+        return AppLocalizations.of(context)!.knowledge;
       case MenuItems.EXPERIENCE:
         return AppLocalizations.of(context)!.experience;
       case MenuItems.PROJECT:
@@ -28,7 +28,7 @@ enum MenuItems {
     switch (this) {
       case MenuItems.ABOUT_ME:
         return const Icon(Icons.person, size: 25);
-      case MenuItems.TECHNOLOGY:
+      case MenuItems.KNOWLEDGE:
         return const SvgIcon(icon: SvgIconData("assets/svg/languageCode.svg"));
       case MenuItems.EXPERIENCE:
         return const Icon(Icons.computer, size: 25);

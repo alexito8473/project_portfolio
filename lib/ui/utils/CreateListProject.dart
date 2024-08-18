@@ -5,10 +5,10 @@ List<Project> createListProject() {
     const Project(
         name: "TastyDash",
         imgUrl: [
+          "assets/images/projects/tasty/4.webp",
+          "assets/images/projects/tasty/3.webp",
           "assets/images/projects/tasty/1.webp",
           "assets/images/projects/tasty/2.webp",
-          "assets/images/projects/tasty/3.webp",
-          "assets/images/projects/tasty/4.webp",
           "assets/images/projects/tasty/5.webp",
         ],
         projectDescription: ProjectDescription.TASTY_DASH,
@@ -35,9 +35,9 @@ List<Project> createListProject() {
     const Project(
         name: "TastyDashProject",
         imgUrl: [
+          "assets/images/projects/tasty/3.webp",
           "assets/images/projects/tasty/1.webp",
           "assets/images/projects/tasty/2.webp",
-          "assets/images/projects/tasty/3.webp",
           "assets/images/projects/tasty/4.webp",
           "assets/images/projects/tasty/5.webp",
         ],
@@ -48,9 +48,10 @@ List<Project> createListProject() {
     const Project(
         name: "TastyDashProject",
         imgUrl: [
+          "assets/images/projects/tasty/3.webp",
           "assets/images/projects/tasty/1.webp",
           "assets/images/projects/tasty/2.webp",
-          "assets/images/projects/tasty/3.webp",
+
           "assets/images/projects/tasty/4.webp",
           "assets/images/projects/tasty/5.webp",
         ],
@@ -61,9 +62,10 @@ List<Project> createListProject() {
     const Project(
         name: "TastyDashProject",
         imgUrl: [
+          "assets/images/projects/tasty/3.webp",
           "assets/images/projects/tasty/1.webp",
           "assets/images/projects/tasty/2.webp",
-          "assets/images/projects/tasty/3.webp",
+
           "assets/images/projects/tasty/4.webp",
           "assets/images/projects/tasty/5.webp",
         ],
