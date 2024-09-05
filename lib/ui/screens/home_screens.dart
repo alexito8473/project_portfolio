@@ -1,11 +1,14 @@
+import 'package:animate_on_hover/animate_on_hover.dart';
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../models/Project.dart';
 import '../../structure/blocs/appTheme/app_theme_bloc.dart';
-import '../widgets/header_widegts.dart';
-import '../widgets/listProject.dart';
+import '../widgets/header_widegt.dart';
 import '../widgets/listTechnology.dart';
+import '../widgets/project_widget.dart';
+import '../widgets/titleCustom.dart';
 import '../widgets/works_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -76,12 +79,35 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       size: widget.size,
                       isMobile: widget.isMobile,
                     ),
-                    ListProject(
+                    TitleHome(
                         key: widget.listGlobalKey[2],
                         size: widget.size,
-                        isTopNavigation: widget.activeNavigationTop,
-                        isMobile: false,
-                        bannerBackground: widget.bannerBackground),
+                        title: AppLocalizations.of(context)!.projects,
+                        isMobile: widget.isMobile),
+                    RepaintBoundary(
+                        child: Padding(
+                      padding: EdgeInsets.only(
+                          top: widget.size.height * 0.05,
+                          left: widget.size.width * 0.05,
+                          right: widget.size.width * 0.05),
+                      child: Wrap(
+                        spacing: 40,
+                        runSpacing:
+                            widget.isMobile ? 35 : widget.size.height * .07,
+                        alignment: WrapAlignment.center,
+                        children: List.generate(
+                          ProjectRelease.values.length,
+                          (index) {
+                            return BannerProject(
+                              size: widget.size,
+                              projectRelease: ProjectRelease.values[index],
+                              isMobile: widget.isMobile,
+                              isDarkMode: isDarkMode,
+                            ).increaseSizeOnHover(1.05);
+                          },
+                        ),
+                      ),
+                    )),
                     LitTechnology(
                       key: widget.listGlobalKey[3],
                       size: widget.size,

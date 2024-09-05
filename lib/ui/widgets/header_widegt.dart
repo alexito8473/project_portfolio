@@ -10,7 +10,6 @@ class HeaderWidget extends StatelessWidget {
   final Size size;
   final bool isMobile;
   const HeaderWidget({super.key, required this.size, required this.isMobile});
-
   @override
   Widget build(BuildContext context) {
     bool overSideWidth = size.width > 1800;
@@ -31,11 +30,7 @@ class HeaderWidget extends StatelessWidget {
               child: ClipOval(
             child: Image.asset(
               "assets/images/personal.webp",
-              width: isMobile
-                  ? 160
-                  : overSideWidth
-                      ? 300
-                      : 220,
+              width: overSideWidth ? 300 : 220,
             ),
           )),
           Container(
@@ -104,11 +99,10 @@ class HeaderWidget extends StatelessWidget {
               style: const TextStyle(fontSize: 40),
             ),
           ),
-          AnimatedContainer(
+          Container(
               padding: EdgeInsets.only(
                   bottom: size.height * .06, top: size.height * .03),
               width: size.width * 0.7,
-              duration: const Duration(milliseconds: 300),
               child: Text(
                 AppLocalizations.of(context)!.aboutMeDescription,
                 style: TextStyle(

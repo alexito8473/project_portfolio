@@ -8,12 +8,32 @@ import 'customButton_widget.dart';
 class BannerProject extends StatelessWidget {
   final Size size;
   final ProjectRelease projectRelease;
+  final bool isMobile;
+  final bool isDarkMode;
   const BannerProject(
-      {super.key, required this.size, required this.projectRelease});
+      {super.key,
+      required this.size,
+      required this.projectRelease,
+      required this.isMobile,
+      required this.isDarkMode});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(20), boxShadow: [
+          isDarkMode
+              ? const BoxShadow(
+                  color: Colors.white54,
+                  blurRadius: 20,
+                  spreadRadius: 1.2,
+                )
+              : BoxShadow(
+                  color: Colors.blueAccent.withOpacity(0.7),
+                  blurRadius: 20,
+                  spreadRadius: 1.2,
+                )
+        ]),
         width: 300,
         height: 400,
         child: Stack(
@@ -22,8 +42,7 @@ class BannerProject extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(projectRelease.project.imgUrl[0],
                     fit: BoxFit.none,
-
-                    color: Colors.black.withOpacity(0.8),
+                    color: Colors.black.withOpacity(0.7),
                     colorBlendMode: BlendMode.darken,
                     width: 300,
                     height: 400,
