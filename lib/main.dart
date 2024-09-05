@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:proyect_porfolio/models/Project.dart';
 import 'package:proyect_porfolio/models/Technology.dart';
 import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
@@ -46,6 +47,11 @@ class MyApp extends StatelessWidget {
   void preCacheImage(BuildContext context) async {
     await precacheImage(
         const AssetImage("assets/images/personal.webp"), context);
+    for (var element in ProjectRelease.values) {
+      element.project.imgUrl.forEach(
+        (imgUrl) async => await precacheImage(AssetImage(imgUrl), context),
+      );
+    }
   }
 
   @override

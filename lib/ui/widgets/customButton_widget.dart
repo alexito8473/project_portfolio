@@ -20,7 +20,8 @@ class IconButtonNavigator extends StatelessWidget {
       required this.color,
       required this.tooltip,
       required this.iconUri,
-      required this.secondColor, required this.overSideWidth});
+      required this.secondColor,
+      required this.overSideWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class IconButtonNavigator extends StatelessWidget {
         icon: SvgPicture.asset(
           iconUri,
           color: secondColor ? color : null,
-          width: overSideWidth?60:40,
+          width: overSideWidth ? 60 : 40,
         ));
   }
 }
@@ -60,12 +61,11 @@ class ButtonDownloadPdf extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
-          padding: const EdgeInsets.symmetric(
-              horizontal: 15, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         ),
         child: Text(
           AppLocalizations.of(context)!.downloadCV,
-          style: TextStyle(fontSize: overSideWidth?25:14),
+          style: TextStyle(fontSize: overSideWidth ? 25 : 14),
         ));
   }
 }
@@ -80,7 +80,7 @@ class ButtonGithubProject extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.only(left: 10),
         width: 80,
-        height: 60,
+        height: 45,
         child: FloatingActionButton(
             onPressed: () async => await launchUrl(uri),
             child: SvgPicture.asset(
@@ -88,7 +88,7 @@ class ButtonGithubProject extends StatelessWidget {
                   ? Colors.white
                   : Colors.black,
               "assets/svg/github.svg",
-              width: 50,
+              width: 35,
             )));
   }
 }

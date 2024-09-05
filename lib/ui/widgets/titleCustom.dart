@@ -7,14 +7,15 @@ class TitleHome extends StatelessWidget {
   const TitleHome(
       {super.key,
       required this.size,
-      required this.title, required this.isMobile});
+      required this.title,
+      required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.only(
-            top: isMobile?0:size.height * 0.05, bottom: size.height * 0.05),
+            top: isMobile ? 0 : size.height * 0.05, bottom: size.height * 0.05),
         width: size.width * 0.70,
-        child: Text(title, style: const TextStyle(fontSize: 40)));
+        child: Text(title, style: const TextStyle(fontSize: 45)));
   }
 }

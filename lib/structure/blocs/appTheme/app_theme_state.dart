@@ -26,7 +26,7 @@ enum AppTheme {
           textTheme: GoogleFonts.texturinaTextTheme(Typography.whiteCupertino),
           colorScheme: const ColorScheme(
               brightness: Brightness.dark,
-              primary: Colors.grey,
+              primary: Colors.blueGrey,
               onPrimary: Colors.blueAccent,
               secondary: Colors.white,
               onSecondary: Colors.white,

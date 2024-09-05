@@ -22,8 +22,9 @@ class LitTechnology extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: size.width * 0.15,vertical: isMobile?0:size.height * 0.15),
+      padding: EdgeInsets.symmetric(
+          horizontal: size.width * 0.15,
+          vertical: isMobile ? 0 : size.height * 0.15),
       child: Column(children: [
         TitleHome(
           size: size,
@@ -32,22 +33,22 @@ class LitTechnology extends StatelessWidget {
         ),
         RepaintBoundary(
             child: Padding(
-                padding:
-                EdgeInsets.only(top: isMobile?0:100),
-                child:Wrap(
-                spacing: 20,
-                alignment: WrapAlignment.center,
-                runSpacing: 30,
-                children: List.generate(
-                    TypeLanguage.values.length,
-                    (index) => ColumnListTechnologyWidget(
-                        listTechnology: context
-                            .read<ListTechnologyCubit>()
-                            .getTypeLanguageList(TypeLanguage.values[index]),
-                        isMobile: isMobile,
-                        size: size,
-                        title: TypeLanguage.values[index].getTitle(context),
-                        createDialogTechnology: createDialogTechnology))))),
+                padding: EdgeInsets.only(top: isMobile ? 0 : 100),
+                child: Wrap(
+                    spacing: 20,
+                    alignment: WrapAlignment.center,
+                    runSpacing: 30,
+                    children: List.generate(
+                        TypeLanguage.values.length,
+                        (index) => ColumnListTechnologyWidget(
+                            listTechnology: context
+                                .read<ListTechnologyCubit>()
+                                .getTypeLanguageList(
+                                    TypeLanguage.values[index]),
+                            isMobile: isMobile,
+                            size: size,
+                            title: TypeLanguage.values[index].getTitle(context),
+                            createDialogTechnology: createDialogTechnology))))),
       ]),
     );
   }

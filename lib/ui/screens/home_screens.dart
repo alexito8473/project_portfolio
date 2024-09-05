@@ -1,7 +1,6 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:proyect_porfolio/models/Project.dart';
 
 import '../../structure/blocs/appTheme/app_theme_bloc.dart';
 import '../widgets/header_widegts.dart';
@@ -9,16 +8,16 @@ import '../widgets/listProject.dart';
 import '../widgets/listTechnology.dart';
 import '../widgets/works_widget.dart';
 
-class HomeDesktopScreens extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   final Function createDialogTechnology;
   final ScrollController scrollController;
   final Widget topNavigation;
   final List<GlobalKey> listGlobalKey;
-  final List<Project> listProject;
   final bool activeNavigationTop;
   final Size size;
+  final bool isMobile;
   final bool bannerBackground;
-  const HomeDesktopScreens(
+  const HomeScreen(
       {super.key,
       required this.scrollController,
       required this.topNavigation,
@@ -26,15 +25,14 @@ class HomeDesktopScreens extends StatefulWidget {
       required this.activeNavigationTop,
       required this.size,
       required this.createDialogTechnology,
-      required this.listProject,
-      required this.bannerBackground});
+      required this.bannerBackground,
+      required this.isMobile});
 
   @override
-  State<HomeDesktopScreens> createState() => _HomeDesktopScreensState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeDesktopScreensState extends State<HomeDesktopScreens>
-    with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void dispose() {
     widget.scrollController.dispose();
@@ -45,10 +43,10 @@ class _HomeDesktopScreensState extends State<HomeDesktopScreens>
   Widget build(BuildContext context) {
     bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
     return Scaffold(
-        appBar:AppBar(
+        appBar: AppBar(
           flexibleSpace: widget.topNavigation,
-          shadowColor: Colors.black,
-          toolbarHeight: 90,
+          shadowColor: isDarkMode ? Colors.grey : Colors.black,
+          toolbarHeight: 70,
         ),
         body: AnimatedBackground(
             behaviour: RandomParticleBehaviour(
@@ -61,7 +59,7 @@ class _HomeDesktopScreensState extends State<HomeDesktopScreens>
               spawnMaxSpeed: 30.0,
               spawnMinRadius: 7.0,
               spawnMaxRadius: 30.0,
-              particleCount: 15,
+              particleCount: widget.isMobile ? 7 : 15,
             )),
             vsync: this,
             child: SingleChildScrollView(
@@ -71,30 +69,29 @@ class _HomeDesktopScreensState extends State<HomeDesktopScreens>
                     HeaderWidget(
                       key: widget.listGlobalKey[0],
                       size: widget.size,
-                      isMobile: false,
+                      isMobile: widget.isMobile,
                     ),
                     EducationWidget(
                       key: widget.listGlobalKey[1],
                       size: widget.size,
-                      isMobile: false,
+                      isMobile: widget.isMobile,
                     ),
                     ListProject(
                         key: widget.listGlobalKey[2],
                         size: widget.size,
-                        listProject: widget.listProject,
                         isTopNavigation: widget.activeNavigationTop,
                         isMobile: false,
                         bannerBackground: widget.bannerBackground),
                     LitTechnology(
                       key: widget.listGlobalKey[3],
                       size: widget.size,
-                      isMobile: false,
+                      isMobile: widget.isMobile,
                       createDialogTechnology: widget.createDialogTechnology,
                     ),
                     EducationWidget(
                       key: widget.listGlobalKey[4],
                       size: widget.size,
-                      isMobile: false,
+                      isMobile: widget.isMobile,
                     ),
                     Container(
                       color: Colors.grey.shade700,

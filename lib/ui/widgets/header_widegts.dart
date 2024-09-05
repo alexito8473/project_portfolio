@@ -16,9 +16,9 @@ class HeaderWidget extends StatelessWidget {
     bool overSideWidth = size.width > 1800;
     return Padding(
       padding: EdgeInsets.only(
-          top: !isMobile ? size.height * 0.07 : size.height * 0.04,
-          bottom: size.height * 0.05,
-          left: size.width * 0.1,
+          top: !isMobile ? size.height * .07 : size.height * .04,
+          bottom: size.height * .02,
+          left: size.width * .1,
           right: size.width * .1),
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
@@ -39,8 +39,7 @@ class HeaderWidget extends StatelessWidget {
             ),
           )),
           Container(
-              width: overSideWidth ? 600 : 530,
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.all(25),
               decoration: BoxDecoration(
                 border: DashedBorder.all(
                   color: context.watch<AppThemeBloc>().state.isDarkMode()
@@ -59,7 +58,7 @@ class HeaderWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height:40,
+                      height: 55,
                       child: AutoSizeText(
                         "Alejandro Aguilar",
                         maxLines: 1,
@@ -67,39 +66,34 @@ class HeaderWidget extends StatelessWidget {
                       ),
                     ),
                     RepaintBoundary(
-                        child: Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Wrap(
-                                alignment: WrapAlignment.spaceEvenly,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  IconButtonNavigator(
-                                    uri: Uri.parse(
-                                        'https://github.com/alexito8473'),
-                                    color: context
-                                            .watch<AppThemeBloc>()
-                                            .state
-                                            .isDarkMode()
-                                        ? Colors.white
-                                        : Colors.black,
-                                    tooltip: 'Github',
-                                    iconUri: 'assets/svg/github.svg',
-                                    secondColor: true,
-                                    overSideWidth: overSideWidth,
-                                  ),
-                                  IconButtonNavigator(
-                                    uri: Uri.parse(
-                                        'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
-                                    color: Colors.blue,
-                                    tooltip: 'Linkedin',
-                                    iconUri: 'assets/svg/linkedin.svg',
-                                    secondColor: false,
-                                    overSideWidth: overSideWidth,
-                                  ),
-                                  ButtonDownloadPdf(
-                                    overSideWidth: overSideWidth,
-                                  )
-                                ]))),
+                        child: Wrap(
+                            alignment: WrapAlignment.spaceEvenly,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                          IconButtonNavigator(
+                            uri: Uri.parse('https://github.com/alexito8473'),
+                            color:
+                                context.watch<AppThemeBloc>().state.isDarkMode()
+                                    ? Colors.white
+                                    : Colors.black,
+                            tooltip: 'Github',
+                            iconUri: 'assets/svg/github.svg',
+                            secondColor: true,
+                            overSideWidth: overSideWidth,
+                          ),
+                          IconButtonNavigator(
+                            uri: Uri.parse(
+                                'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
+                            color: Colors.blue,
+                            tooltip: 'Linkedin',
+                            iconUri: 'assets/svg/linkedin.svg',
+                            secondColor: false,
+                            overSideWidth: overSideWidth,
+                          ),
+                          ButtonDownloadPdf(
+                            overSideWidth: overSideWidth,
+                          )
+                        ])),
                   ])),
           Container(
             margin: EdgeInsets.only(
