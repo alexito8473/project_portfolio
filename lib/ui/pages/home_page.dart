@@ -2,15 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 import '../../models/Item.dart';
-import '../../models/Technology.dart';
 
 import '../screens/home_screens.dart';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -154,87 +151,7 @@ class HomePage extends StatelessWidget {
         ));
   }
 
-  void createDialogTechnology(BuildContext context, Technology technology,
-      bool isMobile, bool isDarkMode) {
-    Color background = isDarkMode ? Colors.black : Colors.white;
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shadowColor: isDarkMode ? Colors.white10 : Colors.black12,
-          content: Container(
-            width: 350,
-            height: !isMobile ? 380 : 430,
-            decoration: BoxDecoration(
-                color: background, borderRadius: BorderRadius.circular(10)),
-            child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        transform: const GradientRotation(0.3),
-                        stops: const [
-                          0.85,
-                          0.85,
-                          1,
-                          1
-                        ],
-                        colors: [
-                          background,
-                          technology.color.withOpacity(0.5),
-                          technology.color.withOpacity(0.5),
-                          background
-                        ])),
-                child: Column(
-                  children: [
-                    SizedBox(
-                        height: 40,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: AutoSizeText(
-                                maxLines: 2,
-                                '${AppLocalizations.of(context)!.myExperience} ${technology.name}',
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                            ),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(Icons.close))
-                          ],
-                        )),
-                    Expanded(
-                        child: Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: AutoSizeText(
-                        technology.typeDescription.getDescription(context),
-                        style: const TextStyle(fontSize: 15),
-                        textAlign: TextAlign.justify,
-                      ),
-                    )),
-                    Container(
-                        height: 60,
-                        alignment: Alignment.bottomLeft,
-                        child: SvgPicture.asset(
-                          technology.urlIcon,
-                          width: 60,
-                        )),
-                  ],
-                )),
-          ),
-          backgroundColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0.0),
-          ),
-          elevation: 24.0, // Controla la sombra para el efecto de elevación
-        );
-      },
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -245,15 +162,12 @@ class HomePage extends StatelessWidget {
       scrollController: _scrollController,
       listGlobalKey: listGlobalKey,
       activeNavigationTop: activeNavigationTop,
-      size: size,
-      createDialogTechnology: createDialogTechnology,
       bannerBackground: isMobile,
       topNavigation: topNavigation(
           size: size,
           activeNavigationTop: activeNavigationTop,
           context: context,
           isMobile: isMobile),
-      isMobile: isMobile,
     );
   }
 }

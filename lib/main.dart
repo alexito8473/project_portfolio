@@ -12,6 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui' as ui;
 
+import 'package:worker_manager/worker_manager.dart';
+
 AppTheme selectMode(Brightness brightness, bool? isLightMode) {
   switch (isLightMode) {
     case true:
@@ -44,14 +46,20 @@ class MyApp extends StatelessWidget {
       required this.prefs,
       required this.listTechnology});
 
-  void preCacheImage(BuildContext context) async {
-    await precacheImage(
-        const AssetImage("assets/images/personal.webp"), context);
-    for (var element in ProjectRelease.values) {
-      element.project.imgUrl.forEach(
-        (imgUrl) async => await precacheImage(AssetImage(imgUrl), context),
-      );
-    }
+  void preCacheImage(BuildContext context) {
+    workerManager.execute<void>(
+      () async {
+        await precacheImage(
+            const AssetImage("assets/images/personal.webp"), context);
+
+        for (var element in ProjectRelease.values) {
+          element.project.imgUrl.forEach(
+            (imgUrl) async => await precacheImage(AssetImage(imgUrl), context),
+          );
+        }
+      },
+      priority: WorkPriority.immediately,
+    );
   }
 
   @override

@@ -1,6 +1,6 @@
 {
-    "name": "proyect_porfolio",
-    "short_name": "proyect_porfolio",
+    "name": "project_porfolio",
+    "short_name": "project_porfolio",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

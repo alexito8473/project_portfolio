@@ -43,7 +43,8 @@ class ButtonDownloadPdf extends StatelessWidget {
   final bool overSideWidth;
   const ButtonDownloadPdf({super.key, required this.overSideWidth});
 
-  void downloadFile() async {
+  void downloadFile()  {
+
     html.AnchorElement(href: 'assets/pdf/Currículum_Alejandro_Aguilar.pdf')
       ..setAttribute('download', "Curriculum_Alejandro_Aguilar.pdf")
       ..click();

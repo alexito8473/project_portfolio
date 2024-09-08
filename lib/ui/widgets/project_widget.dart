@@ -1,55 +1,97 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:proyect_porfolio/ui/widgets/titleCustom.dart';
 
 import '../../models/Project.dart';
+import '../../structure/blocs/appTheme/app_theme_bloc.dart';
 import 'customButton_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+class ListProject extends StatelessWidget {
+  const ListProject({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
+    bool isMobile = size.width < 600;
+    return Column(
+      children: [
+        TitleHome(
+            size: size,
+            title: AppLocalizations.of(context)!.projects,
+            isMobile: isMobile),
+        Container(
+          padding: EdgeInsets.only(top: size.height * 0.05),
+          width: size.width * .7,
+          child: Wrap(
+            spacing: 40,
+            runSpacing: isMobile ? 35 : size.height * .07,
+            alignment: WrapAlignment.center,
+            children: List.generate(
+              ProjectRelease.values.length,
+              (index) {
+                return BannerProject(
+                  size: size,
+                  projectRelease: ProjectRelease.values[index],
+                  isMobile: isMobile,
+                );
+              },
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
 
 class BannerProject extends StatelessWidget {
   final Size size;
   final ProjectRelease projectRelease;
   final bool isMobile;
-  final bool isDarkMode;
   const BannerProject(
       {super.key,
       required this.size,
       required this.projectRelease,
-      required this.isMobile,
-      required this.isDarkMode});
+      required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         decoration:
             BoxDecoration(borderRadius: BorderRadius.circular(20), boxShadow: [
-          isDarkMode
+          context.watch<AppThemeBloc>().state.isDarkMode()
               ? const BoxShadow(
                   color: Colors.white54,
                   blurRadius: 20,
                   spreadRadius: 1.2,
                 )
               : BoxShadow(
-                  color: Colors.blueAccent.withOpacity(0.7),
+                  color: Colors.blueAccent.withOpacity(0.5),
                   blurRadius: 20,
                   spreadRadius: 1.2,
                 )
         ]),
-        width: 300,
-        height: 400,
+        width: isMobile ? null : 400,
+        height: 350,
         child: Stack(
           children: [
-            ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(projectRelease.project.imgUrl[0],
-                    fit: BoxFit.none,
-                    color: Colors.black.withOpacity(0.7),
-                    colorBlendMode: BlendMode.darken,
-                    width: 300,
-                    height: 400,
-                    scale: 3,
-                    filterQuality: FilterQuality.none)),
+            Container(
+              width: isMobile ? null : 400,
+              height: 350,
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(30)),
+                  image: DecorationImage(
+                      image: AssetImage(projectRelease.project.imgUrl[0]),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.7), BlendMode.darken),
+                      alignment: Alignment.topCenter,
+                      filterQuality: FilterQuality.none)),
+            ),
             Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -59,53 +101,48 @@ class BannerProject extends StatelessWidget {
                         maxLines: 1,
                         projectRelease.project.name,
                         style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
+                          fontSize: 25,
+                          color: Colors.blueAccent,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     Expanded(
-                      child: AutoSizeText(
-                        projectRelease.getDescription(context),
-                        style:
-                            const TextStyle(fontSize: 15, color: Colors.white),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
+                        child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: AutoSizeText(
+                                projectRelease.getDescription(context),
+                                style: const TextStyle(
+                                    fontSize: 15, color: Colors.white),
+                                textAlign: TextAlign.justify))),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Expanded(
-                            child: Container(
-                                margin: const EdgeInsets.only(top: 10),
-                                height: 45,
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    const BoxShadow(
-                                        color: Colors.white24,
-                                        blurRadius: 4,
-                                        spreadRadius: 4),
-                                    BoxShadow(
-                                        color:
-                                            Colors.blueAccent.withOpacity(0.1),
-                                        blurRadius: 3,
-                                        spreadRadius: 2)
-                                  ],
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: List.generate(
-                                        projectRelease.project.imgIconLanguage
-                                            .length, (index) {
-                                      return SvgPicture.asset(
-                                          projectRelease
-                                              .project.imgIconLanguage[index],
-                                          width: 35);
-                                    })))),
+                          child: Container(
+                              height: 45,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.white24,
+                                      spreadRadius: 4,
+                                      blurRadius: 4)
+                                ],
+                              ),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: List.generate(
+                                      projectRelease.project.imgIconLanguage
+                                          .length, (index) {
+                                    return SvgPicture.asset(
+                                        projectRelease
+                                            .project.imgIconLanguage[index],
+                                        width: 35);
+                                  }))),
+                        ),
                         ButtonGithubProject(
                             size: size,
                             uri: Uri.parse(

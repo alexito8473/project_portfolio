@@ -7,11 +7,11 @@ import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 import '../widgets/customButton_widget.dart';
 
 class HeaderWidget extends StatelessWidget {
-  final Size size;
-  final bool isMobile;
-  const HeaderWidget({super.key, required this.size, required this.isMobile});
+  const HeaderWidget({super.key});
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
+    bool isMobile = size.width < 600;
     bool overSideWidth = size.width > 1800;
     return Padding(
       padding: EdgeInsets.only(
@@ -26,13 +26,12 @@ class HeaderWidget extends StatelessWidget {
         spacing: 20,
         runSpacing: 20,
         children: [
-          RepaintBoundary(
-              child: ClipOval(
+          ClipOval(
             child: Image.asset(
               "assets/images/personal.webp",
               width: overSideWidth ? 300 : 220,
             ),
-          )),
+          ),
           Container(
               padding: const EdgeInsets.all(25),
               decoration: BoxDecoration(
@@ -57,14 +56,13 @@ class HeaderWidget extends StatelessWidget {
                       child: AutoSizeText(
                         "Alejandro Aguilar",
                         maxLines: 1,
-                        style: TextStyle(fontSize: overSideWidth ? 45 : 37),
+                        style: TextStyle(fontSize: isMobile ? 25 : 35),
                       ),
                     ),
-                    RepaintBoundary(
-                        child: Wrap(
-                            alignment: WrapAlignment.spaceEvenly,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: [
+                    Wrap(
+                        alignment: WrapAlignment.spaceEvenly,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
                           IconButtonNavigator(
                             uri: Uri.parse('https://github.com/alexito8473'),
                             color:
@@ -88,7 +86,7 @@ class HeaderWidget extends StatelessWidget {
                           ButtonDownloadPdf(
                             overSideWidth: overSideWidth,
                           )
-                        ])),
+                        ]),
                   ])),
           Container(
             margin: EdgeInsets.only(
@@ -106,14 +104,9 @@ class HeaderWidget extends StatelessWidget {
               child: Text(
                 AppLocalizations.of(context)!.aboutMeDescription,
                 style: TextStyle(
-                    fontSize: isMobile
-                        ? 18
-                        : overSideWidth
-                            ? 25
-                            : 20,
-                    fontStyle: FontStyle.italic),
+                    fontSize: isMobile ? 18 : 20, fontStyle: FontStyle.italic),
                 textAlign: TextAlign.justify,
-              )),
+              ))
         ],
       ),
     );

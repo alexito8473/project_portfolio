@@ -17,7 +17,6 @@ dependencies:
   intl: ^0.19.0
   url_launcher: ^6.0.20
   animated_background: ^2.0.0
-  lecle_bubble_timeline: ^0.0.1+1
   google_fonts: ^6.2.1
   animate_on_hover: ^1.0.2
   auto_size_text: ^3.0.0
@@ -26,9 +25,7 @@ dependencies:
   flutter_svg_icons: ^0.0.1+4
   flutter_carousel_slider: ^1.1.0
   mobkit_dashed_border: ^0.0.6
-  blur: ^4.0.0
-  timeline_tile: ^2.0.0
-
+  worker_manager: ^7.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -41,6 +38,7 @@ flutter:
     - assets/pdf/Currículum_Alejandro_Aguilar.pdf
 
     - assets/images/personal.webp
+    - assets/images/BackgroundBoat.webp
 
     - assets/svg/linkedin.svg
     - assets/svg/github.svg

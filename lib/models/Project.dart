@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum ProjectRelease {
   TASTYDASH(
@@ -33,16 +34,16 @@ enum ProjectRelease {
               'https://github.com/alexito8473/gomoku-Alejandro-Aguilar')),
   OTELO(
       project: Project(
-          name: "TastyDashProject",
+          name: "Otelo",
           imgUrl: [
-            "assets/images/projects/tasty/3.webp",
-            "assets/images/projects/tasty/1.webp",
-            "assets/images/projects/tasty/2.webp",
-            "assets/images/projects/tasty/4.webp",
-            "assets/images/projects/tasty/5.webp",
+            "assets/images/projects/goReversi/1.webp",
           ],
-          imgIconLanguage: ["assets/svg/programLanguage/android.svg"],
-          repositoryUrl: 'https://github.com/alexito8473/TastyDashProject')),
+          imgIconLanguage: [
+            "assets/svg/programLanguage/java.svg",
+            "assets/svg/eclipse.svg",
+          ],
+          repositoryUrl:
+          'https://github.com/alexito8473/Go')),
   APP_TEACHER(
       project: Project(
           name: "TastyDashProject",
@@ -75,11 +76,11 @@ enum ProjectRelease {
   String getDescription(BuildContext context) {
     switch (this) {
       case ProjectRelease.TASTYDASH:
-        return "jkadhfkjlasdf";
+        return AppLocalizations.of(context)!.descriptionTasty;
       case ProjectRelease.GOMOKU:
-        return "1dfsdaf";
+        return "Gomoku";
       case ProjectRelease.OTELO:
-        return "asdfasdf";
+        return AppLocalizations.of(context)!.descriptionGomoku;
       case ProjectRelease.APP_TEACHER:
         return "1234";
       case ProjectRelease.APP_STUDENT:
