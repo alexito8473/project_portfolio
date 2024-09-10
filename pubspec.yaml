@@ -26,6 +26,9 @@ dependencies:
   flutter_carousel_slider: ^1.1.0
   mobkit_dashed_border: ^0.0.6
   worker_manager: ^7.0.3
+  http: ^1.2.2
+  email_validator: ^2.1.17
+  flutter_dotenv: ^5.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -35,6 +38,7 @@ flutter:
   generate: true
   # To add assets to your application, add an assets section, like this:
   assets:
+    - .env
     - assets/pdf/Currículum_Alejandro_Aguilar.pdf
 
     - assets/images/personal.webp

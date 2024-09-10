@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:html' as html;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -43,8 +44,7 @@ class ButtonDownloadPdf extends StatelessWidget {
   final bool overSideWidth;
   const ButtonDownloadPdf({super.key, required this.overSideWidth});
 
-  void downloadFile()  {
-
+  void downloadFile() {
     html.AnchorElement(href: 'assets/pdf/Currículum_Alejandro_Aguilar.pdf')
       ..setAttribute('download', "Curriculum_Alejandro_Aguilar.pdf")
       ..click();
@@ -68,6 +68,71 @@ class ButtonDownloadPdf extends StatelessWidget {
           AppLocalizations.of(context)!.downloadCV,
           style: TextStyle(fontSize: overSideWidth ? 25 : 14),
         ));
+  }
+}
+
+class ButtonContactToMe extends StatefulWidget {
+  final bool isDesactivate;
+  final Function sendEmail;
+  const ButtonContactToMe(
+      {super.key, required this.isDesactivate, required this.sendEmail});
+
+  @override
+  State<ButtonContactToMe> createState() => _ButtonContactToMeState();
+}
+
+class _ButtonContactToMeState extends State<ButtonContactToMe> {
+  bool _changeBackground = false;
+  double _elevation = 2.0;
+  @override
+  Widget build(BuildContext context) {
+    bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
+    return InkWell(
+      mouseCursor: widget.isDesactivate
+          ? MouseCursor.defer
+          : SystemMouseCursors.click,
+      onTap: () {
+        if (!widget.isDesactivate) {
+          widget.sendEmail();
+        }
+      },
+      child: MouseRegion(
+          onEnter: (event) {
+            if (!widget.isDesactivate) {
+              setState(() {
+                _changeBackground = true;
+                _elevation = 5;
+              });
+            }
+          },
+          onExit: (event) {
+            if (!widget.isDesactivate) {
+              setState(() {
+                _changeBackground = false;
+                _elevation = 2;
+              });
+            }
+          },
+          child: Material(
+            elevation: _elevation,
+            borderRadius: BorderRadius.circular(10),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              width: 120,
+              height: 40,
+              decoration: BoxDecoration(
+                color: widget.isDesactivate
+                    ? isDarkMode?Colors.grey.withOpacity(0.2):Colors.grey
+                    : _changeBackground
+                        ? Colors.lightBlueAccent
+                        : Colors.blueAccent,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              alignment: Alignment.center,
+              child: Text("Enviar"),
+            ),
+          )),
+    );
   }
 }
 

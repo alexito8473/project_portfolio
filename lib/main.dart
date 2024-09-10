@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:proyect_porfolio/models/Project.dart';
 import 'package:proyect_porfolio/models/Technology.dart';
@@ -14,6 +15,7 @@ import 'dart:ui' as ui;
 
 import 'package:worker_manager/worker_manager.dart';
 
+
 AppTheme selectMode(Brightness brightness, bool? isLightMode) {
   switch (isLightMode) {
     case true:
@@ -27,6 +29,7 @@ AppTheme selectMode(Brightness brightness, bool? isLightMode) {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MyApp(
     isLightMode: prefs.getBool('isLightMode'),
