@@ -3,26 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../structure/blocs/appTheme/app_theme_bloc.dart';
+import '../widgets/aboutMe_widget.dart';
 import '../widgets/contactToMe_Widget.dart';
 import '../widgets/footer_widget.dart';
-import '../widgets/header_widegt.dart';
-import '../widgets/listTechnology.dart';
-import '../widgets/project_widget.dart';
 import '../widgets/works_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   final ScrollController scrollController;
   final Widget topNavigation;
+  final Widget listTechnology;
+  final Widget listProject;
+  final Widget header;
   final List<GlobalKey> listGlobalKey;
-  final bool activeNavigationTop;
-  final bool bannerBackground;
+  final Function checkIfWidgetIsVisible;
   const HomeScreen(
       {super.key,
       required this.scrollController,
       required this.topNavigation,
       required this.listGlobalKey,
-      required this.activeNavigationTop,
-      required this.bannerBackground});
+      required this.listTechnology,
+      required this.listProject,
+      required this.header,
+      required this.checkIfWidgetIsVisible});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -32,12 +34,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.ensureVisualUpdate();
+    widget.scrollController.addListener(() => widget.checkIfWidgetIsVisible());
+  }
+
+  @override
+  void dispose() {
+    widget.scrollController
+        .removeListener(() => widget.checkIfWidgetIsVisible());
+    widget.scrollController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           flexibleSpace: widget.topNavigation,
           shadowColor: context.watch<AppThemeBloc>().state.isDarkMode()
@@ -65,20 +76,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             vsync: this,
             child: SingleChildScrollView(
                 controller: widget.scrollController,
-                child: Column(
+                child: RepaintBoundary(
+                    child: Column(
                   children: [
-                    SizedBox(key: widget.listGlobalKey[0],height: 1,width: 1,),
-                    const RepaintBoundary(child: HeaderWidget()),
-                    SizedBox(key: widget.listGlobalKey[1],height: 1,width: 1,),
-                    const RepaintBoundary(child: EducationWidget()),
-                    SizedBox(key: widget.listGlobalKey[2],height: 1,width: 1,),
-                    const RepaintBoundary(child: ListProject()),
-                    SizedBox(key: widget.listGlobalKey[3],height: 1,width: 1,),
-                    const RepaintBoundary(child: LitTechnology()),
-                    SizedBox(key: widget.listGlobalKey[4],height: 1,width: 1,),
-                     const RepaintBoundary(child: ContactToMeWidget()),
-                    const RepaintBoundary(child: FooterWidget()),
+                    SizedBox(key: widget.listGlobalKey[0]),
+                    widget.header,
+                    const AboutMeWidget(),
+                    SizedBox(key: widget.listGlobalKey[1]),
+                    const EducationWidget(),
+                    SizedBox(key: widget.listGlobalKey[2]),
+                    widget.listProject,
+                    SizedBox(key: widget.listGlobalKey[3]),
+                    widget.listTechnology,
+                    SizedBox(key: widget.listGlobalKey[4]),
+                    const ContactToMeWidget(),
+                    const FooterWidget(),
                   ],
-                ))));
+                )))));
   }
 }

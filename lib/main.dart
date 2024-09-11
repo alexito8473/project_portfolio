@@ -15,7 +15,6 @@ import 'dart:ui' as ui;
 
 import 'package:worker_manager/worker_manager.dart';
 
-
 AppTheme selectMode(Brightness brightness, bool? isLightMode) {
   switch (isLightMode) {
     case true:
@@ -29,6 +28,7 @@ AppTheme selectMode(Brightness brightness, bool? isLightMode) {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding.instance.ensureVisualUpdate();
   await dotenv.load(fileName: ".env");
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MyApp(
@@ -117,7 +117,7 @@ class MyApp extends StatelessWidget {
               ],
               locale: context.watch<AppLocaleBloc>().state.locale.getLocal(),
               supportedLocales: const [Locale("en", ""), Locale("es", "")],
-              title: 'Portafolio Alejandro',
+              title: 'Portfolio Alejandro',
               theme: state.appTheme.getTheme(),
               home: HomePage());
         }));

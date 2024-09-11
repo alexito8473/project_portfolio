@@ -6,6 +6,7 @@ import 'package:proyect_porfolio/ui/widgets/titleCustom.dart';
 
 import '../../models/Project.dart';
 import '../../structure/blocs/appTheme/app_theme_bloc.dart';
+import '../utils/CheckSize.dart';
 import 'customButton_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -15,7 +16,7 @@ class ListProject extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    bool isMobile = size.width < 600;
+    bool isMobile = CheckSize.isMobile(size);
     return Column(
       children: [
         TitleHome(
@@ -60,7 +61,7 @@ class BannerProject extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(20), boxShadow: [
+            BoxDecoration( boxShadow: [
           context.watch<AppThemeBloc>().state.isDarkMode()
               ? const BoxShadow(
                   color: Colors.white54,
@@ -81,12 +82,12 @@ class BannerProject extends StatelessWidget {
               width: isMobile ? null : 400,
               height: 350,
               decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(30)),
+                  borderRadius: const BorderRadius.all(Radius.circular(25)),
                   image: DecorationImage(
                       image: AssetImage(projectRelease.project.imgUrl[0]),
                       fit: BoxFit.cover,
                       colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.7), BlendMode.darken),
+                          Colors.black.withOpacity(0.62), BlendMode.darken),
                       alignment: Alignment.topCenter,
                       filterQuality: FilterQuality.none)),
             ),
@@ -109,21 +110,22 @@ class BannerProject extends StatelessWidget {
                     ),
                     Expanded(
                         child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
                             child: AutoSizeText(
                                 projectRelease.getDescription(context),
                                 style: const TextStyle(
                                     fontSize: 15, color: Colors.white),
                                 textAlign: TextAlign.justify))),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
                           child: Container(
-                              height: 45,
+                              padding: const EdgeInsets.all(2),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(10),
                                 boxShadow: const [
                                   BoxShadow(
                                       color: Colors.white24,
@@ -131,16 +133,15 @@ class BannerProject extends StatelessWidget {
                                       blurRadius: 4)
                                 ],
                               ),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                              child: Wrap(
+                                  alignment:WrapAlignment.spaceAround,
                                   children: List.generate(
                                       projectRelease.project.imgIconLanguage
                                           .length, (index) {
                                     return SvgPicture.asset(
                                         projectRelease
                                             .project.imgIconLanguage[index],
-                                        width: 35);
+                                        width: isMobile?30:45);
                                   }))),
                         ),
                         ButtonGithubProject(

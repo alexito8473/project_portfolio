@@ -58,6 +58,7 @@ flutter:
     - assets/images/projects/tasty/4.webp
     - assets/images/projects/tasty/5.webp
     - assets/images/projects/goReversi/1.webp
+    - assets/images/projects/gomoku/1.png
     - assets/svg/programLanguage/java.svg
     - assets/svg/programLanguage/android.svg
     - assets/svg/programLanguage/maui.svg

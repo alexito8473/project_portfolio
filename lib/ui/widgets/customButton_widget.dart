@@ -71,17 +71,17 @@ class ButtonDownloadPdf extends StatelessWidget {
   }
 }
 
-class ButtonContactToMe extends StatefulWidget {
+class ButtonSentEmail extends StatefulWidget {
   final bool isDesactivate;
   final Function sendEmail;
-  const ButtonContactToMe(
+  const ButtonSentEmail(
       {super.key, required this.isDesactivate, required this.sendEmail});
 
   @override
-  State<ButtonContactToMe> createState() => _ButtonContactToMeState();
+  State<ButtonSentEmail> createState() => _ButtonSentEmailState();
 }
 
-class _ButtonContactToMeState extends State<ButtonContactToMe> {
+class _ButtonSentEmailState extends State<ButtonSentEmail> {
   bool _changeBackground = false;
   double _elevation = 2.0;
   @override
@@ -129,7 +129,7 @@ class _ButtonContactToMeState extends State<ButtonContactToMe> {
                 borderRadius: BorderRadius.circular(10),
               ),
               alignment: Alignment.center,
-              child: Text("Enviar"),
+              child: Text(AppLocalizations.of(context)!.sendEmail),
             ),
           )),
     );

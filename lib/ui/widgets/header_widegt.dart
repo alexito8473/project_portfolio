@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mobkit_dashed_border/mobkit_dashed_border.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
+import '../utils/CheckSize.dart';
 import '../widgets/customButton_widget.dart';
 
 class HeaderWidget extends StatelessWidget {
@@ -11,8 +11,8 @@ class HeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    bool isMobile = size.width < 600;
-    bool overSideWidth = size.width > 1800;
+    bool isMobile = CheckSize.isMobile(size);
+    bool overSideWidth = CheckSize.isOverSideWidth(size);
     return Padding(
       padding: EdgeInsets.only(
           top: !isMobile ? size.height * .07 : size.height * .04,
@@ -26,12 +26,14 @@ class HeaderWidget extends StatelessWidget {
         spacing: 20,
         runSpacing: 20,
         children: [
-          ClipOval(
-            child: Image.asset(
-              "assets/images/personal.webp",
-              width: overSideWidth ? 300 : 220,
-            ),
-          ),
+          Hero(
+              tag: "Image",
+              child: ClipOval(
+                child: Image.asset(
+                  "assets/images/personal.webp",
+                  width: overSideWidth ? 300 : 220,
+                ),
+              )),
           Container(
               padding: const EdgeInsets.all(25),
               decoration: BoxDecoration(
@@ -88,25 +90,6 @@ class HeaderWidget extends StatelessWidget {
                           )
                         ]),
                   ])),
-          Container(
-            margin: EdgeInsets.only(
-                top: size.height * 0.08, bottom: size.height * 0.02),
-            width: size.width * 0.70,
-            child: Text(
-              AppLocalizations.of(context)!.aboutMe,
-              style: const TextStyle(fontSize: 40),
-            ),
-          ),
-          Container(
-              padding: EdgeInsets.only(
-                  bottom: size.height * .06, top: size.height * .03),
-              width: size.width * 0.7,
-              child: Text(
-                AppLocalizations.of(context)!.aboutMeDescription,
-                style: TextStyle(
-                    fontSize: isMobile ? 18 : 20, fontStyle: FontStyle.italic),
-                textAlign: TextAlign.justify,
-              ))
         ],
       ),
     );

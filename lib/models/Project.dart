@@ -18,17 +18,19 @@ enum ProjectRelease {
             "assets/svg/programLanguage/flutter.svg",
             "assets/svg/programLanguage/firebase.svg",
             "assets/svg/intellij.svg",
+            "assets/svg/github.svg",
           ],
           repositoryUrl: 'https://github.com/alexito8473/TastyDashProject')),
   GOMOKU(
       project: Project(
           name: "Gomoku",
           imgUrl: [
-            "assets/images/projects/goReversi/1.webp",
+            "assets/images/projects/gomoku/1.png",
           ],
           imgIconLanguage: [
             "assets/svg/programLanguage/java.svg",
             "assets/svg/eclipse.svg",
+            "assets/svg/github.svg",
           ],
           repositoryUrl:
               'https://github.com/alexito8473/gomoku-Alejandro-Aguilar')),
@@ -41,12 +43,12 @@ enum ProjectRelease {
           imgIconLanguage: [
             "assets/svg/programLanguage/java.svg",
             "assets/svg/eclipse.svg",
+            "assets/svg/github.svg",
           ],
-          repositoryUrl:
-          'https://github.com/alexito8473/Go')),
+          repositoryUrl: 'https://github.com/alexito8473/Go')),
   APP_TEACHER(
       project: Project(
-          name: "TastyDashProject",
+          name: "App Teacher",
           imgUrl: [
             "assets/images/projects/tasty/3.webp",
             "assets/images/projects/tasty/1.webp",
@@ -58,7 +60,7 @@ enum ProjectRelease {
           repositoryUrl: 'https://github.com/alexito8473/TastyDashProject')),
   APP_STUDENT(
       project: Project(
-          name: "TastyDashProject",
+          name: "App Student",
           imgUrl: [
             "assets/images/projects/tasty/3.webp",
             "assets/images/projects/tasty/1.webp",
@@ -78,9 +80,9 @@ enum ProjectRelease {
       case ProjectRelease.TASTYDASH:
         return AppLocalizations.of(context)!.descriptionTasty;
       case ProjectRelease.GOMOKU:
-        return "Gomoku";
-      case ProjectRelease.OTELO:
         return AppLocalizations.of(context)!.descriptionGomoku;
+      case ProjectRelease.OTELO:
+        return AppLocalizations.of(context)!.descriptionOtelo;
       case ProjectRelease.APP_TEACHER:
         return "1234";
       case ProjectRelease.APP_STUDENT:

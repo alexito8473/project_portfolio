@@ -12,6 +12,7 @@
   "formSubject": "Subject",
   "formRequestCorrect": "The message has been sent successfully",
   "formRequestInCorrect": "Error sending message",
+  "sendEmail": "Send",
   "practicesNextPort": "In my internship I gained knowledge about the importance of agile methodologies.\nI was also developing a real application created with Flutter.\nFinally I was working with Java and thanks to that I increased my knowledge.",
   "workExperience": "Work experience",
   "projects": "Projects",
@@ -39,5 +40,7 @@
   "springExperience":"I have a basic understanding of Spring Boot, but I am in the process of learning more to develop backend applications. As I gain more experience, I plan to delve deeper into its functionalities and capabilities to create robust and efficient solutions.",
   "javaScriptExperience":"I currently have a basic understanding of JavaScript, but I am in the process of learning more to improve my web development skills. I am working on gaining a deeper understanding of the language and its applications in creating interactive and dynamic interfaces.",
   "descriptionTasty": "This is a final year project. The application uses Firebase with realtime, authentication, storage and Gemini. The purpose of the project is to be able to show the data of a product, as well as to be able to see on a map where the associated restaurants are located on the map.",
-  "descriptionGomoku": "Game made with Java without a graphical interface, it works through the terminal. It is made with Java 17 and following best practices."
+  "descriptionOtelo": "Game made with Java without a graphical interface, it works through the terminal. It is made with Java 17 and following best practices.",
+  "descriptionGomoku" :"Game made with Java without a graphical interface. First project with several modes, player vs player, player vs bot and bot vs bot."
+
 }

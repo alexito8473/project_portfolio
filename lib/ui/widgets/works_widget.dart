@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
+import '../utils/CheckSize.dart';
 import 'titleCustom.dart';
 
 class EducationWidget extends StatelessWidget {
@@ -13,7 +14,7 @@ class EducationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    bool isMobile = size.width < 600;
+    bool isMobile = CheckSize.isMobile(size);
     return Padding(
             padding: EdgeInsets.only(bottom: size.height * 0.05),
             child: Column(

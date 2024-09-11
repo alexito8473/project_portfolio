@@ -9,6 +9,7 @@ import 'package:proyect_porfolio/ui/widgets/titleCustom.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../data/services/SendMessage.dart';
+import '../utils/CheckSize.dart';
 import 'customButton_widget.dart';
 
 class ContactToMeWidget extends StatefulWidget {
@@ -23,48 +24,53 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerMessage = TextEditingController();
   final TextEditingController _controllerSubject = TextEditingController();
-  bool isDesactivateButton = true;
-  bool isSendMessage = false;
-  bool isFinishSentMessage = false;
-  bool isCorrectMessage = false;
+  bool _isDesactivateButton = true;
+  bool _isSendMessage = false;
+  bool _isFinishSentMessage = false;
+  bool _isCorrectMessage = false;
   void checkIsDesactivateButton() {
-    setState(() {
-      isDesactivateButton = _controllerName.text.isEmpty ||
-          _controllerEmail.text.isEmpty ||
-          _controllerMessage.text.isEmpty ||
-          _controllerSubject.text.isEmpty ||
-          !EmailValidator.validate(_controllerEmail.text);
-    });
+    final isCurrentDesactivateButton = _controllerName.text.isEmpty ||
+        _controllerEmail.text.isEmpty ||
+        _controllerMessage.text.isEmpty ||
+        _controllerSubject.text.isEmpty ||
+        !EmailValidator.validate(_controllerEmail.text);
+    if (isCurrentDesactivateButton != _isDesactivateButton) {
+      setState(() {
+        _isDesactivateButton = isCurrentDesactivateButton;
+      });
+    }
   }
 
   void _sendEmail() async {
+    if (_isDesactivateButton) {
+      return;
+    }
+    final name = _controllerName.text;
+    final email = _controllerEmail.text;
+    final message = _controllerMessage.text;
+    final subject = _controllerSubject.text;
     bool isCorrect = false;
     setState(() {
-      isSendMessage = true;
-      isFinishSentMessage = false;
-    });
-    if (!isDesactivateButton) {
-      isCorrect = await SendMessage.getInstance()!.sendEmail(Message(
-          name: _controllerName.text,
-          subject: _controllerSubject.text,
-          message: _controllerMessage.text,
-          email: _controllerEmail.text));
       _controllerName.text = "";
       _controllerEmail.text = "";
       _controllerMessage.text = "";
       _controllerSubject.text = "";
-    }
+      _isSendMessage = true;
+      _isFinishSentMessage = false;
+    });
+    isCorrect = await SendMessage.getInstance()!.sendEmail(
+        Message(name: name, subject: subject, message: message, email: email));
     setState(() {
-      isSendMessage = false;
-      isFinishSentMessage = true;
-      isCorrectMessage = isCorrect;
+      _isSendMessage = false;
+      _isFinishSentMessage = true;
+      _isCorrectMessage = isCorrect;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    bool isMobile = size.width < 600;
+    bool isMobile = CheckSize.isMobile(size);
     bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
     return Column(
       children: [
@@ -76,7 +82,7 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
         Container(
             margin: EdgeInsets.only(top: isMobile ? 0 : size.height * 0.1),
             padding: EdgeInsets.symmetric(
-                vertical: size.height * 0.05, horizontal: size.width * 0.1),
+                vertical: size.height * 0.03, horizontal: size.width * 0.08),
             width: isMobile ? size.width * .8 : size.width * .7,
             height: 520,
             decoration: BoxDecoration(
@@ -89,7 +95,7 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
                       spreadRadius: 3)
                 ],
                 color:
-                    isDarkMode ? Colors.black87 : Colors.white.withOpacity(0.9),
+                    isDarkMode ? Colors.black : Colors.white.withOpacity(0.9),
                 borderRadius: BorderRadius.circular(20)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -101,7 +107,7 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
                   title: AppLocalizations.of(context)!.formName,
                   isBigMessage: false,
                   checkIsDesactivateButton: checkIsDesactivateButton,
-                  isMobile: isMobile,
+                  isMobile: isMobile
                 ),
                 ContactToMeFormField(
                   size: size,
@@ -110,7 +116,7 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
                   title: AppLocalizations.of(context)!.formEmail,
                   isBigMessage: false,
                   checkIsDesactivateButton: checkIsDesactivateButton,
-                  isMobile: isMobile,
+                  isMobile: isMobile
                 ),
                 ContactToMeFormField(
                   size: size,
@@ -119,7 +125,7 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
                   isBigMessage: false,
                   checkIsDesactivateButton: checkIsDesactivateButton,
                   isMobile: isMobile,
-                  icon: const Icon(Icons.subject),
+                  icon: const Icon(Icons.subject)
                 ),
                 ContactToMeFormField(
                   size: size,
@@ -128,7 +134,7 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
                   title: AppLocalizations.of(context)!.formMessage,
                   isBigMessage: true,
                   checkIsDesactivateButton: checkIsDesactivateButton,
-                  isMobile: isMobile,
+                  isMobile: isMobile
                 ),
                 Row(
                   textDirection: TextDirection.rtl,
@@ -136,17 +142,17 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
                   children: [
                     Align(
                       alignment: Alignment.centerRight,
-                      child: ButtonContactToMe(
-                        isDesactivate: isDesactivateButton,
+                      child: ButtonSentEmail(
+                        isDesactivate: _isDesactivateButton,
                         sendEmail: _sendEmail,
                       ),
                     ),
-                    if (isFinishSentMessage)
+                    if (_isFinishSentMessage)
                       Expanded(
                           child: Padding(
                               padding: const EdgeInsets.only(right: 15),
                               child: AutoSizeText(
-                                isCorrectMessage
+                                _isCorrectMessage
                                     ? AppLocalizations.of(context)!
                                         .formRequestCorrect
                                     : AppLocalizations.of(context)!
@@ -154,7 +160,7 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
                                 maxLines: 3,
                                 style: const TextStyle(fontSize: 18),
                               ))),
-                    if (isSendMessage) const CircularProgressIndicator()
+                    if (_isSendMessage) const CircularProgressIndicator()
                   ],
                 )
               ],
@@ -164,7 +170,7 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
   }
 }
 
-class ContactToMeFormField extends StatefulWidget {
+class ContactToMeFormField extends StatelessWidget {
   final Size size;
   final Function checkIsDesactivateButton;
   final TextEditingController myController;
@@ -183,30 +189,22 @@ class ContactToMeFormField extends StatefulWidget {
       required this.isMobile});
 
   @override
-  State<ContactToMeFormField> createState() => _ContactToMeFormFieldState();
-}
-
-class _ContactToMeFormFieldState extends State<ContactToMeFormField> {
-  @override
   Widget build(BuildContext context) {
     bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
     return TextFormField(
-      onChanged: (value) => widget.checkIsDesactivateButton(),
-      controller: widget.myController,
-      maxLines: widget.isBigMessage ? 5 : 1,
-      showCursor: true,
+      onChanged: (value) => checkIsDesactivateButton(),
+      controller: myController,
+      maxLines: isBigMessage ? 5 : 1,
       decoration: InputDecoration(
-          labelText: widget.title,
+          labelText:title,
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
-                color: isDarkMode ? Colors.white:Colors.blue,
-                width: 2.5
-              )),
+                  color: isDarkMode ? Colors.white : Colors.blue, width: 2.5)),
           floatingLabelStyle:
               TextStyle(color: isDarkMode ? Colors.white : null, height: 20),
           disabledBorder: InputBorder.none,
-          prefixIcon: widget.icon,
+          prefixIcon: icon,
           filled: true,
           fillColor: isDarkMode ? Colors.grey.shade700 : Colors.white,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),

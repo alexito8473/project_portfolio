@@ -6,12 +6,13 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../models/Technology.dart';
 import '../../structure/cubits/listTechnology/list_technology_cubit.dart';
+import '../utils/CheckSize.dart';
 import 'columnListTechnology_Widget.dart';
 import 'titleCustom.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LitTechnology extends StatelessWidget {
-  const LitTechnology({super.key});
+class ListTechnology extends StatelessWidget {
+  const ListTechnology({super.key});
   void createDialogTechnology(BuildContext context, Technology technology,
       bool isMobile, bool isDarkMode) {
     Color background = isDarkMode ? Colors.black : Colors.white;
@@ -97,7 +98,7 @@ class LitTechnology extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    bool isMobile = size.width < 600;
+    bool isMobile = CheckSize.isMobile(size);
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: size.width * 0.15,
@@ -106,8 +107,7 @@ class LitTechnology extends StatelessWidget {
         TitleHome(
           size: size,
           title: AppLocalizations.of(context)!.knowledge,
-          isMobile: isMobile,
-        ),
+          isMobile: isMobile),
          Padding(
                 padding: EdgeInsets.only(top: isMobile ? 0 : 100),
                 child: Wrap(
