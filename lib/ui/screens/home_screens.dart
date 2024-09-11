@@ -6,7 +6,6 @@ import '../../structure/blocs/appTheme/app_theme_bloc.dart';
 import '../widgets/aboutMe_widget.dart';
 import '../widgets/contactToMe_Widget.dart';
 import '../widgets/footer_widget.dart';
-import '../widgets/works_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   final ScrollController scrollController;
@@ -14,6 +13,7 @@ class HomeScreen extends StatefulWidget {
   final Widget listTechnology;
   final Widget listProject;
   final Widget header;
+  final Widget educationWidget;
   final List<GlobalKey> listGlobalKey;
   final Function checkIfWidgetIsVisible;
   const HomeScreen(
@@ -24,7 +24,7 @@ class HomeScreen extends StatefulWidget {
       required this.listTechnology,
       required this.listProject,
       required this.header,
-      required this.checkIfWidgetIsVisible});
+      required this.checkIfWidgetIsVisible, required this.educationWidget});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     widget.header,
                     const AboutMeWidget(),
                     SizedBox(key: widget.listGlobalKey[1]),
-                    const EducationWidget(),
+                    widget.educationWidget,
                     SizedBox(key: widget.listGlobalKey[2]),
                     widget.listProject,
                     SizedBox(key: widget.listGlobalKey[3]),

@@ -1,24 +1,12 @@
 import 'package:bloc/bloc.dart';
 
 import '../../../models/Technology.dart';
+import '../../../ui/utils/CreateListTechnology.dart';
 
 part 'list_technology_state.dart';
 
 class ListTechnologyCubit extends Cubit<ListTechnologyState> {
-  ListTechnologyCubit({
-    required listTechnologyMobile,
-    required listTechnologyBackend,
-    required listTechnologyFrontend,
-    required listTechnologyLearning,
-    required listTechnologyTools,
-    required listTechnologyServers,
-  }) : super(ListTechnologyState(
-            listTechnologyMobile: listTechnologyMobile,
-            listTechnologyBackend: listTechnologyBackend,
-            listTechnologyFrontend: listTechnologyFrontend,
-            listTechnologyLearning: listTechnologyLearning,
-            listTechnologyTools: listTechnologyTools,
-            listTechnologyServers: listTechnologyServers));
+  ListTechnologyCubit() : super(ListTechnologyState.init());
 
   List<Technology> getTypeLanguageList(TypeLanguage typeLanguage) {
     switch (typeLanguage) {

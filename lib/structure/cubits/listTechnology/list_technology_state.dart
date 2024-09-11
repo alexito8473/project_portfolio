@@ -14,4 +14,26 @@ class ListTechnologyState {
       required this.listTechnologyLearning,
       required this.listTechnologyTools,
       required this.listTechnologyServers});
+  factory ListTechnologyState.init() {
+    List<Technology> allTechnology = createListTechnology();
+    return ListTechnologyState(
+        listTechnologyMobile: allTechnology
+            .where((element) => element.typeLanguage == TypeLanguage.MOBILE)
+            .toList(),
+        listTechnologyBackend: allTechnology
+            .where((element) => element.typeLanguage == TypeLanguage.BACKEND)
+            .toList(),
+        listTechnologyFrontend: allTechnology
+            .where((element) => element.typeLanguage == TypeLanguage.MOBILE)
+            .toList(),
+        listTechnologyLearning: allTechnology
+            .where((element) => element.typeLanguage == TypeLanguage.LEARNING)
+            .toList(),
+        listTechnologyTools: allTechnology
+            .where((element) => element.typeLanguage == TypeLanguage.TOOLS)
+            .toList(),
+        listTechnologyServers: allTechnology
+            .where((element) => element.typeLanguage == TypeLanguage.SERVERS)
+            .toList());
+  }
 }

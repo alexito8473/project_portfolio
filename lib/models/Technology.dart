@@ -85,7 +85,6 @@ enum TypeDescription {
         return AppLocalizations.of(context)!.javaScriptExperience;
       case TypeDescription.ECLIPSE:
         //Falta arreglarlo
-
         return AppLocalizations.of(context)!.javaScriptExperience;
     }
   }

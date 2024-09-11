@@ -7,13 +7,7 @@ enum ProjectRelease {
   TASTYDASH(
       project: Project(
           name: "TastyDash",
-          imgUrl: [
-            "assets/images/projects/tasty/4.webp",
-            "assets/images/projects/tasty/3.webp",
-            "assets/images/projects/tasty/1.webp",
-            "assets/images/projects/tasty/2.webp",
-            "assets/images/projects/tasty/5.webp",
-          ],
+          imgUrl: "assets/images/projects/tasty/4.webp",
           imgIconLanguage: [
             "assets/svg/programLanguage/flutter.svg",
             "assets/svg/programLanguage/firebase.svg",
@@ -24,9 +18,7 @@ enum ProjectRelease {
   GOMOKU(
       project: Project(
           name: "Gomoku",
-          imgUrl: [
-            "assets/images/projects/gomoku/1.png",
-          ],
+          imgUrl: "assets/images/projects/gomoku/1.png",
           imgIconLanguage: [
             "assets/svg/programLanguage/java.svg",
             "assets/svg/eclipse.svg",
@@ -37,9 +29,7 @@ enum ProjectRelease {
   OTELO(
       project: Project(
           name: "Otelo",
-          imgUrl: [
-            "assets/images/projects/goReversi/1.webp",
-          ],
+          imgUrl: "assets/images/projects/goReversi/1.webp",
           imgIconLanguage: [
             "assets/svg/programLanguage/java.svg",
             "assets/svg/eclipse.svg",
@@ -49,26 +39,22 @@ enum ProjectRelease {
   APP_TEACHER(
       project: Project(
           name: "App Teacher",
-          imgUrl: [
-            "assets/images/projects/tasty/3.webp",
-            "assets/images/projects/tasty/1.webp",
-            "assets/images/projects/tasty/2.webp",
-            "assets/images/projects/tasty/4.webp",
-            "assets/images/projects/tasty/5.webp",
+          imgUrl: "assets/images/projects/appTeacher/1_new.jpeg",
+          imgIconLanguage: [
+            "assets/svg/programLanguage/maui.svg",
+            "assets/svg/programLanguage/firebase.svg",
+            "assets/svg/github.svg"
           ],
-          imgIconLanguage: ["assets/svg/programLanguage/android.svg"],
           repositoryUrl: 'https://github.com/alexito8473/TastyDashProject')),
   APP_STUDENT(
       project: Project(
           name: "App Student",
-          imgUrl: [
-            "assets/images/projects/tasty/3.webp",
-            "assets/images/projects/tasty/1.webp",
-            "assets/images/projects/tasty/2.webp",
-            "assets/images/projects/tasty/4.webp",
-            "assets/images/projects/tasty/5.webp",
+          imgUrl: "assets/images/projects/appStudent/1.jpeg",
+          imgIconLanguage: [
+            "assets/svg/programLanguage/maui.svg",
+            "assets/svg/programLanguage/firebase.svg",
+            "assets/svg/github.svg"
           ],
-          imgIconLanguage: ["assets/svg/programLanguage/android.svg"],
           repositoryUrl: 'https://github.com/alexito8473/TastyDashProject'));
 
   const ProjectRelease({required this.project});
@@ -93,7 +79,7 @@ enum ProjectRelease {
 
 class Project {
   final String name;
-  final List<String> imgUrl;
+  final String imgUrl;
   final String repositoryUrl;
   final List<String> imgIconLanguage;
   const Project(

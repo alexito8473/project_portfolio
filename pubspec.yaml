@@ -23,12 +23,12 @@ dependencies:
   dropdown_button2: ^2.3.9
   flutter_svg: ^2.0.10+1
   flutter_svg_icons: ^0.0.1+4
-  flutter_carousel_slider: ^1.1.0
   mobkit_dashed_border: ^0.0.6
-  worker_manager: ^7.0.3
   http: ^1.2.2
   email_validator: ^2.1.17
   flutter_dotenv: ^5.1.0
+  responsive_framework: ^1.5.1
+  flutter_carousel_widget: ^3.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -39,7 +39,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - .env
-    - assets/pdf/Currículum_Alejandro_Aguilar.pdf
+    - assets/pdf/Curriculum_Alejandro_Aguilar_Alba.pdf
 
     - assets/images/personal.webp
     - assets/images/BackgroundBoat.webp
@@ -59,6 +59,8 @@ flutter:
     - assets/images/projects/tasty/5.webp
     - assets/images/projects/goReversi/1.webp
     - assets/images/projects/gomoku/1.png
+    - assets/images/projects/appStudent/1.jpeg
+    - assets/images/projects/appTeacher/1_new.jpeg
     - assets/svg/programLanguage/java.svg
     - assets/svg/programLanguage/android.svg
     - assets/svg/programLanguage/maui.svg

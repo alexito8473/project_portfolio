@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:html' as html;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../structure/blocs/appTheme/app_theme_bloc.dart';
+import '../../../structure/blocs/appTheme/app_theme_bloc.dart';
+
 
 class IconButtonNavigator extends StatelessWidget {
   final Uri uri;
@@ -14,15 +16,13 @@ class IconButtonNavigator extends StatelessWidget {
   final String tooltip;
   final String iconUri;
   final bool secondColor;
-  final bool overSideWidth;
   const IconButtonNavigator(
       {super.key,
       required this.uri,
       required this.color,
       required this.tooltip,
       required this.iconUri,
-      required this.secondColor,
-      required this.overSideWidth});
+      required this.secondColor});
 
   @override
   Widget build(BuildContext context) {
@@ -35,19 +35,32 @@ class IconButtonNavigator extends StatelessWidget {
         icon: SvgPicture.asset(
           iconUri,
           color: secondColor ? color : null,
-          width: overSideWidth ? 60 : 40,
+          width: ResponsiveBreakpoints.of(context).isDesktop ? 60 : 40,
         ));
   }
 }
 
 class ButtonDownloadPdf extends StatelessWidget {
-  final bool overSideWidth;
-  const ButtonDownloadPdf({super.key, required this.overSideWidth});
+  const ButtonDownloadPdf({super.key});
 
-  void downloadFile() {
-    html.AnchorElement(href: 'assets/pdf/Currículum_Alejandro_Aguilar.pdf')
-      ..setAttribute('download', "Curriculum_Alejandro_Aguilar.pdf")
+  void downloadFile() async {
+    // Cargar el archivo PDF desde los assets
+    ByteData data = await rootBundle
+        .load('assets/pdf/Curriculum_Alejandro_Aguilar_Alba.pdf');
+    final pdfBytes = data.buffer.asUint8List();
+
+    // Crear el blob para descarga
+    final blob = html.Blob([pdfBytes], 'application/pdf');
+
+    // Crear la URL para descarga
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    html.AnchorElement(href: url)
+      ..setAttribute('download',
+          'Curriculum_Alejandro_Aguilar_Alba.pdf') // Nombre del archivo a descargar
       ..click();
+
+    // Liberar el URL temporal
+    html.Url.revokeObjectUrl(url);
   }
 
   @override
@@ -66,7 +79,7 @@ class ButtonDownloadPdf extends StatelessWidget {
         ),
         child: Text(
           AppLocalizations.of(context)!.downloadCV,
-          style: TextStyle(fontSize: overSideWidth ? 25 : 14),
+          style: TextStyle(fontSize: ResponsiveBreakpoints.of(context).isDesktop ? 25 : 14),
         ));
   }
 }
@@ -88,9 +101,8 @@ class _ButtonSentEmailState extends State<ButtonSentEmail> {
   Widget build(BuildContext context) {
     bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
     return InkWell(
-      mouseCursor: widget.isDesactivate
-          ? MouseCursor.defer
-          : SystemMouseCursors.click,
+      mouseCursor:
+          widget.isDesactivate ? MouseCursor.defer : SystemMouseCursors.click,
       onTap: () {
         if (!widget.isDesactivate) {
           widget.sendEmail();
@@ -122,7 +134,9 @@ class _ButtonSentEmailState extends State<ButtonSentEmail> {
               height: 40,
               decoration: BoxDecoration(
                 color: widget.isDesactivate
-                    ? isDarkMode?Colors.grey.withOpacity(0.2):Colors.grey
+                    ? isDarkMode
+                        ? Colors.grey.withOpacity(0.2)
+                        : Colors.grey
                     : _changeBackground
                         ? Colors.lightBlueAccent
                         : Colors.blueAccent,
@@ -137,9 +151,8 @@ class _ButtonSentEmailState extends State<ButtonSentEmail> {
 }
 
 class ButtonGithubProject extends StatelessWidget {
-  final Size size;
   final Uri uri;
-  const ButtonGithubProject({super.key, required this.size, required this.uri});
+  const ButtonGithubProject({super.key, required this.uri});
 
   @override
   Widget build(BuildContext context) {

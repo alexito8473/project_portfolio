@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:proyect_porfolio/ui/utils/CheckSize.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class AboutMeWidget extends StatelessWidget {
   const AboutMeWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return Column(
       children: [
         Container(
           margin: EdgeInsets.only(
-              top: size.height * 0.08, bottom: size.height * 0.02),
-          width: size.width * 0.70,
+              top: ResponsiveBreakpoints.of(context).screenHeight * 0.08,
+              bottom: ResponsiveBreakpoints.of(context).screenHeight * 0.02),
+          width: ResponsiveBreakpoints.of(context).screenWidth * 0.70,
           child: Text(
             AppLocalizations.of(context)!.aboutMe,
             style: const TextStyle(fontSize: 40),
@@ -21,15 +21,15 @@ class AboutMeWidget extends StatelessWidget {
         ),
         Container(
             padding: EdgeInsets.only(
-                bottom: size.height * .06, top: size.height * .03),
-            width: size.width * 0.7,
-            child: Text(
-              AppLocalizations.of(context)!.aboutMeDescription,
-              style: TextStyle(
-                  fontSize: CheckSize.isMobile(size) ? 18 : 20,
-                  fontStyle: FontStyle.italic),
-              textAlign: TextAlign.justify,
-            ))
+                bottom: ResponsiveBreakpoints.of(context).screenHeight * .06,
+                top: ResponsiveBreakpoints.of(context).screenHeight * .03),
+            width: ResponsiveBreakpoints.of(context).screenWidth * 0.7,
+            child: Text(AppLocalizations.of(context)!.aboutMeDescription,
+                style: TextStyle(
+                    fontSize:
+                        ResponsiveBreakpoints.of(context).isMobile ? 18 : 20,
+                    fontStyle: FontStyle.italic),
+                textAlign: TextAlign.justify))
       ],
     );
   }

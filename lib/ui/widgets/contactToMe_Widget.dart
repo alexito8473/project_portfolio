@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyect_porfolio/models/Message.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
-import 'package:proyect_porfolio/ui/widgets/titleCustom.dart';
+import 'package:proyect_porfolio/ui/widgets/customWidget/titleCustom.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../data/services/SendMessage.dart';
-import '../utils/CheckSize.dart';
-import 'customButton_widget.dart';
+import 'customWidget/customButton_widget.dart';
 
 class ContactToMeWidget extends StatefulWidget {
   const ContactToMeWidget({super.key});
@@ -69,21 +69,22 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    bool isMobile = CheckSize.isMobile(size);
     bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
     return Column(
       children: [
-        TitleHome(
-          size: size,
-          title: AppLocalizations.of(context)!.contact_me,
-          isMobile: isMobile,
-        ),
+        TitleHome(title: AppLocalizations.of(context)!.contact_me),
         Container(
-            margin: EdgeInsets.only(top: isMobile ? 0 : size.height * 0.1),
+            margin: EdgeInsets.only(
+                top: ResponsiveBreakpoints.of(context).isMobile
+                    ? 0
+                    : ResponsiveBreakpoints.of(context).screenHeight * 0.1),
             padding: EdgeInsets.symmetric(
-                vertical: size.height * 0.03, horizontal: size.width * 0.08),
-            width: isMobile ? size.width * .8 : size.width * .7,
+                vertical: ResponsiveBreakpoints.of(context).screenHeight * 0.03,
+                horizontal:
+                    ResponsiveBreakpoints.of(context).screenWidth * 0.08),
+            width: ResponsiveBreakpoints.of(context).isMobile
+                ? ResponsiveBreakpoints.of(context).screenWidth * .8
+                : ResponsiveBreakpoints.of(context).screenWidth * .7,
             height: 520,
             decoration: BoxDecoration(
                 boxShadow: [
@@ -101,41 +102,29 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ContactToMeFormField(
-                  size: size,
-                  myController: _controllerName,
-                  icon: const Icon(Icons.person),
-                  title: AppLocalizations.of(context)!.formName,
-                  isBigMessage: false,
-                  checkIsDesactivateButton: checkIsDesactivateButton,
-                  isMobile: isMobile
-                ),
+                    myController: _controllerName,
+                    icon: const Icon(Icons.person),
+                    title: AppLocalizations.of(context)!.formName,
+                    isBigMessage: false,
+                    checkIsDesactivateButton: checkIsDesactivateButton),
                 ContactToMeFormField(
-                  size: size,
-                  myController: _controllerEmail,
-                  icon: const Icon(Icons.email),
-                  title: AppLocalizations.of(context)!.formEmail,
-                  isBigMessage: false,
-                  checkIsDesactivateButton: checkIsDesactivateButton,
-                  isMobile: isMobile
-                ),
+                    myController: _controllerEmail,
+                    icon: const Icon(Icons.email),
+                    title: AppLocalizations.of(context)!.formEmail,
+                    isBigMessage: false,
+                    checkIsDesactivateButton: checkIsDesactivateButton),
                 ContactToMeFormField(
-                  size: size,
-                  myController: _controllerSubject,
-                  title: AppLocalizations.of(context)!.formSubject,
-                  isBigMessage: false,
-                  checkIsDesactivateButton: checkIsDesactivateButton,
-                  isMobile: isMobile,
-                  icon: const Icon(Icons.subject)
-                ),
+                    myController: _controllerSubject,
+                    title: AppLocalizations.of(context)!.formSubject,
+                    isBigMessage: false,
+                    checkIsDesactivateButton: checkIsDesactivateButton,
+                    icon: const Icon(Icons.subject)),
                 ContactToMeFormField(
-                  size: size,
-                  myController: _controllerMessage,
-                  icon: const Icon(CupertinoIcons.pen),
-                  title: AppLocalizations.of(context)!.formMessage,
-                  isBigMessage: true,
-                  checkIsDesactivateButton: checkIsDesactivateButton,
-                  isMobile: isMobile
-                ),
+                    myController: _controllerMessage,
+                    icon: const Icon(CupertinoIcons.pen),
+                    title: AppLocalizations.of(context)!.formMessage,
+                    isBigMessage: true,
+                    checkIsDesactivateButton: checkIsDesactivateButton),
                 Row(
                   textDirection: TextDirection.rtl,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,22 +160,18 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
 }
 
 class ContactToMeFormField extends StatelessWidget {
-  final Size size;
   final Function checkIsDesactivateButton;
   final TextEditingController myController;
   final Icon icon;
-  final bool isMobile;
   final String title;
   final bool isBigMessage;
   const ContactToMeFormField(
       {super.key,
-      required this.size,
       required this.myController,
       required this.icon,
       required this.title,
       required this.isBigMessage,
-      required this.checkIsDesactivateButton,
-      required this.isMobile});
+      required this.checkIsDesactivateButton});
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +181,7 @@ class ContactToMeFormField extends StatelessWidget {
       controller: myController,
       maxLines: isBigMessage ? 5 : 1,
       decoration: InputDecoration(
-          labelText:title,
+          labelText: title,
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(

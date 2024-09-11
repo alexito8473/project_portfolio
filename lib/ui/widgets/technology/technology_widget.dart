@@ -2,25 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
-import '../../models/Technology.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import '../../../models/Technology.dart';
 
 class TechnologyView extends StatelessWidget {
-  final Size size;
   final Technology technology;
-  final bool isMobile;
   final Function createFrame;
-  const TechnologyView({
-    super.key,
-    required this.size,
-    required this.technology,
-    required this.isMobile,
-    required this.createFrame,
-  });
+  const TechnologyView(
+      {super.key, required this.technology, required this.createFrame});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => createFrame(context, technology, isMobile,
+        onTap: () => createFrame(
+            context,
+            technology,
+            ResponsiveBreakpoints.of(context).isMobile,
             context.read<AppThemeBloc>().state.isDarkMode()),
         child: Padding(
           padding: const EdgeInsets.all(10),

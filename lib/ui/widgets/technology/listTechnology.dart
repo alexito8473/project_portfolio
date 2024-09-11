@@ -1,18 +1,19 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../models/Technology.dart';
-import '../../structure/cubits/listTechnology/list_technology_cubit.dart';
-import '../utils/CheckSize.dart';
+import '../../../models/Technology.dart';
+import '../../../structure/blocs/appTheme/app_theme_bloc.dart';
+import '../../../structure/cubits/listTechnology/list_technology_cubit.dart';
 import 'columnListTechnology_Widget.dart';
-import 'titleCustom.dart';
+import '../customWidget/titleCustom.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ListTechnology extends StatelessWidget {
   const ListTechnology({super.key});
+
   void createDialogTechnology(BuildContext context, Technology technology,
       bool isMobile, bool isDarkMode) {
     Color background = isDarkMode ? Colors.black : Colors.white;
@@ -60,9 +61,7 @@ class ListTechnology extends StatelessWidget {
                               ),
                             ),
                             IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
+                                onPressed: () => Navigator.pop(context),
                                 icon: const Icon(Icons.close))
                           ],
                         )),
@@ -80,6 +79,11 @@ class ListTechnology extends StatelessWidget {
                         alignment: Alignment.bottomLeft,
                         child: SvgPicture.asset(
                           technology.urlIcon,
+                          color: technology.changeColor
+                              ? context.watch<AppThemeBloc>().state.isDarkMode()
+                                  ? Colors.white
+                                  : Colors.black
+                              : null,
                           width: 60,
                         )),
                   ],
@@ -97,34 +101,30 @@ class ListTechnology extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    bool isMobile = CheckSize.isMobile(size);
+    bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: size.width * 0.15,
-          vertical: isMobile ? 0 : size.height * 0.15),
+          horizontal: ResponsiveBreakpoints.of(context).screenWidth * 0.15,
+          vertical: isMobile ? 0 :ResponsiveBreakpoints.of(context).screenHeight * 0.15),
       child: Column(children: [
-        TitleHome(
-          size: size,
-          title: AppLocalizations.of(context)!.knowledge,
-          isMobile: isMobile),
-         Padding(
-                padding: EdgeInsets.only(top: isMobile ? 0 : 100),
-                child: Wrap(
-                    spacing: 20,
-                    alignment: WrapAlignment.center,
-                    runSpacing: 30,
-                    children: List.generate(
-                        TypeLanguage.values.length,
-                        (index) => ColumnListTechnologyWidget(
-                            listTechnology: context
-                                .read<ListTechnologyCubit>()
-                                .getTypeLanguageList(
-                                    TypeLanguage.values[index]),
-                            isMobile: isMobile,
-                            size: size,
-                            title: TypeLanguage.values[index].getTitle(context),
-                            createDialogTechnology: createDialogTechnology)))),
+        TitleHome(title: AppLocalizations.of(context)!.knowledge),
+        Padding(
+            padding: EdgeInsets.only(top: isMobile ? 0 : 100),
+            child: Wrap(
+                spacing: 20,
+                alignment: WrapAlignment.center,
+                runSpacing: 30,
+                children: List.generate(
+                  TypeLanguage.values.length,
+                  (index) => LayoutBuilder(builder: (context, constraints) {
+                    return ColumnListTechnologyWidget(
+                        listTechnology: context
+                            .read<ListTechnologyCubit>()
+                            .getTypeLanguageList(TypeLanguage.values[index]),
+                        title: TypeLanguage.values[index].getTitle(context),
+                        createDialogTechnology: createDialogTechnology);
+                  }),
+                ))),
       ]),
     );
   }
