@@ -29,6 +29,10 @@ dependencies:
   flutter_dotenv: ^5.1.0
   responsive_framework: ^1.5.1
   flutter_carousel_widget: ^3.0.1
+  animate_do: ^3.3.4
+  timeline_tile: ^2.0.0
+  animated_text_kit: ^4.2.2
+  widget_circular_animator: ^1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -36,46 +40,21 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
-  # To add assets to your application, add an assets section, like this:
   assets:
     - .env
-    - assets/pdf/Curriculum_Alejandro_Aguilar_Alba.pdf
+    - assets/pdf/
 
-    - assets/images/personal.webp
-    - assets/images/BackgroundBoat.webp
+    - assets/svg/
+    - assets/svg/programLanguage/
 
-    - assets/svg/linkedin.svg
-    - assets/svg/github.svg
-    - assets/svg/eclipse.svg
-    - assets/svg/languageCode.svg
-    - assets/svg/project.svg
-    - assets/svg/git.svg
-    - assets/svg/intellij.svg
+    - assets/images/
+    - assets/images/projects/tasty/
+    - assets/images/projects/goReversi/
+    - assets/images/projects/gomoku/
+    - assets/images/projects/appStudent/
+    - assets/images/projects/appTeacher/
 
-    - assets/images/projects/tasty/1.webp
-    - assets/images/projects/tasty/2.webp
-    - assets/images/projects/tasty/3.webp
-    - assets/images/projects/tasty/4.webp
-    - assets/images/projects/tasty/5.webp
-    - assets/images/projects/goReversi/1.webp
-    - assets/images/projects/gomoku/1.png
-    - assets/images/projects/appStudent/1.jpeg
-    - assets/images/projects/appTeacher/1_new.jpeg
-    - assets/svg/programLanguage/java.svg
-    - assets/svg/programLanguage/android.svg
-    - assets/svg/programLanguage/maui.svg
-    - assets/svg/programLanguage/html.svg
-    - assets/svg/programLanguage/css.svg
-    - assets/svg/programLanguage/javascript.svg
-    - assets/svg/programLanguage/php.svg
-    - assets/svg/programLanguage/dart.svg
-    - assets/svg/programLanguage/python.svg
-    - assets/svg/programLanguage/kotlin.svg
-    - assets/svg/programLanguage/spring.svg
-    - assets/svg/programLanguage/flutter.svg
-    - assets/svg/programLanguage/mysql.svg
-    - assets/svg/programLanguage/mongoDb.svg
-    - assets/svg/programLanguage/firebase.svg
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

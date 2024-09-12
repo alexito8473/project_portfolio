@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -9,10 +10,7 @@ class TitleHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(
-            top: ResponsiveBreakpoints.of(context).screenHeight * 0.05,
-            bottom: ResponsiveBreakpoints.of(context).screenHeight *
-                (ResponsiveBreakpoints.of(context).isMobile ? 0.05 : 0)),
+      margin: const EdgeInsets.only(bottom: 50),
         width: ResponsiveBreakpoints.of(context).screenWidth * 0.70,
         child: AutoSizeText(
           title,
@@ -21,3 +19,45 @@ class TitleHome extends StatelessWidget {
         ));
   }
 }
+class CustomTitleDeveloper extends StatelessWidget {
+  const CustomTitleDeveloper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedTextKit(
+      animatedTexts: [
+        TypewriterAnimatedText(
+          'Mobile Developer',
+          cursor: "",
+          textStyle: const TextStyle(
+            fontSize: 32.0,
+            fontWeight: FontWeight.bold,
+          ),
+          speed: const Duration(milliseconds: 300),
+        ),
+        TypewriterAnimatedText(
+          'Front Developer',
+          cursor: "",
+          textStyle: const TextStyle(
+            fontSize: 32.0,
+            fontWeight: FontWeight.bold,
+          ),
+          speed: const Duration(milliseconds: 300),
+        ),
+        TypewriterAnimatedText(
+          'Back Developer',
+          cursor: "",
+          textStyle: const TextStyle(
+            fontSize: 32.0,
+            fontWeight: FontWeight.bold,
+          ),
+          speed: const Duration(milliseconds: 300),
+        ),
+      ],
+      pause: Duration.zero,
+      repeatForever: true,
+    );
+
+  }
+}
+

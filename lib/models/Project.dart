@@ -7,7 +7,7 @@ enum ProjectRelease {
   TASTYDASH(
       project: Project(
           name: "TastyDash",
-          imgUrl: "assets/images/projects/tasty/4.webp",
+          imgUrl: "assets/images/projects/tasty/1.webp",
           imgIconLanguage: [
             "assets/svg/programLanguage/flutter.svg",
             "assets/svg/programLanguage/firebase.svg",
@@ -22,7 +22,7 @@ enum ProjectRelease {
           imgIconLanguage: [
             "assets/svg/programLanguage/java.svg",
             "assets/svg/eclipse.svg",
-            "assets/svg/github.svg",
+            "assets/svg/github.svg"
           ],
           repositoryUrl:
               'https://github.com/alexito8473/gomoku-Alejandro-Aguilar')),
@@ -33,7 +33,7 @@ enum ProjectRelease {
           imgIconLanguage: [
             "assets/svg/programLanguage/java.svg",
             "assets/svg/eclipse.svg",
-            "assets/svg/github.svg",
+            "assets/svg/github.svg"
           ],
           repositoryUrl: 'https://github.com/alexito8473/Go')),
   APP_TEACHER(

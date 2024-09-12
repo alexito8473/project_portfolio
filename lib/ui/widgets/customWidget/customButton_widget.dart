@@ -9,7 +9,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../structure/blocs/appTheme/app_theme_bloc.dart';
 
-
 class IconButtonNavigator extends StatelessWidget {
   final Uri uri;
   final Color color;
@@ -28,15 +27,13 @@ class IconButtonNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
         padding: const EdgeInsets.all(12),
-        iconSize: 50,
+        iconSize: 30,
         tooltip: tooltip,
         color: color,
         onPressed: () async => await launchUrl(uri),
-        icon: SvgPicture.asset(
-          iconUri,
-          color: secondColor ? color : null,
-          width: ResponsiveBreakpoints.of(context).isDesktop ? 60 : 40,
-        ));
+        icon: SvgPicture.asset(iconUri,
+            color: secondColor ? color : null,
+            width: ResponsiveBreakpoints.of(context).isMobile ? 35 : 50));
   }
 }
 
@@ -72,15 +69,14 @@ class ButtonDownloadPdf extends StatelessWidget {
           backgroundColor: Colors.blue,
           shadowColor: Colors.blueAccent,
           elevation: 5, // Elevación
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         ),
-        child: Text(
-          AppLocalizations.of(context)!.downloadCV,
-          style: TextStyle(fontSize: ResponsiveBreakpoints.of(context).isDesktop ? 25 : 14),
-        ));
+        child: Text(AppLocalizations.of(context)!.downloadCV,
+            style: TextStyle(
+                fontSize:
+                    ResponsiveBreakpoints.of(context).isMobile ? 15 : 20)));
   }
 }
 
@@ -129,22 +125,20 @@ class _ButtonSentEmailState extends State<ButtonSentEmail> {
             elevation: _elevation,
             borderRadius: BorderRadius.circular(10),
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              width: 120,
-              height: 40,
-              decoration: BoxDecoration(
-                color: widget.isDesactivate
-                    ? isDarkMode
-                        ? Colors.grey.withOpacity(0.2)
-                        : Colors.grey
-                    : _changeBackground
-                        ? Colors.lightBlueAccent
-                        : Colors.blueAccent,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              alignment: Alignment.center,
-              child: Text(AppLocalizations.of(context)!.sendEmail),
-            ),
+                duration: const Duration(milliseconds: 300),
+                width: 120,
+                height: 40,
+                decoration: BoxDecoration(
+                    color: widget.isDesactivate
+                        ? isDarkMode
+                            ? Colors.grey.withOpacity(0.2)
+                            : Colors.grey
+                        : _changeBackground
+                            ? Colors.lightBlueAccent
+                            : Colors.blueAccent,
+                    borderRadius: BorderRadius.circular(10)),
+                alignment: Alignment.center,
+                child: Text(AppLocalizations.of(context)!.sendEmail)),
           )),
     );
   }
@@ -163,11 +157,10 @@ class ButtonGithubProject extends StatelessWidget {
         child: FloatingActionButton(
             onPressed: () async => await launchUrl(uri),
             child: SvgPicture.asset(
-              color: context.watch<AppThemeBloc>().state.isDarkMode()
-                  ? Colors.white
-                  : Colors.black,
-              "assets/svg/github.svg",
-              width: 35,
-            )));
+                color: context.watch<AppThemeBloc>().state.isDarkMode()
+                    ? Colors.white
+                    : Colors.black,
+                "assets/svg/github.svg",
+                width: 35)));
   }
 }

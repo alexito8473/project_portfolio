@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,13 @@ import 'package:responsive_framework/responsive_framework.dart';
 import '../../models/Item.dart';
 
 import '../screens/home_screens.dart';
-import '../widgets/header_widegt.dart';
+import '../widgets/header/aboutMe_widget.dart';
+import '../widgets/contacMe/contactToMe_Widget.dart';
+import '../widgets/footer/footer_widget.dart';
+import '../widgets/header/header_widegt.dart';
 import '../widgets/technology/listTechnology.dart';
 import '../widgets/project/project_widget.dart';
-import '../widgets/works_widget.dart';
+import '../widgets/work/listWorks_widget.dart';
 
 class HomePage extends StatefulWidget {
   final Widget bannerTop;
@@ -24,16 +28,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
-  late final Widget _listTechnology;
-  late final Widget _listProject;
-  late final Widget _header;
-  late final Widget _educationWidget;
+  late final List<Widget> _listWidgetHome;
   late final List<GlobalKey> _listGlobalKey;
-
+  late ImageProvider assetImage;
   final GlobalKey _headerKey = GlobalKey();
   bool isActiveBannerTop = false;
   @override
   void initState() {
+    assetImage = const AssetImage("assets/images/personal.webp");
     loadWidget();
     super.initState();
   }
@@ -79,23 +81,19 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget topNavigation() {
-    bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    bool isStopInformationTop = ResponsiveBreakpoints.of(context).isTablet;
     return Container(
-        padding: EdgeInsets.only(
-            left: ResponsiveBreakpoints.of(context).screenWidth * 0.04,
-            right: ResponsiveBreakpoints.of(context).screenWidth * 0.04),
-        height: isMobile ? 60 : 80,
+        padding:  EdgeInsets.symmetric(horizontal: ResponsiveBreakpoints.of(context).screenWidth * 0.035),
+        height: ResponsiveBreakpoints.of(context).isMobile ? 60 : 80,
         alignment: Alignment.center,
         width: ResponsiveBreakpoints.of(context).screenWidth,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            isMobile
+            ResponsiveBreakpoints.of(context).isMobile
                 ? const Expanded(
                     child: AutoSizeText(
                     "Full Stack Developer",
-                    style: TextStyle(fontSize: 28),
+                    style: TextStyle(fontSize: 25),
                     maxLines: 1,
                   ))
                 : const AutoSizeText(
@@ -103,82 +101,89 @@ class _HomePageState extends State<HomePage>
                     style: TextStyle(fontSize: 28),
                     maxLines: 1,
                   ),
-            if (isActiveBannerTop && !isStopInformationTop&&!ResponsiveBreakpoints.of(context).isMobile) widget.bannerTop,
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              IconButton(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                  onPressed: () =>
-                      context.read<AppLocaleBloc>().add(ChangeLocalEvent()),
-                  icon: Text(
-                      context
-                          .watch<AppLocaleBloc>()
-                          .state
-                          .locale
-                          .getLenguajeCode(),
-                      style: const TextStyle(fontSize: 25))),
-              Padding(
-                  padding: EdgeInsets.only(
-                      left:
-                          ResponsiveBreakpoints.of(context).screenWidth * 0.01),
-                  child: IconButton(
-                      onPressed: () =>
-                          context.read<AppThemeBloc>().add(ChangeThemeEvent()),
-                      icon: context
-                          .watch<AppThemeBloc>()
-                          .state
-                          .appTheme
-                          .getIcon())),
-              Padding(
-                  padding: EdgeInsets.only(
-                      left:
-                          ResponsiveBreakpoints.of(context).screenWidth * 0.01),
-                  child: DropdownButtonHideUnderline(
-                      child: DropdownButton2(
-                          customButton: const Icon(Icons.list, size: 38),
-                          items: List.generate(
-                            MenuItems.values.length,
-                            (index) {
-                              return DropdownMenuItem<int>(
-                                  value: index,
-                                  child: MenuItems.values[index]
-                                      .buildItem(context));
-                            },
-                          ),
-                          onChanged: (value) {
-                            if (value != null) {
-                              scrollToItem(_listGlobalKey[value]);
-                            }
-                          },
-                          barrierColor: Colors.black.withOpacity(0.4),
-                          dropdownStyleData: DropdownStyleData(
-                              width: 170,
-                              useSafeArea: true,
-                              padding: const EdgeInsets.symmetric(vertical: 6),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
-                                  color: context
-                                          .watch<AppThemeBloc>()
-                                          .state
-                                          .isDarkMode()
-                                      ? Colors.grey.shade800
-                                      : Colors.blueAccent)))))
-            ])
+            if (isActiveBannerTop &&
+                !ResponsiveBreakpoints.of(context).isTablet &&
+                !ResponsiveBreakpoints.of(context).isMobile)
+              Expanded(child: FadeIn(child: widget.bannerTop)),
+            SizedBox(
+                width: ResponsiveBreakpoints.of(context).isMobile? ResponsiveBreakpoints.of(context).screenWidth * 0.4:180,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 3),
+                          onPressed: () => context
+                              .read<AppLocaleBloc>()
+                              .add(ChangeLocalEvent()),
+                          icon: Text(
+                              context
+                                  .watch<AppLocaleBloc>()
+                                  .state
+                                  .locale
+                                  .getLenguajeCode(),
+                              style: const TextStyle(fontSize: 25))),
+                      IconButton(
+                          onPressed: () => context
+                              .read<AppThemeBloc>()
+                              .add(ChangeThemeEvent()),
+                          icon: context
+                              .watch<AppThemeBloc>()
+                              .state
+                              .appTheme
+                              .getIcon()),
+                      DropdownButtonHideUnderline(
+                          child: DropdownButton2(
+                              customButton: const Icon(Icons.list, size: 38),
+                              items: List.generate(
+                                MenuItems.values.length,
+                                (index) {
+                                  return DropdownMenuItem<int>(
+                                      value: index,
+                                      child: MenuItems.values[index]
+                                          .buildItem(context));
+                                },
+                              ),
+                              onChanged: (value) {
+                                if (value != null) {
+                                  scrollToItem(_listGlobalKey[value]);
+                                }
+                              },
+                              barrierColor: Colors.black.withOpacity(0.4),
+                              dropdownStyleData: DropdownStyleData(
+                                  width: 170,
+                                  useSafeArea: true,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 6),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(4),
+                                      color: context
+                                              .watch<AppThemeBloc>()
+                                              .state
+                                              .isDarkMode()
+                                          ? Colors.grey.shade800
+                                          : Colors.blueAccent))))
+                    ]))
           ],
         ));
   }
 
   void loadWidget() {
-    _listTechnology = const ListTechnology();
-    _listProject = const ListProject();
-    _educationWidget = const EducationWidget();
-    _header = HeaderWidget(key: _headerKey);
     _listGlobalKey = [
       GlobalKey(),
       GlobalKey(),
       GlobalKey(),
       GlobalKey(),
       GlobalKey()
+    ];
+    _listWidgetHome = [
+      HeaderWidget(key: _headerKey, assetImageUser: assetImage),
+      AboutMeWidget(key: _listGlobalKey[0]),
+      EducationWidget(key: _listGlobalKey[1]),
+      ListProject(key: _listGlobalKey[2]),
+      ListTechnology(key: _listGlobalKey[3]),
+      ContactToMeWidget(key: _listGlobalKey[4]),
+      const FooterWidget()
     ];
   }
 
@@ -187,13 +192,9 @@ class _HomePageState extends State<HomePage>
     _checkIfWidgetIsVisible();
     return HomeScreen(
       scrollController: _scrollController,
-      listGlobalKey: _listGlobalKey,
       topNavigation: topNavigation(),
-      listTechnology: _listTechnology,
-      listProject: _listProject,
-      header: _header,
       checkIfWidgetIsVisible: _checkIfWidgetIsVisible,
-      educationWidget: _educationWidget,
+      listWidgetHome: _listWidgetHome,
     );
   }
 }

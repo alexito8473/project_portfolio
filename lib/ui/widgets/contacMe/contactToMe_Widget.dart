@@ -9,8 +9,8 @@ import 'package:proyect_porfolio/ui/widgets/customWidget/titleCustom.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../data/services/SendMessage.dart';
-import 'customWidget/customButton_widget.dart';
+import '../../../data/services/SendMessage.dart';
+import '../customWidget/customButton_widget.dart';
 
 class ContactToMeWidget extends StatefulWidget {
   const ContactToMeWidget({super.key});
@@ -72,14 +72,17 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
     bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
     return Column(
       children: [
+        const SizedBox(
+          height: 100
+        ),
         TitleHome(title: AppLocalizations.of(context)!.contact_me),
         Container(
             margin: EdgeInsets.only(
                 top: ResponsiveBreakpoints.of(context).isMobile
                     ? 0
-                    : ResponsiveBreakpoints.of(context).screenHeight * 0.1),
+                    : ResponsiveBreakpoints.of(context).screenHeight * 0.01),
             padding: EdgeInsets.symmetric(
-                vertical: ResponsiveBreakpoints.of(context).screenHeight * 0.03,
+                vertical: ResponsiveBreakpoints.of(context).screenHeight * 0.02,
                 horizontal:
                     ResponsiveBreakpoints.of(context).screenWidth * 0.08),
             width: ResponsiveBreakpoints.of(context).isMobile

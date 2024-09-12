@@ -27,7 +27,7 @@ class AboutMeWidget extends StatelessWidget {
             child: Text(AppLocalizations.of(context)!.aboutMeDescription,
                 style: TextStyle(
                     fontSize:
-                        ResponsiveBreakpoints.of(context).isMobile ? 18 : 20,
+                        ResponsiveBreakpoints.of(context).isMobile ? 15 : 20,
                     fontStyle: FontStyle.italic),
                 textAlign: TextAlign.justify))
       ],

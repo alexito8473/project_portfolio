@@ -14,6 +14,7 @@ class ListTechnologyState {
       required this.listTechnologyLearning,
       required this.listTechnologyTools,
       required this.listTechnologyServers});
+
   factory ListTechnologyState.init() {
     List<Technology> allTechnology = createListTechnology();
     return ListTechnologyState(
@@ -24,7 +25,7 @@ class ListTechnologyState {
             .where((element) => element.typeLanguage == TypeLanguage.BACKEND)
             .toList(),
         listTechnologyFrontend: allTechnology
-            .where((element) => element.typeLanguage == TypeLanguage.MOBILE)
+            .where((element) => element.typeLanguage == TypeLanguage.FRONTEND)
             .toList(),
         listTechnologyLearning: allTechnology
             .where((element) => element.typeLanguage == TypeLanguage.LEARNING)
