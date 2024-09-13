@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../structure/blocs/appTheme/app_theme_bloc.dart';
 
@@ -62,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     spawnMaxSpeed: 30.0,
                     spawnMinRadius: 7.0,
                     spawnMaxRadius: 30.0,
-                    particleCount: 10)),
+                    particleCount: ResponsiveBreakpoints.of(context).isMobile?6: 10)),
             vsync: this,
             child: SingleChildScrollView(
                 controller: widget.scrollController,

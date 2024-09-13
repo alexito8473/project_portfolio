@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,12 +8,17 @@ import '../customWidget/customButton_widget.dart';
 
 class HeaderWidget extends StatelessWidget {
   final ImageProvider assetImageUser;
-  const HeaderWidget({super.key, required this.assetImageUser});
+  final GlobalKey activationKey;
+  const HeaderWidget(
+      {super.key, required this.assetImageUser, required this.activationKey});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ResponsiveBreakpoints.of(context).screenHeight * 0.8,
+      constraints: ResponsiveBreakpoints.of(context).isMobile
+          ? null
+          : const BoxConstraints(minHeight: 800),
+      height: ResponsiveBreakpoints.of(context).screenHeight * 0.9,
       width: ResponsiveBreakpoints.of(context).screenWidth,
       padding: ResponsiveBreakpoints.of(context).isMobile
           ? EdgeInsets.symmetric(
@@ -30,6 +34,7 @@ class HeaderWidget extends StatelessWidget {
         alignment: WrapAlignment.center,
         children: [
           SizedBox(
+            key: activationKey,
             width: 500,
             child: WidgetCircularAnimator(
                 outerColor: Colors.blueAccent,
@@ -49,9 +54,12 @@ class HeaderWidget extends StatelessWidget {
                         filterQuality: FilterQuality.none,
                         width: 300))),
           ),
-          SizedBox(
+          Container(
               width: 500,
-              height: ResponsiveBreakpoints.of(context).screenHeight * 0.5,
+              constraints: ResponsiveBreakpoints.of(context).isMobile
+                  ? null
+                  : const BoxConstraints(minHeight: 400),
+              height: ResponsiveBreakpoints.of(context).screenHeight * 0.65,
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,11 +86,13 @@ class HeaderWidget extends StatelessWidget {
                       child: AutoSizeText(
                           "Desarrollador Full Stack apasionado por la programación y el aprendizaje.",
                           maxLines: 3,
-                          style: TextStyle(fontSize: 25,color: Colors.greenAccent)),
+                          style: TextStyle(
+                              fontSize: 25, color: Colors.greenAccent)),
                     ),
                     Wrap(
                         alignment: WrapAlignment.center,
-                        spacing: ResponsiveBreakpoints.of(context).isMobile?0:30,
+                        spacing:
+                            ResponsiveBreakpoints.of(context).isMobile ? 0 : 30,
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           IconButtonNavigator(
@@ -122,15 +132,29 @@ class HeaderTop extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ClipOval(
-                child: Image.asset(
-              "assets/images/personal.webp",
-              filterQuality: FilterQuality.high,
-              width: 50,
-            )),
+            Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: ClipOval(
+                    child: Image(
+                        image: const AssetImage("assets/images/personal.webp"),
+                        frameBuilder:
+                            (context, child, frame, wasSynchronouslyLoaded) {
+                          if (frame == null) {
+                            return const CircleAvatar(
+                                radius: 150, backgroundColor: Colors.white);
+                          }
+                          return child;
+                        },
+                        filterQuality: FilterQuality.none))),
+            SizedBox(
+              width: ResponsiveBreakpoints.of(context).screenWidth * 0.01,
+            ),
             const AutoSizeText("Alejandro Aguilar",
                 maxLines: 1, style: TextStyle(fontSize: 25)),
-            IconButtonNavigator(
+            SizedBox(
+              width: ResponsiveBreakpoints.of(context).screenWidth * 0.01,
+            ),
+            ButtonIconSvg(
                 uri: Uri.parse('https://github.com/alexito8473'),
                 color: context.watch<AppThemeBloc>().state.isDarkMode()
                     ? Colors.white
@@ -139,8 +163,9 @@ class HeaderTop extends StatelessWidget {
                 iconUri: 'assets/svg/github.svg',
                 secondColor: true),
             SizedBox(
-                width: ResponsiveBreakpoints.of(context).screenWidth * .01),
-            IconButtonNavigator(
+              width: ResponsiveBreakpoints.of(context).screenWidth * 0.01,
+            ),
+            ButtonIconSvg(
                 uri: Uri.parse(
                     'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
                 color: Colors.blue,
@@ -148,7 +173,8 @@ class HeaderTop extends StatelessWidget {
                 iconUri: 'assets/svg/linkedin.svg',
                 secondColor: false),
             SizedBox(
-                width: ResponsiveBreakpoints.of(context).screenWidth * .01),
+              width: ResponsiveBreakpoints.of(context).screenWidth * 0.01,
+            ),
             const ButtonDownloadPdf(),
           ],
         ));

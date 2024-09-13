@@ -13,13 +13,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui' as ui;
 
-
-
+import 'data/services/ServiceGithub.dart';
+void metodo() async{
+  print(await ServiceGithub.getInstance()?.seeCommitGithub());
+}
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  WidgetsBinding.instance.ensureVisualUpdate();
+
   await dotenv.load(fileName: ".env");
   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  metodo();
   runApp(MyApp(isLightMode: prefs.getBool('isLightMode'), prefs: prefs));
 }
 
@@ -41,13 +43,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     var brightness = MediaQuery.of(context).platformBrightness;
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => ListTechnologyCubit()),
           BlocProvider(
               create: (context) => AppThemeBloc(
-                  appTheme: _selectMode(brightness, isLightMode), prefs: prefs)),
+                  appTheme: _selectMode(brightness, isLightMode),
+                  prefs: prefs)),
           BlocProvider(
               create: (context) => AppLocaleBloc(
                   locale: AppLocale.selectAppLocale(
@@ -65,13 +69,16 @@ class MyApp extends StatelessWidget {
               locale: context.watch<AppLocaleBloc>().state.locale.getLocal(),
               supportedLocales: const [Locale("en", ""), Locale("es", "")],
               title: 'Portfolio Alejandro',
-              theme: state.appTheme.getTheme(),
+              checkerboardRasterCacheImages: true,
+              theme: state.getTheme(),
+              themeAnimationCurve: Curves.easeInOut,
+              themeAnimationDuration: const Duration(milliseconds: 400),
               builder: (context, child) =>
                   ResponsiveBreakpoints.builder(child: child!, breakpoints: [
                     const Breakpoint(start: 0, end: 600, name: "MOBILE"),
                     const Breakpoint(start: 600, end: 1100, name: "TABLET"),
                     const Breakpoint(
-                        start: 1800, end: double.infinity, name: "DESKTOP"),
+                        start: 1800, end: double.infinity, name: "DESKTOP")
                   ]),
               home: const HomePage(bannerTop: HeaderTop()));
         }));

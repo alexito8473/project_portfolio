@@ -177,7 +177,7 @@ class _HomePageState extends State<HomePage>
       GlobalKey()
     ];
     _listWidgetHome = [
-      HeaderWidget(key: _headerKey, assetImageUser: assetImage),
+      HeaderWidget( assetImageUser: assetImage,activationKey: _headerKey,),
       AboutMeWidget(key: _listGlobalKey[0]),
       EducationWidget(key: _listGlobalKey[1]),
       ListProject(key: _listGlobalKey[2]),

@@ -9,6 +9,36 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../structure/blocs/appTheme/app_theme_bloc.dart';
 
+class ButtonIconSvg extends StatelessWidget {
+  final Uri uri;
+  final Color color;
+  final String tooltip;
+  final String iconUri;
+  final bool secondColor;
+  const ButtonIconSvg(
+      {super.key,
+      required this.uri,
+      required this.color,
+      required this.tooltip,
+      required this.iconUri,
+      required this.secondColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () async => await launchUrl(uri),
+      mouseCursor: SystemMouseCursors.click,
+      child: Tooltip(
+        message: tooltip ,
+        child:  SvgPicture.asset(iconUri,
+              color: secondColor ? color : null,
+              width:  35),
+
+      ) ,
+    );
+  }
+}
+
 class IconButtonNavigator extends StatelessWidget {
   final Uri uri;
   final Color color;
@@ -76,7 +106,7 @@ class ButtonDownloadPdf extends StatelessWidget {
         child: Text(AppLocalizations.of(context)!.downloadCV,
             style: TextStyle(
                 fontSize:
-                    ResponsiveBreakpoints.of(context).isMobile ? 15 : 20)));
+                    ResponsiveBreakpoints.of(context).isMobile ? 14 : 18)));
   }
 }
 

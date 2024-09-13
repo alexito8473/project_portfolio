@@ -36,7 +36,6 @@ class ListProject extends StatelessWidget {
                 },
               ),
               options: FlutterCarouselOptions(
-                  autoPlay: true,
                   enableInfiniteScroll: true,
                   enlargeCenterPage: true,
                   viewportFraction: ResponsiveBreakpoints.of(context).isTablet

@@ -13,7 +13,10 @@ class AppThemeBloc extends Bloc<AppThemeEvent, AppThemeState> {
       await prefs.setBool(
           'isLightMode', state.appTheme.reverse() == AppTheme.LIGHT);
       emit(AppThemeState(
-          appTheme: state.appTheme.reverse(), prefs: state.prefs));
+          appTheme: state.appTheme.reverse(),
+          prefs: state.prefs,
+          themeDataDark: state.themeDataDark,
+          themeDataLight: state.themeDataLight));
     });
   }
 }

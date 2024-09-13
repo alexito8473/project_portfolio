@@ -59,7 +59,7 @@ class WorksWidget extends StatelessWidget {
                     Colors.black.withOpacity(0.7), BlendMode.darken),
                 image: const AssetImage("assets/images/BackgroundBoat.webp"),
                 fit: BoxFit.cover,
-                filterQuality: FilterQuality.high,
+                filterQuality: FilterQuality.none,
                 scale: 1.1),
             borderRadius: BorderRadius.circular(20)),
         child: Column(
@@ -89,7 +89,7 @@ class WorksWidget extends StatelessWidget {
                     style: TextStyle(
                         fontSize: descriptionFontSize(context),
                         color: Colors.white)),
-              )),
+              ))
             ]));
   }
 }
@@ -110,13 +110,13 @@ class NoWorkWidget extends StatelessWidget {
                     Colors.black.withOpacity(0.7), BlendMode.darken),
                 image: const AssetImage("assets/images/NoWork.webp"),
                 fit: BoxFit.cover,
-                filterQuality: FilterQuality.high,
+                filterQuality: FilterQuality.none,
                 scale: 1.1),
             borderRadius: BorderRadius.circular(20)),
         child: AutoSizeText(
           AppLocalizations.of(context)!.comingSoon,
           maxLines: 1,
-          style: const TextStyle(fontSize: 40),
+          style: const TextStyle(fontSize: 40, color: Colors.white),
         ));
   }
 }
