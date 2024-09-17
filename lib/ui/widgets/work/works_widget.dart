@@ -102,8 +102,6 @@ class NoWorkWidget extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.all(20),
         alignment: Alignment.topLeft,
-        margin: EdgeInsets.only(
-            top: ResponsiveBreakpoints.of(context).isMobile ? 0 : 80),
         decoration: BoxDecoration(
             image: DecorationImage(
                 colorFilter: ColorFilter.mode(

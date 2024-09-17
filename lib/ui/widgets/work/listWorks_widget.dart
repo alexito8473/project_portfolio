@@ -14,14 +14,14 @@ class EducationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: ResponsiveBreakpoints.of(context).isMobile?ResponsiveBreakpoints.of(context).screenHeight:null,
-      margin:  EdgeInsets.only(bottom: ResponsiveBreakpoints.of(context).isMobile?0:100),
+      margin:  EdgeInsets.only(bottom: ResponsiveBreakpoints.of(context).isMobile?0:100,top: ResponsiveBreakpoints.of(context).isMobile?100:0),
       child: Column(
         children: [
           TitleHome(title: AppLocalizations.of(context)!.workExperience),
           Container(
               width: 800,
               color: Colors.transparent,
-              height: ResponsiveBreakpoints.of(context).isMobile ? 150 : 360,
+              height: 120,
               margin: EdgeInsets.only(
                   left: ResponsiveBreakpoints.of(context).screenWidth * 0.15,
                   right: ResponsiveBreakpoints.of(context).screenWidth * 0.15),

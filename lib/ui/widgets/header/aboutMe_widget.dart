@@ -8,6 +8,8 @@ import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 import 'package:proyect_porfolio/ui/widgets/customWidget/titleCustom.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../../../data/services/ServiceGithub.dart';
+
 class AboutMeWidget extends StatelessWidget {
   const AboutMeWidget({super.key});
 
@@ -22,14 +24,20 @@ class AboutMeWidget extends StatelessWidget {
                 : const BoxConstraints(minHeight: 1000),
             width: ResponsiveBreakpoints.of(context).screenWidth * 0.7,
             height: ResponsiveBreakpoints.of(context).screenHeight,
-            margin: EdgeInsets.only(bottom: 30),
+            margin: const EdgeInsets.only(bottom: 30),
             child: Wrap(
               alignment: WrapAlignment.spaceEvenly,
               runSpacing: ResponsiveBreakpoints.of(context).screenHeight * 0.05,
               children: [
                 Container(
-                    width: 400,
+                    width: 450,
                     decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 3,
+                              blurRadius: 20)
+                        ],
                         border: DashedBorder.fromBorderSide(
                             dashLength: 15,
                             side: BorderSide(
@@ -52,7 +60,7 @@ class AboutMeWidget extends StatelessWidget {
                             fontStyle: FontStyle.italic),
                         textAlign: TextAlign.justify)),
                 Container(
-                  width: 400,
+                  width: 450,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -63,6 +71,12 @@ class AboutMeWidget extends StatelessWidget {
                                 ResponsiveBreakpoints.of(context).screenHeight *
                                     0.05),
                         decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.blueGrey.withOpacity(0.3),
+                                  spreadRadius: 3,
+                                  blurRadius: 20)
+                            ],
                             border: DashedBorder.fromBorderSide(
                                 dashLength: 15,
                                 side: BorderSide(
@@ -75,7 +89,7 @@ class AboutMeWidget extends StatelessWidget {
                                     width: 2)),
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
-                        width: 400,
+                        width: 450,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -92,12 +106,19 @@ class AboutMeWidget extends StatelessWidget {
                         ),
                       ),
                       Container(
+                        width: 450,
                         padding: EdgeInsets.all(40),
                         margin: EdgeInsets.only(
                             bottom:
                                 ResponsiveBreakpoints.of(context).screenHeight *
                                     0.05),
                         decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.blueGrey.withOpacity(0.3),
+                                  spreadRadius: 3,
+                                  blurRadius: 20)
+                            ],
                             border: DashedBorder.fromBorderSide(
                                 dashLength: 15,
                                 side: BorderSide(
@@ -110,7 +131,6 @@ class AboutMeWidget extends StatelessWidget {
                                     width: 2)),
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
-                        width: 400,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -120,8 +140,8 @@ class AboutMeWidget extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.blueAccent,
                                         fontSize: 30))),
-                            AutoSizeText(
-                                "- Resolución de problema\n- Trabajo en equipo\n- Comunicación proactiva\n- Trabajo en equipo",
+                            AutoSizeText("Commits realizados: 203",
+                                //${ServiceGithub.getInstance()?.allCountCommit}
                                 style: TextStyle(fontSize: 20)),
                           ],
                         ),

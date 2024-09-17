@@ -56,19 +56,7 @@ class ListProject extends StatelessWidget {
     );
   }
 }
-class TransparentClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    // Define aquí las áreas no transparentes de la imagen. Ejemplo simple:
-    path.addRect(Rect.fromLTWH(0, 0, size.width - 2,
-        size.height)); // Ajusta las dimensiones según necesites
-    return path;
-  }
 
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
 
 class BannerProject extends StatelessWidget {
   final ProjectRelease projectRelease;
@@ -85,7 +73,7 @@ class BannerProject extends StatelessWidget {
               image: AssetImage(projectRelease.project.imgUrl),
               fit: BoxFit.cover,
               colorFilter:
-                  const ColorFilter.mode(Colors.black54, BlendMode.darken),
+                   ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.darken),
               alignment: Alignment.topCenter,
               filterQuality: FilterQuality.none,
             )),
@@ -126,7 +114,7 @@ class BannerProject extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: const [
                                         BoxShadow(
-                                            color: Colors.white24,
+                                            color: Colors.white12,
                                             spreadRadius: 4,
                                             blurRadius: 4)
                                       ]),
