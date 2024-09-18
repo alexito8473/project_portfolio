@@ -18,8 +18,9 @@ class ListProject extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: ResponsiveBreakpoints.of(context).isMobile?ResponsiveBreakpoints.of(context).screenHeight:null,
+    return Container(
+      height: ResponsiveBreakpoints.of(context).screenHeight,
+      constraints: const BoxConstraints(minHeight: 600),
       child: Column(children: [
         TitleHome(title: AppLocalizations.of(context)!.projects),
         Container(

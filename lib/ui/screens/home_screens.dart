@@ -41,12 +41,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
+         appBar: AppBar(
           flexibleSpace: widget.topNavigation,
           shadowColor: context.watch<AppThemeBloc>().state.isDarkMode()
               ? Colors.grey
               : Colors.black,
-          toolbarHeight: 70,
+          toolbarHeight:ResponsiveBreakpoints.of(context).isMobile?65: 80,
         ),
         body: AnimatedBackground(
             behaviour: RandomParticleBehaviour(
@@ -63,15 +63,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     spawnMaxSpeed: 30.0,
                     spawnMinRadius: 7.0,
                     spawnMaxRadius: 30.0,
-                    particleCount: ResponsiveBreakpoints.of(context).isMobile?6: 10)),
+                    particleCount:
+                        ResponsiveBreakpoints.of(context).isMobile ? 6 : 10)),
             vsync: this,
             child: SingleChildScrollView(
                 controller: widget.scrollController,
-                child: RepaintBoundary(
-                    child: Column(
-                        children: List.generate(
-                            widget.listWidgetHome.length,
-                            (index) => FadeIn(
+                child: Column(
+                    children: List.generate(
+                        widget.listWidgetHome.length,
+                        (index) => RepaintBoundary(
+                            child: FadeIn(
                                 child: widget.listWidgetHome[index])))))));
   }
 }

@@ -13,8 +13,11 @@ class EducationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ResponsiveBreakpoints.of(context).isMobile?ResponsiveBreakpoints.of(context).screenHeight:null,
-      margin:  EdgeInsets.only(bottom: ResponsiveBreakpoints.of(context).isMobile?0:100,top: ResponsiveBreakpoints.of(context).isMobile?100:0),
+      height: ResponsiveBreakpoints.of(context).screenHeight,
+      constraints: BoxConstraints(minHeight: 600),
+      margin: EdgeInsets.only(
+          bottom: ResponsiveBreakpoints.of(context).isMobile ? 0 : 100,
+          top: ResponsiveBreakpoints.of(context).isMobile ? 100 : 0),
       child: Column(
         children: [
           TitleHome(title: AppLocalizations.of(context)!.workExperience),
@@ -53,12 +56,13 @@ class EducationWidget extends StatelessWidget {
                 isLast: true,
                 axis: TimelineAxis.vertical,
                 alignment: TimelineAlign.start,
-                endChild: const Padding(padding: EdgeInsets.only(top:30),child: WorksWidget(),),
+                endChild: const Padding(
+                  padding: EdgeInsets.only(top: 30),
+                  child: WorksWidget(),
+                ),
               ))
         ],
       ),
-    ) ;
+    );
   }
 }
-
-

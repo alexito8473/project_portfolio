@@ -2,23 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
+import 'package:proyect_porfolio/structure/blocs/appSendMessage/app_send_message_bloc.dart';
+import 'package:proyect_porfolio/structure/blocs/appServicesGithub/app_service_github_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 import 'package:proyect_porfolio/structure/cubits/listTechnology/list_technology_cubit.dart';
 import 'package:proyect_porfolio/ui/pages/home_page.dart';
-
 import 'package:proyect_porfolio/ui/widgets/header/header_widegt.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui' as ui;
 
-import 'data/services/ServiceGithub.dart';
 void main() async {
-
-  await dotenv.load(fileName: ".env");
   final SharedPreferences prefs = await SharedPreferences.getInstance();
- //  await ServiceGithub.getInstance()?.seeCommitGithub();
+  await dotenv.load(fileName: ".env");
   runApp(MyApp(isLightMode: prefs.getBool('isLightMode'), prefs: prefs));
 }
 
@@ -40,10 +38,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var brightness = MediaQuery.of(context).platformBrightness;
     return MultiBlocProvider(
         providers: [
+          BlocProvider(create: (context) => AppServiceGithubBloc()),
+          BlocProvider(create: (context) => AppSendMessageBloc()),
           BlocProvider(create: (context) => ListTechnologyCubit()),
           BlocProvider(
               create: (context) => AppThemeBloc(

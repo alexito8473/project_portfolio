@@ -29,7 +29,7 @@ class AppThemeState {
       prefs: prefs,
       themeDataDark: ThemeData.from(
           useMaterial3: true,
-          textTheme: GoogleFonts.texturinaTextTheme(Typography.whiteCupertino),
+          textTheme: GoogleFonts.texturinaTextTheme(Typography.whiteMountainView),
           colorScheme: const ColorScheme(
               brightness: Brightness.dark,
               primary: Colors.blueGrey,

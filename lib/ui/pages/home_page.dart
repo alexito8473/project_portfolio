@@ -4,6 +4,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
+import 'package:proyect_porfolio/structure/blocs/appServicesGithub/app_service_github_bloc.dart';
 import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../models/Item.dart';
@@ -35,6 +36,7 @@ class _HomePageState extends State<HomePage>
   bool isActiveBannerTop = false;
   @override
   void initState() {
+    context.read<AppServiceGithubBloc>().add(ConnectToGithub());
     assetImage = const AssetImage("assets/images/personal.webp");
     loadWidget();
     super.initState();
@@ -51,19 +53,16 @@ class _HomePageState extends State<HomePage>
   void _checkIfWidgetIsVisible() {
     ResponsiveBreakpointsData breakpointsData =
         ResponsiveBreakpoints.of(context);
-    if (breakpointsData.isTablet) return;
     if (breakpointsData.isMobile) return;
     RenderBox? box =
         _headerKey.currentContext?.findRenderObject() as RenderBox?;
     if (box != null) {
       Offset position = box.localToGlobal(Offset.zero);
-
       // Obtén las dimensiones visibles del área de scroll
       double screenHeight = breakpointsData.screenHeight;
 
       // Verifica si el widget está dentro del rango visible
-      // true cuando esta renderizado y false cuando no
-
+      // true cuando esta renderizado y false cuando no.
       if (position.dy < screenHeight && position.dy + box.size.height > 0) {
         if (isActiveBannerTop) {
           setState(() {
@@ -81,90 +80,89 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget topNavigation() {
-    return Container(
-        padding:  EdgeInsets.symmetric(horizontal: ResponsiveBreakpoints.of(context).screenWidth * 0.035),
-        height: ResponsiveBreakpoints.of(context).isMobile ? 60 : 80,
-        alignment: Alignment.center,
-        width: ResponsiveBreakpoints.of(context).screenWidth,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ResponsiveBreakpoints.of(context).isMobile
-                ? const Expanded(
-                    child: AutoSizeText(
-                    "Full Stack Developer",
-                    style: TextStyle(fontSize: 25),
-                    maxLines: 1,
-                  ))
-                : const AutoSizeText(
-                    "Full Stack Developer",
-                    style: TextStyle(fontSize: 28),
-                    maxLines: 1,
-                  ),
-            if (isActiveBannerTop &&
-                !ResponsiveBreakpoints.of(context).isTablet &&
-                !ResponsiveBreakpoints.of(context).isMobile)
-              Expanded(child: FadeIn(child: widget.bannerTop)),
-            SizedBox(
-                width: ResponsiveBreakpoints.of(context).isMobile? ResponsiveBreakpoints.of(context).screenWidth * 0.4:180,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      IconButton(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 3),
-                          onPressed: () => context
-                              .read<AppLocaleBloc>()
-                              .add(ChangeLocalEvent()),
-                          icon: Text(
-                              context
-                                  .watch<AppLocaleBloc>()
-                                  .state
-                                  .locale
-                                  .getLenguajeCode(),
-                              style: const TextStyle(fontSize: 25))),
-                      IconButton(
-                          onPressed: () => context
-                              .read<AppThemeBloc>()
-                              .add(ChangeThemeEvent()),
-                          icon: context
-                              .watch<AppThemeBloc>()
-                              .state
-                              .appTheme
-                              .getIcon()),
-                      DropdownButtonHideUnderline(
-                          child: DropdownButton2(
-                              customButton: const Icon(Icons.list, size: 38),
-                              items: List.generate(
-                                MenuItems.values.length,
-                                (index) {
-                                  return DropdownMenuItem<int>(
-                                      value: index,
-                                      child: MenuItems.values[index]
-                                          .buildItem(context));
+    return Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: ResponsiveBreakpoints.of(context).screenWidth * 0.035),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ResponsiveBreakpoints.of(context).isMobile
+                  ? const Expanded(
+                      child: AutoSizeText(
+                      "Full Stack Developer",
+                      style: TextStyle(fontSize: 25),
+                      maxLines: 1,
+                    ))
+                  : const AutoSizeText(
+                      "Full Stack Developer",
+                      style: TextStyle(fontSize: 28),
+                      maxLines: 1,
+                    ),
+              if (isActiveBannerTop &&
+                  !ResponsiveBreakpoints.of(context).isMobile)
+                Expanded(child: FadeIn(child: widget.bannerTop)),
+              SizedBox(
+                  width: ResponsiveBreakpoints.of(context).isMobile ? 150 : 180,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconButton(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 3),
+                            onPressed: () => context
+                                .read<AppLocaleBloc>()
+                                .add(ChangeLocalEvent()),
+                            icon: Text(
+                                context
+                                    .watch<AppLocaleBloc>()
+                                    .state
+                                    .locale
+                                    .getLenguajeCode(),
+                                style: const TextStyle(fontSize: 25))),
+                        IconButton(
+                            onPressed: () => context
+                                .read<AppThemeBloc>()
+                                .add(ChangeThemeEvent()),
+                            icon: context
+                                .watch<AppThemeBloc>()
+                                .state
+                                .appTheme
+                                .getIcon()),
+                        DropdownButtonHideUnderline(
+                            child: DropdownButton2(
+                                customButton: const Icon(Icons.list, size: 38),
+                                items: List.generate(
+                                  MenuItems.values.length,
+                                  (index) {
+                                    return DropdownMenuItem<int>(
+                                        value: index,
+                                        child: MenuItems.values[index]
+                                            .buildItem(context));
+                                  },
+                                ),
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    scrollToItem(_listGlobalKey[value]);
+                                  }
                                 },
-                              ),
-                              onChanged: (value) {
-                                if (value != null) {
-                                  scrollToItem(_listGlobalKey[value]);
-                                }
-                              },
-                              barrierColor: Colors.black.withOpacity(0.4),
-                              dropdownStyleData: DropdownStyleData(
-                                  width: 170,
-                                  useSafeArea: true,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 6),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4),
-                                      color: context
-                                              .watch<AppThemeBloc>()
-                                              .state
-                                              .isDarkMode()
-                                          ? Colors.grey.shade800
-                                          : Colors.blueAccent))))
-                    ]))
-          ],
+                                barrierColor: Colors.black.withOpacity(0.4),
+                                dropdownStyleData: DropdownStyleData(
+                                    width: 170,
+                                    useSafeArea: true,
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 6),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(4),
+                                        color: context
+                                                .watch<AppThemeBloc>()
+                                                .state
+                                                .isDarkMode()
+                                            ? Colors.grey.shade800
+                                            : Colors.blueAccent))))
+                      ]))
+            ],
+          ),
         ));
   }
 
@@ -177,7 +175,7 @@ class _HomePageState extends State<HomePage>
       GlobalKey()
     ];
     _listWidgetHome = [
-      HeaderWidget( assetImageUser: assetImage,activationKey: _headerKey,),
+      HeaderWidget(assetImageUser: assetImage, activationKey: _headerKey),
       AboutMeWidget(key: _listGlobalKey[0]),
       EducationWidget(key: _listGlobalKey[1]),
       ListProject(key: _listGlobalKey[2]),
