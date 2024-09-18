@@ -102,29 +102,37 @@ class ListTechnology extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: ResponsiveBreakpoints.of(context).screenWidth * 0.15,
-          vertical: isMobile ? 0 :ResponsiveBreakpoints.of(context).screenHeight * 0.15),
+    return Container(
+      padding: EdgeInsets.only(
+          left: isMobile
+              ? 0
+              : ResponsiveBreakpoints.of(context).screenWidth * 0.15,
+          right: isMobile
+              ? 0
+              : ResponsiveBreakpoints.of(context).screenWidth * 0.15,
+          top: isMobile
+              ? 0
+              : ResponsiveBreakpoints.of(context).screenHeight * 0.15,
+          bottom: isMobile
+              ? 0
+              : ResponsiveBreakpoints.of(context).screenHeight * 0.45),
       child: Column(children: [
         TitleHome(title: AppLocalizations.of(context)!.knowledge),
-        Padding(
-            padding: EdgeInsets.only(top: isMobile ? 0 : 100),
-            child: Wrap(
-                spacing: 20,
-                alignment: WrapAlignment.center,
-                runSpacing: 30,
-                children: List.generate(
-                  TypeLanguage.values.length,
-                  (index) => LayoutBuilder(builder: (context, constraints) {
-                    return ColumnListTechnologyWidget(
-                        listTechnology: context
-                            .read<ListTechnologyCubit>()
-                            .getTypeLanguageList(TypeLanguage.values[index]),
-                        title: TypeLanguage.values[index].getTitle(context),
-                        createDialogTechnology: createDialogTechnology);
-                  }),
-                ))),
+        Wrap(
+            spacing: 20,
+            alignment: WrapAlignment.center,
+            runSpacing: 30,
+            children: List.generate(
+              TypeLanguage.values.length,
+              (index) => LayoutBuilder(builder: (context, constraints) {
+                return ColumnListTechnologyWidget(
+                    listTechnology: context
+                        .read<ListTechnologyCubit>()
+                        .getTypeLanguageList(TypeLanguage.values[index]),
+                    title: TypeLanguage.values[index].getTitle(context),
+                    createDialogTechnology: createDialogTechnology);
+              }),
+            )),
       ]),
     );
   }

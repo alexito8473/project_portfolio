@@ -9,6 +9,7 @@ import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../models/Item.dart';
 
+import '../../structure/blocs/appCheckVisibilityNavigationTop/app_check_visibility_navigation_top_bloc.dart';
 import '../screens/home_screens.dart';
 import '../widgets/header/aboutMe_widget.dart';
 import '../widgets/contacMe/contactToMe_Widget.dart';
@@ -19,25 +20,21 @@ import '../widgets/project/project_widget.dart';
 import '../widgets/work/listWorks_widget.dart';
 
 class HomePage extends StatefulWidget {
-  final Widget bannerTop;
-  const HomePage({super.key, required this.bannerTop});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
   late final List<Widget> _listWidgetHome;
   late final List<GlobalKey> _listGlobalKey;
-  late ImageProvider assetImage;
   final GlobalKey _headerKey = GlobalKey();
-  bool isActiveBannerTop = false;
+
   @override
   void initState() {
     context.read<AppServiceGithubBloc>().add(ConnectToGithub());
-    assetImage = const AssetImage("assets/images/personal.webp");
     loadWidget();
     super.initState();
   }
@@ -48,35 +45,6 @@ class _HomePageState extends State<HomePage>
       duration: const Duration(milliseconds: 500),
       curve: Curves.linear,
     );
-  }
-
-  void _checkIfWidgetIsVisible() {
-    ResponsiveBreakpointsData breakpointsData =
-        ResponsiveBreakpoints.of(context);
-    if (breakpointsData.isMobile) return;
-    RenderBox? box =
-        _headerKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box != null) {
-      Offset position = box.localToGlobal(Offset.zero);
-      // Obtén las dimensiones visibles del área de scroll
-      double screenHeight = breakpointsData.screenHeight;
-
-      // Verifica si el widget está dentro del rango visible
-      // true cuando esta renderizado y false cuando no.
-      if (position.dy < screenHeight && position.dy + box.size.height > 0) {
-        if (isActiveBannerTop) {
-          setState(() {
-            isActiveBannerTop = false;
-          });
-        }
-      } else {
-        if (!isActiveBannerTop) {
-          setState(() {
-            isActiveBannerTop = true;
-          });
-        }
-      }
-    }
   }
 
   Widget topNavigation() {
@@ -99,9 +67,12 @@ class _HomePageState extends State<HomePage>
                       style: TextStyle(fontSize: 28),
                       maxLines: 1,
                     ),
-              if (isActiveBannerTop &&
+              if (context
+                      .watch<AppCheckVisibilityNavigationTopBloc>()
+                      .state
+                      .isActiveBannerTop &&
                   !ResponsiveBreakpoints.of(context).isMobile)
-                Expanded(child: FadeIn(child: widget.bannerTop)),
+                Expanded(child: FadeIn(child: HeaderTop())),
               SizedBox(
                   width: ResponsiveBreakpoints.of(context).isMobile ? 150 : 180,
                   child: Row(
@@ -175,7 +146,9 @@ class _HomePageState extends State<HomePage>
       GlobalKey()
     ];
     _listWidgetHome = [
-      HeaderWidget(assetImageUser: assetImage, activationKey: _headerKey),
+      HeaderWidget(
+          assetImageUser: const AssetImage("assets/images/personal.webp"),
+          activationKey: _headerKey),
       AboutMeWidget(key: _listGlobalKey[0]),
       EducationWidget(key: _listGlobalKey[1]),
       ListProject(key: _listGlobalKey[2]),
@@ -187,11 +160,14 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    _checkIfWidgetIsVisible();
+    context
+        .read<AppCheckVisibilityNavigationTopBloc>()
+        .add(UpdateNavigationEvent(context: context, headerKey: _headerKey));
     return HomeScreen(
       scrollController: _scrollController,
       topNavigation: topNavigation(),
-      checkIfWidgetIsVisible: _checkIfWidgetIsVisible,
+      updateNavigationEvent:
+          UpdateNavigationEvent(context: context, headerKey: _headerKey),
       listWidgetHome: _listWidgetHome,
     );
   }

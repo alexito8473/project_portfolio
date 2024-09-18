@@ -14,7 +14,7 @@ class EducationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: ResponsiveBreakpoints.of(context).screenHeight,
-      constraints: BoxConstraints(minHeight: 600),
+      constraints: const BoxConstraints(minHeight: 600),
       margin: EdgeInsets.only(
           bottom: ResponsiveBreakpoints.of(context).isMobile ? 0 : 100,
           top: ResponsiveBreakpoints.of(context).isMobile ? 100 : 0),

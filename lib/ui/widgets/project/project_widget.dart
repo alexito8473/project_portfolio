@@ -1,4 +1,3 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +20,7 @@ class ListProject extends StatelessWidget {
     return Container(
       height: ResponsiveBreakpoints.of(context).screenHeight,
       constraints: const BoxConstraints(minHeight: 600),
-      child: Column(children: [
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         TitleHome(title: AppLocalizations.of(context)!.projects),
         Container(
             padding: EdgeInsets.only(
@@ -31,7 +30,7 @@ class ListProject extends StatelessWidget {
             child: FlutterCarousel(
               items: List.generate(
                 ProjectRelease.values.length,
-                    (index) {
+                (index) {
                   return BannerProject(
                       projectRelease: ProjectRelease.values[index]);
                 },
@@ -42,22 +41,21 @@ class ListProject extends StatelessWidget {
                   viewportFraction: ResponsiveBreakpoints.of(context).isTablet
                       ? 0.55
                       : ResponsiveBreakpoints.of(context).isMobile
-                      ? 0.75
-                      : 0.32,
+                          ? 0.75
+                          : 0.32,
                   autoPlayCurve: Curves.linear,
                   showIndicator:
-                  ResponsiveBreakpoints.of(context).isMobile ? true : false,
+                      ResponsiveBreakpoints.of(context).isMobile ? true : false,
                   aspectRatio: ResponsiveBreakpoints.of(context).isTablet
                       ? 1.6
                       : ResponsiveBreakpoints.of(context).isMobile
-                      ? 0.8
-                      : 2.2),
+                          ? 0.8
+                          : 2.2),
             ))
       ]),
     );
   }
 }
-
 
 class BannerProject extends StatelessWidget {
   final ProjectRelease projectRelease;
@@ -68,16 +66,16 @@ class BannerProject extends StatelessWidget {
     return RepaintBoundary(
         child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(45),
+                borderRadius: BorderRadius.circular(45),
                 image: DecorationImage(
                   scale: 1.2,
-              image: AssetImage(projectRelease.project.imgUrl),
-              fit: BoxFit.cover,
-              colorFilter:
-                   ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.darken),
-              alignment: Alignment.topCenter,
-              filterQuality: FilterQuality.none,
-            )),
+                  image: AssetImage(projectRelease.project.imgUrl),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.7), BlendMode.darken),
+                  alignment: Alignment.topCenter,
+                  filterQuality: FilterQuality.none,
+                )),
             child: Stack(
               children: [
                 Padding(

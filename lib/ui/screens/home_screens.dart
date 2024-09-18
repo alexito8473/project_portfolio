@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../../structure/blocs/appCheckVisibilityNavigationTop/app_check_visibility_navigation_top_bloc.dart';
 import '../../structure/blocs/appTheme/app_theme_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   final ScrollController scrollController;
-  final Function checkIfWidgetIsVisible;
+  final UpdateNavigationEvent updateNavigationEvent;
   final Widget topNavigation;
   final List<Widget> listWidgetHome;
   const HomeScreen(
       {super.key,
       required this.scrollController,
       required this.topNavigation,
-      required this.checkIfWidgetIsVisible,
+      required this.updateNavigationEvent,
       required this.listWidgetHome});
 
   @override
@@ -26,13 +27,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    widget.scrollController.addListener(() => widget.checkIfWidgetIsVisible());
+    widget.scrollController.addListener(() => context
+        .read<AppCheckVisibilityNavigationTopBloc>()
+        .add(widget.updateNavigationEvent));
   }
 
   @override
   void dispose() {
     widget.scrollController
-        .removeListener(() => widget.checkIfWidgetIsVisible());
+        .removeListener(() => context
+        .read<AppCheckVisibilityNavigationTopBloc>()
+        .add(widget.updateNavigationEvent));
     widget.scrollController.dispose();
     super.dispose();
   }

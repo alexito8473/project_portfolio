@@ -59,67 +59,60 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
   Widget build(BuildContext context) {
     bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
     return BlocBuilder<AppSendMessageBloc, AppSendMessageState>(
-      builder: (context, state) {
-        return Column(
-          children: [
-            const SizedBox(height: 100),
-            TitleHome(title: AppLocalizations.of(context)!.contact_me),
-            Container(
-                margin: EdgeInsets.only(
-                    top: ResponsiveBreakpoints.of(context).isMobile
-                        ? 0
-                        : ResponsiveBreakpoints.of(context).screenHeight *
-                            0.01),
-                padding: EdgeInsets.symmetric(
-                    vertical:
-                        ResponsiveBreakpoints.of(context).screenHeight * 0.02,
-                    horizontal:
-                        ResponsiveBreakpoints.of(context).screenWidth * 0.08),
-                width: ResponsiveBreakpoints.of(context).isMobile
-                    ? ResponsiveBreakpoints.of(context).screenWidth * .8
-                    : ResponsiveBreakpoints.of(context).screenWidth * .7,
-                height: 520,
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                          color: isDarkMode
-                              ? Colors.white30
-                              : Colors.blueAccent.withOpacity(0.4),
-                          blurRadius: 4,
-                          spreadRadius: 3)
-                    ],
-                    color: isDarkMode
-                        ? Colors.black
-                        : Colors.white.withOpacity(0.9),
-                    borderRadius: BorderRadius.circular(20)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ContactToMeFormField(
-                        myController: _controllerName,
-                        icon: const Icon(Icons.person),
-                        title: AppLocalizations.of(context)!.formName,
-                        isBigMessage: false,
-                        checkIsDesactivateButton: checkIsDesactivateButton),
-                    ContactToMeFormField(
-                        myController: _controllerEmail,
-                        icon: const Icon(Icons.email),
-                        title: AppLocalizations.of(context)!.formEmail,
-                        isBigMessage: false,
-                        checkIsDesactivateButton: checkIsDesactivateButton),
-                    ContactToMeFormField(
-                        myController: _controllerSubject,
-                        title: AppLocalizations.of(context)!.formSubject,
-                        isBigMessage: false,
-                        checkIsDesactivateButton: checkIsDesactivateButton,
-                        icon: const Icon(Icons.subject)),
-                    ContactToMeFormField(
-                        myController: _controllerMessage,
-                        icon: const Icon(CupertinoIcons.pen),
-                        title: AppLocalizations.of(context)!.formMessage,
-                        isBigMessage: true,
-                        checkIsDesactivateButton: checkIsDesactivateButton),
-                    Row(
+        builder: (context, state) {
+      return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        if (ResponsiveBreakpoints.of(context).isMobile)
+          const SizedBox(height: 100),
+        TitleHome(title: AppLocalizations.of(context)!.contact_me),
+        Container(
+            padding: EdgeInsets.symmetric(
+                vertical: ResponsiveBreakpoints.of(context).screenHeight * 0.02,
+                horizontal:
+                    ResponsiveBreakpoints.of(context).screenWidth * 0.08),
+            width: ResponsiveBreakpoints.of(context).isMobile
+                ? ResponsiveBreakpoints.of(context).screenWidth * .8
+                : ResponsiveBreakpoints.of(context).screenWidth * .7,
+            height: 520,
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: isDarkMode
+                          ? Colors.white30
+                          : Colors.blueAccent.withOpacity(0.4),
+                      blurRadius: 4,
+                      spreadRadius: 3)
+                ],
+                color:
+                    isDarkMode ? Colors.black : Colors.white.withOpacity(0.9),
+                borderRadius: BorderRadius.circular(20)),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ContactToMeFormField(
+                      myController: _controllerName,
+                      icon: const Icon(Icons.person),
+                      title: AppLocalizations.of(context)!.formName,
+                      isBigMessage: false,
+                      checkIsDesactivateButton: checkIsDesactivateButton),
+                  ContactToMeFormField(
+                      myController: _controllerEmail,
+                      icon: const Icon(Icons.email),
+                      title: AppLocalizations.of(context)!.formEmail,
+                      isBigMessage: false,
+                      checkIsDesactivateButton: checkIsDesactivateButton),
+                  ContactToMeFormField(
+                      myController: _controllerSubject,
+                      title: AppLocalizations.of(context)!.formSubject,
+                      isBigMessage: false,
+                      checkIsDesactivateButton: checkIsDesactivateButton,
+                      icon: const Icon(Icons.subject)),
+                  ContactToMeFormField(
+                      myController: _controllerMessage,
+                      icon: const Icon(CupertinoIcons.pen),
+                      title: AppLocalizations.of(context)!.formMessage,
+                      isBigMessage: true,
+                      checkIsDesactivateButton: checkIsDesactivateButton),
+                  Row(
                       textDirection: TextDirection.rtl,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -144,14 +137,10 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
                                     style: const TextStyle(fontSize: 18),
                                   ))),
                         if (state.sendMessage) const CircularProgressIndicator()
-                      ],
-                    )
-                  ],
-                )),
-          ],
-        );
-      },
-    );
+                      ])
+                ]))
+      ]);
+    });
   }
 }
 
