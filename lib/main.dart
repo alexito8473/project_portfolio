@@ -3,13 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:proyect_porfolio/structure/blocs/appCheckVisibilityNavigationTop/app_check_visibility_navigation_top_bloc.dart';
-import 'package:proyect_porfolio/structure/blocs/appLocale/app_locale_bloc.dart';
-import 'package:proyect_porfolio/structure/blocs/appSendMessage/app_send_message_bloc.dart';
-import 'package:proyect_porfolio/structure/blocs/appServicesGithub/app_service_github_bloc.dart';
-import 'package:proyect_porfolio/structure/blocs/appTheme/app_theme_bloc.dart';
-import 'package:proyect_porfolio/structure/cubits/listTechnology/list_technology_cubit.dart';
-import 'package:proyect_porfolio/ui/pages/home_page.dart';
+import 'package:proyect_porfolio/data/dataSource/ProjectData.dart';
+import 'package:proyect_porfolio/domain/repositories/GithubRepository.dart';
+import 'package:proyect_porfolio/domain/repositories/SendMessageRepository.dart';
+import 'package:proyect_porfolio/presentation/pages/home_page.dart';
+import 'package:proyect_porfolio/domain/blocs/appCheckVisibilityNavigationTop/app_check_visibility_navigation_top_bloc.dart';
+import 'package:proyect_porfolio/domain/blocs/appLocale/app_locale_bloc.dart';
+import 'package:proyect_porfolio/domain/blocs/appSendMessage/app_send_message_bloc.dart';
+import 'package:proyect_porfolio/domain/blocs/appServicesGithub/app_service_github_bloc.dart';
+import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
+import 'package:proyect_porfolio/domain/cubits/listTechnology/list_technology_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui' as ui;
@@ -36,14 +39,26 @@ class MyApp extends StatelessWidget {
     }
   }
 
+  void _preCacheImages(BuildContext context) {
+    for (final project in ProjectRelease.values) {
+      precacheImage(AssetImage(project.project.imgUrl), context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
+    _preCacheImages(context);
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => AppCheckVisibilityNavigationTopBloc()),
-          BlocProvider(create: (context) => AppServiceGithubBloc()),
-          BlocProvider(create: (context) => AppSendMessageBloc()),
+          BlocProvider(
+              create: (context) => AppCheckVisibilityNavigationTopBloc()),
+          BlocProvider(
+              create: (context) => AppServiceGithubBloc(
+                  githubRepository: GithubRepository.init())),
+          BlocProvider(
+              create: (context) => AppSendMessageBloc(
+                  sendMessageRepository: SendMessageRepository.init())),
           BlocProvider(create: (context) => ListTechnologyCubit()),
           BlocProvider(
               create: (context) => AppThemeBloc(

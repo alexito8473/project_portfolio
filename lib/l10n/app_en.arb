@@ -13,6 +13,11 @@
   "formRequestCorrect": "The message has been sent successfully",
   "formRequestInCorrect": "Error sending message",
   "sendEmail": "Send",
+  "skills": "Skills",
+  "skills1": "Problem solving",
+  "skills2": "Proactive communication",
+  "skills3": "Skills",
+  "textCommit": "Commits made",
   "practicesNextPort": "- Knowledge of agile methodologies.\n- Experience in real Flutter projects.\n- Experience working with Java.",
   "workExperience": "Work experience",
   "projects": "Projects",
@@ -41,6 +46,9 @@
   "javaScriptExperience":"I currently have a basic understanding of JavaScript, but I am in the process of learning more to improve my web development skills. I am working on gaining a deeper understanding of the language and its applications in creating interactive and dynamic interfaces.",
   "descriptionTasty": "This is a final year project. The application uses Firebase with realtime, authentication, storage and Gemini. The purpose of the project is to be able to show the data of a product, as well as to be able to see on a map where the associated restaurants are located on the map.",
   "descriptionOtelo": "Game made with Java without a graphical interface, it works through the terminal. It is made with Java 17 and following best practices.",
-  "descriptionGomoku" :"Game made with Java without a graphical interface. First project with several modes, player vs player, player vs bot and bot vs bot."
+  "descriptionGomoku" :"Game made with Java without a graphical interface. First project with several modes, player vs player, player vs bot and bot vs bot.",
+  "descriptionAppTeacher":"Project carried out in my higher education. It is an application aimed at teachers. Its objective is to be able to keep track of all the students in the app and to be able to see how many hours they have completed in total, as well as being able to see their personal data and finally being able to create a PDF of all their hours and work completed in the practices.",
+  "descriptionAppStudent":"Project carried out in my higher education. It is an application aimed at students. Its objective is to control the work carried out in the module's practices, indicating how much time we have spent on the task and its time. It also has a cloud database where you can create a student account or log in with the Firebase authenticator.",
+  "descriptionUltraRestaurant": "Project carried out in my higher education. It is an application for a food company that wants to be able to show its products. You can log in or register, and you can also view a product catalogue where you can filter them in different ways."
 
 }

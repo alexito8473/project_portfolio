@@ -13,6 +13,11 @@
   "formRequestCorrect": "Se ha enviado correctamente el mensaje",
   "formRequestInCorrect": "Error el enviar el mensaje",
   "sendEmail": "Enviar",
+  "skills": "Habilidades",
+  "skills1": "Resolución de problemas",
+  "skills2": "Trabajo en equipo",
+  "skills3": "Comunicación proactiva",
+  "textCommit": "Commits realizados",
   "practicesNextPort": "- Conocimientos sobre metodologías ágiles.\n- Experiencia en proyecto real de Flutter.\n- Experiencia en trabajar con Java.",
   "workExperience": "Experiencia laboral",
   "projects": "Proyectos",
@@ -41,5 +46,9 @@
   "javaScriptExperience":"Actualmente tengo un conocimiento básico de JavaScript, pero estoy en proceso de aprender más para mejorar mis habilidades en desarrollo web. Estoy trabajando para adquirir una comprensión más profunda del lenguaje y sus aplicaciones en la creación de interfaces interactivas y dinámicas.",
   "descriptionTasty": "Se trata de un proyecto de fin de grado. La aplicación hace uso de firebase con realtime, authentication, storage y Gemini. La finalidad del proyecto es poder mostrar los datos de un los producto, además de poder en un mapa donde están ubicados los restaurante asociados en el mapa.",
   "descriptionOtelo" : "Juego realizado con Java sin interfaz gráfica, funciona a través de la terminal. Esta realizado con Java 17 y siguiendo las mejores prácticas.",
-  "descriptionGomoku" : "Juego realizado con Java sin interfaz gráfica. Primer proyecto con varias modalidades, jugador vs jugador, jugador vs bot y bot vs bot."
+  "descriptionGomoku" : "Juego realizado con Java sin interfaz gráfica. Primer proyecto con varias modalidades, jugador vs jugador, jugador vs bot y bot vs bot.",
+  "descriptionAppTeacher":"Proyecto realizado en mi grado superior. Se trata de una aplicación dirigida para los profesores su objetivo es poder tener un seguimientos de todos los alumnos de la app y poder visualizar cuantas horas llevan en total realizadas, además de poder ver sus datos personales y por último poder realizar un pdf de todas sus horas y trabajo realizado en las practicas.",
+  "descriptionAppStudent":"Proyecto realizado en mi grado superior. Se trata de una aplicación dirigida para los estudiantes su objetivo es controlar el trabajo realizado en las practicas del modulo, indicando cuanto tiempo hemos realizado en la tarea y su tiempo, además consta de una base de datos en la nube donde podrás crear una cuenta de estudiante o iniciar sesión con el autentificador de firebase.",
+  "descriptionUltraRestaurant": "Proyecto realizado en mi grado superior. Se trata de una aplicación destinada a una empresa de comida, que quiera poder mostrar sus productos, podrás iniciar sesión o registrarte, además podrás visualizar un catalogo de productos donde podrás filtrarlos de distintas formas."
+
 }
