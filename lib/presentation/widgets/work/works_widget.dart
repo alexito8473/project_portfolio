@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../domain/blocs/appLocale/app_locale_bloc.dart';
+import '../../../domain/blocs/appTheme/app_theme_bloc.dart';
 
 class WorksWidget extends StatelessWidget {
   const WorksWidget({super.key});
@@ -49,14 +50,17 @@ class WorksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+        duration: const Duration(milliseconds: 400),
         padding: const EdgeInsets.all(20),
         margin: EdgeInsets.only(
             top: ResponsiveBreakpoints.of(context).isMobile ? 0 : 80),
         decoration: BoxDecoration(
             image: DecorationImage(
-                colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.7), BlendMode.darken),
+                colorFilter: context.watch<AppThemeBloc>().state.isDarkMode()
+                    ? ColorFilter.mode(
+                        Colors.black.withOpacity(0.7), BlendMode.darken)
+                    : const ColorFilter.mode(Colors.black54, BlendMode.darken),
                 image: const AssetImage("assets/images/BackgroundBoat.webp"),
                 fit: BoxFit.cover,
                 filterQuality: FilterQuality.none,
@@ -99,13 +103,16 @@ class NoWorkWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+        duration: const Duration(milliseconds: 400),
         padding: const EdgeInsets.all(20),
         alignment: Alignment.topLeft,
         decoration: BoxDecoration(
             image: DecorationImage(
-                colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.7), BlendMode.darken),
+                colorFilter: context.watch<AppThemeBloc>().state.isDarkMode()
+                    ? ColorFilter.mode(
+                        Colors.black.withOpacity(0.7), BlendMode.darken)
+                    : const ColorFilter.mode(Colors.black54, BlendMode.darken),
                 image: const AssetImage("assets/images/NoWork.webp"),
                 fit: BoxFit.cover,
                 filterQuality: FilterQuality.none,

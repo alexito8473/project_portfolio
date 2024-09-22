@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:meta/meta.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 part 'app_check_visibility_navigation_top_event.dart';

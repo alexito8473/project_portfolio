@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:proyect_porfolio/data/models/message.dart';
 
-import 'package:proyect_porfolio/data/models/Message.dart';
-
-import '../../repositories/SendMessageRepository.dart';
+import '../../repositories/send_message_repository.dart';
 
 part 'app_send_message_event.dart';
 part 'app_send_message_state.dart';
@@ -10,10 +9,10 @@ part 'app_send_message_state.dart';
 class AppSendMessageBloc
     extends Bloc<AppSendMessageEvent, AppSendMessageState> {
   final SendMessageRepository sendMessageRepository;
+
   AppSendMessageBloc({required this.sendMessageRepository})
       : super(AppSendMessageStateInit()) {
     on<AppSendMessageEvent>((event, emit) async {
-
       emit(state.copyWitch(
           sendMessage: true, sentSuccessfully: false, sentFinished: false));
 

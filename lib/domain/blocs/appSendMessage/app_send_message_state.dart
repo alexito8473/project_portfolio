@@ -10,7 +10,6 @@ class AppSendMessageState {
       required this.sentSuccessfully,
       required this.sentFinished});
 
-
   AppSendMessageState copyWitch(
       {required bool? sendMessage,
       required bool? sentSuccessfully,
@@ -21,6 +20,8 @@ class AppSendMessageState {
         sentFinished: sentFinished ?? this.sentFinished);
   }
 }
-class AppSendMessageStateInit extends AppSendMessageState{
-  AppSendMessageStateInit() : super(sendMessage: false, sentSuccessfully: false, sentFinished: false);
+
+class AppSendMessageStateInit extends AppSendMessageState {
+  AppSendMessageStateInit()
+      : super(sendMessage: false, sentSuccessfully: false, sentFinished: false);
 }

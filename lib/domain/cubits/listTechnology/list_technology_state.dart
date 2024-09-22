@@ -1,40 +1,20 @@
 part of 'list_technology_cubit.dart';
 
 class ListTechnologyState {
-  final List<Technology> listTechnologyMobile;
-  final List<Technology> listTechnologyBackend;
-  final List<Technology> listTechnologyFrontend;
-  final List<Technology> listTechnologyLearning;
-  final List<Technology> listTechnologyTools;
-  final List<Technology> listTechnologyServers;
+  final List<Technology> listTechnology;
+  final List<Technology> listFiltered;
   ListTechnologyState(
-      {required this.listTechnologyMobile,
-      required this.listTechnologyBackend,
-      required this.listTechnologyFrontend,
-      required this.listTechnologyLearning,
-      required this.listTechnologyTools,
-      required this.listTechnologyServers});
+      {required this.listTechnology, required this.listFiltered});
 
   factory ListTechnologyState.init() {
-    List<Technology> allTechnology = createListTechnology();
+    List<Technology> listTechnology = createListTechnology();
     return ListTechnologyState(
-        listTechnologyMobile: allTechnology
-            .where((element) => element.typeLanguage == TypeLanguage.MOBILE)
-            .toList(),
-        listTechnologyBackend: allTechnology
-            .where((element) => element.typeLanguage == TypeLanguage.BACKEND)
-            .toList(),
-        listTechnologyFrontend: allTechnology
-            .where((element) => element.typeLanguage == TypeLanguage.FRONTEND)
-            .toList(),
-        listTechnologyLearning: allTechnology
-            .where((element) => element.typeLanguage == TypeLanguage.LEARNING)
-            .toList(),
-        listTechnologyTools: allTechnology
-            .where((element) => element.typeLanguage == TypeLanguage.TOOLS)
-            .toList(),
-        listTechnologyServers: allTechnology
-            .where((element) => element.typeLanguage == TypeLanguage.SERVERS)
-            .toList());
+        listTechnology: listTechnology, listFiltered: listTechnology);
   }
+  ListTechnologyState copyWitch(
+          {required List<Technology>? listTechnology,
+          required List<Technology>? listFiltered}) =>
+      ListTechnologyState(
+          listTechnology: listTechnology ?? this.listTechnology,
+          listFiltered: listFiltered ?? this.listFiltered);
 }

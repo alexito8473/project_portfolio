@@ -8,16 +8,17 @@ import 'package:proyect_porfolio/domain/blocs/appServicesGithub/app_service_gith
 import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../data/dataSource/MenuItems.dart';
+import '../../data/dataSource/menu_items.dart';
+import '../../data/dataSource/project_data.dart';
 import '../../domain/blocs/appCheckVisibilityNavigationTop/app_check_visibility_navigation_top_bloc.dart';
 import '../screens/home_screens.dart';
-import '../widgets/header/aboutMe_widget.dart';
-import '../widgets/contacMe/contactToMe_Widget.dart';
+import '../widgets/contacMe/contact_me_widget.dart';
 import '../widgets/footer/footer_widget.dart';
+import '../widgets/header/about_me_widget.dart';
 import '../widgets/header/header_widegt.dart';
-import '../widgets/technology/listTechnology.dart';
 import '../widgets/project/project_widget.dart';
-import '../widgets/work/listWorks_widget.dart';
+import '../widgets/technology/list_technology_widget.dart';
+import '../widgets/work/list_works_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,10 +33,17 @@ class _HomePageState extends State<HomePage> {
   late final List<GlobalKey> _listGlobalKey;
   final GlobalKey _headerKey = GlobalKey();
 
+  void _preCacheImages() async{
+    for (final project in ProjectRelease.values) {
+      await precacheImage(AssetImage(project.project.imgUrl), context);
+    }
+  }
+
   @override
   void initState() {
-    context.read<AppServiceGithubBloc>().add(ConnectToGithub());
+    _preCacheImages();
     loadWidget();
+    context.read<AppServiceGithubBloc>().add(ConnectToGithub());
     super.initState();
   }
 
@@ -58,7 +66,10 @@ class _HomePageState extends State<HomePage> {
               ResponsiveBreakpoints.of(context).isMobile
                   ? const Expanded(
                       child: AutoSizeText("Full Stack Developer",
-                          style: TextStyle(fontSize: 25), maxLines: 1))
+                          style: TextStyle(fontSize: 28),
+                          maxFontSize: 28,
+                          minFontSize: 2,
+                          maxLines: 1))
                   : const AutoSizeText("Full Stack Developer",
                       style: TextStyle(fontSize: 28), maxLines: 1),
               if (context
@@ -141,10 +152,10 @@ class _HomePageState extends State<HomePage> {
       HeaderWidget(
           assetImageUser: const AssetImage("assets/images/personal.webp"),
           activationKey: _headerKey),
-      AboutMeWidget(key: _listGlobalKey[0]),
-      EducationWidget(key: _listGlobalKey[1]),
-      ListProject(key: _listGlobalKey[2]),
-      ListTechnology(key: _listGlobalKey[3]),
+      EducationWidget(key: _listGlobalKey[0]),
+      ListProject(key: _listGlobalKey[1]),
+      ListTechnology(key: _listGlobalKey[2]),
+      AboutMeWidget(key: _listGlobalKey[3]),
       ContactToMeWidget(key: _listGlobalKey[4]),
       const FooterWidget()
     ];

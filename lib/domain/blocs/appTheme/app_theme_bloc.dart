@@ -7,16 +7,13 @@ part 'app_theme_event.dart';
 part 'app_theme_state.dart';
 
 class AppThemeBloc extends Bloc<AppThemeEvent, AppThemeState> {
-  AppThemeBloc({required AppTheme appTheme, required SharedPreferences prefs})
-      : super(AppThemeState.init(appTheme: appTheme, prefs: prefs)) {
+  late final SharedPreferences prefs;
+  AppThemeBloc({required SharedPreferences prefs})
+      : super(AppThemeState.init(prefs: prefs)) {
     on<ChangeThemeEvent>((event, emit) async {
       await prefs.setBool(
           'isLightMode', state.appTheme.reverse() == AppTheme.LIGHT);
-      emit(AppThemeState(
-          appTheme: state.appTheme.reverse(),
-          prefs: state.prefs,
-          themeDataDark: state.themeDataDark,
-          themeDataLight: state.themeDataLight));
+      emit(AppThemeState(appTheme: state.appTheme.reverse()));
     });
   }
 }

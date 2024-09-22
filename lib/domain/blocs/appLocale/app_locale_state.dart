@@ -20,7 +20,9 @@ enum AppLocale {
 
 class AppLocaleState {
   final AppLocale locale;
+
   AppLocaleState({required this.locale});
+
   factory AppLocaleState.init() => AppLocaleState(locale: AppLocale.SPANISH);
 
   AppLocaleState copyWith({required AppLocale? locale}) =>

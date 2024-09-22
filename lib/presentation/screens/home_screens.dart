@@ -3,6 +3,7 @@ import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import '../../domain/blocs/appCheckVisibilityNavigationTop/app_check_visibility_navigation_top_bloc.dart';
 import '../../domain/blocs/appTheme/app_theme_bloc.dart';
 
@@ -11,6 +12,7 @@ class HomeScreen extends StatefulWidget {
   final UpdateNavigationEvent updateNavigationEvent;
   final Widget topNavigation;
   final List<Widget> listWidgetHome;
+
   const HomeScreen(
       {super.key,
       required this.scrollController,
@@ -22,7 +24,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -51,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           toolbarHeight: ResponsiveBreakpoints.of(context).isMobile ? 65 : 80),
       body: AnimatedBackground(
           behaviour: RandomParticleBehaviour(
+              paint: Paint(),
               options: ParticleOptions(
                   baseColor: Colors.blue,
                   opacityChangeRate: 0.30,
