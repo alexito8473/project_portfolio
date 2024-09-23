@@ -25,7 +25,7 @@ class EducationWidget extends StatelessWidget {
               subIcon: MenuItems.EXPERIENCE.getIcon(size: 40)),
           SizedBox(
               width: ResponsiveBreakpoints.of(context).screenWidth * .8,
-             child: Wrap(
+              child: Wrap(
                   alignment: WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   spacing: ResponsiveBreakpoints.of(context).screenWidth * .1,

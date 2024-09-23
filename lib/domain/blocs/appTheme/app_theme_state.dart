@@ -3,7 +3,6 @@ part of 'app_theme_bloc.dart';
 enum AppTheme {
   LIGHT,
   DARK;
-
   ThemeData getTheme() {
     switch (this) {
       case AppTheme.LIGHT:

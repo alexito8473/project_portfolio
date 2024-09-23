@@ -5,7 +5,6 @@ import '../../repositories/github_repository.dart';
 
 part 'app_service_github_event.dart';
 part 'app_service_github_state.dart';
-
 class AppServiceGithubBloc
     extends Bloc<AppServiceGithubEvent, AppServiceGithubState> {
   final GithubRepository githubRepository;

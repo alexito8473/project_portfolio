@@ -16,5 +16,5 @@ class Technology {
       required this.color,
       required this.typeLanguage,
       required this.typeDescription,
-      this.changeColor=false});
+      this.changeColor = false});
 }

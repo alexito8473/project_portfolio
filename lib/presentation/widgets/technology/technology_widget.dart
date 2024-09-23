@@ -149,6 +149,7 @@ class TechnologyView extends StatelessWidget {
               borderRadius: BorderRadius.circular(0.0),
             ),
             elevation: 24.0);
+
       },
     );
   }

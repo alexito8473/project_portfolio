@@ -25,6 +25,7 @@ class ButtonIconSvg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
       onTap: () async => await launchUrl(uri),
       mouseCursor: SystemMouseCursors.click,

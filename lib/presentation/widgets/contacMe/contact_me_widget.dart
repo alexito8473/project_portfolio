@@ -9,7 +9,6 @@ import 'package:proyect_porfolio/domain/blocs/appSendMessage/app_send_message_bl
 import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
 import 'package:proyect_porfolio/presentation/widgets/customWidget/title_custom.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
 import '../../../data/dataSource/menu_items.dart';
 import '../customWidget/custom_button_widget.dart';
 

@@ -7,7 +7,6 @@ class TitleHome extends StatelessWidget {
   final Widget subIcon;
 
   const TitleHome({super.key, required this.title, required this.subIcon});
-
   @override
   Widget build(BuildContext context) {
     return Container(

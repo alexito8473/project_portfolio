@@ -2,7 +2,6 @@ part of 'app_service_github_bloc.dart';
 
 class AppServiceGithubState {
   final int allCountCommit;
-
   const AppServiceGithubState({required this.allCountCommit});
 
   factory AppServiceGithubState.init() {

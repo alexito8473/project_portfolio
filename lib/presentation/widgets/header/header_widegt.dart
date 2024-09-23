@@ -2,10 +2,11 @@ import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:widget_circular_animator/widget_circular_animator.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../customWidget/custom_button_widget.dart';
 
 class HeaderWidget extends StatelessWidget {

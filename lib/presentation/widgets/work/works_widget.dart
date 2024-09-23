@@ -73,6 +73,7 @@ class WorksWidget extends StatelessWidget {
                       color: Colors.blueAccent)),
               AutoSizeText("NextPort AI",
                   maxLines: 1,
+
                   style: TextStyle(
                       fontSize: secondTileFontSize(context),
                       color: Colors.blue)),

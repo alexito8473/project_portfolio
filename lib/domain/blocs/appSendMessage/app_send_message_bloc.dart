@@ -5,7 +5,6 @@ import '../../repositories/send_message_repository.dart';
 
 part 'app_send_message_event.dart';
 part 'app_send_message_state.dart';
-
 class AppSendMessageBloc
     extends Bloc<AppSendMessageEvent, AppSendMessageState> {
   final SendMessageRepository sendMessageRepository;

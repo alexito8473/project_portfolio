@@ -4,7 +4,6 @@ class AppCheckVisibilityNavigationTopState {
   final bool isActiveBannerTop;
 
   const AppCheckVisibilityNavigationTopState({required this.isActiveBannerTop});
-
   factory AppCheckVisibilityNavigationTopState.init() {
     return const AppCheckVisibilityNavigationTopState(isActiveBannerTop: false);
   }

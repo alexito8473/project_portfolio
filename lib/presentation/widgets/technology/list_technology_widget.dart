@@ -43,7 +43,6 @@ class AnimatedListTechnology extends StatefulWidget {
 
 class _AnimatedListTechnologyState extends State<AnimatedListTechnology> {
   late int counterAnimated;
-
   @override
   void initState() {
     counterAnimated =

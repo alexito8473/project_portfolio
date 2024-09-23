@@ -6,7 +6,6 @@ class ListTechnologyState {
 
   ListTechnologyState(
       {required this.listTechnology, required this.listFiltered});
-
   factory ListTechnologyState.init() {
     List<Technology> listTechnology = createListTechnology();
     return ListTechnologyState(

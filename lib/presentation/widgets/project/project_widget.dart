@@ -147,6 +147,7 @@ class BannerProject extends StatelessWidget {
                                                   ? 30
                                                   : 45);
                                         })))),
+
                             ButtonGithubProject(
                                 uri: Uri.parse(
                                     projectRelease.project.repositoryUrl)),

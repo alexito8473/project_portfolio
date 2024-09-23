@@ -16,7 +16,6 @@ import 'package:proyect_porfolio/domain/repositories/send_message_repository.dar
 import 'package:proyect_porfolio/presentation/pages/home_page.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 void main() async {
   await dotenv.load(fileName: ".env");
   runApp(MyApp(prefs: await SharedPreferences.getInstance()));

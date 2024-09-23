@@ -5,7 +5,6 @@ class Project {
   final String imgUrl;
   final String repositoryUrl;
   final List<String> imgIconLanguage;
-
   const Project(
       {required this.name,
       required this.imgUrl,

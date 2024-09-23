@@ -25,7 +25,8 @@ class AboutMeWidget extends StatelessWidget {
             margin: EdgeInsets.only(
                 bottom: ResponsiveBreakpoints.of(context).screenHeight * 0.2),
             child: Wrap(alignment: WrapAlignment.spaceEvenly, children: [
-              InformationContainerUnderLine(havePaddingSubText: true,
+              InformationContainerUnderLine(
+                  havePaddingSubText: true,
                   width: 500,
                   subTitle: [
                     AppLocalizations.of(context)!.aboutMeDescription1,
@@ -124,10 +125,10 @@ class InformationContainerUnderLine extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: List.generate(
-                    subTitle.length,
-                    (index) => Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: AutoSizeText(
+                subTitle.length,
+                (index) => Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: AutoSizeText(
                         haveMiddleDash
                             ? "- ${subTitle[index]}"
                             : subTitle[index],

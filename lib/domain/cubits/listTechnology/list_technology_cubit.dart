@@ -4,7 +4,6 @@ import 'package:proyect_porfolio/data/models/technology.dart';
 import '../../../data/dataSource/tecnology_data.dart';
 
 part 'list_technology_state.dart';
-
 class ListTechnologyCubit extends Cubit<ListTechnologyState> {
   ListTechnologyCubit() : super(ListTechnologyState.init());
 

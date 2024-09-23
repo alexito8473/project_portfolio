@@ -32,7 +32,6 @@ class _HomePageState extends State<HomePage> {
   late final List<GlobalKey> _listGlobalKey;
   final GlobalKey _headerKey = GlobalKey();
 
-
   @override
   void initState() {
     loadWidget();
