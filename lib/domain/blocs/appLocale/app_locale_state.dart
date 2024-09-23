@@ -3,7 +3,6 @@ part of 'app_locale_bloc.dart';
 enum AppLocale {
   SPANISH(),
   ENGLISH();
-
   Locale getLocal() =>
       this == AppLocale.SPANISH ? const Locale("es") : const Locale("en");
 

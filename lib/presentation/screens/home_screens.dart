@@ -42,7 +42,6 @@ class _HomeScreenState extends State<HomeScreen>
     widget.scrollController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) => Scaffold(
       resizeToAvoidBottomInset: false,

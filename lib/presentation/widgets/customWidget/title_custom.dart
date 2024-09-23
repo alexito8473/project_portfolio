@@ -7,7 +7,6 @@ class TitleHome extends StatelessWidget {
   final Widget subIcon;
 
   const TitleHome({super.key, required this.title, required this.subIcon});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,12 +19,13 @@ class TitleHome extends StatelessWidget {
           children: [
             subIcon,
             const SizedBox(width: 10),
-            Expanded(child:  AutoSizeText(title,
-                style: TextStyle(
-                    fontSize:
-                    ResponsiveBreakpoints.of(context).isMobile ? 30 : 30),
-                maxLines: 1))
-
+            Expanded(
+                child: AutoSizeText(title,
+                    style: TextStyle(
+                        fontSize: ResponsiveBreakpoints.of(context).isMobile
+                            ? 30
+                            : 30),
+                    maxLines: 1))
           ],
         ));
   }

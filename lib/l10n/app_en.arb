@@ -1,6 +1,7 @@
 {
   "aboutMe": "About me",
-  "aboutMeDescription": "I am passionate about programming, always looking for new opportunities to learn and grow. I constantly strive to excel in my sector, combining dedication, a meticulous approach to development and a proactive attitude to face challenges. I enjoy exploring new technologies and trends in the world of programming, which allows me to be at the forefront and offer innovative solutions. My commitment to continuous training is what drives me to improve every day.",
+  "aboutMeDescription1": "I am Alejandro Aguilar Alba, a passionate programmer always looking for new opportunities to learn and grow in the world of technology. I continually strive to excel in the industry, combining unwavering dedication with a meticulous approach to development.",
+  "aboutMeDescription2": "My proactive attitude allows me to effectively face complex challenges, while I enjoy exploring and applying the latest trends and technologies. This keeps me at the forefront and helps me deliver innovative solutions. My commitment to continuous training is what drives my constant evolution, always seeking excellence in each project.",
   "downloadCV": "Download CV",
   "knowledge": "Knowledge",
   "comingSoon": "Coming soon...",
@@ -18,13 +19,17 @@
   "skills2": "Teamwork",
   "skills3": "Proactive communication",
   "textCommit": "Commits made",
-  "practicesNextPort": "- Knowledge of agile methodologies.\n- Experience in real Flutter projects.\n- Experience working with Java.",
+  "practicesNextPort1": "- Knowledge of agile methodologies.",
+  "practicesNextPort2": "- Experience in real Flutter projects.",
+  "practicesNextPort3": "- Experience working with Java.",
+  "descriptionHeader": "Full Stack developer passionate about programming and learning.",
   "workExperience": "Work experience",
   "projects": "Projects",
   "learning": "Learning",
   "tools": "Tools",
   "mobile": "Mobile",
   "server": "Server",
+  "all": "All",
   "experience": "Experience",
   "myExperience": "My experience using",
   "javaExperience": "During two years of training in a Higher Degree, I have developed a solid command of Java, following the best programming practices. I have worked on projects ranging from desktop applications to web applications, always applying principles of modularity, code reuse and design patterns.",
@@ -50,5 +55,8 @@
   "descriptionAppTeacher": "Project carried out in my higher education. It is an application aimed at teachers. Its objective is to be able to keep track of all the students in the app and to be able to see how many hours they have completed in total, as well as being able to see their personal data and finally being able to create a PDF of all their hours and work completed in the practices.",
   "descriptionAppStudent": "Project carried out in my higher education. It is an application aimed at students. Its objective is to control the work carried out in the module's practices, indicating how much time we have spent on the task and its time. It also has a cloud database where you can create a student account or log in with the Firebase authenticator.",
   "descriptionUltraRestaurant": "Project carried out in my higher education. It is an application for a food company that wants to be able to show its products. You can log in or register, and you can also view a product catalogue where you can filter them in different ways.",
-  "descriptionImcCalculator": "Project developed using the Maui .Net framework, it is a body mass index calculator."
+  "descriptionImcCalculator": "Project developed using the Maui .Net framework, it is a body mass index calculator.",
+  "eclipseExperience": "Eclipse is the integrated development environment (IDE) that started my programming journey. I feel very comfortable working in this environment, taking advantage of its advanced tools and features to develop Java projects efficiently and productively. It was the first IDE I used, and it continues to be a fundamental platform in my workflow.",
+  "visualEstudioExperience": "Visual Studio is the integrated development environment (IDE) that I use specifically for working with .NET MAUI. Although it is not my primary tool, I feel comfortable using it for projects on this platform, taking advantage of its powerful tools and features that facilitate efficient development of cross-platform applications. It is a robust solution for my .NET MAUI projects."
+
 }

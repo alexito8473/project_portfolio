@@ -4,7 +4,6 @@ class AppSendMessageState {
   final bool sendMessage;
   final bool sentSuccessfully;
   final bool sentFinished;
-
   const AppSendMessageState(
       {required this.sendMessage,
       required this.sentSuccessfully,

@@ -3,7 +3,6 @@ part of 'app_theme_bloc.dart';
 enum AppTheme {
   LIGHT,
   DARK;
-
   ThemeData getTheme() {
     switch (this) {
       case AppTheme.LIGHT:
@@ -63,6 +62,7 @@ class AppThemeState {
           return AppTheme.DARK;
       }
     }
+
     return AppThemeState(appTheme: selectMode());
   }
 

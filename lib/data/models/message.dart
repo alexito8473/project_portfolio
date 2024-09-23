@@ -3,7 +3,6 @@ class Message {
   final String email;
   final String subject;
   final String message;
-
   const Message(
       {required this.name,
       required this.email,

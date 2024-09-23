@@ -131,17 +131,15 @@ class BannerProject extends StatelessWidget {
                                           return SvgPicture.asset(
                                               projectRelease.project
                                                   .imgIconLanguage[index],
-                                              theme: projectRelease.project
+                                              color: projectRelease.project
                                                       .imgIconLanguage[index]
                                                       .endsWith("github.svg")
-                                                  ? SvgTheme(
-                                                      currentColor: context
-                                                              .watch<
-                                                                  AppThemeBloc>()
-                                                              .state
-                                                              .isDarkMode()
-                                                          ? Colors.white
-                                                          : Colors.black)
+                                                  ? context
+                                                          .watch<AppThemeBloc>()
+                                                          .state
+                                                          .isDarkMode()
+                                                      ? Colors.white
+                                                      : Colors.black
                                                   : null,
                                               width: ResponsiveBreakpoints.of(
                                                           context)
@@ -149,6 +147,7 @@ class BannerProject extends StatelessWidget {
                                                   ? 30
                                                   : 45);
                                         })))),
+
                             ButtonGithubProject(
                                 uri: Uri.parse(
                                     projectRelease.project.repositoryUrl)),

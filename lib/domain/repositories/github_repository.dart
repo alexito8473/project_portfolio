@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 class GithubRepository {
   final String userName;
   final String tokenGithub;
-
   GithubRepository._({required this.userName, required this.tokenGithub});
 
   factory GithubRepository.init() => GithubRepository._(

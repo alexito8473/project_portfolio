@@ -1,6 +1,7 @@
 {
   "aboutMe": "Sobre mi",
-  "aboutMeDescription": "Soy un apasionado de la programación, siempre en busca de nuevas oportunidades para aprender y crecer. Me esfuerzo constantemente por destacar en mi sector, combinando dedicación, un enfoque meticuloso en el desarrollo y una actitud proactiva para enfrentar desafíos. Disfruto explorando nuevas tecnologías y tendencias en el mundo de la programación, lo que me permite estar a la vanguardia y ofrecer soluciones innovadoras. Mi compromiso con la formación continua es lo que me impulsa a mejorar cada día.",
+  "aboutMeDescription1": "Soy Alejandro Aguilar Alba, un programador apasionado y siempre en busca de nuevas oportunidades para aprender y crecer en el mundo de la tecnología. Me esfuerzo continuamente por destacar en el sector, combinando una dedicación inquebrantable con un enfoque meticuloso en el desarrollo.",
+  "aboutMeDescription2": "Soy un apasionado de la programación, siempre en busca de nuevas oportunidades para aprender y crecer. Me esfuerzo constantemente por destacar en mi sector, combinando dedicación, un enfoque meticuloso en el desarrollo y una actitud proactiva para enfrentar desafíos. Disfruto explorando nuevas tecnologías y tendencias en el mundo de la programación, lo que me permite estar a la vanguardia y ofrecer soluciones innovadoras. Mi compromiso con la formación continua es lo que me impulsa a mejorar cada día.",
   "downloadCV": "Descargar CV",
   "knowledge": "Conocimiento",
   "comingSoon": "Proximamente...",
@@ -18,13 +19,17 @@
   "skills2": "Trabajo en equipo",
   "skills3": "Comunicación proactiva",
   "textCommit": "Commits realizados",
-  "practicesNextPort": "- Conocimientos sobre metodologías ágiles.\n- Experiencia en proyecto real de Flutter.\n- Experiencia en trabajar con Java.",
+  "practicesNextPort1": "- Conocimientos sobre metodologías ágiles.",
+  "practicesNextPort2": "- Experiencia en proyecto real de Flutter.",
+  "practicesNextPort3": "- Experiencia en trabajar con Java.",
+  "descriptionHeader": "Desarrollador Full Stack apasionado por la programación y el aprendizaje.",
   "workExperience": "Experiencia laboral",
   "projects": "Proyectos",
   "learning": "Aprendiendo",
   "tools": "Herramientas",
   "mobile": "Móvil",
   "server": "Servidor",
+  "all": "Todo",
   "experience": "Experiencia",
   "myExperience": "Mi Experiencia usando",
   "javaExperience": "Durante dos años de formación en un Grado Superior, he desarrollado un sólido dominio de Java, siguiendo las mejores prácticas de programación. He trabajado en proyectos que van desde aplicaciones de escritorio hasta aplicaciones web, siempre aplicando principios de modularidad, reutilización de código y patrones de diseño.",
@@ -50,5 +55,8 @@
   "descriptionAppTeacher": "Proyecto realizado en mi grado superior. Se trata de una aplicación dirigida para los profesores su objetivo es poder tener un seguimientos de todos los alumnos de la app y poder visualizar cuantas horas llevan en total realizadas, además de poder ver sus datos personales y por último poder realizar un pdf de todas sus horas y trabajo realizado en las practicas.",
   "descriptionAppStudent": "Proyecto realizado en mi grado superior. Se trata de una aplicación dirigida para los estudiantes su objetivo es controlar el trabajo realizado en las practicas del modulo, indicando cuanto tiempo hemos realizado en la tarea y su tiempo, además consta de una base de datos en la nube donde podrás crear una cuenta de estudiante o iniciar sesión con el autentificador de firebase.",
   "descriptionUltraRestaurant": "Proyecto realizado en mi grado superior. Se trata de una aplicación destinada a una empresa de comida, que quiera poder mostrar sus productos, podrás iniciar sesión o registrarte, además podrás visualizar un catalogo de productos donde podrás filtrarlos de distintas formas.",
-  "descriptionImcCalculator": "Proyecto realizado en el framework .Net Maui, se trata de una calculadora sobre el índice de la masa corporal."
+  "descriptionImcCalculator": "Proyecto realizado en el framework .Net Maui, se trata de una calculadora sobre el índice de la masa corporal.",
+  "eclipseExperience": "Eclipse es el entorno de desarrollo integrado (IDE) con el que comencé mi trayectoria en programación. Me siento muy cómodo trabajando en este entorno, aprovechando sus herramientas y características avanzadas para desarrollar proyectos de Java de manera eficiente y productiva. Fue el primer IDE que utilicé, y continúa siendo una plataforma fundamental en mi flujo de trabajo.",
+  "visualEstudioExperience": "Visual Studio es el entorno de desarrollo integrado (IDE) que utilizo específicamente para trabajar con .NET MAUI. Aunque no es mi herramienta principal, me siento cómodo utilizándolo para proyectos en esta plataforma, aprovechando sus potentes herramientas y características que facilitan el desarrollo eficiente de aplicaciones multiplataforma. Es una solución robusta para mis proyectos en .NET MAUI."
+
 }

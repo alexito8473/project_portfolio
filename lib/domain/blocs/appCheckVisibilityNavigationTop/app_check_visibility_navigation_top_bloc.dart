@@ -4,7 +4,6 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 part 'app_check_visibility_navigation_top_event.dart';
 part 'app_check_visibility_navigation_top_state.dart';
-
 class AppCheckVisibilityNavigationTopBloc extends Bloc<
     AppCheckVisibilityNavigationTopEvent,
     AppCheckVisibilityNavigationTopState> {

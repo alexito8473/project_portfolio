@@ -43,33 +43,29 @@ class WorksWidget extends StatelessWidget {
 
   double descriptionFontSize(BuildContext context) {
     if (ResponsiveBreakpoints.of(context).isMobile) {
-      return 16;
+      return 18;
     }
     return 23;
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-        duration: const Duration(milliseconds: 400),
-        padding: const EdgeInsets.all(20),
-        margin: EdgeInsets.only(
-            top: ResponsiveBreakpoints.of(context).isMobile ? 0 : 80),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                colorFilter: context.watch<AppThemeBloc>().state.isDarkMode()
-                    ? ColorFilter.mode(
-                        Colors.black.withOpacity(0.7), BlendMode.darken)
-                    : const ColorFilter.mode(Colors.black54, BlendMode.darken),
-                image: const AssetImage("assets/images/BackgroundBoat.webp"),
-                fit: BoxFit.cover,
-                filterQuality: FilterQuality.none,
-                scale: 1.1),
-            borderRadius: BorderRadius.circular(20)),
+    List<String> listAppLocations = [
+      AppLocalizations.of(context)!.practicesNextPort1,
+      AppLocalizations.of(context)!.practicesNextPort2,
+      AppLocalizations.of(context)!.practicesNextPort3,
+    ];
+    return Padding(
+        padding: const EdgeInsets.only(top: 120),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              AutoSizeText(
+                  "${DateFormat("MMMM yyyy", context.watch<AppLocaleBloc>().state.locale.getLocal().toString()).format(DateTime.utc(2024, 4))} - ${DateFormat("MMMM yyyy", context.watch<AppLocaleBloc>().state.locale.getLocal().toString()).format(DateTime.utc(2024, 6))}",
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontSize: timeFontSize(context), color: Colors.grey)),
               AutoSizeText(AppLocalizations.of(context)!.practices,
                   maxLines: 2,
                   style: TextStyle(
@@ -77,23 +73,22 @@ class WorksWidget extends StatelessWidget {
                       color: Colors.blueAccent)),
               AutoSizeText("NextPort AI",
                   maxLines: 1,
+
                   style: TextStyle(
                       fontSize: secondTileFontSize(context),
                       color: Colors.blue)),
-              AutoSizeText(
-                  "${DateFormat("MMMM yyyy", context.watch<AppLocaleBloc>().state.locale.getLocal().toString()).format(DateTime.utc(2024, 4))} - ${DateFormat("MMMM yyyy", context.watch<AppLocaleBloc>().state.locale.getLocal().toString()).format(DateTime.utc(2024, 6))}",
-                  maxLines: 1,
-                  style: TextStyle(
-                      fontSize: timeFontSize(context), color: Colors.grey)),
               Expanded(
                   child: Align(
-                alignment: Alignment.bottomLeft,
-                child: AutoSizeText(
-                    AppLocalizations.of(context)!.practicesNextPort,
-                    style: TextStyle(
-                        fontSize: descriptionFontSize(context),
-                        color: Colors.white)),
-              ))
+                      alignment: Alignment.bottomLeft,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: listAppLocations
+                              .map((message) => AutoSizeText(message,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      fontSize: descriptionFontSize(context))))
+                              .toList())))
             ]));
   }
 }

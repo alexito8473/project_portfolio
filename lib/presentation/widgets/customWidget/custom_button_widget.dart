@@ -14,23 +14,30 @@ class ButtonIconSvg extends StatelessWidget {
   final Uri uri;
   final String tooltip;
   final String iconUri;
-  final SvgTheme? svgTheme;
+  final bool changeColor;
 
   const ButtonIconSvg(
       {super.key,
       required this.uri,
       required this.tooltip,
       required this.iconUri,
-      this.svgTheme});
+      this.changeColor = false});
 
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
       onTap: () async => await launchUrl(uri),
       mouseCursor: SystemMouseCursors.click,
       child: Tooltip(
         message: tooltip,
-        child: SvgPicture.asset(iconUri, theme: svgTheme, width: 35),
+        child: SvgPicture.asset(iconUri,
+            color: changeColor
+                ? context.watch<AppThemeBloc>().state.isDarkMode()
+                    ? Colors.white
+                    : Colors.black
+                : null,
+            width: 35),
       ),
     );
   }
@@ -41,12 +48,15 @@ class IconButtonNavigator extends StatelessWidget {
   final Color color;
   final String tooltip;
   final String iconUri;
-  final SvgTheme? svgTheme;
+  final bool changeColor;
+
   const IconButtonNavigator(
       {super.key,
       required this.uri,
       required this.tooltip,
-      required this.iconUri,this.svgTheme, required this.color});
+      required this.iconUri,
+      this.changeColor = false,
+      required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +67,11 @@ class IconButtonNavigator extends StatelessWidget {
         color: color,
         onPressed: () async => await launchUrl(uri),
         icon: SvgPicture.asset(iconUri,
-            theme: svgTheme,
+            color: changeColor
+                ? context.watch<AppThemeBloc>().state.isDarkMode()
+                    ? Colors.white
+                    : Colors.black
+                : null,
             width: ResponsiveBreakpoints.of(context).isMobile ? 35 : 50));
   }
 }
@@ -174,6 +188,7 @@ class _ButtonSentEmailState extends State<ButtonSentEmail> {
 
 class ButtonGithubProject extends StatelessWidget {
   final Uri uri;
+
   const ButtonGithubProject({super.key, required this.uri});
 
   @override
@@ -185,9 +200,11 @@ class ButtonGithubProject extends StatelessWidget {
         child: FloatingActionButton(
             onPressed: () async => await launchUrl(uri),
             child: SvgPicture.asset(
-                theme:SvgTheme(currentColor:context.watch<AppThemeBloc>().state.isDarkMode()
-                    ? Colors.white
-                    : Colors.black) ,
+                theme: SvgTheme(
+                    currentColor:
+                        context.watch<AppThemeBloc>().state.isDarkMode()
+                            ? Colors.white
+                            : Colors.black),
                 "assets/svg/github.svg",
                 width: 35)));
   }

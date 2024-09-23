@@ -13,6 +13,7 @@ class FooterWidget extends StatelessWidget {
       width: ResponsiveBreakpoints.of(context).screenWidth,
       alignment: Alignment.center,
       child: const Text(
+
         "©2024 Alejandro Aguilar",
         style: TextStyle(fontSize: 25),
       ),

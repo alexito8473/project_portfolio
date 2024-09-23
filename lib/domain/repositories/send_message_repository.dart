@@ -25,7 +25,6 @@ class SendMessageRepository {
       templateId: dotenv.env["EMAIL_TEMPLATE_ID"]!,
       secondTemplateId: dotenv.env["EMAIL_SECOND_TEMPLATE_ID"]!,
       userId: dotenv.env["EMAIL_USER_ID"]!);
-
   Future<Response> sendEmailToMe(Message message) async {
     return await http.post(uri,
         headers: {'Content-Type': 'application/json'},
