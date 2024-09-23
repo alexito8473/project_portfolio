@@ -25,17 +25,19 @@ class AboutMeWidget extends StatelessWidget {
             margin: EdgeInsets.only(
                 bottom: ResponsiveBreakpoints.of(context).screenHeight * 0.2),
             child: Wrap(alignment: WrapAlignment.spaceEvenly, children: [
-              InformationContainerUnderLine(
-                width: 480,
-                subTitle: [AppLocalizations.of(context)!.aboutMeDescription],
-                backgroundColor: Colors.grey,
-                textAlignSubTitle: TextAlign.justify,
-                haveMiddleDash: false,
-                textStyleSubTitle: TextStyle(
-                    fontSize:
-                        ResponsiveBreakpoints.of(context).isMobile ? 15 : 20,
-                    fontStyle: FontStyle.italic),
-              ),
+              InformationContainerUnderLine(havePaddingSubText: true,
+                  width: 500,
+                  subTitle: [
+                    AppLocalizations.of(context)!.aboutMeDescription1,
+                    AppLocalizations.of(context)!.aboutMeDescription2
+                  ],
+                  backgroundColor: Colors.grey,
+                  textAlignSubTitle: TextAlign.justify,
+                  haveMiddleDash: false,
+                  textStyleSubTitle: TextStyle(
+                      fontSize:
+                          ResponsiveBreakpoints.of(context).isMobile ? 13 : 18,
+                      fontStyle: FontStyle.italic)),
               SizedBox(
                   width: 400,
                   child: Column(
@@ -50,12 +52,11 @@ class AboutMeWidget extends StatelessWidget {
                             ],
                             countLineSubTitle: 2),
                         InformationContainerUnderLine(
-                          title: 'Github',
-                          subTitle: [
-                            "${AppLocalizations.of(context)!.textCommit}: ${context.watch<AppServiceGithubBloc>().state.allCountCommit}"
-                          ],
-                          countLineSubTitle: 2,
-                        ),
+                            title: 'Github',
+                            subTitle: [
+                              "${AppLocalizations.of(context)!.textCommit}: ${context.watch<AppServiceGithubBloc>().state.allCountCommit}"
+                            ],
+                            countLineSubTitle: 2)
                       ]))
             ]))
       ],
@@ -68,6 +69,7 @@ class InformationContainerUnderLine extends StatelessWidget {
   final List<String> subTitle;
   final int? countLineSubTitle;
   final double width;
+  final bool havePaddingSubText;
   final Color backgroundColor;
   final TextAlign? textAlignSubTitle;
   final TextStyle? textStyleSubTitle;
@@ -82,7 +84,8 @@ class InformationContainerUnderLine extends StatelessWidget {
       this.textStyleSubTitle = const TextStyle(fontSize: 18),
       this.textAlignSubTitle,
       this.haveMiddleDash = true,
-      this.width = 400});
+      this.width = 400,
+      this.havePaddingSubText = false});
 
   @override
   Widget build(BuildContext context) {
@@ -118,16 +121,20 @@ class InformationContainerUnderLine extends StatelessWidget {
                     style: const TextStyle(
                         color: Colors.blueAccent, fontSize: 30))),
           Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(
-                subTitle.length,
-                (index) => AutoSizeText(
-                    haveMiddleDash ? "- ${subTitle[index]}" : subTitle[index],
-                    maxLines: countLineSubTitle,
-                    textAlign: textAlignSubTitle,
-                    style: textStyleSubTitle)),
-          ),
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(
+                    subTitle.length,
+                    (index) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: AutoSizeText(
+                        haveMiddleDash
+                            ? "- ${subTitle[index]}"
+                            : subTitle[index],
+                        maxLines: countLineSubTitle,
+                        textAlign: textAlignSubTitle,
+                        style: textStyleSubTitle)),
+              )),
         ]));
   }
 }

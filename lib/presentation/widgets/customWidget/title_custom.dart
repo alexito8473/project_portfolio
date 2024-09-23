@@ -20,12 +20,13 @@ class TitleHome extends StatelessWidget {
           children: [
             subIcon,
             const SizedBox(width: 10),
-            Expanded(child:  AutoSizeText(title,
-                style: TextStyle(
-                    fontSize:
-                    ResponsiveBreakpoints.of(context).isMobile ? 30 : 30),
-                maxLines: 1))
-
+            Expanded(
+                child: AutoSizeText(title,
+                    style: TextStyle(
+                        fontSize: ResponsiveBreakpoints.of(context).isMobile
+                            ? 30
+                            : 30),
+                    maxLines: 1))
           ],
         ));
   }

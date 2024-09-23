@@ -3,6 +3,7 @@ part of 'list_technology_cubit.dart';
 class ListTechnologyState {
   final List<Technology> listTechnology;
   final List<Technology> listFiltered;
+
   ListTechnologyState(
       {required this.listTechnology, required this.listFiltered});
 
@@ -11,6 +12,7 @@ class ListTechnologyState {
     return ListTechnologyState(
         listTechnology: listTechnology, listFiltered: listTechnology);
   }
+
   ListTechnologyState copyWitch(
           {required List<Technology>? listTechnology,
           required List<Technology>? listFiltered}) =>

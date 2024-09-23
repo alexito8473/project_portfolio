@@ -24,6 +24,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final SharedPreferences prefs;
+
   const MyApp({super.key, required this.prefs});
 
   @override
@@ -36,8 +37,7 @@ class MyApp extends StatelessWidget {
               create: (context) => AppSendMessageBloc(
                   sendMessageRepository: SendMessageRepository.init())),
           BlocProvider(create: (context) => ListTechnologyCubit()),
-          BlocProvider(
-              create: (context) => AppThemeBloc(prefs: prefs)),
+          BlocProvider(create: (context) => AppThemeBloc(prefs: prefs)),
           BlocProvider(
               create: (context) => AppServiceGithubBloc(
                   githubRepository: GithubRepository.init())),

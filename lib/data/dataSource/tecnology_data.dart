@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../models/technology.dart';
 
@@ -28,7 +27,7 @@ enum TypeLanguage {
       case TypeLanguage.SERVERS:
         return AppLocalizations.of(context)!.server;
       case TypeLanguage.ALL:
-        return "All";
+        return AppLocalizations.of(context)!.all;
     }
   }
 }
@@ -91,10 +90,9 @@ enum TypeDescription {
       case TypeDescription.JAVASCRIPT:
         return AppLocalizations.of(context)!.javaScriptExperience;
       case TypeDescription.ECLIPSE:
-        //Falta arreglarlo
-        return "Entorno de desarrollo donde";
+        return AppLocalizations.of(context)!.eclipseExperience;
       case TypeDescription.VISUAL_STUDIO:
-        return "Añadir2";
+        return AppLocalizations.of(context)!.visualEstudioExperience;
     }
   }
 }
@@ -184,7 +182,7 @@ List<Technology> createListTechnology() {
         urlIcon: "assets/svg/github.svg",
         color: Colors.grey,
         typeLanguage: TypeLanguage.TOOLS,
-        svgTheme: SvgTheme(currentColor: Colors.white),
+        changeColor: true,
         typeDescription: TypeDescription.GITHUB),
     const Technology(
         name: "IntelliJ",

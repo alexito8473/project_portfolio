@@ -63,6 +63,7 @@ class AppThemeState {
           return AppTheme.DARK;
       }
     }
+
     return AppThemeState(appTheme: selectMode());
   }
 

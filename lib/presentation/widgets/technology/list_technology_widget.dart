@@ -1,9 +1,9 @@
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyect_porfolio/presentation/widgets/technology/technology_widget.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import '../../../data/dataSource/menu_items.dart';
 import '../../../domain/cubits/listTechnology/list_technology_cubit.dart';
 import '../customWidget/title_custom.dart';
@@ -43,6 +43,7 @@ class AnimatedListTechnology extends StatefulWidget {
 
 class _AnimatedListTechnologyState extends State<AnimatedListTechnology> {
   late int counterAnimated;
+
   @override
   void initState() {
     counterAnimated =

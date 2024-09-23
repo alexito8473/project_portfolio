@@ -2,11 +2,10 @@ import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:widget_circular_animator/widget_circular_animator.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../customWidget/custom_button_widget.dart';
 
 class HeaderWidget extends StatelessWidget {
@@ -22,10 +21,10 @@ class HeaderWidget extends StatelessWidget {
           : Colors.green;
 
   double textFontSubTitle(BuildContext context) =>
-      ResponsiveBreakpoints.of(context).isMobile ? 20 : 28;
+      ResponsiveBreakpoints.of(context).isMobile ? 24 : 28;
 
   double textFontTitle(BuildContext context) =>
-      ResponsiveBreakpoints.of(context).isMobile ? 25 : 40;
+      ResponsiveBreakpoints.of(context).isMobile ? 26 : 40;
 
   Color iconColorGitHub(BuildContext context) =>
       context.watch<AppThemeBloc>().state.isDarkMode()
@@ -97,7 +96,7 @@ class HeaderWidget extends StatelessWidget {
                         width: 500,
                         height: 80,
                         child: AutoSizeText(
-                            "Desarrollador Full Stack apasionado por la programación y el aprendizaje.",
+                            AppLocalizations.of(context)!.descriptionHeader,
                             maxLines: 3,
                             minFontSize: 2,
                             maxFontSize: 28,
@@ -116,15 +115,13 @@ class HeaderWidget extends StatelessWidget {
                               color: iconColorGitHub(context),
                               tooltip: 'Github',
                               iconUri: 'assets/svg/github.svg',
-                              svgTheme: SvgTheme(
-                                  currentColor: iconColorGitHub(context))),
+                              changeColor: true),
                           IconButtonNavigator(
-                            uri: Uri.parse(
-                                'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
-                            color: Colors.blue,
-                            tooltip: 'Linkedin',
-                            iconUri: 'assets/svg/linkedin.svg',
-                          ),
+                              uri: Uri.parse(
+                                  'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
+                              color: Colors.blue,
+                              tooltip: 'Linkedin',
+                              iconUri: 'assets/svg/linkedin.svg'),
                           const ButtonDownloadPdf()
                         ]),
                   ])),
@@ -138,11 +135,11 @@ class HeaderTop extends StatelessWidget {
   const HeaderTop({super.key});
 
   int countWidgetInPage(double widthPage) {
-    if (widthPage < 650) return 0;
-    if (widthPage < 682) return 1;
-    if (widthPage < 730) return 2;
-    if (widthPage < 980) return 3;
-    if (widthPage < 1050) return 4;
+    if (widthPage < 670) return 0;
+    if (widthPage < 730) return 1;
+    if (widthPage < 780) return 2;
+    if (widthPage < 1000) return 3;
+    if (widthPage < 1100) return 4;
     return 5;
   }
 
@@ -170,7 +167,6 @@ class HeaderTop extends StatelessWidget {
                                       radius: 150,
                                       backgroundColor: Colors.white);
                                 }
-
                                 return child;
                               },
                               filterQuality: FilterQuality.none)))),
@@ -181,23 +177,17 @@ class HeaderTop extends StatelessWidget {
             if (countWidget > 3) SizedBox(width: widthPage * 0.01),
             if (countWidget > 2)
               ButtonIconSvg(
-                uri: Uri.parse('https://github.com/alexito8473'),
-                tooltip: 'Github',
-                iconUri: 'assets/svg/github.svg',
-                svgTheme: SvgTheme(
-                    currentColor:
-                        context.watch<AppThemeBloc>().state.isDarkMode()
-                            ? Colors.white
-                            : Colors.black),
-              ),
+                  uri: Uri.parse('https://github.com/alexito8473'),
+                  tooltip: 'Github',
+                  iconUri: 'assets/svg/github.svg',
+                  changeColor: true),
             if (countWidget > 2) SizedBox(width: widthPage * 0.01),
             if (countWidget > 1)
               ButtonIconSvg(
-                uri: Uri.parse(
-                    'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
-                tooltip: 'Linkedin',
-                iconUri: 'assets/svg/linkedin.svg',
-              ),
+                  uri: Uri.parse(
+                      'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
+                  tooltip: 'Linkedin',
+                  iconUri: 'assets/svg/linkedin.svg'),
             if (countWidget > 1) SizedBox(width: widthPage * 0.01),
             if (countWidget > 0)
               const Padding(

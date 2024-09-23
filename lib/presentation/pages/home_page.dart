@@ -9,7 +9,6 @@ import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../data/dataSource/menu_items.dart';
-import '../../data/dataSource/project_data.dart';
 import '../../domain/blocs/appCheckVisibilityNavigationTop/app_check_visibility_navigation_top_bloc.dart';
 import '../screens/home_screens.dart';
 import '../widgets/contacMe/contact_me_widget.dart';
@@ -33,15 +32,9 @@ class _HomePageState extends State<HomePage> {
   late final List<GlobalKey> _listGlobalKey;
   final GlobalKey _headerKey = GlobalKey();
 
-  void _preCacheImages() async{
-    for (final project in ProjectRelease.values) {
-      await precacheImage(AssetImage(project.project.imgUrl), context);
-    }
-  }
 
   @override
   void initState() {
-    _preCacheImages();
     loadWidget();
     context.read<AppServiceGithubBloc>().add(ConnectToGithub());
     super.initState();
@@ -64,12 +57,18 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ResponsiveBreakpoints.of(context).isMobile
-                  ? const Expanded(
-                      child: AutoSizeText("Full Stack Developer",
-                          style: TextStyle(fontSize: 28),
-                          maxFontSize: 28,
-                          minFontSize: 2,
-                          maxLines: 1))
+                  ? Expanded(
+                      child: Container(
+                          constraints: const BoxConstraints(
+                            minHeight: 10,
+                            maxHeight: 65,
+                          ),
+                          child: const AutoSizeText("Full Stack Developer",
+                              style: TextStyle(fontSize: 28),
+                              maxFontSize: 28,
+                              softWrap: false,
+                              minFontSize: 2,
+                              maxLines: 1)))
                   : const AutoSizeText("Full Stack Developer",
                       style: TextStyle(fontSize: 28), maxLines: 1),
               if (context
@@ -88,8 +87,7 @@ class _HomePageState extends State<HomePage> {
                                 .read<AppLocaleBloc>()
                                 .add(ChangeLocalEvent()),
                             icon: Text(
-                                context
-                                    .watch<AppLocaleBloc>()
+                                BlocProvider.of<AppLocaleBloc>(context)
                                     .state
                                     .locale
                                     .getLenguajeCode(),
@@ -98,8 +96,7 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () => context
                                 .read<AppThemeBloc>()
                                 .add(ChangeThemeEvent()),
-                            icon: context
-                                .watch<AppThemeBloc>()
+                            icon: BlocProvider.of<AppThemeBloc>(context)
                                 .state
                                 .appTheme
                                 .getIcon()),
