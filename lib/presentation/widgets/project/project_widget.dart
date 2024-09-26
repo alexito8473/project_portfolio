@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proyect_porfolio/presentation/widgets/customWidget/title_custom.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
 import '../../../data/dataSource/menu_items.dart';
 import '../../../data/dataSource/project_data.dart';
 import '../../../domain/blocs/appTheme/app_theme_bloc.dart';
@@ -34,13 +34,38 @@ class _ListProjectState extends State<ListProject> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: ResponsiveBreakpoints.of(context).screenHeight,
-        constraints: const BoxConstraints(minHeight: 600),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          TitleHome(
-              title: AppLocalizations.of(context)!.projects,
-              subIcon: MenuItems.PROJECT.getIcon(size: 40)),
+          SizedBox(
+              width: ResponsiveBreakpoints.of(context).screenWidth * 0.7,
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.start,
+                alignment: WrapAlignment.spaceBetween,
+                children: [
+                  TitleHome(
+                    title: AppLocalizations.of(context)!.projects,
+                    subIcon: MenuItems.PROJECT.getIcon(size: 40),
+                    haveWidth: false,
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.green,
+                        shadowColor: Colors.greenAccent,
+                        elevation: 5,
+                        // Elevación
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 15),
+                      ),
+                      onPressed: () =>
+                          context.go("/projects"),
+                      child: const AutoSizeText("Ver todos los proyectos",
+                          style: TextStyle(fontSize: 18), maxLines: 1))
+                ]
+              )),
           Container(
               padding: EdgeInsets.only(
                   top: ResponsiveBreakpoints.of(context).screenHeight * 0.05),
@@ -48,7 +73,7 @@ class _ListProjectState extends State<ListProject> {
               height: 420,
               child: FlutterCarousel(
                   items: List.generate(
-                      ProjectRelease.values.length,
+                      4,
                       (index) => BannerProject(
                           projectRelease: ProjectRelease.values[index])),
                   options: FlutterCarouselOptions(
@@ -63,95 +88,90 @@ class _ListProjectState extends State<ListProject> {
 
 class BannerProject extends StatelessWidget {
   final ProjectRelease projectRelease;
-
-  const BannerProject({super.key, required this.projectRelease});
+  final double? height;
+  const BannerProject({super.key, required this.projectRelease, this.height});
 
   @override
-  Widget build(BuildContext context) => RepaintBoundary(
-      child: AnimatedContainer(
-          duration: const Duration(milliseconds: 400),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(45),
-              image: DecorationImage(
-                  scale: 1.2,
-                  image: AssetImage(projectRelease.project.imgUrl),
-                  fit: BoxFit.cover,
-                  colorFilter: context.watch<AppThemeBloc>().state.isDarkMode()
-                      ? ColorFilter.mode(
-                          Colors.black.withOpacity(0.7), BlendMode.darken)
-                      : const ColorFilter.mode(
-                          Colors.black54, BlendMode.darken),
-                  alignment: Alignment.topCenter,
-                  filterQuality: FilterQuality.none)),
-          child: Stack(children: [
-            Padding(
-                padding: const EdgeInsets.all(30),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                          height: 50,
-                          child: AutoSizeText(
-                              maxLines: 1,
-                              projectRelease.project.name,
-                              style: const TextStyle(
-                                  fontSize: 25,
-                                  color: Colors.blueAccent,
-                                  fontWeight: FontWeight.bold))),
-                      Expanded(
-                          child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: AutoSizeText(
-                                  projectRelease.getDescription(context),
-                                  style: const TextStyle(
-                                      fontSize: 15, color: Colors.white),
-                                  textAlign: TextAlign.justify))),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                                child: Container(
-                                    padding: const EdgeInsets.all(2),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                              color: Colors.white12,
-                                              spreadRadius: 4,
-                                              blurRadius: 4)
-                                        ]),
-                                    child: Wrap(
-                                        alignment: WrapAlignment.spaceAround,
-                                        children: List.generate(
-                                            projectRelease
-                                                .project
-                                                .imgIconLanguage
-                                                .length, (index) {
-                                          return SvgPicture.asset(
-                                              projectRelease.project
-                                                  .imgIconLanguage[index],
-                                              color: projectRelease.project
-                                                      .imgIconLanguage[index]
-                                                      .endsWith("github.svg")
-                                                  ? context
-                                                          .watch<AppThemeBloc>()
-                                                          .state
-                                                          .isDarkMode()
-                                                      ? Colors.white
-                                                      : Colors.black
-                                                  : null,
-                                              width: ResponsiveBreakpoints.of(
-                                                          context)
-                                                      .isMobile
-                                                  ? 30
-                                                  : 45);
-                                        })))),
-
-                            ButtonGithubProject(
-                                uri: Uri.parse(
-                                    projectRelease.project.repositoryUrl)),
-                          ])
-                    ]))
-          ])));
+  Widget build(BuildContext context) => AnimatedContainer(
+      height: height,
+      duration: const Duration(milliseconds: 400),
+      margin: EdgeInsets.only(
+          bottom: ResponsiveBreakpoints.of(context).screenHeight * 0.02),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(45),
+          image: DecorationImage(
+              scale: 1.2,
+              image: AssetImage(projectRelease.project.imgUrl),
+              fit: BoxFit.cover,
+              colorFilter: context.watch<AppThemeBloc>().state.isDarkMode()
+                  ? ColorFilter.mode(
+                      Colors.black.withOpacity(0.7), BlendMode.darken)
+                  : const ColorFilter.mode(Colors.black54, BlendMode.darken),
+              alignment: Alignment.topCenter,
+              filterQuality: FilterQuality.none)),
+      child: Stack(children: [
+        Padding(
+            padding: const EdgeInsets.all(30),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              SizedBox(
+                  height: 50,
+                  child: AutoSizeText(
+                      maxLines: 1,
+                      projectRelease.project.name,
+                      style: const TextStyle(
+                          fontSize: 25,
+                          color: Colors.blueAccent,
+                          fontWeight: FontWeight.bold))),
+              Expanded(
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: AutoSizeText(
+                          projectRelease.getDescription(context),
+                          style: const TextStyle(
+                              fontSize: 15, color: Colors.white),
+                          textAlign: TextAlign.justify))),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                        child: Container(
+                            padding: const EdgeInsets.all(1),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.white12,
+                                      spreadRadius: 4,
+                                      blurRadius: 4)
+                                ]),
+                            child: Wrap(
+                                alignment: WrapAlignment.spaceAround,
+                                children: List.generate(
+                                    projectRelease.project.imgIconLanguage
+                                        .length, (index) {
+                                  return SvgPicture.asset(
+                                      projectRelease
+                                          .project.imgIconLanguage[index],
+                                      color: projectRelease
+                                              .project.imgIconLanguage[index]
+                                              .endsWith("github.svg")
+                                          ? context
+                                                  .watch<AppThemeBloc>()
+                                                  .state
+                                                  .isDarkMode()
+                                              ? Colors.white
+                                              : Colors.black
+                                          : null,
+                                      width: ResponsiveBreakpoints.of(context)
+                                              .isMobile
+                                          ? 28
+                                          : 42);
+                                })))),
+                    ButtonGithubProject(
+                        uri: Uri.parse(projectRelease.project.repositoryUrl)),
+                  ])
+            ]))
+      ]));
 }

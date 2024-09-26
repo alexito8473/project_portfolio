@@ -76,7 +76,18 @@ enum ProjectRelease {
             "assets/svg/visualStudio.svg",
             "assets/svg/github.svg"
           ],
-          repositoryUrl: 'https://github.com/alexito8473/TrabajoAndroid'));
+          repositoryUrl: 'https://github.com/alexito8473/TrabajoAndroid')),
+  PAINT_VANILLA(
+      project: Project(
+          name: "Paint vanilla",
+          imgUrl: "assets/images/projects/paintVanilla/1.webp",
+          imgIconLanguage: [
+            "assets/svg/programLanguage/html.svg",
+            "assets/svg/programLanguage/css.svg",
+            "assets/svg/visualStudioCode.svg",
+            "assets/svg/github.svg"
+          ],
+          repositoryUrl: 'https://github.com/alexito8473/paintProject'));
 
   const ProjectRelease({required this.project});
 
@@ -98,6 +109,8 @@ enum ProjectRelease {
         return AppLocalizations.of(context)!.descriptionUltraRestaurant;
       case ProjectRelease.IMC_CALCULATOR:
         return AppLocalizations.of(context)!.descriptionImcCalculator;
+      case ProjectRelease.PAINT_VANILLA:
+        return AppLocalizations.of(context)!.descriptionProjectPaint;
     }
   }
 }

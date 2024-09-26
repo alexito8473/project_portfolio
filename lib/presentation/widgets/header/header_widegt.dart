@@ -57,7 +57,6 @@ class HeaderWidget extends StatelessWidget {
         alignment: WrapAlignment.center,
         children: [
           SizedBox(
-            key: activationKey,
             width: 500,
             child: WidgetCircularAnimator(
                 outerColor: Colors.blueAccent,
@@ -78,6 +77,7 @@ class HeaderWidget extends StatelessWidget {
                         width: 300))),
           ),
           SizedBox(
+              key: activationKey,
               width: 500,
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -136,65 +136,71 @@ class HeaderTop extends StatelessWidget {
   const HeaderTop({super.key});
 
   int countWidgetInPage(double widthPage) {
-    if (widthPage < 670) return 0;
-    if (widthPage < 730) return 1;
-    if (widthPage < 780) return 2;
-    if (widthPage < 1000) return 3;
-    if (widthPage < 1100) return 4;
+    if (widthPage < 690) return 0;
+    if (widthPage < 750) return 1;
+    if (widthPage < 820) return 2;
+    if (widthPage < 1050) return 3;
+    if (widthPage < 1250) return 4;
     return 5;
+  }
+
+  double paddingWidgetInPage(double widthPage) {
+    if (widthPage < 690) return 0;
+    if (widthPage < 750) return widthPage * 0.17;
+    if (widthPage < 820) return widthPage * 0.12;
+    if (widthPage < 1050) return widthPage * 0.1;
+    if (widthPage < 1250) return widthPage * 0.07;
+    return 0;
   }
 
   @override
   Widget build(BuildContext context) {
     double widthPage = ResponsiveBreakpoints.of(context).screenWidth;
     int countWidget = countWidgetInPage(widthPage);
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (countWidget == 5)
-              FadeIn(
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: ClipOval(
-                          child: Image(
-                              image: const AssetImage(
-                                  "assets/images/personal.webp"),
-                              frameBuilder: (context, child, frame,
-                                  wasSynchronouslyLoaded) {
-                                if (frame == null) {
-                                  return const CircleAvatar(
-                                      radius: 150,
-                                      backgroundColor: Colors.white);
-                                }
-                                return child;
-                              },
-                              filterQuality: FilterQuality.none)))),
-            if (countWidget == 5) SizedBox(width: widthPage * 0.01),
-            if (countWidget > 3)
-              const AutoSizeText("Alejandro Aguilar",
-                  maxLines: 1, style: TextStyle(fontSize: 25)),
-            if (countWidget > 3) SizedBox(width: widthPage * 0.01),
-            if (countWidget > 2)
-              ButtonIconSvg(
-                  uri: Uri.parse('https://github.com/alexito8473'),
-                  tooltip: 'Github',
-                  iconUri: 'assets/svg/github.svg',
-                  changeColor: true),
-            if (countWidget > 2) SizedBox(width: widthPage * 0.01),
-            if (countWidget > 1)
-              ButtonIconSvg(
-                  uri: Uri.parse(
-                      'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
-                  tooltip: 'Linkedin',
-                  iconUri: 'assets/svg/linkedin.svg'),
-            if (countWidget > 1) SizedBox(width: widthPage * 0.01),
-            if (countWidget > 0)
-              const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: ButtonDownloadPdf()),
-          ],
-        ));
+    return Container(
+        padding: EdgeInsets.only(
+            top: 5, bottom: 5, left: paddingWidgetInPage(widthPage)),
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          if (countWidget == 5)
+            FadeIn(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: ClipOval(
+                        child: Image(
+                            image:
+                                const AssetImage("assets/images/personal.webp"),
+                            frameBuilder: (context, child, frame,
+                                wasSynchronouslyLoaded) {
+                              if (frame == null) {
+                                return const CircleAvatar(
+                                    radius: 150, backgroundColor: Colors.white);
+                              }
+                              return child;
+                            },
+                            filterQuality: FilterQuality.none)))),
+          if (countWidget == 5) SizedBox(width: widthPage * 0.01),
+          if (countWidget > 3)
+            const AutoSizeText("Alejandro Aguilar",
+                maxLines: 1, style: TextStyle(fontSize: 25)),
+          if (countWidget > 3) SizedBox(width: widthPage * 0.01),
+          if (countWidget > 2)
+            ButtonIconSvg(
+                uri: Uri.parse('https://github.com/alexito8473'),
+                tooltip: 'Github',
+                iconUri: 'assets/svg/github.svg',
+                changeColor: true),
+          if (countWidget > 2) SizedBox(width: widthPage * 0.01),
+          if (countWidget > 1)
+            ButtonIconSvg(
+                uri: Uri.parse(
+                    'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
+                tooltip: 'Linkedin',
+                iconUri: 'assets/svg/linkedin.svg'),
+          if (countWidget > 1) SizedBox(width: widthPage * 0.01),
+          if (countWidget > 0)
+            const Padding(
+                padding: EdgeInsets.symmetric(vertical: 5),
+                child: ButtonDownloadPdf())
+        ]));
   }
 }

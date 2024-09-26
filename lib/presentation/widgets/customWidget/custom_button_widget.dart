@@ -198,6 +198,7 @@ class ButtonGithubProject extends StatelessWidget {
         width: 80,
         height: 45,
         child: FloatingActionButton(
+          heroTag: null,
             onPressed: () async => await launchUrl(uri),
             child: SvgPicture.asset(
                 theme: SvgTheme(

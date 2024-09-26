@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:proyect_porfolio/domain/blocs/appCheckVisibilityNavigationTop/app_check_visibility_navigation_top_bloc.dart';
+import 'package:proyect_porfolio/domain/blocs/appCheckVisibilityNavigationTop/app_banner_top_bloc.dart';
 import 'package:proyect_porfolio/domain/blocs/appLocale/app_locale_bloc.dart';
 import 'package:proyect_porfolio/domain/blocs/appSendMessage/app_send_message_bloc.dart';
 import 'package:proyect_porfolio/domain/blocs/appServicesGithub/app_service_github_bloc.dart';
@@ -13,9 +13,11 @@ import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
 import 'package:proyect_porfolio/domain/cubits/listTechnology/list_technology_cubit.dart';
 import 'package:proyect_porfolio/domain/repositories/github_repository.dart';
 import 'package:proyect_porfolio/domain/repositories/send_message_repository.dart';
-import 'package:proyect_porfolio/presentation/pages/home_page.dart';
+
+import 'package:proyect_porfolio/presentation/route/route.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 void main() async {
   await dotenv.load(fileName: ".env");
   runApp(MyApp(prefs: await SharedPreferences.getInstance()));
@@ -30,8 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(
-              create: (context) => AppCheckVisibilityNavigationTopBloc()),
+          BlocProvider(create: (context) => AppBannerTopBloc()),
           BlocProvider(
               create: (context) => AppSendMessageBloc(
                   sendMessageRepository: SendMessageRepository.init())),
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
         ],
         child:
             BlocBuilder<AppThemeBloc, AppThemeState>(builder: (context, state) {
-          return MaterialApp(
+          return MaterialApp.router(
               localizationsDelegates: const [
                 AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,
@@ -58,14 +59,15 @@ class MyApp extends StatelessWidget {
               supportedLocales: const [Locale("en", ""), Locale("es", "")],
               title: 'Portfolio Alejandro',
               theme: state.getTheme(),
+              routerConfig: router,
+
               builder: (context, child) =>
                   ResponsiveBreakpoints.builder(child: child!, breakpoints: [
                     const Breakpoint(start: 0, end: 600, name: "MOBILE"),
                     const Breakpoint(start: 600, end: 1100, name: "TABLET"),
                     const Breakpoint(
                         start: 1800, end: double.infinity, name: "DESKTOP")
-                  ]),
-              home: const HomePage());
+                  ]));
         }));
   }
 }
