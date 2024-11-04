@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/project.dart';
+
 enum ProjectRelease {
   TASTYDASH(
       project: Project(
@@ -10,8 +11,7 @@ enum ProjectRelease {
           imgIconLanguage: [
             "assets/svg/programLanguage/flutter.svg",
             "assets/svg/programLanguage/firebase.svg",
-            "assets/svg/intellij.svg",
-            "assets/svg/github.svg",
+            "assets/svg/intellij.svg"
           ],
           repositoryUrl: 'https://github.com/alexito8473/TastyDashProject')),
   GOMOKU(
@@ -20,8 +20,7 @@ enum ProjectRelease {
           imgUrl: "assets/images/projects/gomoku/1.png",
           imgIconLanguage: [
             "assets/svg/programLanguage/java.svg",
-            "assets/svg/eclipse.svg",
-            "assets/svg/github.svg"
+            "assets/svg/eclipse.svg"
           ],
           repositoryUrl:
               'https://github.com/alexito8473/gomoku-Alejandro-Aguilar')),
@@ -31,8 +30,7 @@ enum ProjectRelease {
           imgUrl: "assets/images/projects/goReversi/1.webp",
           imgIconLanguage: [
             "assets/svg/programLanguage/java.svg",
-            "assets/svg/eclipse.svg",
-            "assets/svg/github.svg"
+            "assets/svg/eclipse.svg"
           ],
           repositoryUrl: 'https://github.com/alexito8473/Go')),
   APP_TEACHER(
@@ -42,8 +40,7 @@ enum ProjectRelease {
           imgIconLanguage: [
             "assets/svg/programLanguage/maui.svg",
             "assets/svg/visualStudio.svg",
-            "assets/svg/programLanguage/firebase.svg",
-            "assets/svg/github.svg"
+            "assets/svg/programLanguage/firebase.svg"
           ],
           repositoryUrl: 'https://github.com/alexito8473/TastyDashProject')),
   APP_STUDENT(
@@ -53,8 +50,7 @@ enum ProjectRelease {
           imgIconLanguage: [
             "assets/svg/programLanguage/maui.svg",
             "assets/svg/visualStudio.svg",
-            "assets/svg/programLanguage/firebase.svg",
-            "assets/svg/github.svg"
+            "assets/svg/programLanguage/firebase.svg"
           ],
           repositoryUrl: 'https://github.com/alexito8473/TastyDashProject')),
   ULTRA_RESTAURANT(
@@ -63,8 +59,7 @@ enum ProjectRelease {
           imgUrl: "assets/images/projects/ultraRestaurant/1.webp",
           imgIconLanguage: [
             "assets/svg/programLanguage/kotlin.svg",
-            "assets/svg/intellij.svg",
-            "assets/svg/github.svg"
+            "assets/svg/intellij.svg"
           ],
           repositoryUrl: 'https://github.com/alexito8473/TrabajoAndroid')),
   IMC_CALCULATOR(
@@ -73,8 +68,7 @@ enum ProjectRelease {
           imgUrl: "assets/images/projects/imcCalculator/1.webp",
           imgIconLanguage: [
             "assets/svg/programLanguage/maui.svg",
-            "assets/svg/visualStudio.svg",
-            "assets/svg/github.svg"
+            "assets/svg/visualStudio.svg"
           ],
           repositoryUrl: 'https://github.com/alexito8473/TrabajoAndroid')),
   PAINT_VANILLA(
@@ -84,10 +78,22 @@ enum ProjectRelease {
           imgIconLanguage: [
             "assets/svg/programLanguage/html.svg",
             "assets/svg/programLanguage/css.svg",
-            "assets/svg/visualStudioCode.svg",
-            "assets/svg/github.svg"
+            "assets/svg/programLanguage/javascript.svg",
+            "assets/svg/visualStudioCode.svg"
           ],
-          repositoryUrl: 'https://github.com/alexito8473/paintProject'));
+          urlPage: "https://paintprojectalejandroaguilaralba.vercel.app/",
+          repositoryUrl: 'https://github.com/alexito8473/paintProject')),
+  TIC_TAC_TOE(
+      project: Project(
+          name: "Tic tac toe",
+          imgUrl: "assets/images/projects/ticTacToe/1.webp",
+          imgIconLanguage: [
+            "assets/svg/programLanguage/react.svg",
+            "assets/svg/programLanguage/javascript.svg",
+            "assets/svg/visualStudioCode.svg"
+          ],
+          urlPage: "https://project-tic-tac-toe-seven.vercel.app/",
+          repositoryUrl: 'https://github.com/alexito8473/project-tic-tac-toe'));
 
   const ProjectRelease({required this.project});
 
@@ -111,6 +117,8 @@ enum ProjectRelease {
         return AppLocalizations.of(context)!.descriptionImcCalculator;
       case ProjectRelease.PAINT_VANILLA:
         return AppLocalizations.of(context)!.descriptionProjectPaint;
+      case ProjectRelease.TIC_TAC_TOE:
+        return AppLocalizations.of(context)!.descriptionTicTacToe;
     }
   }
 }

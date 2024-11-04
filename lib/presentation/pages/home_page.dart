@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyect_porfolio/domain/blocs/appServicesGithub/app_service_github_bloc.dart';
@@ -32,14 +31,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  void scrollToItem(GlobalKey key) {
-    Scrollable.ensureVisible(
-      key.currentContext!,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.linear,
-    );
-  }
-
+  void scrollToItem(GlobalKey key) => Scrollable.ensureVisible(
+        key.currentContext!,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.linear,
+      );
 
   void loadWidget() {
     _listGlobalKey = [

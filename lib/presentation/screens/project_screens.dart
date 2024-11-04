@@ -34,6 +34,7 @@ class _ProjectScreensState extends State<ProjectScreens>
 
   @override
   Widget build(BuildContext context) {
+    int countColum=countColumns();
     return Scaffold(
         appBar: AppBar(
             title: AutoSizeText(AppLocalizations.of(context)!.projects,
@@ -95,18 +96,20 @@ class _ProjectScreensState extends State<ProjectScreens>
                         ResponsiveBreakpoints.of(context).isMobile ? 6 : 10)),
             vsync: this,
             child: MasonryGridView.count(
-                crossAxisCount: countColumns(),
+                crossAxisCount: countColum,
                 addRepaintBoundaries: true,
                 mainAxisSpacing: ResponsiveBreakpoints.of(context).screenHeight * 0.01,
                 crossAxisSpacing: ResponsiveBreakpoints.of(context).screenWidth * 0.01,
                 padding: EdgeInsets.only(left: ResponsiveBreakpoints.of(context).screenWidth * 0.08, right: ResponsiveBreakpoints.of(context).screenWidth * 0.08, top: ResponsiveBreakpoints.of(context).screenHeight * 0.1),
                 itemCount: ProjectRelease.values.length,
                 itemBuilder: (context, index) {
-                  return BannerProject(
+                  return Padding(
+                      padding:index<countColum? EdgeInsets.only(top: (index%2==0)?60:0):EdgeInsets.zero,
+                  child:BannerProject(
                       projectRelease: ProjectRelease.values[index],
                       height: ResponsiveBreakpoints.of(context).isMobile
-                          ? 400
-                          : (index % 5 + 3) * 100);
+                          ? 500
+                          : (index % 5 + 3) * 130));
                 })));
   }
 }

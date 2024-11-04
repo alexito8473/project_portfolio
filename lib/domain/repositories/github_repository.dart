@@ -35,7 +35,7 @@ class GithubRepository {
           },
         );
 
-        if (commitsResponse.statusCode == 200) {
+        if (commitsResponse.statusCode == 200 ) {
           var contributorsData = json.decode(commitsResponse.body);
           for (var contributor in contributorsData) {
             countCommits += int.parse(contributor["total"].toString());

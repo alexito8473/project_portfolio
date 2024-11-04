@@ -13,7 +13,6 @@ import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
 import 'package:proyect_porfolio/domain/cubits/listTechnology/list_technology_cubit.dart';
 import 'package:proyect_porfolio/domain/repositories/github_repository.dart';
 import 'package:proyect_porfolio/domain/repositories/send_message_repository.dart';
-
 import 'package:proyect_porfolio/presentation/route/route.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,7 +59,6 @@ class MyApp extends StatelessWidget {
               title: 'Portfolio Alejandro',
               theme: state.getTheme(),
               routerConfig: router,
-
               builder: (context, child) =>
                   ResponsiveBreakpoints.builder(child: child!, breakpoints: [
                     const Breakpoint(start: 0, end: 600, name: "MOBILE"),

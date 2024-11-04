@@ -119,14 +119,13 @@ class TechnologyView extends StatelessWidget {
                                   icon: const Icon(Icons.close))
                             ],
                           )),
-                      Padding(
+                      Expanded(child:Padding(
                         padding: const EdgeInsets.only(top: 8),
                         child: AutoSizeText(
                           technology.typeDescription.getDescription(context),
                           style: const TextStyle(fontSize: 15),
                           textAlign: TextAlign.justify,
-
-                      )),
+                        )) ),
                       Container(
                           height: 60,
                           alignment: Alignment.bottomLeft,

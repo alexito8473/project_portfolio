@@ -25,7 +25,6 @@ class ButtonIconSvg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return InkWell(
       onTap: () async => await launchUrl(uri),
       mouseCursor: SystemMouseCursors.click,
@@ -186,27 +185,26 @@ class _ButtonSentEmailState extends State<ButtonSentEmail> {
   }
 }
 
-class ButtonGithubProject extends StatelessWidget {
+class ButtonNavigation extends StatelessWidget {
   final Uri uri;
-
-  const ButtonGithubProject({super.key, required this.uri});
-
+  final String urlSvg;
+  const ButtonNavigation({super.key, required this.uri, required this.urlSvg});
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.only(left: 10),
         width: 80,
         height: 45,
-        child: FloatingActionButton(
-          heroTag: null,
+        margin: const EdgeInsets.only(right: 10),
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blueGrey.shade700.withOpacity(0.7),
+              shadowColor: Colors.blueGrey.shade700,
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
             onPressed: () async => await launchUrl(uri),
-            child: SvgPicture.asset(
-                theme: SvgTheme(
-                    currentColor:
-                        context.watch<AppThemeBloc>().state.isDarkMode()
-                            ? Colors.white
-                            : Colors.black),
-                "assets/svg/github.svg",
-                width: 35)));
+            child: SvgPicture.asset(color: Colors.white, urlSvg, width: 35)));
   }
 }

@@ -27,11 +27,11 @@ class TitleHome extends StatelessWidget {
           children: [
             subIcon,
             const SizedBox(width: 10),
-            AutoSizeText(title,
+            Expanded(child:   AutoSizeText(title,
                 style: TextStyle(
                     fontSize:
-                        ResponsiveBreakpoints.of(context).isMobile ? 30 : 30),
-                maxLines: 1)
+                    ResponsiveBreakpoints.of(context).isMobile ? 30 : 30),
+                maxLines: 1))
           ],
         ));
   }

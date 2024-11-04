@@ -40,32 +40,30 @@ class _ListProjectState extends State<ListProject> {
           SizedBox(
               width: ResponsiveBreakpoints.of(context).screenWidth * 0.7,
               child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.start,
-                alignment: WrapAlignment.spaceBetween,
-                children: [
-                  TitleHome(
-                    title: AppLocalizations.of(context)!.projects,
-                    subIcon: MenuItems.PROJECT.getIcon(size: 40),
-                    haveWidth: false,
-                  ),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.green,
-                        shadowColor: Colors.greenAccent,
-                        elevation: 5,
-                        // Elevación
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 15),
-                      ),
-                      onPressed: () =>
-                          context.go("/projects"),
-                      child: const AutoSizeText("Ver todos los proyectos",
-                          style: TextStyle(fontSize: 18), maxLines: 1))
-                ]
-              )),
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  alignment: WrapAlignment.spaceBetween,
+                  children: [
+                    TitleHome(
+                      title: AppLocalizations.of(context)!.projects,
+                      subIcon: MenuItems.PROJECT.getIcon(size: 40),
+                      haveWidth: false,
+                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.green,
+                          shadowColor: Colors.greenAccent,
+                          elevation: 5,
+                          // Elevación
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 15),
+                        ),
+                        onPressed: () => context.go("/projects"),
+                        child: const AutoSizeText("Ver todos los proyectos",
+                            style: TextStyle(fontSize: 18), maxLines: 1))
+                  ])),
           Container(
               padding: EdgeInsets.only(
                   top: ResponsiveBreakpoints.of(context).screenHeight * 0.05),
@@ -74,8 +72,10 @@ class _ListProjectState extends State<ListProject> {
               child: FlutterCarousel(
                   items: List.generate(
                       4,
-                      (index) => BannerProject(
-                          projectRelease: ProjectRelease.values[index])),
+                      (index) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: BannerProject(
+                              projectRelease: ProjectRelease.values[index]))),
                   options: FlutterCarouselOptions(
                       enableInfiniteScroll: true,
                       enlargeCenterPage: true,
@@ -95,10 +95,19 @@ class BannerProject extends StatelessWidget {
   Widget build(BuildContext context) => AnimatedContainer(
       height: height,
       duration: const Duration(milliseconds: 400),
+      constraints: const BoxConstraints(maxHeight: 700),
       margin: EdgeInsets.only(
           bottom: ResponsiveBreakpoints.of(context).screenHeight * 0.02),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(45),
+          boxShadow: [
+            BoxShadow(
+                color: context.watch<AppThemeBloc>().state.isDarkMode()
+                    ? Colors.white24
+                    : Colors.black87,
+                spreadRadius: 2,
+                blurRadius: 10),
+          ],
           image: DecorationImage(
               scale: 1.2,
               image: AssetImage(projectRelease.project.imgUrl),
@@ -114,15 +123,24 @@ class BannerProject extends StatelessWidget {
             padding: const EdgeInsets.all(30),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(
-                  height: 50,
-                  child: AutoSizeText(
-                      maxLines: 1,
-                      projectRelease.project.name,
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.blueAccent,
-                          fontWeight: FontWeight.bold))),
+              AutoSizeText(
+                  maxLines: 1,
+                  projectRelease.project.name,
+                  style: const TextStyle(
+                      fontSize: 30,
+                      color: Colors.blueAccent,
+                      fontWeight: FontWeight.bold)),
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Row(children: [
+                    if (projectRelease.project.urlPage != null)
+                      ButtonNavigation(
+                          uri: Uri.parse(projectRelease.project.urlPage!),
+                          urlSvg: "assets/svg/web.svg"),
+                    ButtonNavigation(
+                        uri: Uri.parse(projectRelease.project.repositoryUrl),
+                        urlSvg: "assets/svg/github.svg")
+                  ])),
               Expanded(
                   child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -131,47 +149,25 @@ class BannerProject extends StatelessWidget {
                           style: const TextStyle(
                               fontSize: 15, color: Colors.white),
                           textAlign: TextAlign.justify))),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        child: Container(
-                            padding: const EdgeInsets.all(1),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: const [
-                                  BoxShadow(
-                                      color: Colors.white12,
-                                      spreadRadius: 4,
-                                      blurRadius: 4)
-                                ]),
-                            child: Wrap(
-                                alignment: WrapAlignment.spaceAround,
-                                children: List.generate(
-                                    projectRelease.project.imgIconLanguage
-                                        .length, (index) {
-                                  return SvgPicture.asset(
-                                      projectRelease
-                                          .project.imgIconLanguage[index],
-                                      color: projectRelease
-                                              .project.imgIconLanguage[index]
-                                              .endsWith("github.svg")
-                                          ? context
-                                                  .watch<AppThemeBloc>()
-                                                  .state
-                                                  .isDarkMode()
-                                              ? Colors.white
-                                              : Colors.black
-                                          : null,
-                                      width: ResponsiveBreakpoints.of(context)
-                                              .isMobile
-                                          ? 28
-                                          : 42);
-                                })))),
-                    ButtonGithubProject(
-                        uri: Uri.parse(projectRelease.project.repositoryUrl)),
-                  ])
+              Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(1),
+                  child: Wrap(
+                      alignment: WrapAlignment.spaceAround,
+                      children: List.generate(
+                          projectRelease.project.imgIconLanguage.length,
+                          (index) {
+                        return SvgPicture.asset(
+                            projectRelease.project.imgIconLanguage[index],
+                            color: projectRelease.project.imgIconLanguage[index]
+                                    .endsWith("github.svg")
+                                ?  Colors.white
+
+                                : null,
+                            width: ResponsiveBreakpoints.of(context).isMobile
+                                ? 35
+                                : 42);
+                      }))),
             ]))
       ]));
 }

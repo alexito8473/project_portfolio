@@ -3,6 +3,7 @@ part of 'app_theme_bloc.dart';
 enum AppTheme {
   LIGHT,
   DARK;
+
   ThemeData getTheme() {
     switch (this) {
       case AppTheme.LIGHT:
@@ -54,16 +55,14 @@ class AppThemeState {
   });
 
   factory AppThemeState.init({required SharedPreferences prefs}) {
-    AppTheme selectMode() {
-      switch (prefs.getBool('isLightMode')) {
-        case true:
-          return AppTheme.LIGHT;
-        case false || null:
-          return AppTheme.DARK;
-      }
+    AppTheme appTheme;
+    switch (prefs.getBool('isLightMode')) {
+      case true:
+        appTheme = AppTheme.LIGHT;
+      case false || null:
+        appTheme = AppTheme.DARK;
     }
-
-    return AppThemeState(appTheme: selectMode());
+    return AppThemeState(appTheme: appTheme);
   }
 
   bool isDarkMode() => appTheme == AppTheme.DARK;
