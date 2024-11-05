@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/project.dart';
@@ -14,6 +15,26 @@ enum ProjectRelease {
             "assets/svg/intellij.svg"
           ],
           repositoryUrl: 'https://github.com/alexito8473/TastyDashProject')),
+  TIC_TAC_TOE(
+      project: Project(
+          name: "Tic tac toe",
+          imgUrl: "assets/images/projects/ticTacToe/1.webp",
+          imgIconLanguage: [
+            "assets/svg/programLanguage/react.svg",
+            "assets/svg/programLanguage/javascript.svg",
+            "assets/svg/visualStudioCode.svg"
+          ],
+          urlPage: "https://project-tic-tac-toe-seven.vercel.app/",
+          repositoryUrl: 'https://github.com/alexito8473/project-tic-tac-toe')),
+  ULTRA_RESTAURANT(
+      project: Project(
+          name: "Ultra Restaurant",
+          imgUrl: "assets/images/projects/ultraRestaurant/1.webp",
+          imgIconLanguage: [
+            "assets/svg/programLanguage/kotlin.svg",
+            "assets/svg/intellij.svg"
+          ],
+          repositoryUrl: 'https://github.com/alexito8473/TrabajoAndroid')),
   GOMOKU(
       project: Project(
           name: "Gomoku",
@@ -53,15 +74,7 @@ enum ProjectRelease {
             "assets/svg/programLanguage/firebase.svg"
           ],
           repositoryUrl: 'https://github.com/alexito8473/TastyDashProject')),
-  ULTRA_RESTAURANT(
-      project: Project(
-          name: "Ultra Restaurant",
-          imgUrl: "assets/images/projects/ultraRestaurant/1.webp",
-          imgIconLanguage: [
-            "assets/svg/programLanguage/kotlin.svg",
-            "assets/svg/intellij.svg"
-          ],
-          repositoryUrl: 'https://github.com/alexito8473/TrabajoAndroid')),
+
   IMC_CALCULATOR(
       project: Project(
           name: "Imc Calculator",
@@ -83,21 +96,33 @@ enum ProjectRelease {
           ],
           urlPage: "https://paintprojectalejandroaguilaralba.vercel.app/",
           repositoryUrl: 'https://github.com/alexito8473/paintProject')),
-  TIC_TAC_TOE(
-      project: Project(
-          name: "Tic tac toe",
-          imgUrl: "assets/images/projects/ticTacToe/1.webp",
-          imgIconLanguage: [
-            "assets/svg/programLanguage/react.svg",
-            "assets/svg/programLanguage/javascript.svg",
-            "assets/svg/visualStudioCode.svg"
-          ],
-          urlPage: "https://project-tic-tac-toe-seven.vercel.app/",
-          repositoryUrl: 'https://github.com/alexito8473/project-tic-tac-toe'));
+  ;
 
   const ProjectRelease({required this.project});
 
   final Project project;
+  List<Color> listBackgroundNoActive() {
+    switch (this) {
+      case ProjectRelease.TASTYDASH:
+        return [Colors.blue, Colors.green];
+      case ProjectRelease.GOMOKU:
+        return [Colors.red, Colors.green];
+      case ProjectRelease.OTELO:
+        return [Colors.purple, Colors.yellow];
+      case ProjectRelease.APP_TEACHER:
+        return [Colors.cyan, Colors.indigo];
+      case ProjectRelease.APP_STUDENT:
+        return [Colors.orange, Colors.blue];
+      case ProjectRelease.ULTRA_RESTAURANT:
+        return [Colors.deepOrange, Colors.cyan];
+      case ProjectRelease.IMC_CALCULATOR:
+        return [Colors.teal , Colors.amber];
+      case ProjectRelease.PAINT_VANILLA:
+        return [Colors.indigo, Colors.lime];
+      case ProjectRelease.TIC_TAC_TOE:
+        return [Colors.pink, Colors.lightGreen];
+    }
+  }
 
   String getDescription(BuildContext context) {
     switch (this) {

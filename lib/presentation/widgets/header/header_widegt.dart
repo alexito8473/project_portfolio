@@ -39,96 +39,103 @@ class HeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: ResponsiveBreakpoints.of(context).screenHeight * 0.9,
-      constraints: const BoxConstraints(minHeight: 700),
-      width: ResponsiveBreakpoints.of(context).screenWidth,
-      padding: ResponsiveBreakpoints.of(context).isMobile
-          ? EdgeInsets.symmetric(
-              horizontal: ResponsiveBreakpoints.of(context).screenWidth * 0.15)
-          : null,
-      margin: EdgeInsets.only(
-          top: ResponsiveBreakpoints.of(context).screenHeight * 0.12),
-      child: Wrap(
-        direction: Axis.horizontal,
-        runSpacing: ResponsiveBreakpoints.of(context).screenHeight * .1,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        spacing: ResponsiveBreakpoints.of(context).screenWidth * .1,
-        alignment: WrapAlignment.center,
-        children: [
-          SizedBox(
-            width: 500,
-            child: WidgetCircularAnimator(
-                outerColor: Colors.blueAccent,
-                innerColor: Colors.blueGrey,
-                size: ResponsiveBreakpoints.of(context).isMobile ? 250 : 350,
-                child: ClipOval(
-                    child: Image(
-                        image: assetImageUser,
-                        frameBuilder:
-                            (context, child, frame, wasSynchronouslyLoaded) {
-                          if (frame == null) {
-                            return const CircleAvatar(
-                                radius: 150, backgroundColor: Colors.white);
-                          }
-                          return child;
-                        },
-                        filterQuality: FilterQuality.none,
-                        width: 300))),
-          ),
-          SizedBox(
-              key: activationKey,
-              width: 500,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                        width: 500,
-                        height: 70,
-                        child: AutoSizeText("Alejandro Aguilar Alba",
-                            maxLines: 2,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blueAccent,
-                                fontSize: textFontTitle(context)))),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                        width: 500,
-                        height: 80,
-                        child: AutoSizeText(
-                            AppLocalizations.of(context)!.descriptionHeader,
-                            maxLines: 3,
-                            minFontSize: 2,
-                            maxFontSize: 28,
-                            style: TextStyle(
-                                fontSize: textFontSubTitle(context),
-                                color: textColorSubTitle(context)))),
-                    const SizedBox(height: 20),
-                    Wrap(
-                        alignment: WrapAlignment.center,
-                        spacing:
-                            ResponsiveBreakpoints.of(context).isMobile ? 0 : 30,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          IconButtonNavigator(
-                              uri: Uri.parse('https://github.com/alexito8473'),
-                              color: iconColorGitHub(context),
-                              tooltip: 'Github',
-                              iconUri: 'assets/svg/github.svg',
-                              changeColor: true),
-                          IconButtonNavigator(
-                              uri: Uri.parse(
-                                  'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
-                              color: Colors.blue,
-                              tooltip: 'Linkedin',
-                              iconUri: 'assets/svg/linkedin.svg'),
-                          const ButtonDownloadPdf()
-                        ]),
-                  ])),
-        ],
-      ),
-    );
+    return SliverToBoxAdapter(
+        child: Container(
+            height: ResponsiveBreakpoints.of(context).screenHeight,
+            constraints: const BoxConstraints(minHeight: 700),
+            width: ResponsiveBreakpoints.of(context).screenWidth,
+            padding: ResponsiveBreakpoints.of(context).isMobile
+                ? EdgeInsets.symmetric(
+                    horizontal:
+                        ResponsiveBreakpoints.of(context).screenWidth * 0.15)
+                : null,
+            margin: EdgeInsets.only(
+                top: ResponsiveBreakpoints.of(context).screenHeight * 0.12),
+            child: Wrap(
+                direction: Axis.horizontal,
+                runSpacing: ResponsiveBreakpoints.of(context).screenHeight * .1,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: ResponsiveBreakpoints.of(context).screenWidth * .1,
+                alignment: WrapAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 500,
+                    child: WidgetCircularAnimator(
+                        outerColor: Colors.blueAccent,
+                        innerColor: Colors.blueGrey,
+                        size: ResponsiveBreakpoints.of(context).isMobile
+                            ? 250
+                            : 350,
+                        child: ClipOval(
+                            child: Image(
+                                image: assetImageUser,
+                                frameBuilder: (context, child, frame,
+                                    wasSynchronouslyLoaded) {
+                                  if (frame == null) {
+                                    return const CircleAvatar(
+                                        radius: 150,
+                                        backgroundColor: Colors.white);
+                                  }
+                                  return child;
+                                },
+                                filterQuality: FilterQuality.none,
+                                width: 300))),
+                  ),
+                  SizedBox(
+                      key: activationKey,
+                      width: 500,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                                width: 500,
+                                height: 70,
+                                child: AutoSizeText("Alejandro Aguilar Alba",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blueAccent,
+                                        fontSize: textFontTitle(context)))),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                                width: 500,
+                                height: 80,
+                                child: AutoSizeText(
+                                    AppLocalizations.of(context)!
+                                        .descriptionHeader,
+                                    maxLines: 3,
+                                    minFontSize: 2,
+                                    maxFontSize: 28,
+                                    style: TextStyle(
+                                        fontSize: textFontSubTitle(context),
+                                        color: textColorSubTitle(context)))),
+                            const SizedBox(height: 20),
+                            Wrap(
+                                alignment: WrapAlignment.center,
+                                spacing:
+                                    ResponsiveBreakpoints.of(context).isMobile
+                                        ? 0
+                                        : 30,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  IconButtonNavigator(
+                                      uri: Uri.parse(
+                                          'https://github.com/alexito8473'),
+                                      color: iconColorGitHub(context),
+                                      tooltip: 'Github',
+                                      iconUri: 'assets/svg/github.svg',
+                                      changeColor: true),
+                                  IconButtonNavigator(
+                                      uri: Uri.parse(
+                                          'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
+                                      color: Colors.blue,
+                                      tooltip: 'Linkedin',
+                                      iconUri: 'assets/svg/linkedin.svg'),
+                                  const ButtonDownloadPdf()
+                                ])
+                          ]))
+                ])));
   }
 }
 

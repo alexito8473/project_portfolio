@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:proyect_porfolio/domain/blocs/appServicesGithub/app_service_github_bloc.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import '../../data/dataSource/project_data.dart';
 import '../../domain/blocs/appCheckVisibilityNavigationTop/app_banner_top_bloc.dart';
 import '../screens/home_screens.dart';
 import '../widgets/contacMe/contact_me_widget.dart';
@@ -31,11 +34,9 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  void scrollToItem(GlobalKey key) => Scrollable.ensureVisible(
-        key.currentContext!,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.linear,
-      );
+  void scrollToItem(GlobalKey key) =>
+      Scrollable.ensureVisible(key.currentContext!,
+          duration: const Duration(milliseconds: 500), curve: Curves.linear);
 
   void loadWidget() {
     _listGlobalKey = [
@@ -51,6 +52,7 @@ class _HomePageState extends State<HomePage> {
           activationKey: _headerKey),
       EducationWidget(key: _listGlobalKey[0]),
       ListProject(key: _listGlobalKey[1]),
+      const MasonrySliver(),
       ListTechnology(key: _listGlobalKey[2]),
       AboutMeWidget(key: _listGlobalKey[3]),
       ContactToMeWidget(key: _listGlobalKey[4]),

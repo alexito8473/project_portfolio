@@ -13,7 +13,8 @@ class ListTechnology extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SliverToBoxAdapter(
+        child:Container(
       constraints: const BoxConstraints(minHeight: 750),
       padding: EdgeInsets.only(
           left: ResponsiveBreakpoints.of(context).screenWidth * 0.10,
@@ -30,7 +31,7 @@ class ListTechnology extends StatelessWidget {
         const SizedBox(height: 40),
         const AnimatedListTechnology()
       ]),
-    );
+    ));
   }
 }
 

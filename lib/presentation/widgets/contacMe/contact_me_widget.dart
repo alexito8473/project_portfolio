@@ -61,7 +61,8 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
     bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
     return BlocBuilder<AppSendMessageBloc, AppSendMessageState>(
         builder: (context, state) {
-      return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      return SliverToBoxAdapter(
+          child:Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         if (ResponsiveBreakpoints.of(context).isMobile)
           const SizedBox(height: 100),
         TitleHome(
@@ -142,7 +143,7 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
                         if (state.sendMessage) const CircularProgressIndicator()
                       ])
                 ]))
-      ]);
+      ]));
     });
   }
 }

@@ -191,10 +191,9 @@ class ButtonNavigation extends StatelessWidget {
   const ButtonNavigation({super.key, required this.uri, required this.urlSvg});
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: 80,
         height: 45,
-        margin: const EdgeInsets.only(right: 10),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blueGrey.shade700.withOpacity(0.7),

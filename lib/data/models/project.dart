@@ -11,6 +11,6 @@ class Project {
     required this.imgUrl,
     required this.imgIconLanguage,
     required this.repositoryUrl,
-    this.urlPage,
+    this.urlPage
   });
 }

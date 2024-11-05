@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:proyect_porfolio/domain/blocs/appCheckVisibilityNavigationTop/app_banner_top_bloc.dart';
 import 'package:proyect_porfolio/domain/blocs/appLocale/app_locale_bloc.dart';
 import 'package:proyect_porfolio/domain/blocs/appSendMessage/app_send_message_bloc.dart';
@@ -57,7 +58,36 @@ class MyApp extends StatelessWidget {
               locale: context.watch<AppLocaleBloc>().state.locale.getLocal(),
               supportedLocales: const [Locale("en", ""), Locale("es", "")],
               title: 'Portfolio Alejandro',
-              theme: state.getTheme(),
+              themeMode: state.isDarkMode() ? ThemeMode.dark : ThemeMode.light,
+              theme: ThemeData.from(
+                  useMaterial3: true,
+                  textTheme:
+                      GoogleFonts.texturinaTextTheme(Typography.blackCupertino),
+                  colorScheme: const ColorScheme(
+                      brightness: Brightness.light,
+                      primary: Colors.blueAccent,
+                      onPrimary: Colors.blue,
+                      secondary: Colors.blue,
+                      primaryContainer: Colors.blueAccent,
+                      onSecondary: Colors.blue,
+                      error: Colors.white,
+                      onError: Colors.white,
+                      surface: Colors.white,
+                      onSurface: Colors.black)),
+              darkTheme: ThemeData.from(
+                  useMaterial3: true,
+                  textTheme: GoogleFonts.texturinaTextTheme(
+                      Typography.whiteMountainView),
+                  colorScheme: const ColorScheme(
+                      brightness: Brightness.dark,
+                      primary: Colors.blueGrey,
+                      onPrimary: Colors.blueAccent,
+                      secondary: Colors.white,
+                      onSecondary: Colors.white,
+                      error: Colors.white,
+                      onError: Colors.white,
+                      surface: Colors.black,
+                      onSurface: Colors.white)),
               routerConfig: router,
               builder: (context, child) =>
                   ResponsiveBreakpoints.builder(child: child!, breakpoints: [

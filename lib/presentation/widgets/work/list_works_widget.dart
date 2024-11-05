@@ -16,8 +16,10 @@ class EducationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 600),
+    return SliverToBoxAdapter(
+        child: Container(
+      margin: EdgeInsets.only(
+          bottom: ResponsiveBreakpoints.of(context).screenHeight * 0.3),
       child: Column(
         children: [
           TitleHome(
@@ -69,23 +71,21 @@ class EducationWidget extends StatelessWidget {
                                 height: 450,
                                 color: Colors.transparent,
                                 child: TimelineTile(
-                                  beforeLineStyle:
-                                      const LineStyle(color: Colors.blueAccent),
-                                  indicatorStyle: const IndicatorStyle(
-                                      color: Colors.blueAccent,
-                                      width: 40,
-                                      indicator:
-                                          Icon(Icons.directions_boat, size: 40),
-                                      padding:
-                                          EdgeInsets.only(right: 30, top: 10)),
-                                  isLast: true,
-                                  axis: TimelineAxis.vertical,
-                                  alignment: TimelineAlign.start,
-                                  endChild: const Padding(
-                                    padding: EdgeInsets.only(top: 30),
-                                    child: WorksWidget(),
-                                  ),
-                                ))
+                                    beforeLineStyle: const LineStyle(
+                                        color: Colors.blueAccent),
+                                    indicatorStyle: const IndicatorStyle(
+                                        color: Colors.blueAccent,
+                                        width: 40,
+                                        indicator: Icon(Icons.directions_boat,
+                                            size: 40),
+                                        padding: EdgeInsets.only(
+                                            right: 30, top: 10)),
+                                    isLast: true,
+                                    axis: TimelineAxis.vertical,
+                                    alignment: TimelineAlign.start,
+                                    endChild: const Padding(
+                                        padding: EdgeInsets.only(top: 30),
+                                        child: WorksWidget())))
                           ],
                         )),
                     ClipOval(
@@ -113,6 +113,6 @@ class EducationWidget extends StatelessWidget {
                   ]))
         ],
       ),
-    );
+    ));
   }
 }

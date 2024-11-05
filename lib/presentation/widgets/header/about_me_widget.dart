@@ -15,7 +15,8 @@ class AboutMeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return SliverToBoxAdapter(
+        child:Column(
       children: [
         TitleHome(
             title: AppLocalizations.of(context)!.aboutMe,
@@ -61,7 +62,7 @@ class AboutMeWidget extends StatelessWidget {
                       ]))
             ]))
       ],
-    );
+    ));
   }
 }
 

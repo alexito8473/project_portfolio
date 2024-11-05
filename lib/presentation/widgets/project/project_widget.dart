@@ -1,10 +1,13 @@
+import 'dart:ui';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:masonry_grid/masonry_grid.dart';
 import 'package:proyect_porfolio/presentation/widgets/customWidget/title_custom.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../data/dataSource/menu_items.dart';
@@ -20,69 +23,285 @@ class ListProject extends StatefulWidget {
 }
 
 class _ListProjectState extends State<ListProject> {
-  double viewportFraction() => ResponsiveBreakpoints.of(context).isTablet
-      ? 0.55
-      : ResponsiveBreakpoints.of(context).isMobile
-          ? 0.75
-          : 0.32;
-
-  double aspectRatio() => ResponsiveBreakpoints.of(context).isTablet
-      ? 1.6
-      : ResponsiveBreakpoints.of(context).isMobile
-          ? 0.8
-          : 2.2;
-
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: ResponsiveBreakpoints.of(context).screenHeight,
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          SizedBox(
-              width: ResponsiveBreakpoints.of(context).screenWidth * 0.7,
-              child: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.start,
-                  alignment: WrapAlignment.spaceBetween,
-                  children: [
-                    TitleHome(
-                      title: AppLocalizations.of(context)!.projects,
-                      subIcon: MenuItems.PROJECT.getIcon(size: 40),
-                      haveWidth: false,
-                    ),
-                    ElevatedButton(
+    return SliverToBoxAdapter(
+        child: SizedBox(
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      SizedBox(
+          width: ResponsiveBreakpoints.of(context).screenWidth * 0.7,
+          child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.start,
+              alignment: WrapAlignment.spaceBetween,
+              children: [
+                TitleHome(
+                    title: AppLocalizations.of(context)!.projects,
+                    subIcon: MenuItems.PROJECT.getIcon(size: 40),
+                    haveWidth: false),
+                Padding(
+                    padding: EdgeInsets.only(
+                        bottom: ResponsiveBreakpoints.of(context).screenHeight *
+                            0.05),
+                    child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.green,
-                          shadowColor: Colors.greenAccent,
-                          elevation: 5,
-                          // Elevación
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0)),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 15),
-                        ),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.green,
+                            shadowColor: Colors.greenAccent,
+                            elevation: 5,
+                            // Elevación
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0)),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 15)),
                         onPressed: () => context.go("/projects"),
                         child: const AutoSizeText("Ver todos los proyectos",
-                            style: TextStyle(fontSize: 18), maxLines: 1))
-                  ])),
-          Container(
-              padding: EdgeInsets.only(
-                  top: ResponsiveBreakpoints.of(context).screenHeight * 0.05),
-              width: ResponsiveBreakpoints.of(context).screenWidth,
-              height: 420,
-              child: FlutterCarousel(
-                  items: List.generate(
-                      4,
-                      (index) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: BannerProject(
-                              projectRelease: ProjectRelease.values[index]))),
-                  options: FlutterCarouselOptions(
-                      enableInfiniteScroll: true,
-                      enlargeCenterPage: true,
-                      showIndicator: false,
-                      viewportFraction: viewportFraction(),
-                      aspectRatio: aspectRatio()))),
-        ]));
+                            style: TextStyle(fontSize: 18), maxLines: 1)))
+              ]))
+    ])));
+  }
+}
+
+class MasonrySliver extends StatelessWidget {
+  const MasonrySliver({super.key});
+  int countColumns({required BuildContext context}) {
+    if (ResponsiveBreakpoints.of(context).screenWidth < 900) return 1;
+    if (ResponsiveBreakpoints.of(context).screenWidth < 1300) return 2;
+    if (ResponsiveBreakpoints.of(context).screenWidth < 2000) return 3;
+    if (ResponsiveBreakpoints.of(context).isDesktop) return 4;
+    return 1;
+  }
+
+  double viewportFraction({required BuildContext context}) =>
+      ResponsiveBreakpoints.of(context).isTablet
+          ? 0.55
+          : ResponsiveBreakpoints.of(context).isMobile
+              ? 0.75
+              : 0.32;
+
+  double aspectRatio({required BuildContext context}) =>
+      ResponsiveBreakpoints.of(context).isTablet
+          ? 1.6
+          : ResponsiveBreakpoints.of(context).isMobile
+              ? 0.8
+              : 2.2;
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
+    int countColum = countColumns(context: context);
+    return SliverToBoxAdapter(
+      child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+          child: MasonryGrid(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            column: countColum,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            children: List.generate(
+                6,
+                (index) => Padding(
+                    padding: index < countColum
+                        ? EdgeInsets.only(
+                            top: index == 0 ? 0 : (index % 2 + 0.5) * 70)
+                        : EdgeInsets.zero,
+                    child: BannerPro(
+                        projectRelease: ProjectRelease.values[index]))),
+          )),
+    );
+  }
+}
+
+class BannerPro extends StatefulWidget {
+  final ProjectRelease projectRelease;
+  final double height;
+  const BannerPro({super.key, required this.projectRelease, this.height = 500});
+
+  @override
+  State<BannerPro> createState() => _BannerProState();
+}
+
+class _BannerProState extends State<BannerPro> {
+  bool isHover = false;
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+        onHover: (event) {
+          setState(() {
+            isHover = true;
+          });
+        },
+        onExit: (event) {
+          setState(() {
+            isHover = false;
+          });
+        },
+        child: Hero(
+            tag: widget.projectRelease.project.name,
+            child: Material(
+                child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 700),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: context.watch<AppThemeBloc>().state.isDarkMode()
+                            ? Colors.black
+                            : Colors.grey[900],
+                        boxShadow: [
+                          context.watch<AppThemeBloc>().state.isDarkMode()
+                              ? BoxShadow(
+                                  color: Colors.white.withOpacity(0.5),
+                                  blurRadius: 15)
+                              : BoxShadow(
+                                  color: Colors.blueAccent.withOpacity(0.8),
+                                  blurRadius: 15)
+                        ]),
+                    height: 600,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          SizedBox(
+                            child: Stack(
+                              children: [
+                                AnimatedContainer(
+                                    duration: const Duration(milliseconds: 700),
+                                    decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20)),
+                                        gradient: LinearGradient(
+                                          begin: isHover
+                                              ? Alignment.topRight
+                                              : Alignment.topLeft,
+                                          end: isHover
+                                              ? Alignment.centerLeft
+                                              : Alignment.centerRight,
+                                          colors: widget.projectRelease
+                                              .listBackgroundNoActive(),
+                                        )),
+                                    height: 250),
+                                Positioned(
+                                    right: -0,
+                                    bottom: -0,
+                                    child: AnimatedContainer(
+                                      duration: const Duration(milliseconds: 700),
+                                      width: 250,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              fit: BoxFit.none,
+                                              isAntiAlias: true,
+                                              alignment: Alignment.topLeft,
+                                              scale: 2.7,
+                                              colorFilter:
+                                              ColorFilter.mode( isHover?Colors.black38:
+                                                      Colors.black54,
+                                                      BlendMode.darken),
+                                              filterQuality: FilterQuality.none,
+                                              image: AssetImage(
+                                                widget.projectRelease.project
+                                                    .imgUrl,
+                                              )),
+                                          borderRadius: const BorderRadius.only(
+                                              topLeft: Radius.circular(30)),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.black
+                                                    .withOpacity(.6),
+                                                blurRadius: 10,
+                                                spreadRadius: 7)
+                                          ]),
+                                    ))
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                              child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Wrap(
+                                          direction: Axis.horizontal,
+                                          spacing:
+                                              ResponsiveBreakpoints.of(context)
+                                                      .screenWidth *
+                                                  0.01,
+                                          children: [
+                                            AutoSizeText(
+                                                maxLines: 1,
+                                                widget.projectRelease.project
+                                                    .name,
+                                                style: const TextStyle(
+                                                    fontSize: 30,
+                                                    color: Colors.blueAccent,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            if (widget.projectRelease.project
+                                                    .urlPage !=
+                                                null)
+                                              ButtonNavigation(
+                                                  uri: Uri.parse(widget
+                                                      .projectRelease
+                                                      .project
+                                                      .urlPage!),
+                                                  urlSvg: "assets/svg/web.svg"),
+                                            ButtonNavigation(
+                                                uri: Uri.parse(widget
+                                                    .projectRelease
+                                                    .project
+                                                    .repositoryUrl),
+                                                urlSvg: "assets/svg/github.svg")
+                                          ],
+                                        ),
+                                        Expanded(
+                                            child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 10),
+                                                child: AutoSizeText(
+                                                    widget.projectRelease
+                                                        .getDescription(
+                                                            context),
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        color: Colors.white),
+                                                    textAlign:
+                                                        TextAlign.justify))),
+                                        Container(
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.all(1),
+                                            child: Wrap(
+                                                alignment:
+                                                    WrapAlignment.spaceAround,
+                                                children: List.generate(
+                                                    widget
+                                                        .projectRelease
+                                                        .project
+                                                        .imgIconLanguage
+                                                        .length, (index) {
+                                                  return SvgPicture.asset(
+                                                      widget
+                                                              .projectRelease
+                                                              .project
+                                                              .imgIconLanguage[
+                                                          index],
+                                                      color: widget
+                                                              .projectRelease
+                                                              .project
+                                                              .imgIconLanguage[
+                                                                  index]
+                                                              .endsWith(
+                                                                  "github.svg")
+                                                          ? Colors.white
+                                                          : null,
+                                                      width: ResponsiveBreakpoints
+                                                                  .of(context)
+                                                              .isMobile
+                                                          ? 35
+                                                          : 42);
+                                                })))
+                                      ])))
+                        ])))));
   }
 }
 
@@ -92,82 +311,94 @@ class BannerProject extends StatelessWidget {
   const BannerProject({super.key, required this.projectRelease, this.height});
 
   @override
-  Widget build(BuildContext context) => AnimatedContainer(
-      height: height,
-      duration: const Duration(milliseconds: 400),
-      constraints: const BoxConstraints(maxHeight: 700),
-      margin: EdgeInsets.only(
-          bottom: ResponsiveBreakpoints.of(context).screenHeight * 0.02),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(45),
-          boxShadow: [
-            BoxShadow(
-                color: context.watch<AppThemeBloc>().state.isDarkMode()
-                    ? Colors.white24
-                    : Colors.black87,
-                spreadRadius: 2,
-                blurRadius: 10),
-          ],
-          image: DecorationImage(
-              scale: 1.2,
-              image: AssetImage(projectRelease.project.imgUrl),
-              fit: BoxFit.cover,
-              colorFilter: context.watch<AppThemeBloc>().state.isDarkMode()
-                  ? ColorFilter.mode(
-                      Colors.black.withOpacity(0.7), BlendMode.darken)
-                  : const ColorFilter.mode(Colors.black54, BlendMode.darken),
-              alignment: Alignment.topCenter,
-              filterQuality: FilterQuality.none)),
-      child: Stack(children: [
-        Padding(
-            padding: const EdgeInsets.all(30),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              AutoSizeText(
-                  maxLines: 1,
-                  projectRelease.project.name,
-                  style: const TextStyle(
-                      fontSize: 30,
-                      color: Colors.blueAccent,
-                      fontWeight: FontWeight.bold)),
+  Widget build(BuildContext context) => Hero(
+      tag: projectRelease.project.name,
+      child: Material(
+        child: AnimatedContainer(
+            height: height,
+            duration: const Duration(milliseconds: 400),
+            constraints: const BoxConstraints(maxHeight: 700),
+            margin: EdgeInsets.only(
+                bottom: ResponsiveBreakpoints.of(context).screenHeight * 0.02),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(45),
+                boxShadow: [
+                  BoxShadow(
+                      color: context.watch<AppThemeBloc>().state.isDarkMode()
+                          ? Colors.white24
+                          : Colors.black87,
+                      spreadRadius: 2,
+                      blurRadius: 10),
+                ],
+                image: DecorationImage(
+                    scale: 1.2,
+                    image: AssetImage(projectRelease.project.imgUrl),
+                    fit: BoxFit.cover,
+                    colorFilter:
+                        context.watch<AppThemeBloc>().state.isDarkMode()
+                            ? ColorFilter.mode(
+                                Colors.black.withOpacity(0.7), BlendMode.darken)
+                            : const ColorFilter.mode(
+                                Colors.black54, BlendMode.darken),
+                    alignment: Alignment.topCenter,
+                    filterQuality: FilterQuality.none)),
+            child: Stack(children: [
               Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Row(children: [
-                    if (projectRelease.project.urlPage != null)
-                      ButtonNavigation(
-                          uri: Uri.parse(projectRelease.project.urlPage!),
-                          urlSvg: "assets/svg/web.svg"),
-                    ButtonNavigation(
-                        uri: Uri.parse(projectRelease.project.repositoryUrl),
-                        urlSvg: "assets/svg/github.svg")
-                  ])),
-              Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: AutoSizeText(
-                          projectRelease.getDescription(context),
-                          style: const TextStyle(
-                              fontSize: 15, color: Colors.white),
-                          textAlign: TextAlign.justify))),
-              Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(1),
-                  child: Wrap(
-                      alignment: WrapAlignment.spaceAround,
-                      children: List.generate(
-                          projectRelease.project.imgIconLanguage.length,
-                          (index) {
-                        return SvgPicture.asset(
-                            projectRelease.project.imgIconLanguage[index],
-                            color: projectRelease.project.imgIconLanguage[index]
-                                    .endsWith("github.svg")
-                                ?  Colors.white
-
-                                : null,
-                            width: ResponsiveBreakpoints.of(context).isMobile
-                                ? 35
-                                : 42);
-                      }))),
-            ]))
-      ]));
+                  padding: const EdgeInsets.all(30),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AutoSizeText(
+                            maxLines: 1,
+                            projectRelease.project.name,
+                            style: const TextStyle(
+                                fontSize: 30,
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.bold)),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Row(children: [
+                              if (projectRelease.project.urlPage != null)
+                                ButtonNavigation(
+                                    uri: Uri.parse(
+                                        projectRelease.project.urlPage!),
+                                    urlSvg: "assets/svg/web.svg"),
+                              ButtonNavigation(
+                                  uri: Uri.parse(
+                                      projectRelease.project.repositoryUrl),
+                                  urlSvg: "assets/svg/github.svg")
+                            ])),
+                        Expanded(
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: AutoSizeText(
+                                    projectRelease.getDescription(context),
+                                    style: const TextStyle(
+                                        fontSize: 15, color: Colors.white),
+                                    textAlign: TextAlign.justify))),
+                        Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(1),
+                            child: Wrap(
+                                alignment: WrapAlignment.spaceAround,
+                                children: List.generate(
+                                    projectRelease.project.imgIconLanguage
+                                        .length, (index) {
+                                  return SvgPicture.asset(
+                                      projectRelease
+                                          .project.imgIconLanguage[index],
+                                      color: projectRelease
+                                              .project.imgIconLanguage[index]
+                                              .endsWith("github.svg")
+                                          ? Colors.white
+                                          : null,
+                                      width: ResponsiveBreakpoints.of(context)
+                                              .isMobile
+                                          ? 35
+                                          : 42);
+                                }))),
+                      ]))
+            ])),
+      ));
 }
