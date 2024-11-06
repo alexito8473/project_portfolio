@@ -41,87 +41,72 @@ class _ProjectPageState extends State<ProjectPage>
 
   @override
   Widget build(BuildContext context) {
-    int countColum = countColumns();
     return Scaffold(
-        appBar: AppBar(
-            title: Hero(tag: "title", child:Material(  color: Colors.transparent,child: AutoSizeText(AppLocalizations.of(context)!.projects,
-                style: const TextStyle(fontSize: 28), maxLines: 1),) ),
-            actions: [
-              IconButton(
-                  onPressed: () =>
-                      context.read<AppLocaleBloc>().add(ChangeLocalEvent()),
-                  icon: Text(
-                      BlocProvider.of<AppLocaleBloc>(context)
-                          .state
-                          .locale
-                          .getLenguajeCode(),
-                      style: const TextStyle(fontSize: 25))),
-              Padding(
-                  padding: EdgeInsets.only(
-                    right: ResponsiveBreakpoints.of(context).screenWidth * 0.05,
-                  ),
-                  child: IconButton(
-                      onPressed: () =>
-                          context.read<AppThemeBloc>().add(ChangeThemeEvent()),
-                      icon: BlocProvider.of<AppThemeBloc>(context)
-                          .state
-                          .appTheme
-                          .getIcon()))
-            ],
-            flexibleSpace:
-                context.watch<AppBannerTopBloc>().state.isActiveBannerTop &&
-                        !ResponsiveBreakpoints.of(context).isMobile
-                    ? Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                ResponsiveBreakpoints.of(context).screenWidth *
-                                    0.035),
-                        child: const Center(child: HeaderTop()))
-                    : null,
-            shadowColor: context.watch<AppThemeBloc>().state.isDarkMode()
-                ? Colors.grey
-                : Colors.black,
-            toolbarHeight:
-            65),
-        body: AnimatedBackground(
-            behaviour: RandomParticleBehaviour(
-                paint: Paint(),
-                options: ParticleOptions(
-                    baseColor: Colors.green,
-                    opacityChangeRate: 0.25,
-                    minOpacity: context.watch<AppThemeBloc>().state.isDarkMode()
-                        ? 0.11
-                        : 0.08,
-                    maxOpacity: context.watch<AppThemeBloc>().state.isDarkMode()
-                        ? 0.45
-                        : 0.13,
-                    spawnMinSpeed: 20.0,
-                    spawnMaxSpeed: 30.0,
-                    spawnMinRadius: 7.0,
-                    spawnMaxRadius: 30.0,
-                    particleCount:
-                        ResponsiveBreakpoints.of(context).isMobile ? 6 : 10)),
-            vsync: this,
-            child: MasonryGridView.builder(
-                gridDelegate: const SliverSimpleGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 600),
-                addRepaintBoundaries: true,
-                itemCount: ProjectRelease.values.length,
-                mainAxisSpacing: ResponsiveBreakpoints.of(context).screenHeight * 0.01,
-                crossAxisSpacing: ResponsiveBreakpoints.of(context).screenWidth * 0.01,
-                padding: EdgeInsets.only(left: ResponsiveBreakpoints.of(context).screenWidth * 0.08, right: ResponsiveBreakpoints.of(context).screenWidth * 0.08, top: ResponsiveBreakpoints.of(context).screenHeight * 0.1),
-                itemBuilder: (context, index) {
-                  return Padding(
-                      padding: index < countColum
-                          ? EdgeInsets.only(
-                          top: index == 0
-                              ? 0
-                              : (index % 2 + 0.5) * 70)
-                          : EdgeInsets.zero,
-                      child: BannerPro(
-                          projectRelease: ProjectRelease.values[index],
-                          height: ResponsiveBreakpoints.of(context).isMobile
-                              ? 500
-                              : (index % 5 + 3) * 130));
-                })));
+        body: Stack(
+          children: [
+            Positioned.fill(
+                child: AnimatedBackground(
+                    behaviour: RandomParticleBehaviour(
+                        paint: Paint(),
+                        options: ParticleOptions(
+                            baseColor: Colors.green,
+                            opacityChangeRate: 0.25,
+                            minOpacity:
+                                context.watch<AppThemeBloc>().state.isDarkMode()
+                                    ? 0.11
+                                    : 0.08,
+                            maxOpacity:
+                                context.watch<AppThemeBloc>().state.isDarkMode()
+                                    ? 0.45
+                                    : 0.13,
+                            spawnMinSpeed: 20.0,
+                            spawnMaxSpeed: 30.0,
+                            spawnMinRadius: 7.0,
+                            spawnMaxRadius: 30.0,
+                            particleCount:
+                                ResponsiveBreakpoints.of(context).isMobile
+                                    ? 6
+                                    : 10)),
+                    vsync: this,
+                    child: MasonryGridView.builder(
+                        gridDelegate:
+                            const SliverSimpleGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 600),
+                        addRepaintBoundaries: true,
+                        itemCount: ProjectRelease.values.length,
+                        mainAxisSpacing:
+                            ResponsiveBreakpoints.of(context).screenHeight *
+                                0.01,
+                        crossAxisSpacing:
+                            ResponsiveBreakpoints.of(context).screenWidth *
+                                0.01,
+                        padding: EdgeInsets.only(
+                            left: ResponsiveBreakpoints.of(context).screenWidth *
+                                0.08,
+                            right: ResponsiveBreakpoints.of(context).screenWidth *
+                                0.08,
+                            top: ResponsiveBreakpoints.of(context).screenHeight * 0.1),
+                        itemBuilder: (context, index) {
+                          return BannerPro(
+                              projectRelease: ProjectRelease.values[index],
+                              height: ResponsiveBreakpoints.of(context).isMobile
+                                  ? 700
+                                  : (index % 2 + 4) * 130);
+                        }))),
+            Positioned(
+                top: 0,
+                left: 0,
+                child: CustomAppBar(
+                    learning: Row(
+                      children: [
+                        IconButton(onPressed: () {
+                          Navigator.pop(context);
+                        }, icon: const Icon(Icons.arrow_back_ios_new_outlined))
+                      ],
+                    ),
+                    changeScroll: null,
+                    changeTop: true))
+          ],
+        ));
   }
 }

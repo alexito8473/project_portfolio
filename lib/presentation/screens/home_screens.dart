@@ -27,19 +27,29 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  bool _changeTop = false;
   @override
   void initState() {
     super.initState();
     widget.scrollController.addListener(() =>
         context.read<AppBannerTopBloc>().add(widget.updateNavigationEvent));
+    widget.scrollController.addListener(() => _scrollListener());
+  }
+
+  void _scrollListener() {
+    if (_changeTop == context.read<AppBannerTopBloc>().state.isActiveBannerTop)
+      return;
+    setState(() {
+      _changeTop = context.read<AppBannerTopBloc>().state.isActiveBannerTop;
+    });
   }
 
   @override
   void dispose() {
     widget.scrollController.removeListener(() =>
         context.read<AppBannerTopBloc>().add(widget.updateNavigationEvent));
+    widget.scrollController.removeListener(() => _scrollListener);
     widget.scrollController.dispose();
     super.dispose();
   }
@@ -48,76 +58,6 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-            title: Hero(tag: "title", child:Material(
-              color: Colors.transparent,
-                child:
-            Padding(
-                padding: EdgeInsets.only(
-                    left: ResponsiveBreakpoints.of(context).screenWidth * 0.05),
-                child: const AutoSizeText("Full Stack Developer",
-                    style: TextStyle(fontSize: 28), maxLines: 1)))),
-            actions: [
-              IconButton(
-                  onPressed: () =>
-                      context.read<AppLocaleBloc>().add(ChangeLocalEvent()),
-                  icon: Text(
-                      BlocProvider.of<AppLocaleBloc>(context)
-                          .state
-                          .locale
-                          .getLenguajeCode(),
-                      style: const TextStyle(fontSize: 25))),
-              Padding(
-                  padding: EdgeInsets.only(
-                      right:
-                          ResponsiveBreakpoints.of(context).screenWidth * 0.01,
-                      left:
-                          ResponsiveBreakpoints.of(context).screenWidth * 0.01),
-                  child: IconButton(
-                      onPressed: () =>
-                          context.read<AppThemeBloc>().add(ChangeThemeEvent()),
-                      icon: BlocProvider.of<AppThemeBloc>(context)
-                          .state
-                          .appTheme
-                          .getIcon())),
-              Padding(
-                  padding: EdgeInsets.only(
-                      right:
-                          ResponsiveBreakpoints.of(context).screenWidth * 0.05),
-                  child: DropdownButtonHideUnderline(
-                      child: DropdownButton2(
-                          customButton: const Icon(Icons.list, size: 38),
-                          items: List.generate(
-                              MenuItems.values.length,
-                              (index) => DropdownMenuItem<int>(
-                                  value: index,
-                                  child: MenuItems.values[index]
-                                      .buildItem(context))),
-                          onChanged: (value) => widget.scrollNavigation(value),
-                          barrierColor: Colors.black.withOpacity(0.4),
-                          dropdownStyleData: DropdownStyleData(
-                              width: 170,
-                              useSafeArea: true,
-                              padding: const EdgeInsets.symmetric(vertical: 6),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
-                                  color: context
-                                          .watch<AppThemeBloc>()
-                                          .state
-                                          .isDarkMode()
-                                      ? Colors.grey.shade800
-                                      : Colors.blueAccent)))))
-            ],
-            flexibleSpace: Center(
-                child:
-                    context.watch<AppBannerTopBloc>().state.isActiveBannerTop &&
-                            !ResponsiveBreakpoints.of(context).isMobile
-                        ? FadeIn(child: const HeaderTop())
-                        : const SizedBox()),
-            shadowColor: context.watch<AppThemeBloc>().state.isDarkMode()
-                ? Colors.grey
-                : Colors.black,
-            toolbarHeight: 65),
         body: AnimatedBackground(
             behaviour: RandomParticleBehaviour(
                 paint: Paint(),
@@ -138,11 +78,21 @@ class _HomeScreenState extends State<HomeScreen>
                     particleCount:
                         ResponsiveBreakpoints.of(context).isMobile ? 6 : 10)),
             vsync: this,
-            child: CustomScrollView(
-                controller: widget.scrollController,
-                slivers: List.generate(
-                  widget.listWidgetHome.length,
-                  (index) => widget.listWidgetHome[index],
-                ))));
+            child: Stack(
+              children: [
+                Positioned.fill(
+                    child: CustomScrollView(
+                        controller: widget.scrollController,
+                        slivers: List.generate(widget.listWidgetHome.length,
+                            (index) => widget.listWidgetHome[index]))),
+                Positioned(
+                    top: 0,
+                    left: 0,
+                    child: CustomAppBar(
+                      changeScroll: (value) => widget.scrollNavigation(value),
+                      changeTop: _changeTop
+                    ))
+              ],
+            )));
   }
 }

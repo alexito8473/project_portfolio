@@ -114,7 +114,7 @@ class MasonrySliver extends StatelessWidget {
 class BannerPro extends StatefulWidget {
   final ProjectRelease projectRelease;
   final double height;
-  const BannerPro({super.key, required this.projectRelease, this.height = 500});
+  const BannerPro({super.key, required this.projectRelease, this.height = 600});
 
   @override
   State<BannerPro> createState() => _BannerProState();
@@ -137,7 +137,7 @@ class _BannerProState extends State<BannerPro> {
         },
         child: Hero(
             tag: widget.projectRelease.project.name,
-            child: Material(
+            child: Material(color: Colors.transparent,
                 child: AnimatedContainer(
                     duration: const Duration(milliseconds: 700),
                     decoration: BoxDecoration(
@@ -154,7 +154,7 @@ class _BannerProState extends State<BannerPro> {
                                   color: Colors.blueAccent.withOpacity(0.8),
                                   blurRadius: 15)
                         ]),
-                    height: 600,
+                    height: widget.height,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -303,102 +303,4 @@ class _BannerProState extends State<BannerPro> {
                                       ])))
                         ])))));
   }
-}
-
-class BannerProject extends StatelessWidget {
-  final ProjectRelease projectRelease;
-  final double? height;
-  const BannerProject({super.key, required this.projectRelease, this.height});
-
-  @override
-  Widget build(BuildContext context) => Hero(
-      tag: projectRelease.project.name,
-      child: Material(
-        child: AnimatedContainer(
-            height: height,
-            duration: const Duration(milliseconds: 400),
-            constraints: const BoxConstraints(maxHeight: 700),
-            margin: EdgeInsets.only(
-                bottom: ResponsiveBreakpoints.of(context).screenHeight * 0.02),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(45),
-                boxShadow: [
-                  BoxShadow(
-                      color: context.watch<AppThemeBloc>().state.isDarkMode()
-                          ? Colors.white24
-                          : Colors.black87,
-                      spreadRadius: 2,
-                      blurRadius: 10),
-                ],
-                image: DecorationImage(
-                    scale: 1.2,
-                    image: AssetImage(projectRelease.project.imgUrl),
-                    fit: BoxFit.cover,
-                    colorFilter:
-                        context.watch<AppThemeBloc>().state.isDarkMode()
-                            ? ColorFilter.mode(
-                                Colors.black.withOpacity(0.7), BlendMode.darken)
-                            : const ColorFilter.mode(
-                                Colors.black54, BlendMode.darken),
-                    alignment: Alignment.topCenter,
-                    filterQuality: FilterQuality.none)),
-            child: Stack(children: [
-              Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AutoSizeText(
-                            maxLines: 1,
-                            projectRelease.project.name,
-                            style: const TextStyle(
-                                fontSize: 30,
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.bold)),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Row(children: [
-                              if (projectRelease.project.urlPage != null)
-                                ButtonNavigation(
-                                    uri: Uri.parse(
-                                        projectRelease.project.urlPage!),
-                                    urlSvg: "assets/svg/web.svg"),
-                              ButtonNavigation(
-                                  uri: Uri.parse(
-                                      projectRelease.project.repositoryUrl),
-                                  urlSvg: "assets/svg/github.svg")
-                            ])),
-                        Expanded(
-                            child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: AutoSizeText(
-                                    projectRelease.getDescription(context),
-                                    style: const TextStyle(
-                                        fontSize: 15, color: Colors.white),
-                                    textAlign: TextAlign.justify))),
-                        Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(1),
-                            child: Wrap(
-                                alignment: WrapAlignment.spaceAround,
-                                children: List.generate(
-                                    projectRelease.project.imgIconLanguage
-                                        .length, (index) {
-                                  return SvgPicture.asset(
-                                      projectRelease
-                                          .project.imgIconLanguage[index],
-                                      color: projectRelease
-                                              .project.imgIconLanguage[index]
-                                              .endsWith("github.svg")
-                                          ? Colors.white
-                                          : null,
-                                      width: ResponsiveBreakpoints.of(context)
-                                              .isMobile
-                                          ? 35
-                                          : 42);
-                                }))),
-                      ]))
-            ])),
-      ));
 }
