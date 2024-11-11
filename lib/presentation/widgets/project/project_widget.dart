@@ -126,11 +126,13 @@ class _BannerProState extends State<BannerPro> {
   Widget build(BuildContext context) {
     return MouseRegion(
         onHover: (event) {
+          if(isHover) return;
           setState(() {
             isHover = true;
           });
         },
         onExit: (event) {
+          if(!isHover) return;
           setState(() {
             isHover = false;
           });
@@ -192,7 +194,7 @@ class _BannerProState extends State<BannerPro> {
                                               alignment: Alignment.topLeft,
                                               scale: 2.7,
                                               colorFilter:
-                                              ColorFilter.mode( isHover?Colors.black38:
+                                              ColorFilter.mode( isHover?Colors.black26:
                                                       Colors.black54,
                                                       BlendMode.darken),
                                               filterQuality: FilterQuality.none,
@@ -204,10 +206,12 @@ class _BannerProState extends State<BannerPro> {
                                               topLeft: Radius.circular(30)),
                                           boxShadow: [
                                             BoxShadow(
-                                                color: Colors.black
-                                                    .withOpacity(.6),
-                                                blurRadius: 10,
-                                                spreadRadius: 7)
+                                                color:isHover? Colors.black
+                                                    .withOpacity(.8):Colors.black
+                                                    .withOpacity(.2),
+                                                blurRadius:isHover?10: 2,
+
+                                                spreadRadius: isHover?5: 2)
                                           ]),
                                     ))
                               ],

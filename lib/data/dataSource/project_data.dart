@@ -35,6 +35,15 @@ enum ProjectRelease {
             "assets/svg/intellij.svg"
           ],
           repositoryUrl: 'https://github.com/alexito8473/TrabajoAndroid')),
+  POKE_API(
+      project: Project(
+          name: "Poke api",
+          imgUrl: "assets/images/projects/pokeApi/1.webp",
+          imgIconLanguage: [
+            "assets/svg/programLanguage/flutter.svg",
+            "assets/svg/intellij.svg"
+          ],
+          repositoryUrl: 'https://github.com/alexito8473/pokeapi')),
   GOMOKU(
       project: Project(
           name: "Gomoku",
@@ -121,6 +130,8 @@ enum ProjectRelease {
         return [Colors.indigo, Colors.lime];
       case ProjectRelease.TIC_TAC_TOE:
         return [Colors.pink, Colors.lightGreen];
+      case ProjectRelease.POKE_API:
+        return [Colors.teal , Colors.pink];
     }
   }
 
@@ -144,6 +155,7 @@ enum ProjectRelease {
         return AppLocalizations.of(context)!.descriptionProjectPaint;
       case ProjectRelease.TIC_TAC_TOE:
         return AppLocalizations.of(context)!.descriptionTicTacToe;
-    }
+      case ProjectRelease.POKE_API:
+        return AppLocalizations.of(context)!.descriptionPokeApi;}
   }
 }

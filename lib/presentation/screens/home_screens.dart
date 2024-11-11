@@ -87,11 +87,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             (index) => widget.listWidgetHome[index]))),
                 Positioned(
                     top: 0,
+                    right: 0,
                     left: 0,
                     child: CustomAppBar(
-                      changeScroll: (value) => widget.scrollNavigation(value),
-                      changeTop: _changeTop
-                    ))
+                        changeScroll: (value) => widget.scrollNavigation(value),
+                        changeTop: _changeTop))
               ],
             )));
   }

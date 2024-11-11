@@ -171,20 +171,16 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-        tag: "AppBar",
-        child: Material(
-            color: Colors.transparent,
-            child: RepaintBoundary(
-                child: Container(
-                  color: Colors.transparent,
-                    alignment: Alignment.center,
-                    width: ResponsiveBreakpoints.of(context).screenWidth,
-                    height: 80,
+    return RepaintBoundary(
+        child: Center(
+            child: Hero(
+                tag: "AppBar",
+                child: Material(
+                    color: Colors.transparent,
                     child: AnimatedContainer(
                         duration: const Duration(milliseconds: 1200),
                         curve: Curves.decelerate,
-                        height: 90,
+                        height: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             boxShadow: [
@@ -291,6 +287,11 @@ class HeaderTop extends StatelessWidget {
             filterQuality: FilterQuality.none,
             image: AssetImage("assets/images/personal.webp"),
           )),
+          height: countWidget > 4
+              ? initAnimation
+                  ? 50
+                  : 0
+              : 0,
           width: countWidget > 4
               ? initAnimation
                   ? 50

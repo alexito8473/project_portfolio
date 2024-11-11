@@ -1,5 +1,6 @@
 import 'dart:html' as html;
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -112,7 +113,8 @@ class ButtonDownloadPdf extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         ),
-        child: Text(AppLocalizations.of(context)!.downloadCV,
+        child: AutoSizeText(AppLocalizations.of(context)!.downloadCV,
+            maxLines: 1,
             style: TextStyle(
                 fontSize:
                     ResponsiveBreakpoints.of(context).isMobile ? 14 : 18)));

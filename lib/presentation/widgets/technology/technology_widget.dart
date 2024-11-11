@@ -39,11 +39,13 @@ class _TechnologyWidget extends State<TechnologyWidget> {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (event) {
+        if(isActivate) return;
         setState(() {
           isActivate = true;
         });
       },
       onExit: (event) {
+        if(!isActivate) return;
         setState(() {
           isActivate = false;
         });
