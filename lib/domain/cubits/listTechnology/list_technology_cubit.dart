@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:proyect_porfolio/data/models/technology.dart';
 
 import '../../../data/dataSource/tecnology_data.dart';
 
@@ -9,11 +8,10 @@ class ListTechnologyCubit extends Cubit<ListTechnologyState> {
 
   void changeListFiltered(TypeLanguage type) {
     emit(state.copyWitch(
-        listTechnology: state.listTechnology,
         listFiltered: type == TypeLanguage.ALL
-            ? state.listTechnology
-            : state.listTechnology
-                .where((element) => element.typeLanguage == type)
+            ? Knowledge.values
+            : Knowledge.values
+                .where((element) => element.technology.typeLanguage==type)
                 .toList()));
   }
 }

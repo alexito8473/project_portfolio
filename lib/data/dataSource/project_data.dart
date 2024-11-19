@@ -47,7 +47,7 @@ enum ProjectRelease {
   GOMOKU(
       project: Project(
           name: "Gomoku",
-          imgUrl: "assets/images/projects/gomoku/1.png",
+          imgUrl: "assets/images/projects/gomoku/1.webp",
           imgIconLanguage: [
             "assets/svg/programLanguage/java.svg",
             "assets/svg/eclipse.svg"
@@ -66,7 +66,7 @@ enum ProjectRelease {
   APP_TEACHER(
       project: Project(
           name: "App Teacher",
-          imgUrl: "assets/images/projects/appTeacher/1_new.jpeg",
+          imgUrl: "assets/images/projects/appTeacher/1.webp",
           imgIconLanguage: [
             "assets/svg/programLanguage/maui.svg",
             "assets/svg/visualStudio.svg",
@@ -76,7 +76,7 @@ enum ProjectRelease {
   APP_STUDENT(
       project: Project(
           name: "App Student",
-          imgUrl: "assets/images/projects/appStudent/1.jpeg",
+          imgUrl: "assets/images/projects/appStudent/1.webp",
           imgIconLanguage: [
             "assets/svg/programLanguage/maui.svg",
             "assets/svg/visualStudio.svg",

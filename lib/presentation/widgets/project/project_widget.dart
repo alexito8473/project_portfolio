@@ -98,7 +98,7 @@ class MasonrySliver extends StatelessWidget {
             mainAxisSpacing: 20,
             crossAxisSpacing: 20,
             children: List.generate(
-                6,
+                4,
                 (index) => Padding(
                     padding: index < countColum
                         ? EdgeInsets.only(
@@ -110,7 +110,6 @@ class MasonrySliver extends StatelessWidget {
     );
   }
 }
-
 class BannerPro extends StatefulWidget {
   final ProjectRelease projectRelease;
   final double height;
@@ -122,24 +121,161 @@ class BannerPro extends StatefulWidget {
 
 class _BannerProState extends State<BannerPro> {
   bool isHover = false;
+  Widget bannerTitle(){
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          AutoSizeText(
+              maxLines: 1,
+              widget.projectRelease.project
+                  .name,
+              style: const TextStyle(
+                  fontSize: 25,
+                  color: Colors.blueAccent,
+                  fontWeight:
+                  FontWeight.bold)),
+
+          if (widget.projectRelease.project
+              .urlPage !=
+              null)
+            ButtonNavigation(
+                uri: Uri.parse(widget
+                    .projectRelease
+                    .project
+                    .urlPage!),
+                urlSvg: "assets/svg/web.svg"),
+          ButtonNavigation(
+              uri: Uri.parse(widget
+                  .projectRelease
+                  .project
+                  .repositoryUrl),
+              urlSvg: "assets/svg/github.svg")
+        ]
+    );
+  }
+  Widget contentTitle(){
+    return Expanded(
+        child: Padding(
+            padding:
+            const EdgeInsets.symmetric(
+                vertical: 10),
+            child: AutoSizeText(
+                widget.projectRelease
+                    .getDescription(
+                    context),
+                style: const TextStyle(
+                    fontSize: 15,
+                    color: Colors.white),
+                textAlign:
+                TextAlign.justify)));
+  }
+  Widget footerTitle(){
+    return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(1),
+        child: Row(
+           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.generate(
+                widget
+                    .projectRelease
+                    .project
+                    .imgIconLanguage
+                    .length, (index) {
+              return SvgPicture.asset(
+                  widget
+                      .projectRelease
+                      .project
+                      .imgIconLanguage[
+                  index],
+                  color: widget
+                      .projectRelease
+                      .project
+                      .imgIconLanguage[
+                  index]
+                      .endsWith(
+                      "github.svg")
+                      ? Colors.white
+                      : null,
+                  width: ResponsiveBreakpoints
+                      .of(context)
+                      .isMobile
+                      ? 35
+                      : 42);
+            })));
+  }
+  Widget animatedTop(){
+    return AnimatedContainer(
+        duration:
+        const Duration(milliseconds: 700),
+        decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20)),
+            gradient: LinearGradient(
+              begin: isHover
+                  ? Alignment.topRight
+                  : Alignment.topLeft,
+              end: isHover
+                  ? Alignment.centerLeft
+                  : Alignment.centerRight,
+              colors: widget.projectRelease
+                  .listBackgroundNoActive(),
+            )),
+        alignment: Alignment.bottomRight,
+        height: 250,
+        child: AnimatedContainer(
+          duration:
+          const Duration(milliseconds: 700),
+          width: 250,
+          height: 180,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topLeft,
+                  isAntiAlias: false,
+                  colorFilter: ColorFilter.mode(
+                      isHover
+                          ? Colors.black26
+                          : Colors.black54,
+                      BlendMode.darken),
+                  filterQuality: FilterQuality.none,
+                  image: AssetImage(widget
+                      .projectRelease
+                      .project
+                      .imgUrl)),
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30)),
+              boxShadow: [
+                BoxShadow(
+                    color: isHover
+                        ? Colors.black
+                        .withOpacity(.8)
+                        : Colors.black
+                        .withOpacity(.2),
+                    blurRadius: isHover ? 10 : 2,
+                    spreadRadius: isHover ? 5 : 2)
+              ]),
+        ));
+  }
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
+    return RepaintBoundary(child: MouseRegion(
         onHover: (event) {
-          if(isHover) return;
+          if (isHover) return;
           setState(() {
             isHover = true;
           });
         },
         onExit: (event) {
-          if(!isHover) return;
+          if (!isHover) return;
           setState(() {
             isHover = false;
           });
         },
         child: Hero(
             tag: widget.projectRelease.project.name,
-            child: Material(color: Colors.transparent,
+            child: Material(
+                color: Colors.transparent,
                 child: AnimatedContainer(
                     duration: const Duration(milliseconds: 700),
                     decoration: BoxDecoration(
@@ -150,161 +286,28 @@ class _BannerProState extends State<BannerPro> {
                         boxShadow: [
                           context.watch<AppThemeBloc>().state.isDarkMode()
                               ? BoxShadow(
-                                  color: Colors.white.withOpacity(0.5),
-                                  blurRadius: 15)
+                              color: Colors.white.withOpacity(0.5),
+                              blurRadius: 15)
                               : BoxShadow(
-                                  color: Colors.blueAccent.withOpacity(0.8),
-                                  blurRadius: 15)
+                              color: Colors.blueAccent.withOpacity(0.8),
+                              blurRadius: 15)
                         ]),
                     height: widget.height,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SizedBox(
-                            child: Stack(
-                              children: [
-                                AnimatedContainer(
-                                    duration: const Duration(milliseconds: 700),
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(20),
-                                            topRight: Radius.circular(20)),
-                                        gradient: LinearGradient(
-                                          begin: isHover
-                                              ? Alignment.topRight
-                                              : Alignment.topLeft,
-                                          end: isHover
-                                              ? Alignment.centerLeft
-                                              : Alignment.centerRight,
-                                          colors: widget.projectRelease
-                                              .listBackgroundNoActive(),
-                                        )),
-                                    height: 250),
-                                Positioned(
-                                    right: -0,
-                                    bottom: -0,
-                                    child: AnimatedContainer(
-                                      duration: const Duration(milliseconds: 700),
-                                      width: 250,
-                                      height: 200,
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              fit: BoxFit.none,
-                                              isAntiAlias: true,
-                                              alignment: Alignment.topLeft,
-                                              scale: 2.7,
-                                              colorFilter:
-                                              ColorFilter.mode( isHover?Colors.black26:
-                                                      Colors.black54,
-                                                      BlendMode.darken),
-                                              filterQuality: FilterQuality.none,
-                                              image: AssetImage(
-                                                widget.projectRelease.project
-                                                    .imgUrl,
-                                              )),
-                                          borderRadius: const BorderRadius.only(
-                                              topLeft: Radius.circular(30)),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color:isHover? Colors.black
-                                                    .withOpacity(.8):Colors.black
-                                                    .withOpacity(.2),
-                                                blurRadius:isHover?10: 2,
-
-                                                spreadRadius: isHover?5: 2)
-                                          ]),
-                                    ))
-                              ],
-                            ),
-                          ),
+                          animatedTop(),
                           Expanded(
                               child: Padding(
                                   padding: const EdgeInsets.all(10),
                                   child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
-                                        Wrap(
-                                          direction: Axis.horizontal,
-                                          spacing:
-                                              ResponsiveBreakpoints.of(context)
-                                                      .screenWidth *
-                                                  0.01,
-                                          children: [
-                                            AutoSizeText(
-                                                maxLines: 1,
-                                                widget.projectRelease.project
-                                                    .name,
-                                                style: const TextStyle(
-                                                    fontSize: 30,
-                                                    color: Colors.blueAccent,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            if (widget.projectRelease.project
-                                                    .urlPage !=
-                                                null)
-                                              ButtonNavigation(
-                                                  uri: Uri.parse(widget
-                                                      .projectRelease
-                                                      .project
-                                                      .urlPage!),
-                                                  urlSvg: "assets/svg/web.svg"),
-                                            ButtonNavigation(
-                                                uri: Uri.parse(widget
-                                                    .projectRelease
-                                                    .project
-                                                    .repositoryUrl),
-                                                urlSvg: "assets/svg/github.svg")
-                                          ],
-                                        ),
-                                        Expanded(
-                                            child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 10),
-                                                child: AutoSizeText(
-                                                    widget.projectRelease
-                                                        .getDescription(
-                                                            context),
-                                                    style: const TextStyle(
-                                                        fontSize: 15,
-                                                        color: Colors.white),
-                                                    textAlign:
-                                                        TextAlign.justify))),
-                                        Container(
-                                            width: double.infinity,
-                                            padding: const EdgeInsets.all(1),
-                                            child: Wrap(
-                                                alignment:
-                                                    WrapAlignment.spaceAround,
-                                                children: List.generate(
-                                                    widget
-                                                        .projectRelease
-                                                        .project
-                                                        .imgIconLanguage
-                                                        .length, (index) {
-                                                  return SvgPicture.asset(
-                                                      widget
-                                                              .projectRelease
-                                                              .project
-                                                              .imgIconLanguage[
-                                                          index],
-                                                      color: widget
-                                                              .projectRelease
-                                                              .project
-                                                              .imgIconLanguage[
-                                                                  index]
-                                                              .endsWith(
-                                                                  "github.svg")
-                                                          ? Colors.white
-                                                          : null,
-                                                      width: ResponsiveBreakpoints
-                                                                  .of(context)
-                                                              .isMobile
-                                                          ? 35
-                                                          : 42);
-                                                })))
+                                        bannerTitle(),
+                                        contentTitle(),
+                                        footerTitle()
                                       ])))
-                        ])))));
+                        ])))))) ;
   }
 }

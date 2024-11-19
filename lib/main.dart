@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
 
   const MyApp({super.key, required this.prefs});
 
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

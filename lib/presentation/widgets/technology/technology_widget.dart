@@ -11,9 +11,9 @@ import 'package:responsive_framework/responsive_framework.dart';
 import '../../../data/dataSource/tecnology_data.dart';
 
 class TechnologyWidget extends StatefulWidget {
-  final Technology technology;
+  final Knowledge knowledge;
 
-  const TechnologyWidget({super.key, required this.technology});
+  const TechnologyWidget({super.key, required this.knowledge});
 
   @override
   State<TechnologyWidget> createState() => _TechnologyWidget();
@@ -59,16 +59,16 @@ class _TechnologyWidget extends State<TechnologyWidget> {
         height: 100,
         alignment: Alignment.center,
         duration: const Duration(milliseconds: 400),
-        child: TechnologyView(technology: widget.technology),
+        child: TechnologyView(knowledge: widget.knowledge),
       ),
     );
   }
 }
 
 class TechnologyView extends StatelessWidget {
-  final Technology technology;
+  final Knowledge knowledge;
 
-  const TechnologyView({super.key, required this.technology});
+  const TechnologyView({super.key, required this.knowledge});
 
   void createDialogTechnology(BuildContext context, Technology technology,
       bool isMobile, bool isDarkMode) {
@@ -124,7 +124,7 @@ class TechnologyView extends StatelessWidget {
                       Expanded(child:Padding(
                         padding: const EdgeInsets.only(top: 8),
                         child: AutoSizeText(
-                          technology.typeDescription.getDescription(context),
+                          knowledge.getDescription(context),
                           style: const TextStyle(fontSize: 15),
                           textAlign: TextAlign.justify,
                         )) ),
@@ -159,11 +159,11 @@ class TechnologyView extends StatelessWidget {
     return GestureDetector(
       onTap: () => createDialogTechnology(
           context,
-          technology,
+          knowledge.technology,
           ResponsiveBreakpoints.of(context).isMobile,
           context.read<AppThemeBloc>().state.isDarkMode()),
-      child: SvgPicture.asset(technology.urlIcon,
-          color: technology.changeColor
+      child: SvgPicture.asset(knowledge.technology.urlIcon,
+          color: knowledge.technology.changeColor
               ? context.watch<AppThemeBloc>().state.isDarkMode()
                   ? Colors.white
                   : Colors.black

@@ -77,7 +77,7 @@ class _AnimatedListTechnologyState extends State<AnimatedListTechnology> {
               return FadeInLeft(
                 duration: Duration(milliseconds: 800 + (index * 50)),
                 curve: Curves.linear,
-                child: TechnologyWidget(technology: state.listFiltered[index]),
+                child: TechnologyWidget(knowledge: state.listFiltered[index]),
               );
             },
           ),

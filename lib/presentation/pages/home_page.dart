@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+
 import 'package:proyect_porfolio/domain/blocs/appServicesGithub/app_service_github_bloc.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import '../../data/dataSource/project_data.dart';
 import '../../domain/blocs/appCheckVisibilityNavigationTop/app_banner_top_bloc.dart';
 import '../screens/home_screens.dart';
@@ -28,12 +27,18 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey _headerKey = GlobalKey();
 
   @override
-  void initState() {
+  void initState(){
+    loadImagesProjects(context);
     loadWidget();
     context.read<AppServiceGithubBloc>().add(ConnectToGithub());
     super.initState();
   }
-
+  void loadImagesProjects(BuildContext context) async{
+    await precacheImage(const AssetImage("assets/images/personal.webp"), context);
+    for(ProjectRelease release in ProjectRelease.values) {
+      await precacheImage(AssetImage(release.project.imgUrl), context);
+    }
+  }
   void scrollToItem(GlobalKey key) =>
       Scrollable.ensureVisible(key.currentContext!,
           duration: const Duration(milliseconds: 500), curve: Curves.linear);

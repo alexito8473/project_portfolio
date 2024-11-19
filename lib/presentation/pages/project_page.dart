@@ -1,27 +1,13 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:animated_background/particles.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../data/dataSource/project_data.dart';
-import '../../domain/blocs/appCheckVisibilityNavigationTop/app_banner_top_bloc.dart';
-import '../../domain/blocs/appLocale/app_locale_bloc.dart';
 import '../../domain/blocs/appTheme/app_theme_bloc.dart';
 import '../widgets/header/header_widegt.dart';
 import '../widgets/project/project_widget.dart';
-import 'package:responsive_framework/responsive_framework.dart';
-
-import '../../data/dataSource/project_data.dart';
-import '../../domain/blocs/appTheme/app_theme_bloc.dart';
-import '../widgets/project/project_widget.dart';
-
 class ProjectPage extends StatefulWidget {
   const ProjectPage({super.key});
 
@@ -31,13 +17,6 @@ class ProjectPage extends StatefulWidget {
 
 class _ProjectPageState extends State<ProjectPage>
     with SingleTickerProviderStateMixin {
-  int countColumns() {
-    if (ResponsiveBreakpoints.of(context).screenWidth < 650) return 1;
-    if (ResponsiveBreakpoints.of(context).screenWidth < 1300) return 2;
-    if (ResponsiveBreakpoints.of(context).screenWidth < 1800) return 3;
-    if (ResponsiveBreakpoints.of(context).isDesktop) return 4;
-    return 1;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +50,7 @@ class _ProjectPageState extends State<ProjectPage>
                 child: MasonryGridView.builder(
                     gridDelegate:
                         const SliverSimpleGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 600),
+                            maxCrossAxisExtent: 500),
                     addRepaintBoundaries: true,
                     itemCount: ProjectRelease.values.length,
                     mainAxisSpacing:
@@ -99,9 +78,7 @@ class _ProjectPageState extends State<ProjectPage>
             child: CustomAppBar(
                 learning: Row(children: [
                   IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                      onPressed: () => Navigator.pop(context),
                       icon: const Icon(Icons.arrow_back_ios_new_outlined))
                 ]),
                 changeScroll: null,

@@ -1,13 +1,8 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:animated_background/animated_background.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import '../../data/dataSource/menu_items.dart';
 import '../../domain/blocs/appCheckVisibilityNavigationTop/app_banner_top_bloc.dart';
-import '../../domain/blocs/appLocale/app_locale_bloc.dart';
 import '../../domain/blocs/appTheme/app_theme_bloc.dart';
 import '../widgets/header/header_widegt.dart';
 

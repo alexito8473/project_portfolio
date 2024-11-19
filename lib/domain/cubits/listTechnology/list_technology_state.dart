@@ -1,21 +1,17 @@
 part of 'list_technology_cubit.dart';
 
 class ListTechnologyState {
-  final List<Technology> listTechnology;
-  final List<Technology> listFiltered;
+  final List<Knowledge> listFiltered;
 
   ListTechnologyState(
-      {required this.listTechnology, required this.listFiltered});
+      {required this.listFiltered});
   factory ListTechnologyState.init() {
-    List<Technology> listTechnology = createListTechnology();
-    return ListTechnologyState(
-        listTechnology: listTechnology, listFiltered: listTechnology);
+    return ListTechnologyState(listFiltered: Knowledge.values);
   }
 
   ListTechnologyState copyWitch(
-          {required List<Technology>? listTechnology,
-          required List<Technology>? listFiltered}) =>
+          {
+          required List<Knowledge>? listFiltered}) =>
       ListTechnologyState(
-          listTechnology: listTechnology ?? this.listTechnology,
           listFiltered: listFiltered ?? this.listFiltered);
 }
