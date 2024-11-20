@@ -18,6 +18,8 @@ import 'package:proyect_porfolio/presentation/route/route.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'data/dataSource/project_data.dart';
+
 void main() async {
   await dotenv.load(fileName: ".env");
   runApp(MyApp(prefs: await SharedPreferences.getInstance()));
@@ -28,9 +30,16 @@ class MyApp extends StatelessWidget {
 
   const MyApp({super.key, required this.prefs});
 
-
+  void loadImagesProjects(BuildContext context) async {
+    await precacheImage(
+        const AssetImage("assets/images/personal.webp"), context);
+    for (ProjectRelease release in ProjectRelease.values) {
+      await precacheImage(AssetImage(release.project.imgUrl), context);
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    loadImagesProjects(context);
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => AppBannerTopBloc()),

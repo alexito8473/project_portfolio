@@ -80,22 +80,17 @@ class ButtonDownloadPdf extends StatelessWidget {
   const ButtonDownloadPdf({super.key});
 
   void downloadFile() async {
-    // Cargar el archivo PDF desde los assets
     ByteData data = await rootBundle
-        .load('assets/pdf/Curriculum_Alejandro_Aguilar_Alba.pdf');
+        .load('assets/pdf/Curriculum_Alejandro_Aguilar.pdf');
     final pdfBytes = data.buffer.asUint8List();
 
-    // Crear el blob para descarga
     final blob = html.Blob([pdfBytes], 'application/pdf');
 
-    // Crear la URL para descarga
     final url = html.Url.createObjectUrlFromBlob(blob);
     html.AnchorElement(href: url)
       ..setAttribute('download',
           'Curriculum_Alejandro_Aguilar_Alba.pdf') // Nombre del archivo a descargar
       ..click();
-
-    // Liberar el URL temporal
     html.Url.revokeObjectUrl(url);
   }
 

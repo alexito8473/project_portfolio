@@ -82,7 +82,7 @@ class _ProjectPageState extends State<ProjectPage>
                       icon: const Icon(Icons.arrow_back_ios_new_outlined))
                 ]),
                 changeScroll: null,
-                changeTop: true))
+                changeTop: true, onDoubleTap: (){}, canNotTapButton: false))
       ],
     ));
   }

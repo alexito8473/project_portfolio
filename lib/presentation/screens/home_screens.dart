@@ -5,6 +5,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import '../../domain/blocs/appCheckVisibilityNavigationTop/app_banner_top_bloc.dart';
 import '../../domain/blocs/appTheme/app_theme_bloc.dart';
 import '../widgets/header/header_widegt.dart';
+import 'dart:html' as html;
 
 class HomeScreen extends StatefulWidget {
   final ScrollController scrollController;
@@ -24,20 +25,41 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool _changeTop = false;
+  bool moveTop = false;
+  bool isActiveMove = false;
+  Offset _mousePosition = Offset.zero;
+  Offset? _mousePositionSecond;
   @override
   void initState() {
     super.initState();
     widget.scrollController.addListener(() =>
         context.read<AppBannerTopBloc>().add(widget.updateNavigationEvent));
     widget.scrollController.addListener(() => _scrollListener());
+    html.window.onResize.listen((event) {
+      _onResize();
+    },);
   }
 
+
   void _scrollListener() {
-    if (_changeTop == context.read<AppBannerTopBloc>().state.isActiveBannerTop)
-      return;
+    if (_changeTop == context.read<AppBannerTopBloc>().state.isActiveBannerTop) return;
     setState(() {
       _changeTop = context.read<AppBannerTopBloc>().state.isActiveBannerTop;
     });
+  }
+
+  void _onResize() {
+    if (!isActiveMove) return;
+    if (ResponsiveBreakpoints.of(context).isMobile && isActiveMove) {
+      reset();
+    }else{
+      setState(() {
+        _mousePosition = Offset(
+          _mousePosition.dx.clamp(0,ResponsiveBreakpoints.of(context).screenWidth- 300), // Ancho del widget
+          _mousePosition.dy.clamp(0,ResponsiveBreakpoints.of(context).screenHeight - 100),
+        );
+      });
+    }
   }
 
   @override
@@ -49,8 +71,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  void reset(){
+    setState(() {
+      _mousePositionSecond = null;
+      _mousePosition = Offset.zero;
+      moveTop = false;
+      isActiveMove = false;
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: AnimatedBackground(
@@ -73,21 +104,46 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     particleCount:
                         ResponsiveBreakpoints.of(context).isMobile ? 6 : 10)),
             vsync: this,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                    child: CustomScrollView(
-                        controller: widget.scrollController,
-                        slivers: List.generate(widget.listWidgetHome.length,
-                            (index) => widget.listWidgetHome[index]))),
-                Positioned(
-                    top: 0,
-                    right: 0,
-                    left: 0,
-                    child: CustomAppBar(
+            child: MouseRegion(
+                onHover: (event) {
+                  if (isMobile) return;
+                  _mousePositionSecond =
+                      Offset(event.position.dx - 100, event.position.dy - 50);
+                  if (!moveTop) return;
+                  setState(() {
+                    _mousePosition =
+                        Offset(event.position.dx - 100, event.position.dy - 50);
+                  });
+                },
+                child: Stack(children: [
+                  Positioned.fill(
+                      child: CustomScrollView(
+                          controller: widget.scrollController,
+                          slivers: List.generate(widget.listWidgetHome.length,
+                              (index) => widget.listWidgetHome[index]))),
+                  Positioned(
+                      top: _mousePosition.dy,
+                      left: _mousePosition.dx,
+                      right: moveTop || isActiveMove ? null : 0,
+                      child: CustomAppBar(
                         changeScroll: (value) => widget.scrollNavigation(value),
-                        changeTop: _changeTop))
-              ],
-            )));
+                        changeTop: _changeTop,
+                        reset: isActiveMove
+                            ? () => reset()
+                            : null,
+                        onDoubleTap: () {
+                          if (isMobile) return;
+                          if (_mousePositionSecond == null) return;
+                          if (!isActiveMove) {
+                            isActiveMove = true;
+                          }
+                          setState(() {
+                            _mousePosition = _mousePositionSecond!;
+                            moveTop = !moveTop;
+                          });
+                        },
+                        canNotTapButton: moveTop,
+                      ))
+                ]))));
   }
 }
