@@ -13,8 +13,7 @@ class AppServiceGithubBloc
   AppServiceGithubBloc({required this.githubRepository})
       : super(AppServiceGithubState.init()) {
     on<ConnectToGithub>((event, emit) async {
-      emit(state.copyWitch(allCountCommit: await githubRepository.fetchCommitCount())
-      );
+      emit(state.copyWitch(allCountCommit: await githubRepository.fetchCommitCount()));
     });
   }
 }

@@ -37,7 +37,7 @@ class ButtonIconSvg extends StatelessWidget {
                     ? Colors.white
                     : Colors.black
                 : null,
-            width: 35),
+            width: 33),
       ),
     );
   }
@@ -62,7 +62,7 @@ class IconButtonNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
         padding: const EdgeInsets.all(12),
-        iconSize: 30,
+        iconSize: 33,
         tooltip: tooltip,
         color: color,
         onPressed: () async => await launchUrl(uri),

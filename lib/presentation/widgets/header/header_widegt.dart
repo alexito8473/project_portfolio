@@ -179,7 +179,7 @@ class CustomAppBar extends StatelessWidget {
                     child: AnimatedContainer(
                         duration: const Duration(milliseconds: 1200),
                         curve: Curves.decelerate,
-                        height: 75,
+                        height: 55,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             boxShadow: [
@@ -227,7 +227,7 @@ class CustomAppBar extends StatelessWidget {
                                                 .locale
                                                 .getLenguajeCode(),
                                             style:
-                                                const TextStyle(fontSize: 20))),
+                                                const TextStyle(fontSize: 18))),
                                     Padding(
                                         padding: const EdgeInsets.only(
                                             right: 15, left: 15),
@@ -243,8 +243,9 @@ class CustomAppBar extends StatelessWidget {
                                     if (changeScroll != null)
                                       DropdownButtonHideUnderline(
                                           child: DropdownButton2(
+
                                               customButton: const Icon(Icons.list,
-                                                  size: 38),
+                                                  size: 35),
                                               items: List.generate(
                                                   MenuItems.values.length,
                                                   (index) => DropdownMenuItem<int>(
@@ -256,13 +257,13 @@ class CustomAppBar extends StatelessWidget {
                                               barrierColor:
                                                   Colors.black.withOpacity(0.4),
                                               dropdownStyleData: DropdownStyleData(
-                                                  width: 170,
+                                                  width: 180,
                                                   useSafeArea: true,
                                                   padding: const EdgeInsets.symmetric(
-                                                      vertical: 6),
+                                                      vertical: 6,horizontal: 5),
                                                   decoration: BoxDecoration(
                                                       borderRadius:
-                                                          BorderRadius.circular(4),
+                                                          BorderRadius.circular(10),
                                                       color: context.watch<AppThemeBloc>().state.isDarkMode() ? Colors.grey.shade800 : Colors.blueAccent))))
                                   ])
                             ]))))));
@@ -279,25 +280,23 @@ class HeaderTop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(children: [
       ClipOval(
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 400),
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-            filterQuality: FilterQuality.none,
-            image: AssetImage("assets/images/personal.webp"),
-          )),
-          height: countWidget > 4
-              ? initAnimation
-                  ? 50
-                  : 0
-              : 0,
-          width: countWidget > 4
-              ? initAnimation
-                  ? 50
-                  : 0
-              : 0,
-        ),
-      ),
+          child: AnimatedContainer(
+              duration: const Duration(milliseconds: 400),
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      filterQuality: FilterQuality.high,
+                      isAntiAlias: true,
+                      image: AssetImage("assets/images/personal.webp"))),
+              height: countWidget > 4
+                  ? initAnimation
+                      ? 40
+                      : 0
+                  : 0,
+              width: countWidget > 4
+                  ? initAnimation
+                      ? 40
+                      : 0
+                  : 0)),
       AnimatedContainer(
           margin: countWidget > 3
               ? initAnimation
@@ -311,7 +310,7 @@ class HeaderTop extends StatelessWidget {
                   : 0
               : 0,
           child: const AutoSizeText("Alejandro Aguilar",
-              maxLines: 1, style: TextStyle(fontSize: 25))),
+              maxLines: 1, style: TextStyle(fontSize: 23))),
       AnimatedContainer(
           duration: const Duration(milliseconds: 800),
           width: countWidget > 2

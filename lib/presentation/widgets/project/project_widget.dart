@@ -65,7 +65,7 @@ class _ListProjectState extends State<ListProject> {
 class MasonrySliver extends StatelessWidget {
   const MasonrySliver({super.key});
   int countColumns({required BuildContext context}) {
-    if (ResponsiveBreakpoints.of(context).screenWidth < 900) return 1;
+    if (ResponsiveBreakpoints.of(context).screenWidth < 770) return 1;
     if (ResponsiveBreakpoints.of(context).screenWidth < 1300) return 2;
     if (ResponsiveBreakpoints.of(context).screenWidth < 2000) return 3;
     if (ResponsiveBreakpoints.of(context).isDesktop) return 4;
@@ -219,14 +219,14 @@ class _BannerProState extends State<BannerPro> {
                   ? Alignment.centerLeft
                   : Alignment.centerRight,
               colors: widget.projectRelease
-                  .listBackgroundNoActive(),
+                  .listBackgroundNoActive()
             )),
         alignment: Alignment.bottomRight,
         height: 250,
         child: AnimatedContainer(
           duration:
           const Duration(milliseconds: 700),
-          width: 250,
+          width:ResponsiveBreakpoints.of(context).isMobile?ResponsiveBreakpoints.of(context).screenWidth*0.5:  250,
           height: 180,
           decoration: BoxDecoration(
               image: DecorationImage(
@@ -254,7 +254,7 @@ class _BannerProState extends State<BannerPro> {
                         .withOpacity(.2),
                     blurRadius: isHover ? 10 : 2,
                     spreadRadius: isHover ? 5 : 2)
-              ]),
+              ])
         ));
   }
   @override

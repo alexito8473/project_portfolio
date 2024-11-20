@@ -14,36 +14,34 @@ class GithubRepository {
 
   Future<int> fetchCommitCount() async {
     int countCommits = 0;
+    try{
+      final reposResponse = await http.get(
+        Uri.parse('https://api.github.com/users/$userName/repos'),
+        headers: {
+          'Authorization': 'token $tokenGithub'
+        }
+      );
 
-    final reposResponse = await http.get(
-      Uri.parse('https://api.github.com/users/$userName/repos'),
-      headers: {
-        'Authorization': 'token $tokenGithub',
-      },
-    );
-
-    if (reposResponse.statusCode == 200) {
-      var reposData = json.decode(reposResponse.body);
-      for (var repo in reposData) {
-        String repoName = repo['name'];
-
-        final commitsResponse = await http.get(
-          Uri.parse(
-              'https://api.github.com/repos/$userName/$repoName/stats/contributors'),
-          headers: {
-            'Authorization': 'token $tokenGithub',
-          },
-        );
-
-        if (commitsResponse.statusCode == 200 ) {
-          var contributorsData = json.decode(commitsResponse.body);
-          for (var contributor in contributorsData) {
-            countCommits += int.parse(contributor["total"].toString());
+      if (reposResponse.statusCode == 200) {
+        var reposData = json.decode(reposResponse.body);
+        for (var repo in reposData) {
+          String repoName = repo['name'];
+          final commitsResponse = await http.get(
+            Uri.parse(
+                'https://api.github.com/repos/$userName/$repoName/stats/contributors'),
+            headers: {
+              'Authorization': 'token $tokenGithub',
+            },
+          );
+          if (commitsResponse.statusCode == 200 ) {
+            var contributorsData = json.decode(commitsResponse.body);
+            for (var contributor in contributorsData) {
+              countCommits += int.parse(contributor["total"].toString());
+            }
           }
         }
       }
-    }
-
+    }catch(ignored){}
     return countCommits;
   }
 }

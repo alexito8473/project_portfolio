@@ -7,8 +7,8 @@ enum AppTheme {
   AppTheme reverse() => this == AppTheme.LIGHT ? AppTheme.DARK : AppTheme.LIGHT;
 
   Icon getIcon() => this == AppTheme.LIGHT
-      ? const Icon(Icons.light_mode, size: 30.0)
-      : const Icon(Icons.dark_mode, size: 30.0);
+      ? const Icon(Icons.light_mode, size: 25.0)
+      : const Icon(Icons.dark_mode, size: 25.0);
 }
 
 class AppThemeState {
