@@ -31,8 +31,6 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.prefs});
 
   void loadImagesProjects(BuildContext context) async {
-    await precacheImage(
-        const AssetImage("assets/images/personal.webp"), context);
     for (ProjectRelease release in ProjectRelease.values) {
       await precacheImage(AssetImage(release.project.imgUrl), context);
     }

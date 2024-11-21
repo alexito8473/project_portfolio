@@ -1,3 +1,4 @@
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +72,7 @@ class HeaderWidget extends StatelessWidget {
                         child: ClipOval(
                             child: Image(
                                 image: assetImageUser,
+                                isAntiAlias: true,
                                 frameBuilder: (context, child, frame,
                                     wasSynchronouslyLoaded) {
                                   if (frame == null) {
@@ -80,7 +82,7 @@ class HeaderWidget extends StatelessWidget {
                                   }
                                   return child;
                                 },
-                                filterQuality: FilterQuality.none,
+                                filterQuality: FilterQuality.high,
                                 width: 300))),
                   ),
                   SizedBox(
