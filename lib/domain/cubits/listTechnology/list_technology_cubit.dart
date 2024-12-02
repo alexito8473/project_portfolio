@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import '../../../data/dataSource/tecnology_data.dart';
 
 part 'list_technology_state.dart';
+
 class ListTechnologyCubit extends Cubit<ListTechnologyState> {
   ListTechnologyCubit() : super(ListTechnologyState.init());
 
@@ -11,7 +12,8 @@ class ListTechnologyCubit extends Cubit<ListTechnologyState> {
         listFiltered: type == TypeLanguage.ALL
             ? Knowledge.values
             : Knowledge.values
-                .where((element) => element.technology.typeLanguage==type)
-                .toList()));
+                .where((element) => element.technology.typeLanguage == type)
+                .toList(),
+        currentTypeLanguage: type));
   }
 }

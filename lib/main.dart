@@ -18,8 +18,6 @@ import 'package:proyect_porfolio/presentation/route/route.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'data/dataSource/project_data.dart';
-
 void main() async {
   await dotenv.load(fileName: ".env");
   runApp(MyApp(prefs: await SharedPreferences.getInstance()));
@@ -27,17 +25,36 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final SharedPreferences prefs;
-
-  const MyApp({super.key, required this.prefs});
-
-  void loadImagesProjects(BuildContext context) async {
-    for (ProjectRelease release in ProjectRelease.values) {
-      await precacheImage(AssetImage(release.project.imgUrl), context);
-    }
-  }
+  MyApp({super.key, required this.prefs});
+  final ThemeData lightTheme = ThemeData.from(
+      useMaterial3: true,
+      textTheme: GoogleFonts.texturinaTextTheme(Typography.blackCupertino),
+      colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: Colors.blueAccent,
+          onPrimary: Colors.blue,
+          secondary: Colors.blue,
+          primaryContainer: Colors.blueAccent,
+          onSecondary: Colors.blue,
+          error: Colors.white,
+          onError: Colors.white,
+          surface: Colors.white,
+          onSurface: Colors.black));
+  final ThemeData darkTheme = ThemeData.from(
+      useMaterial3: true,
+      textTheme: GoogleFonts.texturinaTextTheme(Typography.whiteMountainView),
+      colorScheme: const ColorScheme(
+          brightness: Brightness.dark,
+          primary: Colors.blueGrey,
+          onPrimary: Colors.blueAccent,
+          secondary: Colors.white,
+          onSecondary: Colors.white,
+          error: Colors.white,
+          onError: Colors.white,
+          surface: Colors.black,
+          onSurface: Colors.white));
   @override
   Widget build(BuildContext context) {
-    loadImagesProjects(context);
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => AppBannerTopBloc()),
@@ -52,7 +69,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) => AppLocaleBloc(
                   locale: AppLocale.selectAppLocale(
-                      ui.PlatformDispatcher.instance.locale))),
+                      ui.PlatformDispatcher.instance.locale)))
         ],
         child:
             BlocBuilder<AppThemeBloc, AppThemeState>(builder: (context, state) {
@@ -67,35 +84,8 @@ class MyApp extends StatelessWidget {
               supportedLocales: const [Locale("en", ""), Locale("es", "")],
               title: 'Portfolio Alejandro',
               themeMode: state.isDarkMode() ? ThemeMode.dark : ThemeMode.light,
-              theme: ThemeData.from(
-                  useMaterial3: true,
-                  textTheme:
-                      GoogleFonts.texturinaTextTheme(Typography.blackCupertino),
-                  colorScheme: const ColorScheme(
-                      brightness: Brightness.light,
-                      primary: Colors.blueAccent,
-                      onPrimary: Colors.blue,
-                      secondary: Colors.blue,
-                      primaryContainer: Colors.blueAccent,
-                      onSecondary: Colors.blue,
-                      error: Colors.white,
-                      onError: Colors.white,
-                      surface: Colors.white,
-                      onSurface: Colors.black)),
-              darkTheme: ThemeData.from(
-                  useMaterial3: true,
-                  textTheme: GoogleFonts.texturinaTextTheme(
-                      Typography.whiteMountainView),
-                  colorScheme: const ColorScheme(
-                      brightness: Brightness.dark,
-                      primary: Colors.blueGrey,
-                      onPrimary: Colors.blueAccent,
-                      secondary: Colors.white,
-                      onSecondary: Colors.white,
-                      error: Colors.white,
-                      onError: Colors.white,
-                      surface: Colors.black,
-                      onSurface: Colors.white)),
+              theme: lightTheme,
+              darkTheme: darkTheme,
               routerConfig: router,
               builder: (context, child) =>
                   ResponsiveBreakpoints.builder(child: child!, breakpoints: [

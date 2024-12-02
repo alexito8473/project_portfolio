@@ -76,12 +76,51 @@ class IconButtonNavigator extends StatelessWidget {
   }
 }
 
+class ButtonSelect extends StatelessWidget {
+  final Function onPressed;
+  final bool isSelect;
+  final String title;
+  const ButtonSelect({super.key, required this.onPressed, required this.isSelect, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                (Set<WidgetState> states) {
+              if (isSelect) {
+                return Colors.blueAccent.withOpacity(0.8);
+              }
+              return context.watch<AppThemeBloc>().state.isDarkMode()
+                  ? Colors.white70
+                  : Colors.grey.shade100;
+            }),
+            foregroundColor:
+                WidgetStateProperty.resolveWith<Color>((Set states) {
+              if (states.contains(WidgetState.selected)) {
+                return Colors.white;
+              }
+              return Colors.black87;
+            }),
+            overlayColor: WidgetStateProperty.resolveWith<Color>(
+                (states) => Colors.black12),
+            shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)))),
+        onPressed: () => onPressed(),
+        child: Container(
+            alignment: Alignment.center,
+            width: 90,
+            height: 40,
+            child: AutoSizeText(title, maxLines: 1)));
+  }
+}
+
 class ButtonDownloadPdf extends StatelessWidget {
   const ButtonDownloadPdf({super.key});
 
   void downloadFile() async {
-    ByteData data = await rootBundle
-        .load('assets/pdf/Curriculum_Alejandro_Aguilar.pdf');
+    ByteData data =
+        await rootBundle.load('assets/pdf/Curriculum_Alejandro_Aguilar.pdf');
     final pdfBytes = data.buffer.asUint8List();
 
     final blob = html.Blob([pdfBytes], 'application/pdf');

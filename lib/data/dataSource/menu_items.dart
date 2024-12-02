@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg_icons/flutter_svg_icons.dart';
+
 enum MenuItems {
   EXPERIENCE,
   PROJECT,
@@ -40,16 +41,11 @@ enum MenuItems {
     }
   }
 
-  Widget buildItem(BuildContext context) {
-    return Row(
-      children: [
+  Widget buildItem(BuildContext context) => Row(children: [
         getIcon(),
         const SizedBox(width: 10),
         Expanded(
-          child: Text(getTitle(context),
-              style: const TextStyle(fontWeight: FontWeight.bold)),
-        ),
-      ],
-    );
-  }
+            child: Text(getTitle(context),
+                style: const TextStyle(fontWeight: FontWeight.bold)))
+      ]);
 }

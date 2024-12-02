@@ -64,6 +64,7 @@ class _ListProjectState extends State<ListProject> {
 
 class MasonrySliver extends StatelessWidget {
   const MasonrySliver({super.key});
+
   int countColumns({required BuildContext context}) {
     if (ResponsiveBreakpoints.of(context).screenWidth < 770) return 1;
     if (ResponsiveBreakpoints.of(context).screenWidth < 1300) return 2;
@@ -91,29 +92,31 @@ class MasonrySliver extends StatelessWidget {
     int countColum = countColumns(context: context);
     return SliverToBoxAdapter(
       child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-          child: MasonryGrid(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            column: countColum,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
-            children: List.generate(
-                4,
-                (index) => Padding(
-                    padding: index < countColum
-                        ? EdgeInsets.only(
-                            top: index == 0 ? 0 : (index % 2 + 0.5) * 70)
-                        : EdgeInsets.zero,
-                    child: BannerPro(
-                        projectRelease: ProjectRelease.values[index]))),
-          )),
+          padding: EdgeInsets.only(left: size.width * 0.1,right: size.width * 0.1,bottom: size.height*0.1),
+          child:Center(
+            child:MasonryGrid(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              column: countColum,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
+              children: List.generate(countColum>3?countColum:3,
+                      (index) => Padding(
+                      padding: index < countColum
+                          ? EdgeInsets.only(
+                          top: index == 0 ? 0 : (index % 2 + 0.5) * 70)
+                          : EdgeInsets.zero,
+                      child: BannerPro(
+                          projectRelease: ProjectRelease.values[index]))),
+            )
+          ) ),
     );
   }
 }
 class BannerPro extends StatefulWidget {
   final ProjectRelease projectRelease;
   final double height;
-  const BannerPro({super.key, required this.projectRelease, this.height = 600});
+  final bool haveFooter;
+  const BannerPro({super.key, required this.projectRelease, this.height = 550,this.haveFooter=false});
 
   @override
   State<BannerPro> createState() => _BannerProState();
@@ -306,7 +309,6 @@ class _BannerProState extends State<BannerPro> {
                                       children: [
                                         bannerTitle(),
                                         contentTitle(),
-                                        footerTitle()
                                       ])))
                         ])))))) ;
   }

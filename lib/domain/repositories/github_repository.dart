@@ -4,15 +4,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class GithubRepository {
-  final String userName;
   final String tokenGithub;
-  GithubRepository._({required this.userName, required this.tokenGithub});
+  GithubRepository._({required this.tokenGithub});
 
   factory GithubRepository.init() => GithubRepository._(
-      userName: dotenv.env["NAME_GITHUB"]!,
       tokenGithub: dotenv.env["TOKEN_GITHUB"]!);
 
   Future<int> fetchCommitCount() async {
+    String userName="alexito8473";
     int countCommits = 0;
     try{
       final reposResponse = await http.get(

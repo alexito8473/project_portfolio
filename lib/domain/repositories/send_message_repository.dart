@@ -20,12 +20,13 @@ class SendMessageRepository {
       required this.uri});
 
   factory SendMessageRepository.init() => SendMessageRepository._(
-      uri: Uri.parse(dotenv.env["URL_API"]!),
+      uri:Uri.parse("https://api.emailjs.com/api/v1.0/email/send"),
       serviceId: dotenv.env["EMAIL_SERVICE_ID"]!,
       templateId: dotenv.env["EMAIL_TEMPLATE_ID"]!,
       secondTemplateId: dotenv.env["EMAIL_SECOND_TEMPLATE_ID"]!,
       userId: dotenv.env["EMAIL_USER_ID"]!);
   Future<Response> sendEmailToMe(Message message) async {
+
     return await http.post(uri,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({

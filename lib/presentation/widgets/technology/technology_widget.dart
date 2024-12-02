@@ -9,6 +9,7 @@ import 'package:proyect_porfolio/domain/cubits/listTechnology/list_technology_cu
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../data/dataSource/tecnology_data.dart';
+import '../customWidget/custom_button_widget.dart';
 
 class TechnologyWidget extends StatefulWidget {
   final Knowledge knowledge;
@@ -24,7 +25,7 @@ class _TechnologyWidget extends State<TechnologyWidget> {
 
   Color colorActive() {
     return context.watch<AppThemeBloc>().state.isDarkMode()
-        ? Colors.white70
+        ? Colors.white38
         : Colors.black54;
   }
 
@@ -33,43 +34,6 @@ class _TechnologyWidget extends State<TechnologyWidget> {
         ? Colors.white10
         : Colors.black12;
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (event) {
-        if(isActivate) return;
-        setState(() {
-          isActivate = true;
-        });
-      },
-      onExit: (event) {
-        if(!isActivate) return;
-        setState(() {
-          isActivate = false;
-        });
-      },
-      child: AnimatedContainer(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: isActivate ? colorActive() : colorNoActive(),
-        ),
-        width: 100,
-        height: 100,
-        alignment: Alignment.center,
-        duration: const Duration(milliseconds: 400),
-        child: TechnologyView(knowledge: widget.knowledge),
-      ),
-    );
-  }
-}
-
-class TechnologyView extends StatelessWidget {
-  final Knowledge knowledge;
-
-  const TechnologyView({super.key, required this.knowledge});
-
   void createDialogTechnology(BuildContext context, Technology technology,
       bool isMobile, bool isDarkMode) {
     Color background = isDarkMode ? Colors.black : Colors.white;
@@ -79,162 +43,141 @@ class TechnologyView extends StatelessWidget {
         return AlertDialog(
             shadowColor: isDarkMode ? Colors.white10 : Colors.black12,
             content: Container(
-              width: 350,
-              height: !isMobile ? 380 : 430,
-              decoration: BoxDecoration(
-                  color: background, borderRadius: BorderRadius.circular(10)),
-              child: Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          transform: const GradientRotation(0.3),
-                          stops: const [
-                            0.85,
-                            0.85,
-                            1,
-                            1
-                          ],
-                          colors: [
-                            background,
-                            technology.color.withOpacity(0.5),
-                            technology.color.withOpacity(0.5),
-                            background
-                          ])),
-                  child: Column(
-                    children: [
+                width: 350,
+                height: !isMobile ? 380 : 430,
+                decoration: BoxDecoration(
+                    color: background, borderRadius: BorderRadius.circular(10)),
+                child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            transform: const GradientRotation(0.3),
+                            stops: const [
+                              0.85,
+                              0.85,
+                              1,
+                              1
+                            ],
+                            colors: [
+                              background,
+                              technology.color.withOpacity(0.5),
+                              technology.color.withOpacity(0.5),
+                              background
+                            ])),
+                    child: Column(children: [
                       SizedBox(
                           height: 40,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: AutoSizeText(
-                                  maxLines: 2,
-                                  '${AppLocalizations.of(context)!.myExperience} ${technology.name}',
-                                  style: const TextStyle(fontSize: 20),
-                                ),
+                          child: Row(children: [
+                            Expanded(
+                              child: AutoSizeText(
+                                maxLines: 2,
+                                '${AppLocalizations.of(context)!.myExperience} ${technology.name}',
+                                style: const TextStyle(fontSize: 20),
                               ),
-                              IconButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  icon: const Icon(Icons.close))
-                            ],
-                          )),
-                      Expanded(child:Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: AutoSizeText(
-                          knowledge.getDescription(context),
-                          style: const TextStyle(fontSize: 15),
-                          textAlign: TextAlign.justify,
-                        )) ),
+                            ),
+                            IconButton(
+                                onPressed: () => Navigator.pop(context),
+                                icon: const Icon(Icons.close))
+                          ])),
+                      Expanded(
+                          child: Padding(
+                              padding: const EdgeInsets.only(top: 8),
+                              child: AutoSizeText(
+                                widget.knowledge.getDescription(context),
+                                style: const TextStyle(fontSize: 15),
+                                textAlign: TextAlign.justify,
+                              ))),
                       Container(
                           height: 60,
                           alignment: Alignment.bottomLeft,
                           child: SvgPicture.asset(technology.urlIcon,
                               color: technology.changeColor
                                   ? context
-                                          .watch<AppThemeBloc>()
-                                          .state
-                                          .isDarkMode()
-                                      ? Colors.white
-                                      : Colors.black
+                                  .watch<AppThemeBloc>()
+                                  .state
+                                  .isDarkMode()
+                                  ? Colors.white
+                                  : Colors.black
                                   : null,
-                              width: 60)),
-                    ],
-                  )),
-            ),
+                              width: 60))
+                    ]))),
             backgroundColor: Colors.transparent,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(0.0),
-            ),
+                borderRadius: BorderRadius.circular(0.0)),
             elevation: 24.0);
-
       },
     );
   }
-
+  void onTap(){
+    createDialogTechnology(
+        context,
+        widget.knowledge.technology,
+        ResponsiveBreakpoints.of(context).isMobile,
+        context.read<AppThemeBloc>().state.isDarkMode());
+  }
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => createDialogTechnology(
-          context,
-          knowledge.technology,
-          ResponsiveBreakpoints.of(context).isMobile,
-          context.read<AppThemeBloc>().state.isDarkMode()),
-      child: SvgPicture.asset(knowledge.technology.urlIcon,
-          color: knowledge.technology.changeColor
-              ? context.watch<AppThemeBloc>().state.isDarkMode()
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (event) {
+        if (isActivate) return;
+        setState(() {
+          isActivate = true;
+        });
+      },
+      onExit: (event) {
+        if (!isActivate) return;
+        setState(() {
+          isActivate = false;
+        });
+      },
+      child: GestureDetector(
+          onTap: () => onTap(),
+        child: AnimatedContainer(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: isActivate ? colorActive() : colorNoActive(),
+          ),
+          width: 90,
+          height: 90,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 600),
+          child: SvgPicture.asset(widget.knowledge.technology.urlIcon,
+              color: widget.knowledge.technology.changeColor
+                  ? context.watch<AppThemeBloc>().state.isDarkMode()
                   ? Colors.white
                   : Colors.black
-              : null,
-          width: 70),
+                  : null,
+              width: 60)
+        )
+      )
     );
   }
 }
 
-class SingleChoice extends StatefulWidget {
+
+class SingleChoice extends StatelessWidget {
   const SingleChoice({super.key});
-
-  @override
-  State<SingleChoice> createState() => _SingleChoiceState();
-}
-
-class _SingleChoiceState extends State<SingleChoice> {
-  TypeLanguage calendarView = TypeLanguage.ALL;
-
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 20,
-      runSpacing: 10,
-      alignment: WrapAlignment.center,
-      children: List.generate(
-          TypeLanguage.values.length,
-          (index) => ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.resolveWith<Color>(
-                  (Set<WidgetState> states) {
-                    if (TypeLanguage.values[index] == calendarView) {
-                      return Colors.blueAccent.withOpacity(0.8);
-                    }
-                    return context.watch<AppThemeBloc>().state.isDarkMode()
-                        ? Colors.white70
-                        : Colors.grey.shade100;
-                  },
-                ),
-                foregroundColor: WidgetStateProperty.resolveWith<Color>(
-                  (Set states) {
-                    if (states.contains(WidgetState.selected)) {
-                      return Colors.white;
-                    }
-                    return Colors.black87;
-                  },
-                ),
-                overlayColor: WidgetStateProperty.resolveWith<Color>(
-                  (states) {
-                    return Colors.black12;
-                  },
-                ),
-                shape: WidgetStateProperty.all(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                ),
-              ),
-              onPressed: () {
-                setState(() => calendarView = TypeLanguage.values[index]);
-                BlocProvider.of<ListTechnologyCubit>(context)
-                    .changeListFiltered(calendarView);
-              },
-              child: Container(
-                alignment: Alignment.center,
-                width: 90,
-                height: 40,
-                child: AutoSizeText(
-                  TypeLanguage.values[index].getTitle(context),
-                  maxLines: 1,
-                ),
-              ))),
-    );
+        spacing: 20,
+        runSpacing: 10,
+        alignment: WrapAlignment.center,
+        children: List.generate(
+            TypeLanguage.values.length,
+            (index) => ButtonSelect(
+                title: TypeLanguage.values[index].getTitle(context),
+                onPressed: () => context
+                    .read<ListTechnologyCubit>()
+                    .changeListFiltered(TypeLanguage.values[index]),
+                isSelect: TypeLanguage.values[index] ==
+                    context
+                        .watch<ListTechnologyCubit>()
+                        .state
+                        .currentTypeLanguage)));
   }
 }

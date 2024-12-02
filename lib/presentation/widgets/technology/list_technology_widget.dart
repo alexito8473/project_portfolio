@@ -14,8 +14,8 @@ class ListTechnology extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-        child:Container(
-      constraints: const BoxConstraints(minHeight: 750),
+        child: Container(
+      constraints: const BoxConstraints(minHeight: 800),
       padding: EdgeInsets.only(
           left: ResponsiveBreakpoints.of(context).screenWidth * 0.10,
           right: ResponsiveBreakpoints.of(context).screenWidth * 0.10,
@@ -27,8 +27,12 @@ class ListTechnology extends StatelessWidget {
         TitleHome(
             title: MenuItems.KNOWLEDGE.getTitle(context),
             subIcon: MenuItems.KNOWLEDGE.getIcon(size: 40)),
-        const Align(alignment: Alignment.center, child: SingleChoice()),
-        const SizedBox(height: 40),
+        const Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 40),
+              child: SingleChoice(),
+            )),
         const AnimatedListTechnology()
       ]),
     ));
@@ -43,7 +47,7 @@ class AnimatedListTechnology extends StatefulWidget {
 }
 
 class _AnimatedListTechnologyState extends State<AnimatedListTechnology> {
-  late int counterAnimated;
+  late int counterAnimated = 0;
   @override
   void initState() {
     counterAnimated =
@@ -54,35 +58,26 @@ class _AnimatedListTechnologyState extends State<AnimatedListTechnology> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ListTechnologyCubit, ListTechnologyState>(
-      listener: (context, state) {
+        listener: (context, state) {
+      setState(() {
+        counterAnimated = 0;
+      });
+      Future.delayed(const Duration(milliseconds: 100)).whenComplete(() {
         setState(() {
-          counterAnimated = 0;
+          counterAnimated = state.listFiltered.length;
         });
-        Future.delayed(const Duration(milliseconds: 10)).whenComplete(
-          () {
-            setState(() {
-              counterAnimated = state.listFiltered.length;
-            });
-          },
-        );
-      },
-      builder: (context, state) {
-        return Wrap(
-          runSpacing: 30,
-          spacing: 30,
+      });
+    }, builder: (context, state) {
+      return Wrap(
+          runSpacing: 20,
+          spacing: 20,
           alignment: WrapAlignment.center,
-          children: List.generate(
-            counterAnimated,
-            (index) {
-              return FadeInLeft(
+          children: List.generate(counterAnimated, (index) {
+            return FadeInLeft(
                 duration: Duration(milliseconds: 800 + (index * 50)),
                 curve: Curves.linear,
-                child: TechnologyWidget(knowledge: state.listFiltered[index])
-              );
-            },
-          ),
-        );
-      },
-    );
+                child: TechnologyWidget(knowledge: state.listFiltered[index]));
+          }));
+    });
   }
 }

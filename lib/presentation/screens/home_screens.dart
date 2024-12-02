@@ -1,7 +1,6 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import '../widgets/header/header_widegt.dart';
-import 'dart:html' as html;
 
 class HomeScreen extends StatelessWidget {
   final ScrollController scrollController;
@@ -29,7 +28,7 @@ class HomeScreen extends StatelessWidget {
       required this.onHover,
       required this.reset,
       required this.onDobleTap,
-        required this.particleOptions});
+      required this.particleOptions});
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +36,7 @@ class HomeScreen extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         body: AnimatedBackground(
             behaviour: RandomParticleBehaviour(
-                paint: Paint(),
-                options: particleOptions),
+                paint: Paint(), options: particleOptions),
             vsync: vsync,
             child: MouseRegion(
                 onHover: (event) => onHover(event),
