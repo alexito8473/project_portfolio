@@ -1,8 +1,6 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
@@ -24,122 +22,134 @@ class HeaderWidget extends StatelessWidget {
           ? Colors.greenAccent
           : Colors.green;
 
-  double textFontSubTitle(BuildContext context) =>
-      ResponsiveBreakpoints.of(context).isMobile ? 24 : 28;
+  double textFontSubTitle(ResponsiveBreakpointsData responsiveBreakpoints) =>
+      responsiveBreakpoints.isMobile ? 24 : 28;
 
-  double textFontTitle(BuildContext context) =>
-      ResponsiveBreakpoints.of(context).isMobile ? 26 : 40;
+  double textFontTitle(ResponsiveBreakpointsData responsiveBreakpoints) =>
+      responsiveBreakpoints.isMobile ? 26 : 40;
 
   Color iconColorGitHub(BuildContext context) =>
       context.watch<AppThemeBloc>().state.isDarkMode()
           ? Colors.white
           : Colors.black;
 
-  BoxConstraints? haveBoxConstraint(BuildContext context, double height) =>
-      ResponsiveBreakpoints.of(context).isMobile
-          ? BoxConstraints(minHeight: height)
-          : null;
+  BoxConstraints? haveBoxConstraint(
+          ResponsiveBreakpointsData responsiveBreakpoints, double height) =>
+      responsiveBreakpoints.isMobile ? BoxConstraints(minHeight: height) : null;
+
+  Widget builderHeader(
+      {required ResponsiveBreakpointsData responsiveBreakpoints,
+      required BuildContext context}) {
+    return Align(
+        alignment: Alignment.center,
+        child: Wrap(
+            direction: Axis.horizontal,
+            runSpacing: responsiveBreakpoints.screenHeight * .1,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: responsiveBreakpoints.screenWidth * .1,
+            alignment: WrapAlignment.center,
+            children: [
+              SizedBox(
+                width: 500,
+                child: WidgetCircularAnimator(
+                    outerColor: Colors.blueAccent,
+                    innerColor: Colors.blueGrey,
+                    size: responsiveBreakpoints.isMobile ? 250 : 350,
+                    child: ClipOval(
+                        child: Image(
+                            image: assetImageUser,
+                            isAntiAlias: true,
+                            frameBuilder: (context, child, frame,
+                                wasSynchronouslyLoaded) {
+                              if (frame == null) {
+                                return const CircleAvatar(
+                                    radius: 150, backgroundColor: Colors.white);
+                              }
+                              return child;
+                            },
+                            filterQuality: FilterQuality.high,
+                            width: 300))),
+              ),
+              Container(
+                  margin: responsiveBreakpoints.isMobile
+                      ? EdgeInsets.symmetric(
+                          horizontal: responsiveBreakpoints.screenWidth * 0.1)
+                      : null,
+                  key: activationKey,
+                  width: 500,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                            width: 500,
+                            height: 80,
+                            child: AutoSizeText("Alejandro Aguilar Alba",
+                                maxLines: 2,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blueAccent,
+                                        fontSize: textFontTitle(
+                                            responsiveBreakpoints)))),
+                        SizedBox(
+                            width: 500,
+                            height: 80,
+                            child: AutoSizeText(
+                                AppLocalizations.of(context)!.descriptionHeader,
+                                maxLines: 3,
+                                minFontSize: 2,
+                                maxFontSize: 28,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(
+                                        fontSize: textFontSubTitle(
+                                            responsiveBreakpoints),
+                                        color: textColorSubTitle(context)))),
+                        Wrap(
+                            alignment: WrapAlignment.center,
+                            spacing: responsiveBreakpoints.isMobile ? 0 : 30,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              IconButtonNavigator(
+                                  uri: Uri.parse(
+                                      'https://github.com/alexito8473'),
+                                  color: iconColorGitHub(context),
+                                  tooltip: 'Github',
+                                  iconUri: 'assets/svg/github.svg',
+                                  changeColor: true),
+                              IconButtonNavigator(
+                                  uri: Uri.parse(
+                                      'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
+                                  color: Colors.blue,
+                                  tooltip: 'Linkedin',
+                                  iconUri: 'assets/svg/linkedin.svg'),
+                              const ButtonDownloadPdf()
+                            ])
+                      ]))
+            ]));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-        child: Container(
-            height: ResponsiveBreakpoints.of(context).screenHeight,
-            constraints: const BoxConstraints(minHeight: 700),
-            width: ResponsiveBreakpoints.of(context).screenWidth,
-            padding: ResponsiveBreakpoints.of(context).isMobile
-                ? EdgeInsets.symmetric(
-                    horizontal:
-                        ResponsiveBreakpoints.of(context).screenWidth * 0.15)
-                : null,
-            margin: EdgeInsets.only(
-                top: ResponsiveBreakpoints.of(context).screenHeight * 0.12),
-            child: Wrap(
-                direction: Axis.horizontal,
-                runSpacing: ResponsiveBreakpoints.of(context).screenHeight * .1,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: ResponsiveBreakpoints.of(context).screenWidth * .1,
-                alignment: WrapAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 500,
-                    child: WidgetCircularAnimator(
-                        outerColor: Colors.blueAccent,
-                        innerColor: Colors.blueGrey,
-                        size: ResponsiveBreakpoints.of(context).isMobile
-                            ? 250
-                            : 350,
-                        child: ClipOval(
-                            child: Image(
-                                image: assetImageUser,
-                                isAntiAlias: true,
-                                frameBuilder: (context, child, frame,
-                                    wasSynchronouslyLoaded) {
-                                  if (frame == null) {
-                                    return const CircleAvatar(
-                                        radius: 150,
-                                        backgroundColor: Colors.white);
-                                  }
-                                  return child;
-                                },
-                                filterQuality: FilterQuality.high,
-                                width: 300))),
-                  ),
-                  SizedBox(
-                      key: activationKey,
-                      width: 500,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                                width: 500,
-                                height: 70,
-                                child: AutoSizeText("Alejandro Aguilar Alba",
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.blueAccent,
-                                        fontSize: textFontTitle(context)))),
-                            const SizedBox(height: 20),
-                            SizedBox(
-                                width: 500,
-                                height: 80,
-                                child: AutoSizeText(
-                                    AppLocalizations.of(context)!
-                                        .descriptionHeader,
-                                    maxLines: 3,
-                                    minFontSize: 2,
-                                    maxFontSize: 28,
-                                    style: TextStyle(
-                                        fontSize: textFontSubTitle(context),
-                                        color: textColorSubTitle(context)))),
-                            const SizedBox(height: 20),
-                            Wrap(
-                                alignment: WrapAlignment.center,
-                                spacing:
-                                    ResponsiveBreakpoints.of(context).isMobile
-                                        ? 0
-                                        : 30,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  IconButtonNavigator(
-                                      uri: Uri.parse(
-                                          'https://github.com/alexito8473'),
-                                      color: iconColorGitHub(context),
-                                      tooltip: 'Github',
-                                      iconUri: 'assets/svg/github.svg',
-                                      changeColor: true),
-                                  IconButtonNavigator(
-                                      uri: Uri.parse(
-                                          'https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
-                                      color: Colors.blue,
-                                      tooltip: 'Linkedin',
-                                      iconUri: 'assets/svg/linkedin.svg'),
-                                  const ButtonDownloadPdf()
-                                ])
-                          ]))
-                ])));
+    ResponsiveBreakpointsData responsiveBreakpoints =
+        ResponsiveBreakpoints.of(context);
+    return responsiveBreakpoints.isMobile ||
+            responsiveBreakpoints.screenHeight < 600
+        ? SliverToBoxAdapter(
+            child: Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: responsiveBreakpoints.isMobile?responsiveBreakpoints.screenHeight * 0.1: responsiveBreakpoints.screenHeight * 0.3),
+                child: builderHeader(
+                    responsiveBreakpoints: responsiveBreakpoints,
+                    context: context)))
+        : SliverFillRemaining(
+            child: builderHeader(
+                responsiveBreakpoints: responsiveBreakpoints,
+                context: context));
   }
 }
 
@@ -159,26 +169,34 @@ class CustomAppBar extends StatelessWidget {
       required this.canNotTapButton,
       this.reset});
 
-  int _countWidgetInPage({required BuildContext context}) {
-    if (ResponsiveBreakpoints.of(context).screenWidth < 430) return 0;
-    if (ResponsiveBreakpoints.of(context).screenWidth < 500) return 1;
-    if (ResponsiveBreakpoints.of(context).screenWidth < 550) return 2;
-    if (ResponsiveBreakpoints.of(context).screenWidth < 750) return 3;
-    if (ResponsiveBreakpoints.of(context).screenWidth < 800) return 4;
+  int _countWidgetInPage(
+      {required ResponsiveBreakpointsData responsiveBreakpoints}) {
+    if (responsiveBreakpoints.screenWidth < 430) return 0;
+    if (responsiveBreakpoints.screenWidth < 500) return 1;
+    if (responsiveBreakpoints.screenWidth < 550) return 2;
+    if (responsiveBreakpoints.screenWidth < 750) return 3;
+    if (responsiveBreakpoints.screenWidth < 800) return 4;
     return 5;
   }
 
-  double _widthAppBar({required BuildContext context}) {
-    if (ResponsiveBreakpoints.of(context).screenWidth < 430) return 220;
-    if (ResponsiveBreakpoints.of(context).screenWidth < 500) return 400;
-    if (ResponsiveBreakpoints.of(context).screenWidth < 550) return  reset!=null?450:430;
-    if (ResponsiveBreakpoints.of(context).screenWidth < 750) return reset!=null?490:450;
-    if (ResponsiveBreakpoints.of(context).screenWidth < 800) return 700;
+  double _widthAppBar(
+      {required ResponsiveBreakpointsData responsiveBreakpoints}) {
+    if (responsiveBreakpoints.screenWidth < 430) return 220;
+    if (responsiveBreakpoints.screenWidth < 500) return 400;
+    if (responsiveBreakpoints.screenWidth < 550) {
+      return reset != null ? 450 : 430;
+    }
+    if (responsiveBreakpoints.screenWidth < 750) {
+      return reset != null ? 490 : 450;
+    }
+    if (responsiveBreakpoints.screenWidth < 800) return 700;
     return 750;
   }
 
   @override
   Widget build(BuildContext context) {
+    ResponsiveBreakpointsData responsiveBreakpoints =
+        ResponsiveBreakpoints.of(context);
     return RepaintBoundary(
         child: Center(
             child: Hero(
@@ -222,7 +240,9 @@ class CustomAppBar extends StatelessWidget {
                                   ? reset == null
                                       ? 220
                                       : 260
-                                  : _widthAppBar(context: context),
+                                  : _widthAppBar(
+                                      responsiveBreakpoints:
+                                          responsiveBreakpoints),
                               child: Row(
                                   mainAxisAlignment: changeTop
                                       ? MainAxisAlignment.spaceBetween
@@ -232,7 +252,8 @@ class CustomAppBar extends StatelessWidget {
                                     HeaderTop(
                                         initAnimation: changeTop,
                                         countWidget: _countWidgetInPage(
-                                            context: context)),
+                                            responsiveBreakpoints:
+                                                responsiveBreakpoints)),
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -253,11 +274,12 @@ class CustomAppBar extends StatelessWidget {
                                                       .state
                                                       .locale
                                                       .getLenguajeCode(),
-                                                  style: const TextStyle(
-                                                      fontSize: 18))),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge)),
                                           Padding(
                                               padding: const EdgeInsets.only(
-                                                  right: 15, left: 15),
+                                                  right: 5, left: 5),
                                               child: IconButton(
                                                   onPressed: () => context
                                                       .read<AppThemeBloc>()
@@ -331,14 +353,14 @@ class HeaderTop extends StatelessWidget {
                   ? const EdgeInsets.symmetric(horizontal: 15)
                   : EdgeInsets.zero
               : EdgeInsets.zero,
-          duration: const Duration(milliseconds: 600),
+          duration: const Duration(milliseconds: 700),
           width: countWidget > 3
               ? initAnimation
-                  ? 200
+                  ? 180
                   : 0
               : 0,
-          child: const AutoSizeText("Alejandro Aguilar",
-              maxLines: 1, style: TextStyle(fontSize: 23))),
+          child: Text("Alejandro Aguilar",
+              maxLines: 1, style: Theme.of(context).textTheme.titleLarge)),
       AnimatedContainer(
           duration: const Duration(milliseconds: 800),
           width: countWidget > 2

@@ -1,5 +1,3 @@
-import 'dart:html' as html;
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import 'package:url_launcher/url_launcher.dart' deferred as launch;
+import 'package:web/web.dart' as web;
 import '../../../domain/blocs/appTheme/app_theme_bloc.dart';
 
 class ButtonIconSvg extends StatelessWidget {
@@ -27,7 +25,10 @@ class ButtonIconSvg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async => await launchUrl(uri),
+      onTap: () async {
+        await launch.loadLibrary();
+        await launch.launchUrl(uri);
+      },
       mouseCursor: SystemMouseCursors.click,
       child: Tooltip(
         message: tooltip,
@@ -62,10 +63,13 @@ class IconButtonNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
         padding: const EdgeInsets.all(12),
-        iconSize: 33,
+        iconSize: 30,
         tooltip: tooltip,
         color: color,
-        onPressed: () async => await launchUrl(uri),
+        onPressed: () async {
+          await launch.loadLibrary();
+          await launch.launchUrl(uri);
+        },
         icon: SvgPicture.asset(iconUri,
             color: changeColor
                 ? context.watch<AppThemeBloc>().state.isDarkMode()
@@ -80,7 +84,11 @@ class ButtonSelect extends StatelessWidget {
   final Function onPressed;
   final bool isSelect;
   final String title;
-  const ButtonSelect({super.key, required this.onPressed, required this.isSelect, required this.title});
+  const ButtonSelect(
+      {super.key,
+      required this.onPressed,
+      required this.isSelect,
+      required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -117,20 +125,8 @@ class ButtonSelect extends StatelessWidget {
 
 class ButtonDownloadPdf extends StatelessWidget {
   const ButtonDownloadPdf({super.key});
-
   void downloadFile() async {
-    ByteData data =
-        await rootBundle.load('assets/pdf/Curriculum_Alejandro_Aguilar.pdf');
-    final pdfBytes = data.buffer.asUint8List();
-
-    final blob = html.Blob([pdfBytes], 'application/pdf');
-
-    final url = html.Url.createObjectUrlFromBlob(blob);
-    html.AnchorElement(href: url)
-      ..setAttribute('download',
-          'Curriculum_Alejandro_Aguilar_Alba.pdf') // Nombre del archivo a descargar
-      ..click();
-    html.Url.revokeObjectUrl(url);
+    web.window.open('assets/pdf/Curriculum_Alejandro_Aguilar.pdf', '_blank');
   }
 
   @override
@@ -142,16 +138,12 @@ class ButtonDownloadPdf extends StatelessWidget {
           backgroundColor: Colors.blue,
           shadowColor: Colors.blueAccent,
           elevation: 5,
-          // Elevación
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         ),
         child: AutoSizeText(AppLocalizations.of(context)!.downloadCV,
-            maxLines: 1,
-            style: TextStyle(
-                fontSize:
-                    ResponsiveBreakpoints.of(context).isMobile ? 14 : 18)));
+            maxLines: 1, style: Theme.of(context).textTheme.labelLarge));
   }
 }
 
@@ -174,50 +166,48 @@ class _ButtonSentEmailState extends State<ButtonSentEmail> {
   Widget build(BuildContext context) {
     bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
     return InkWell(
-      mouseCursor:
-          widget.isDesactivate ? MouseCursor.defer : SystemMouseCursors.click,
-      onTap: () {
-        if (!widget.isDesactivate) {
-          widget.sendEmail();
-        }
-      },
-      child: MouseRegion(
-          onEnter: (event) {
-            if (!widget.isDesactivate) {
-              setState(() {
-                _changeBackground = true;
-                _elevation = 5;
-              });
-            }
-          },
-          onExit: (event) {
-            if (!widget.isDesactivate) {
-              setState(() {
-                _changeBackground = false;
-                _elevation = 2;
-              });
-            }
-          },
-          child: Material(
-            elevation: _elevation,
-            borderRadius: BorderRadius.circular(10),
-            child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                width: 120,
-                height: 40,
-                decoration: BoxDecoration(
-                    color: widget.isDesactivate
-                        ? isDarkMode
-                            ? Colors.grey.withOpacity(0.2)
-                            : Colors.grey
-                        : _changeBackground
-                            ? Colors.lightBlueAccent
-                            : Colors.blueAccent,
-                    borderRadius: BorderRadius.circular(10)),
-                alignment: Alignment.center,
-                child: Text(AppLocalizations.of(context)!.sendEmail)),
-          )),
-    );
+        mouseCursor:
+            widget.isDesactivate ? MouseCursor.defer : SystemMouseCursors.click,
+        onTap: () {
+          if (!widget.isDesactivate) {
+            widget.sendEmail();
+          }
+        },
+        child: MouseRegion(
+            onEnter: (event) {
+              if (!widget.isDesactivate) {
+                setState(() {
+                  _changeBackground = true;
+                  _elevation = 5;
+                });
+              }
+            },
+            onExit: (event) {
+              if (!widget.isDesactivate) {
+                setState(() {
+                  _changeBackground = false;
+                  _elevation = 2;
+                });
+              }
+            },
+            child: Material(
+                elevation: _elevation,
+                borderRadius: BorderRadius.circular(10),
+                child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    width: 120,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: widget.isDesactivate
+                            ? isDarkMode
+                                ? Colors.grey.withOpacity(0.2)
+                                : Colors.grey
+                            : _changeBackground
+                                ? Colors.lightBlueAccent
+                                : Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(10)),
+                    alignment: Alignment.center,
+                    child: Text(AppLocalizations.of(context)!.sendEmail)))));
   }
 }
 
@@ -232,14 +222,15 @@ class ButtonNavigation extends StatelessWidget {
         height: 45,
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blueGrey.shade700.withOpacity(0.7),
-              shadowColor: Colors.blueGrey.shade700,
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            onPressed: () async => await launchUrl(uri),
+                backgroundColor: Colors.blueGrey.shade700.withOpacity(0.7),
+                shadowColor: Colors.blueGrey.shade700,
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10))),
+            onPressed: () async {
+              await launch.loadLibrary();
+              await launch.launchUrl(uri);
+            },
             child: SvgPicture.asset(color: Colors.white, urlSvg, width: 35)));
   }
 }

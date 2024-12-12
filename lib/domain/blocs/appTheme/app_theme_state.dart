@@ -14,9 +14,7 @@ enum AppTheme {
 class AppThemeState {
   final AppTheme appTheme;
 
-  const AppThemeState({
-    required this.appTheme,
-  });
+  const AppThemeState({required this.appTheme});
 
   factory AppThemeState.init({required SharedPreferences prefs}) {
     AppTheme appTheme;
@@ -30,6 +28,7 @@ class AppThemeState {
   }
 
   bool isDarkMode() => appTheme == AppTheme.DARK;
+  Color isDarkModeColor() => isDarkMode()?Colors.white:Colors.black;
 
   AppThemeState copyWitch({required AppTheme? appTheme}) =>
       AppThemeState(appTheme: appTheme ?? this.appTheme);

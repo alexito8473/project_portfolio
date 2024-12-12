@@ -1,20 +1,23 @@
+import 'dart:js_interop';
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:proyect_porfolio/domain/blocs/appServicesGithub/app_service_github_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import '../../data/dataSource/project_data.dart';
+import '../../data/dataSource/menu_items.dart' deferred as menu_items;
 import '../../domain/blocs/appCheckVisibilityNavigationTop/app_banner_top_bloc.dart';
 import '../../domain/blocs/appTheme/app_theme_bloc.dart';
-import '../screens/home_screens.dart';
-import '../widgets/contacMe/contact_me_widget.dart';
-import '../widgets/footer/footer_widget.dart';
-import '../widgets/header/about_me_widget.dart';
-import '../widgets/header/header_widegt.dart';
-import '../widgets/project/project_widget.dart';
-import '../widgets/technology/list_technology_widget.dart';
-import '../widgets/work/list_works_widget.dart';
-import 'dart:html' as html;
+import '../screens/home_screens.dart' deferred as home;
+import '../widgets/certificate/carrousel_Certificate_widget.dart'deferred as certificate;
+import '../widgets/contacMe/contact_me_widget.dart' deferred as contact_me;
+import '../widgets/customWidget/title_custom.dart' deferred as title;
+import '../widgets/footer/footer_widget.dart' deferred as footer;
+import '../widgets/header/about_me_widget.dart' deferred as about_me;
+import '../widgets/header/header_widegt.dart' deferred as header;
+import '../widgets/project/project_widget.dart' deferred as projects;
+import '../widgets/technology/list_technology_widget.dart'
+    deferred as list_technology;
+import '../widgets/work/list_works_widget.dart' deferred as list_work;
+import 'package:web/web.dart' as web;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -48,6 +51,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       _changeTop = context.read<AppBannerTopBloc>().state.isActiveBannerTop;
     });
   }
+
   void _reset() => setState(() {
         _mousePositionSecond = null;
         _mousePosition = Offset.zero;
@@ -62,12 +66,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     } else {
       setState(() {
         _mousePosition = Offset(
-          _mousePosition.dx.clamp(
-              0,
-              ResponsiveBreakpoints.of(context).screenWidth -
-                  300), // Ancho del widget
-          _mousePosition.dy
-              .clamp(0, ResponsiveBreakpoints.of(context).screenHeight - 100),
+          _mousePosition.dx
+              .clamp(0, web.window.innerWidth - 300), // Ancho del widget
+          _mousePosition.dy.clamp(0, web.window.innerHeight - 100),
         );
       });
     }
@@ -114,22 +115,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> _initializePage() async {
     if (isComplete) return;
-    options=ParticleOptions(
-        baseColor: Colors.blue,
-        opacityChangeRate: 0.30,
-        minOpacity: context.watch<AppThemeBloc>().state.isDarkMode()
-            ? 0.11
-            : 0.08,
-        maxOpacity: context.watch<AppThemeBloc>().state.isDarkMode()
-            ? 0.45
-            : 0.13,
-        spawnMinSpeed: 20.0,
-        spawnMaxSpeed: 30.0,
-        spawnMinRadius: 7.0,
-        spawnMaxRadius: 30.0,
-        particleCount:
-        ResponsiveBreakpoints.of(context).isMobile ? 6 : 10);
+    await home.loadLibrary();
+    await list_work.loadLibrary();
+    await list_technology.loadLibrary();
+    await projects.loadLibrary();
+    await header.loadLibrary();
+    await about_me.loadLibrary();
+    await footer.loadLibrary();
+    await contact_me.loadLibrary();
+    await title.loadLibrary();
+    await certificate.loadLibrary();
+    await menu_items.loadLibrary();
     _listGlobalKey = [
+      GlobalKey(),
       GlobalKey(),
       GlobalKey(),
       GlobalKey(),
@@ -137,31 +135,34 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       GlobalKey()
     ];
     _listWidgetHome = [
-      HeaderWidget(
+      header.HeaderWidget(
           assetImageUser: const AssetImage("assets/images/personal.webp"),
           activationKey: _headerKey),
-      EducationWidget(key: _listGlobalKey[0]),
-      ListProject(key: _listGlobalKey[1]),
-      const MasonrySliver(),
-      ListTechnology(key: _listGlobalKey[2]),
-      AboutMeWidget(key: _listGlobalKey[3]),
-      ContactToMeWidget(key: _listGlobalKey[4]),
-      const FooterWidget()
+      title.SliverTitleHome(key: _listGlobalKey[0], menuItem: menu_items.MenuItems.EXPERIENCE),
+      list_work.WorkWidget(),
+      title.SliverTitleHome(key: _listGlobalKey[1], menuItem: menu_items.MenuItems.CERTIFICATE),
+      certificate.CarrouselCertificate(),
+      projects.TopBannerListProjectWidget(key: _listGlobalKey[2]),
+      projects.MasonrySliver(),
+      title.SliverTitleHome(key: _listGlobalKey[3], menuItem: menu_items.MenuItems.KNOWLEDGE),
+      list_technology.ListTechnology(),
+      title.SliverTitleHome(menuItem: menu_items.MenuItems.ABOUT_ME, key: _listGlobalKey[4]),
+      about_me.AboutMeWidget(),
+      title.SliverTitleHome(menuItem: menu_items.MenuItems.CONTACT_ME, key: _listGlobalKey[5]),
+      contact_me.ContactToMeWidget(),
+      footer.FooterWidget()
     ];
-    context.read<AppServiceGithubBloc>().add(ConnectToGithub());
-    html.window.onResize.listen(
-      (event) {
-        _callUpdateNavigation();
-        _onResize();
-      },
-    );
+    web.window.addEventListener(
+        'resize',
+        () {
+          if (isComplete) return;
+          _callUpdateNavigation();
+          _onResize();
+        }.toJS);
     _scrollController.addListener(() {
       _updateNavigation();
       _scrollListener();
     });
-    for (ProjectRelease release in ProjectRelease.values) {
-      await precacheImage(AssetImage(release.project.imgUrl), context);
-    }
     setState(() {
       isComplete = true;
     });
@@ -170,8 +171,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return isComplete
-        ? HomeScreen(
-            particleOptions: options,
+        ? home.HomeScreen(
+            particleOptions: ParticleOptions(
+                baseColor: Colors.blue,
+                opacityChangeRate: 0.30,
+                minOpacity: context.watch<AppThemeBloc>().state.isDarkMode()
+                    ? 0.11
+                    : 0.08,
+                maxOpacity: context.watch<AppThemeBloc>().state.isDarkMode()
+                    ? 0.45
+                    : 0.13,
+                spawnMinSpeed: 20.0,
+                spawnMaxSpeed: 30.0,
+                spawnMinRadius: 7.0,
+                spawnMaxRadius: 30.0,
+                particleCount:
+                    ResponsiveBreakpoints.of(context).isMobile ? 5 : 7),
             scrollController: _scrollController,
             listWidgetHome: _listWidgetHome,
             scrollNavigation: (value) {
@@ -191,10 +206,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             future: _initializePage(),
             builder: (context, snapshot) {
               return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
+                  body: Center(child: CircularProgressIndicator()));
             });
   }
 }

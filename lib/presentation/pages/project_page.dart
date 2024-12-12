@@ -8,6 +8,7 @@ import '../../data/dataSource/project_data.dart';
 import '../../domain/blocs/appTheme/app_theme_bloc.dart';
 import '../widgets/header/header_widegt.dart';
 import '../widgets/project/project_widget.dart';
+
 class ProjectPage extends StatefulWidget {
   const ProjectPage({super.key});
 
@@ -17,7 +18,6 @@ class ProjectPage extends StatefulWidget {
 
 class _ProjectPageState extends State<ProjectPage>
     with SingleTickerProviderStateMixin {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +82,9 @@ class _ProjectPageState extends State<ProjectPage>
                       icon: const Icon(Icons.arrow_back_ios_new_outlined))
                 ]),
                 changeScroll: null,
-                changeTop: true, onDoubleTap: (){}, canNotTapButton: false))
+                changeTop: true,
+                onDoubleTap: () {},
+                canNotTapButton: false))
       ],
     ));
   }

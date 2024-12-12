@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:responsive_framework/responsive_framework.dart';
-
+import 'package:flutter/cupertino.dart' ;
+import 'package:responsive_framework/responsive_framework.dart' ;
 part 'app_banner_top_event.dart';
 part 'app_banner_top_state.dart';
 

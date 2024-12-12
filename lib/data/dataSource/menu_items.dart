@@ -4,6 +4,7 @@ import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 
 enum MenuItems {
   EXPERIENCE,
+  CERTIFICATE,
   PROJECT,
   KNOWLEDGE,
   ABOUT_ME,
@@ -21,6 +22,8 @@ enum MenuItems {
         return AppLocalizations.of(context)!.projects;
       case MenuItems.CONTACT_ME:
         return AppLocalizations.of(context)!.contact_me;
+      case MenuItems.CERTIFICATE:
+        return AppLocalizations.of(context)!.certificate;
     }
   }
 
@@ -38,14 +41,17 @@ enum MenuItems {
             icon: const SvgIconData("assets/svg/project.svg"), size: size);
       case MenuItems.CONTACT_ME:
         return Icon(Icons.contact_page, size: size);
+      case MenuItems.CERTIFICATE:
+        return SvgIcon(
+            icon: const SvgIconData("assets/svg/certificate.svg"), size: size);
     }
   }
 
   Widget buildItem(BuildContext context) => Row(children: [
         getIcon(),
-        const SizedBox(width: 10),
+        const SizedBox(width: 5),
         Expanded(
             child: Text(getTitle(context),
-                style: const TextStyle(fontWeight: FontWeight.bold)))
+                style:Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold)))
       ]);
 }

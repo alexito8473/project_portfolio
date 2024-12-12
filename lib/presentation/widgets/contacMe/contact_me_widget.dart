@@ -7,9 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyect_porfolio/data/models/message.dart';
 import 'package:proyect_porfolio/domain/blocs/appSendMessage/app_send_message_bloc.dart';
 import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
-import 'package:proyect_porfolio/presentation/widgets/customWidget/title_custom.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import '../../../data/dataSource/menu_items.dart';
 import '../customWidget/custom_button_widget.dart';
 
 class ContactToMeWidget extends StatefulWidget {
@@ -58,92 +56,89 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? appLocalizations = AppLocalizations.of(context);
+    ResponsiveBreakpointsData responsiveBreakpoints =
+        ResponsiveBreakpoints.of(context);
     bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
     return BlocBuilder<AppSendMessageBloc, AppSendMessageState>(
         builder: (context, state) {
       return SliverToBoxAdapter(
-          child:Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        if (ResponsiveBreakpoints.of(context).isMobile)
-          const SizedBox(height: 100),
-        TitleHome(
-            title: AppLocalizations.of(context)!.contact_me,
-            subIcon: MenuItems.CONTACT_ME.getIcon(size: 40)),
-        Container(
-            padding: EdgeInsets.symmetric(
-                vertical: ResponsiveBreakpoints.of(context).screenHeight * 0.02,
-                horizontal:
-                    ResponsiveBreakpoints.of(context).screenWidth * 0.08),
-            width: ResponsiveBreakpoints.of(context).isMobile
-                ? ResponsiveBreakpoints.of(context).screenWidth * .8
-                : ResponsiveBreakpoints.of(context).screenWidth * .6,
-            height: 520,
-            decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      color: isDarkMode
-                          ? Colors.white30
-                          : Colors.blueAccent.withOpacity(0.4),
-                      blurRadius: 4,
-                      spreadRadius: 3)
-                ],
-                color:
-                    isDarkMode ? Colors.black : Colors.white.withOpacity(0.9),
-                borderRadius: BorderRadius.circular(20)),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ContactToMeFormField(
-                      myController: _controllerName,
-                      icon: const Icon(Icons.person),
-                      title: AppLocalizations.of(context)!.formName,
-                      isBigMessage: false,
-                      checkIsDesactivateButton: checkIsDesactivateButton),
-                  ContactToMeFormField(
-                      myController: _controllerEmail,
-                      icon: const Icon(Icons.email),
-                      title: AppLocalizations.of(context)!.formEmail,
-                      isBigMessage: false,
-                      checkIsDesactivateButton: checkIsDesactivateButton),
-                  ContactToMeFormField(
-                      myController: _controllerSubject,
-                      title: AppLocalizations.of(context)!.formSubject,
-                      isBigMessage: false,
-                      checkIsDesactivateButton: checkIsDesactivateButton,
-                      icon: const Icon(Icons.subject)),
-                  ContactToMeFormField(
-                      myController: _controllerMessage,
-                      icon: const Icon(CupertinoIcons.pen),
-                      title: AppLocalizations.of(context)!.formMessage,
-                      isBigMessage: true,
-                      checkIsDesactivateButton: checkIsDesactivateButton),
-                  Row(
-                      textDirection: TextDirection.rtl,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: ButtonSentEmail(
-                            isDesactivate: _isDesactivateButton,
-                            sendEmail: _sendEmail,
-                          ),
-                        ),
-                        if (state.sentFinished)
-                          Expanded(
-                              child: Padding(
-                                  padding: const EdgeInsets.only(right: 15),
-                                  child: AutoSizeText(
-                                    state.sentSuccessfully
-                                        ? AppLocalizations.of(context)!
-                                            .formRequestCorrect
-                                        : AppLocalizations.of(context)!
-                                            .formRequestInCorrect,
-                                    maxLines: 3,
-                                    style: const TextStyle(fontSize: 18),
-                                  ))),
-                        if (state.sendMessage) const CircularProgressIndicator()
-                      ])
-                ]))
-      ]));
+          child: Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: responsiveBreakpoints.isMobile
+                      ? responsiveBreakpoints.screenWidth * 0.1
+                      : responsiveBreakpoints.screenWidth * 0.15),
+              padding: EdgeInsets.symmetric(
+                  vertical: responsiveBreakpoints.screenHeight * 0.02,
+                  horizontal: responsiveBreakpoints.screenWidth * 0.08),
+              width: responsiveBreakpoints.isMobile
+                  ? responsiveBreakpoints.screenWidth * .8
+                  : responsiveBreakpoints.screenWidth * .6,
+              height: 520,
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: isDarkMode
+                            ? Colors.white30
+                            : Colors.blueAccent.withOpacity(0.4),
+                        blurRadius: 4,
+                        spreadRadius: 3)
+                  ],
+                  color:
+                      isDarkMode ? Colors.black : Colors.white.withOpacity(0.9),
+                  borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ContactToMeFormField(
+                        myController: _controllerName,
+                        icon: const Icon(Icons.person),
+                        title: appLocalizations!.formName,
+                        isBigMessage: false,
+                        checkIsDesactivateButton: checkIsDesactivateButton),
+                    ContactToMeFormField(
+                        myController: _controllerEmail,
+                        icon: const Icon(Icons.email),
+                        title: appLocalizations.formEmail,
+                        isBigMessage: false,
+                        checkIsDesactivateButton: checkIsDesactivateButton),
+                    ContactToMeFormField(
+                        myController: _controllerSubject,
+                        title: appLocalizations.formSubject,
+                        isBigMessage: false,
+                        checkIsDesactivateButton: checkIsDesactivateButton,
+                        icon: const Icon(Icons.subject)),
+                    ContactToMeFormField(
+                        myController: _controllerMessage,
+                        icon: const Icon(CupertinoIcons.pen),
+                        title: appLocalizations.formMessage,
+                        isBigMessage: true,
+                        checkIsDesactivateButton: checkIsDesactivateButton),
+                    Row(
+                        textDirection: TextDirection.rtl,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: ButtonSentEmail(
+                                  isDesactivate: _isDesactivateButton,
+                                  sendEmail: _sendEmail)),
+                          if (state.sentFinished)
+                            Expanded(
+                                child: Padding(
+                                    padding: const EdgeInsets.only(right: 15),
+                                    child: AutoSizeText(
+                                      state.sentSuccessfully
+                                          ? appLocalizations.formRequestCorrect
+                                          : appLocalizations
+                                              .formRequestInCorrect,
+                                      maxLines: 3,
+                                      style: const TextStyle(fontSize: 18),
+                                    ))),
+                          if (state.sendMessage)
+                            const CircularProgressIndicator()
+                        ])
+                  ])));
     });
   }
 }

@@ -7,7 +7,7 @@ class ListTechnologyState {
       {required this.listFiltered, required this.currentTypeLanguage});
   factory ListTechnologyState.init() {
     return ListTechnologyState(
-        listFiltered: Knowledge.values.where((element) => element.technology.typeLanguage==TypeLanguage.MOBILE,).toList(), currentTypeLanguage: TypeLanguage.MOBILE);
+        listFiltered: Knowledge.values, currentTypeLanguage: TypeLanguage.ALL);
   }
 
   ListTechnologyState copyWitch(

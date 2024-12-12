@@ -11,38 +11,42 @@ import '../../../domain/blocs/appTheme/app_theme_bloc.dart';
 class WorksWidget extends StatelessWidget {
   const WorksWidget({super.key});
 
-  double titleFontSize(BuildContext context) {
-    if (ResponsiveBreakpoints.of(context).isMobile) {
+  double titleFontSize(
+      {required ResponsiveBreakpointsData responsiveBreakpoints}) {
+    if (responsiveBreakpoints.isMobile) {
       return 20;
     }
-    if (ResponsiveBreakpoints.of(context).isTablet) {
+    if (responsiveBreakpoints.isTablet) {
       return 25;
     }
     return 32;
   }
 
-  double secondTileFontSize(BuildContext context) {
-    if (ResponsiveBreakpoints.of(context).isMobile) {
+  double secondTileFontSize(
+      {required ResponsiveBreakpointsData responsiveBreakpoints}) {
+    if (responsiveBreakpoints.isMobile) {
       return 20;
     }
-    if (ResponsiveBreakpoints.of(context).isTablet) {
+    if (responsiveBreakpoints.isTablet) {
       return 25;
     }
     return 28;
   }
 
-  double timeFontSize(BuildContext context) {
-    if (ResponsiveBreakpoints.of(context).isMobile) {
+  double timeFontSize(
+      {required ResponsiveBreakpointsData responsiveBreakpoints}) {
+    if (responsiveBreakpoints.isMobile) {
       return 20;
     }
-    if (ResponsiveBreakpoints.of(context).isTablet) {
+    if (responsiveBreakpoints.isTablet) {
       return 25;
     }
     return 25;
   }
 
-  double descriptionFontSize(BuildContext context) {
-    if (ResponsiveBreakpoints.of(context).isMobile) {
+  double descriptionFontSize(
+      {required ResponsiveBreakpointsData responsiveBreakpoints}) {
+    if (responsiveBreakpoints.isMobile) {
       return 18;
     }
     return 23;
@@ -50,11 +54,9 @@ class WorksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> listAppLocations = [
-      AppLocalizations.of(context)!.practicesNextPort1,
-      AppLocalizations.of(context)!.practicesNextPort2,
-      AppLocalizations.of(context)!.practicesNextPort3,
-    ];
+    ResponsiveBreakpointsData responsiveBreakpoints =
+        ResponsiveBreakpoints.of(context);
+
     return Padding(
         padding: const EdgeInsets.only(top: 120),
         child: Column(
@@ -64,18 +66,21 @@ class WorksWidget extends StatelessWidget {
               AutoSizeText(
                   "${DateFormat("MMMM yyyy", context.watch<AppLocaleBloc>().state.locale.getLocal().toString()).format(DateTime.utc(2024, 4))} - ${DateFormat("MMMM yyyy", context.watch<AppLocaleBloc>().state.locale.getLocal().toString()).format(DateTime.utc(2024, 6))}",
                   maxLines: 1,
-                  style: TextStyle(
-                      fontSize: timeFontSize(context), color: Colors.grey)),
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: Colors.grey,
+                      fontSize: timeFontSize(
+                          responsiveBreakpoints: responsiveBreakpoints))),
               AutoSizeText(AppLocalizations.of(context)!.practices,
                   maxLines: 2,
-                  style: TextStyle(
-                      fontSize: titleFontSize(context),
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      fontSize: titleFontSize(
+                          responsiveBreakpoints: responsiveBreakpoints),
                       color: Colors.blueAccent)),
               AutoSizeText("NextPort AI",
                   maxLines: 1,
-
-                  style: TextStyle(
-                      fontSize: secondTileFontSize(context),
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      fontSize: secondTileFontSize(
+                          responsiveBreakpoints: responsiveBreakpoints),
                       color: Colors.blue)),
               Expanded(
                   child: Align(
@@ -83,11 +88,20 @@ class WorksWidget extends StatelessWidget {
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: listAppLocations
+                          children: [
+                            AppLocalizations.of(context)!.practicesNextPort1,
+                            AppLocalizations.of(context)!.practicesNextPort2,
+                            AppLocalizations.of(context)!.practicesNextPort3,
+                          ]
                               .map((message) => AutoSizeText(message,
                                   maxLines: 2,
-                                  style: TextStyle(
-                                      fontSize: descriptionFontSize(context))))
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium
+                                      ?.copyWith(
+                                          fontSize: descriptionFontSize(
+                                              responsiveBreakpoints:
+                                                  responsiveBreakpoints))))
                               .toList())))
             ]));
   }

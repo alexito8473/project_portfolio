@@ -8,7 +8,6 @@ enum TypeLanguage {
   FRONTEND,
   MOBILE,
   SERVERS,
-  LEARNING,
   TOOLS;
 
   String getTitle(BuildContext context) {
@@ -21,8 +20,6 @@ enum TypeLanguage {
         return AppLocalizations.of(context)!.mobile;
       case TypeLanguage.TOOLS:
         return AppLocalizations.of(context)!.tools;
-      case TypeLanguage.LEARNING:
-        return AppLocalizations.of(context)!.learning;
       case TypeLanguage.SERVERS:
         return AppLocalizations.of(context)!.server;
       case TypeLanguage.ALL:
@@ -47,11 +44,6 @@ enum Knowledge {
       urlIcon: "assets/svg/programLanguage/php.svg",
       color: Color.fromRGBO(97, 124, 190, 1),
       typeLanguage: TypeLanguage.BACKEND)),
-  PYTHON(technology: Technology(
-    name: "Python",
-    urlIcon: "assets/svg/programLanguage/python.svg",
-    color: Color.fromRGBO(48, 105, 152, 1),
-    typeLanguage: TypeLanguage.LEARNING)),
   NET_MAUI(technology: Technology(
       name: ".Net MAUI",
       urlIcon: "assets/svg/programLanguage/maui.svg",
@@ -103,31 +95,16 @@ enum Knowledge {
       color: Colors.grey,
       typeLanguage: TypeLanguage.TOOLS,
       changeColor: true)),
-  INTELLIJ(technology: Technology(
-      name: "IntelliJ",
-      urlIcon: "assets/svg/intellij.svg",
-      color: Color.fromRGBO(18, 124, 239, 1),
-      typeLanguage: TypeLanguage.TOOLS)),
   SPRING(technology: Technology(
       name: "Spring Boot",
       urlIcon: "assets/svg/programLanguage/spring.svg",
       color: Color.fromRGBO(139, 195, 74, 1),
-      typeLanguage: TypeLanguage.LEARNING)),
+      typeLanguage: TypeLanguage.BACKEND)),
   JAVASCRIPT(technology: Technology(
       name: "JavaScript",
       urlIcon: "assets/svg/programLanguage/javascript.svg",
       color: Color.fromRGBO(214, 186, 50, 1),
-      typeLanguage: TypeLanguage.FRONTEND)),
-  ECLIPSE(technology: Technology(
-      name: "Eclipse",
-      urlIcon: "assets/svg/eclipse.svg",
-      color: Color.fromRGBO(255, 196, 0, 1),
-      typeLanguage: TypeLanguage.TOOLS)),
-  VISUAL_STUDIO( technology: Technology(
-      name: "Visual Studio",
-      urlIcon: "assets/svg/visualStudio.svg",
-      color: Color.fromRGBO(160, 139, 232, 1),
-      typeLanguage: TypeLanguage.TOOLS));
+      typeLanguage: TypeLanguage.FRONTEND));
   final Technology technology;
   const Knowledge({required this.technology});
   String getDescription(BuildContext context) {
@@ -138,8 +115,6 @@ enum Knowledge {
         return AppLocalizations.of(context)!.flutterExperience;
       case Knowledge.PHP:
         return AppLocalizations.of(context)!.phpExperience;
-      case Knowledge.PYTHON:
-        return AppLocalizations.of(context)!.pythonExperience;
       case Knowledge.NET_MAUI:
         return AppLocalizations.of(context)!.netMauiExperience;
       case Knowledge.ANDROID:
@@ -160,16 +135,10 @@ enum Knowledge {
         return AppLocalizations.of(context)!.gitExperience;
       case Knowledge.GITHUB:
         return AppLocalizations.of(context)!.gitHubExperience;
-      case Knowledge.INTELLIJ:
-        return AppLocalizations.of(context)!.intelIjExperience;
       case Knowledge.SPRING:
         return AppLocalizations.of(context)!.springExperience;
       case Knowledge.JAVASCRIPT:
         return AppLocalizations.of(context)!.javaScriptExperience;
-      case Knowledge.ECLIPSE:
-        return AppLocalizations.of(context)!.eclipseExperience;
-      case Knowledge.VISUAL_STUDIO:
-        return AppLocalizations.of(context)!.visualEstudioExperience;
     }
   }
 }

@@ -35,6 +35,7 @@ dependencies:
   widget_circular_animator: ^1.0.0
   masonry_grid: ^1.0.0
   go_router: ^14.2.8
+  web: ^1.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -48,8 +49,8 @@ flutter:
 
     - assets/svg/
     - assets/svg/programLanguage/
-
     - assets/images/
+    - assets/images/certificates/
     - assets/images/projects/tasty/
     - assets/images/projects/goReversi/
     - assets/images/projects/gomoku/
