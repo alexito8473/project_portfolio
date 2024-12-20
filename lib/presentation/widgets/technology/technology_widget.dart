@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
 import 'package:proyect_porfolio/domain/cubits/listTechnology/list_technology_cubit.dart';
 import '../../../data/dataSource/tecnology_data.dart';
+import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
 import '../customWidget/custom_button_widget.dart';
 
 class TechnologyWidget extends StatefulWidget {
@@ -76,7 +76,7 @@ class _TechnologyWidget extends State<TechnologyWidget> {
                       return SvgPicture.string(snapshot.data!,
                           color: widget.knowledge.technology.changeColor
                               ? context
-                                  .watch<AppThemeBloc>()
+                                  .watch<AppThemeCubit>()
                                   .state
                                   .isDarkModeColor()
                               : null,

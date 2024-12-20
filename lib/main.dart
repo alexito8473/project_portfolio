@@ -5,10 +5,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:proyect_porfolio/domain/blocs/appCheckVisibilityNavigationTop/app_banner_top_bloc.dart';
-import 'package:proyect_porfolio/domain/blocs/appLocale/app_locale_bloc.dart';
 import 'package:proyect_porfolio/domain/blocs/appSendMessage/app_send_message_bloc.dart';
-import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
+import 'package:proyect_porfolio/domain/cubits/appBannerTop/app_banner_top_cubit.dart';
+import 'package:proyect_porfolio/domain/cubits/appLocale/app_locale_cubit.dart';
+import 'package:proyect_porfolio/domain/cubits/appTheme/app_theme_cubit.dart';
 import 'package:proyect_porfolio/domain/cubits/listTechnology/list_technology_cubit.dart';
 import 'package:proyect_porfolio/presentation/route/route.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           onSurface: Colors.black));
   final ThemeData darkTheme = ThemeData.from(
       useMaterial3: true,
-      textTheme:GoogleFonts.ralewayTextTheme(Typography.whiteMountainView),
+      textTheme: GoogleFonts.ralewayTextTheme(Typography.whiteMountainView),
       colorScheme: const ColorScheme(
           brightness: Brightness.dark,
           primary: Colors.blueGrey,
@@ -53,18 +53,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => AppBannerTopBloc()),
-          BlocProvider(
-              create: (context) => AppSendMessageBloc()),
+          BlocProvider(create: (context) => AppBannerTopCubit()),
+          BlocProvider(create: (context) => AppSendMessageBloc()),
           BlocProvider(create: (context) => ListTechnologyCubit()),
-          BlocProvider(create: (context) => AppThemeBloc(prefs: prefs)),
+          BlocProvider(create: (context) => AppThemeCubit(prefs: prefs)),
           BlocProvider(
-              create: (context) => AppLocaleBloc(
+              create: (context) => AppLocaleCubit(
                   locale: AppLocale.selectAppLocale(
                       ui.PlatformDispatcher.instance.locale)))
         ],
-        child:
-        BlocBuilder<AppThemeBloc, AppThemeState>(builder: (context, state) {
+        child: BlocBuilder<AppThemeCubit, AppThemeState>(
+            builder: (context, state) {
           return MaterialApp.router(
               localizationsDelegates: const [
                 AppLocalizations.delegate,
@@ -72,7 +71,7 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate
               ],
-              locale: context.watch<AppLocaleBloc>().state.locale.getLocal(),
+              locale: context.watch<AppLocaleCubit>().state.locale.getLocal(),
               supportedLocales: const [Locale("en", ""), Locale("es", "")],
               title: 'Portfolio Alejandro',
               checkerboardRasterCacheImages: true,

@@ -27,7 +27,6 @@ class AboutMeWidget extends StatelessWidget {
             horizontal: responsiveBreakpoints.screenWidth * 0.1),
         padding:
             EdgeInsets.only(bottom: responsiveBreakpoints.screenHeight * 0.1),
-
         child: Wrap(
             alignment: WrapAlignment.spaceEvenly,
             crossAxisAlignment: WrapCrossAlignment.center,
@@ -40,16 +39,15 @@ class AboutMeWidget extends StatelessWidget {
                         AppLocalizations.of(context)!.aboutMeDescription1,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontSize:
-                                responsiveBreakpoints.isMobile ? 15 : 18)),
+                                responsiveBreakpoints.isMobile ? 16 : 18)),
                     const SizedBox(height: 10),
                     AutoSizeText(
                         AppLocalizations.of(context)!.aboutMeDescription2,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontSize:
-                                responsiveBreakpoints.isMobile ? 15 : 18)),
-
+                                responsiveBreakpoints.isMobile ? 16 : 18)),
                     /*
-                             SizedBox(
+                    SizedBox(
                         width: 500,
                         child: Column(children: [
                           AutoSizeText(AppLocalizations.of(context)!.skills1),

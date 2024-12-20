@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:proyect_porfolio/domain/cubits/appLocale/app_locale_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
-import '../../../domain/blocs/appLocale/app_locale_bloc.dart';
-import '../../../domain/blocs/appTheme/app_theme_bloc.dart';
+import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
 
 class WorksWidget extends StatelessWidget {
   const WorksWidget({super.key});
@@ -57,6 +56,7 @@ class WorksWidget extends StatelessWidget {
     ResponsiveBreakpointsData responsiveBreakpoints =
         ResponsiveBreakpoints.of(context);
 
+    String stringLocal=context.watch<AppLocaleCubit>().state.locale.getLocal().toString();
     return Padding(
         padding: const EdgeInsets.only(top: 120),
         child: Column(
@@ -64,7 +64,7 @@ class WorksWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AutoSizeText(
-                  "${DateFormat("MMMM yyyy", context.watch<AppLocaleBloc>().state.locale.getLocal().toString()).format(DateTime.utc(2024, 4))} - ${DateFormat("MMMM yyyy", context.watch<AppLocaleBloc>().state.locale.getLocal().toString()).format(DateTime.utc(2024, 6))}",
+                  "${DateFormat("MMMM yyyy", stringLocal).format(DateTime.utc(2024, 4))} - ${DateFormat("MMMM yyyy", stringLocal).format(DateTime.utc(2024, 6))}",
                   maxLines: 1,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
                       color: Colors.grey,
@@ -118,7 +118,7 @@ class NoWorkWidget extends StatelessWidget {
         alignment: Alignment.topLeft,
         decoration: BoxDecoration(
             image: DecorationImage(
-                colorFilter: context.watch<AppThemeBloc>().state.isDarkMode()
+                colorFilter: context.watch<AppThemeCubit>().state.isDarkMode()
                     ? ColorFilter.mode(
                         Colors.black.withOpacity(0.7), BlendMode.darken)
                     : const ColorFilter.mode(Colors.black54, BlendMode.darken),

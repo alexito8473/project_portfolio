@@ -3,12 +3,11 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
+import 'package:proyect_porfolio/domain/cubits/appLocale/app_locale_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:widget_circular_animator/widget_circular_animator.dart';
-
 import '../../../data/dataSource/menu_items.dart';
-import '../../../domain/blocs/appLocale/app_locale_bloc.dart';
+import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
 import '../customWidget/custom_button_widget.dart';
 
 class HeaderWidget extends StatelessWidget {
@@ -18,7 +17,7 @@ class HeaderWidget extends StatelessWidget {
       {super.key, required this.assetImageUser, required this.activationKey});
 
   Color textColorSubTitle(BuildContext context) =>
-      context.watch<AppThemeBloc>().state.isDarkMode()
+      context.watch<AppThemeCubit>().state.isDarkMode()
           ? Colors.greenAccent
           : Colors.green;
 
@@ -29,7 +28,7 @@ class HeaderWidget extends StatelessWidget {
       responsiveBreakpoints.isMobile ? 26 : 40;
 
   Color iconColorGitHub(BuildContext context) =>
-      context.watch<AppThemeBloc>().state.isDarkMode()
+      context.watch<AppThemeCubit>().state.isDarkMode()
           ? Colors.white
           : Colors.black;
 
@@ -142,7 +141,9 @@ class HeaderWidget extends StatelessWidget {
         ? SliverToBoxAdapter(
             child: Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: responsiveBreakpoints.isMobile?responsiveBreakpoints.screenHeight * 0.1: responsiveBreakpoints.screenHeight * 0.3),
+                    vertical: responsiveBreakpoints.isMobile
+                        ? responsiveBreakpoints.screenHeight * 0.1
+                        : responsiveBreakpoints.screenHeight * 0.3),
                 child: builderHeader(
                     responsiveBreakpoints: responsiveBreakpoints,
                     context: context)))
@@ -197,126 +198,109 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     ResponsiveBreakpointsData responsiveBreakpoints =
         ResponsiveBreakpoints.of(context);
-    return RepaintBoundary(
-        child: Center(
-            child: Hero(
-                tag: "AppBar",
-                child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                        onDoubleTap: () => onDoubleTap(),
-                        overlayColor:
-                            const WidgetStatePropertyAll(Colors.transparent),
-                        child: AbsorbPointer(
-                          absorbing: canNotTapButton,
-                          child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 1200),
-                              curve: Curves.decelerate,
-                              height: 55,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: context
-                                                .watch<AppThemeBloc>()
-                                                .state
-                                                .isDarkMode()
-                                            ? Colors.white.withOpacity(0.4)
-                                            : Colors.black.withOpacity(0.8),
-                                        blurRadius: 10,
-                                        spreadRadius: 1)
-                                  ],
-                                  color: context
-                                          .watch<AppThemeBloc>()
-                                          .state
-                                          .isDarkMode()
-                                      ? Colors.grey[900]
-                                      : Colors.grey[100],
-                                  borderRadius: BorderRadius.circular(40)),
-                              margin: const EdgeInsets.only(top: 20),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 5),
-                              width: !changeTop
-                                  ? reset == null
-                                      ? 220
-                                      : 260
-                                  : _widthAppBar(
-                                      responsiveBreakpoints:
-                                          responsiveBreakpoints),
-                              child: Row(
-                                  mainAxisAlignment: changeTop
-                                      ? MainAxisAlignment.spaceBetween
-                                      : MainAxisAlignment.center,
-                                  children: [
-                                    if (learning != null) learning!,
-                                    HeaderTop(
-                                        initAnimation: changeTop,
-                                        countWidget: _countWidgetInPage(
-                                            responsiveBreakpoints:
-                                                responsiveBreakpoints)),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          if (reset != null)
-                                            IconButton(
-                                                onPressed: () => reset!(),
-                                                icon: const Icon(
-                                                    Icons.lock_reset)),
-                                          IconButton(
-                                              onPressed: () => context
-                                                  .read<AppLocaleBloc>()
-                                                  .add(ChangeLocalEvent()),
-                                              icon: Text(
-                                                  BlocProvider.of<
-                                                              AppLocaleBloc>(
-                                                          context)
-                                                      .state
-                                                      .locale
-                                                      .getLenguajeCode(),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge)),
-                                          Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 5, left: 5),
-                                              child: IconButton(
+    return BlocBuilder<AppThemeCubit, AppThemeState>(builder: (context, state) {
+      return RepaintBoundary(
+          child: Center(
+              child: Hero(
+                  tag: "AppBar",
+                  child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                          onDoubleTap: () => onDoubleTap(),
+                          overlayColor:
+                              const WidgetStatePropertyAll(Colors.transparent),
+                          child: AbsorbPointer(
+                              absorbing: canNotTapButton,
+                              child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 1200),
+                                  curve: Curves.decelerate,
+                                  height: 55,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: state.isDarkMode()
+                                                ? Colors.white.withOpacity(0.4)
+                                                : Colors.black.withOpacity(0.8),
+                                            blurRadius: 10,
+                                            spreadRadius: 1)
+                                      ],
+                                      color: state.isDarkMode()
+                                          ? Colors.grey[900]
+                                          : Colors.grey[100],
+                                      borderRadius: BorderRadius.circular(40)),
+                                  margin: const EdgeInsets.only(top: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 5),
+                                  width: !changeTop
+                                      ? reset == null
+                                          ? 220
+                                          : 260
+                                      : _widthAppBar(
+                                          responsiveBreakpoints:
+                                              responsiveBreakpoints),
+                                  child: Row(
+                                      mainAxisAlignment: changeTop
+                                          ? MainAxisAlignment.spaceBetween
+                                          : MainAxisAlignment.center,
+                                      children: [
+                                        if (learning != null) learning!,
+                                        HeaderTop(
+                                            initAnimation: changeTop,
+                                            countWidget: _countWidgetInPage(
+                                                responsiveBreakpoints:
+                                                    responsiveBreakpoints)),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              if (reset != null)
+                                                IconButton(
+                                                    onPressed: () => reset!(),
+                                                    icon: const Icon(
+                                                        Icons.lock_reset)),
+                                              IconButton(
                                                   onPressed: () => context
-                                                      .read<AppThemeBloc>()
-                                                      .add(ChangeThemeEvent()),
-                                                  icon: BlocProvider.of<
-                                                          AppThemeBloc>(context)
-                                                      .state
-                                                      .appTheme
-                                                      .getIcon())),
-                                          if (changeScroll != null)
-                                            DropdownButtonHideUnderline(
-                                                child: DropdownButton2(
-                                                    customButton: const Icon(
-                                                        Icons.list,
-                                                        size: 35),
-                                                    items: List.generate(
-                                                        MenuItems.values.length,
-                                                        (index) => DropdownMenuItem<int>(
-                                                            value: index,
-                                                            child: MenuItems
-                                                                .values[index]
-                                                                .buildItem(
+                                                      .read<AppLocaleCubit>().changeLocal(),
+                                                  icon: Text(
+                                                    context.watch<AppLocaleCubit>().state.locale.getLenguajeCode(),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge)),
+                                              Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 5, left: 5),
+                                                  child: IconButton(
+                                                      onPressed: () => context
+                                                          .read<AppThemeCubit>().changeTheme(),
+                                                      icon: state.appTheme
+                                                          .getIcon())),
+                                              if (changeScroll != null)
+                                                DropdownButtonHideUnderline(
+                                                    child: DropdownButton2(
+                                                        customButton: const Icon(Icons.list,
+                                                            size: 35),
+                                                        items: List.generate(
+                                                            MenuItems
+                                                                .values.length,
+                                                            (index) => DropdownMenuItem<int>(
+                                                                value: index,
+                                                                child: MenuItems.values[index].buildItem(
                                                                     context))),
-                                                    onChanged: (value) =>
-                                                        changeScroll!(value),
-                                                    barrierColor: Colors.black
-                                                        .withOpacity(0.4),
-                                                    dropdownStyleData: DropdownStyleData(
-                                                        width: 180,
-                                                        useSafeArea: true,
-                                                        padding: const EdgeInsets.symmetric(
-                                                            vertical: 6,
-                                                            horizontal: 5),
-                                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: context.watch<AppThemeBloc>().state.isDarkMode() ? Colors.grey.shade800 : Colors.blueAccent))))
-                                        ])
-                                  ])),
-                        ))))));
+                                                        onChanged: (value) =>
+                                                            changeScroll!(
+                                                                value),
+                                                        barrierColor: Colors.black
+                                                            .withOpacity(0.4),
+                                                        dropdownStyleData: DropdownStyleData(
+                                                            width: 180,
+                                                            useSafeArea: true,
+                                                            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
+                                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: state.isDarkMode() ? Colors.grey.shade800 : Colors.blueAccent))))
+                                            ])
+                                      ]))))))));
+    });
   }
 }
 

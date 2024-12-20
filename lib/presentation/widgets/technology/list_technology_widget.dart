@@ -3,10 +3,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:proyect_porfolio/domain/cubits/appTheme/app_theme_cubit.dart';
 import 'package:proyect_porfolio/presentation/widgets/technology/technology_widget.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../data/dataSource/tecnology_data.dart';
-import '../../../domain/blocs/appTheme/app_theme_bloc.dart';
 import '../../../domain/cubits/listTechnology/list_technology_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -15,16 +15,19 @@ class ListTechnology extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
+    ResponsiveBreakpointsData data = ResponsiveBreakpoints.of(context);
     return SliverToBoxAdapter(
         child: Container(
             alignment: Alignment.center,
-            constraints: BoxConstraints(minHeight: size.height * 0.65),
-            margin: EdgeInsets.only(bottom: size.height * 0.2),
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+            constraints: BoxConstraints(minHeight: data.screenHeight * 0.65),
+            margin: EdgeInsets.only(bottom: data.screenHeight * 0.2),
+            padding: EdgeInsets.symmetric(
+                horizontal: data.isMobile
+                    ? data.screenWidth * 0.05
+                    : data.screenWidth * 0.1),
             child: Column(children: [
               const SliverSingleChoice(),
-              SizedBox(height: size.height * 0.05),
+              SizedBox(height: data.screenHeight * 0.05),
               Container(
                   constraints: const BoxConstraints(minHeight: 400),
                   child: const AnimatedListTechnology())
@@ -40,139 +43,119 @@ class AnimatedListTechnology extends StatefulWidget {
 }
 
 class _AnimatedListTechnologyState extends State<AnimatedListTechnology> {
-  late int counterAnimated = 0;
-  @override
-  void initState() {
-    counterAnimated =
-        context.read<ListTechnologyCubit>().state.listFiltered.length;
-    super.initState();
-  }
-
   void createDialogTechnology(
-      BuildContext context, Knowledge know, bool isMobile, bool isDarkMode) {
-    Color background = isDarkMode ? Colors.black : Colors.white;
+      BuildContext context, Knowledge know, bool isMobile) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-            shadowColor: isDarkMode ? Colors.white10 : Colors.black12,
-            content: Container(
-                width: 350,
-                height: !isMobile ? 380 : 430,
-                decoration: BoxDecoration(
-                    color: background, borderRadius: BorderRadius.circular(10)),
-                child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            transform: const GradientRotation(0.3),
-                            stops: const [
-                              0.85,
-                              0.85,
-                              1,
-                              1
-                            ],
-                            colors: [
-                              background,
-                              know.technology.color.withOpacity(0.5),
-                              know.technology.color.withOpacity(0.5),
-                              background
-                            ])),
-                    child: Column(children: [
-                      SizedBox(
-                          height: 40,
-                          child: Row(children: [
-                            Expanded(
-                              child: AutoSizeText(
-                                maxLines: 2,
-                                '${AppLocalizations.of(context)!.myExperience} ${know.technology.name}',
-                                style: const TextStyle(fontSize: 20),
+        return BlocBuilder<AppThemeCubit, AppThemeState>(
+            builder: (context, state) {
+          Color background = state.isDarkMode() ? Colors.black : Colors.white;
+          return AlertDialog(
+              shadowColor: state.isDarkMode() ? Colors.white10 : Colors.black12,
+              content: Container(
+                  width: 350,
+                  height: !isMobile ? 380 : 430,
+                  decoration: BoxDecoration(
+                      color: background,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              transform: const GradientRotation(0.3),
+                              stops: const [
+                                0.85,
+                                0.85,
+                                1,
+                                1
+                              ],
+                              colors: [
+                                background,
+                                know.technology.color.withOpacity(0.5),
+                                know.technology.color.withOpacity(0.5),
+                                background
+                              ])),
+                      child: Column(children: [
+                        SizedBox(
+                            height: 40,
+                            child: Row(children: [
+                              Expanded(
+                                child: AutoSizeText(
+                                  maxLines: 2,
+                                  '${AppLocalizations.of(context)!.myExperience} ${know.technology.name}',
+                                  style: const TextStyle(fontSize: 20),
+                                ),
                               ),
-                            ),
-                            IconButton(
-                                onPressed: () => Navigator.pop(context),
-                                icon: const Icon(Icons.close))
-                          ])),
-                      Expanded(
-                          child: Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: AutoSizeText(
-                                know.getDescription(context),
-                                style: const TextStyle(fontSize: 15),
-                                textAlign: TextAlign.justify,
-                              ))),
-                      Container(
-                          height: 60,
-                          alignment: Alignment.bottomLeft,
-                          child: SvgPicture.asset(know.technology.urlIcon,
-                              color: know.technology.changeColor
-                                  ? context
-                                          .watch<AppThemeBloc>()
-                                          .state
-                                          .isDarkMode()
-                                      ? Colors.white
-                                      : Colors.black
-                                  : null,
-                              width: 60))
-                    ]))),
-            backgroundColor: Colors.transparent,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(0.0)),
-            elevation: 24.0);
+                              IconButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  icon: const Icon(Icons.close))
+                            ])),
+                        Expanded(
+                            child: Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: AutoSizeText(
+                                  know.getDescription(context),
+                                  style: const TextStyle(fontSize: 15),
+                                  textAlign: TextAlign.justify,
+                                ))),
+                        Container(
+                            height: 60,
+                            alignment: Alignment.bottomLeft,
+                            child: SvgPicture.asset(know.technology.urlIcon,
+                                color: know.technology.changeColor
+                                    ? state.isDarkMode()
+                                        ? Colors.white
+                                        : Colors.black
+                                    : null,
+                                width: 60))
+                      ]))),
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0.0)),
+              elevation: 24.0);
+        });
       },
     );
   }
 
   void onTap(Knowledge know) {
     createDialogTechnology(
-        context,
-        know,
-        ResponsiveBreakpoints.of(context).isMobile,
-        context.read<AppThemeBloc>().state.isDarkMode());
+        context, know, ResponsiveBreakpoints.of(context).isMobile);
   }
 
   Color colorActive() {
-    return context.watch<AppThemeBloc>().state.isDarkMode()
+    return context.watch<AppThemeCubit>().state.isDarkMode()
         ? Colors.white38
         : Colors.black54;
   }
 
   Color colorNoActive() {
-    return context.watch<AppThemeBloc>().state.isDarkMode()
+    return context.watch<AppThemeCubit>().state.isDarkMode()
         ? Colors.white10
         : Colors.black12;
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ListTechnologyCubit, ListTechnologyState>(
-        listener: (context, state) {
-      setState(() {
-        counterAnimated = 0;
-      });
-      Future.delayed(const Duration(milliseconds: 100)).whenComplete(() {
-        setState(() {
-          counterAnimated = state.listFiltered.length;
-        });
-      });
-    }, builder: (context, state) {
+    return BlocBuilder<ListTechnologyCubit, ListTechnologyState>(
+        builder: (context, state) {
       return Wrap(
           runSpacing: 20,
           spacing: 20,
           alignment: WrapAlignment.center,
-          children: List.generate(counterAnimated, (index) {
+          children: List.generate(state.lengthListLate, (index) {
             return FadeInLeft(
                 duration: Duration(milliseconds: 800 + (index * 50)),
                 curve: Curves.linear,
                 child: TechnologyWidget(
-                  knowledge: state.listFiltered[index],
-                  onTap: onTap,
-                  colorActive: colorActive,
-                  colorNoActive: colorNoActive,
-                ));
+                    knowledge: state.listFiltered[index],
+                    onTap: onTap,
+                    colorActive: colorActive,
+                    colorNoActive: colorNoActive));
           }));
     });
   }

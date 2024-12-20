@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyect_porfolio/data/models/message.dart';
 import 'package:proyect_porfolio/domain/blocs/appSendMessage/app_send_message_bloc.dart';
-import 'package:proyect_porfolio/domain/blocs/appTheme/app_theme_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
 import '../customWidget/custom_button_widget.dart';
 
 class ContactToMeWidget extends StatefulWidget {
@@ -59,7 +59,7 @@ class _ContactToMeWidgetState extends State<ContactToMeWidget> {
     AppLocalizations? appLocalizations = AppLocalizations.of(context);
     ResponsiveBreakpointsData responsiveBreakpoints =
         ResponsiveBreakpoints.of(context);
-    bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
+    bool isDarkMode = context.watch<AppThemeCubit>().state.isDarkMode();
     return BlocBuilder<AppSendMessageBloc, AppSendMessageState>(
         builder: (context, state) {
       return SliverToBoxAdapter(
@@ -160,7 +160,7 @@ class ContactToMeFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
+    bool isDarkMode = context.watch<AppThemeCubit>().state.isDarkMode();
     return TextFormField(
       onChanged: (value) => checkIsDesactivateButton(),
       controller: myController,
@@ -177,7 +177,7 @@ class ContactToMeFormField extends StatelessWidget {
           prefixIcon: icon,
           filled: true,
           fillColor: isDarkMode ? Colors.grey.shade700 : Colors.white,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)))
     );
   }
 }

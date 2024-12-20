@@ -1,13 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher.dart' deferred as launch;
 import 'package:web/web.dart' as web;
-import '../../../domain/blocs/appTheme/app_theme_bloc.dart';
+
+import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
 
 class ButtonIconSvg extends StatelessWidget {
   final Uri uri;
@@ -34,7 +35,7 @@ class ButtonIconSvg extends StatelessWidget {
         message: tooltip,
         child: SvgPicture.asset(iconUri,
             color: changeColor
-                ? context.watch<AppThemeBloc>().state.isDarkMode()
+                ? context.watch<AppThemeCubit>().state.isDarkMode()
                     ? Colors.white
                     : Colors.black
                 : null,
@@ -61,22 +62,24 @@ class IconButtonNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-        padding: const EdgeInsets.all(12),
-        iconSize: 30,
-        tooltip: tooltip,
-        color: color,
-        onPressed: () async {
-          await launch.loadLibrary();
-          await launch.launchUrl(uri);
-        },
-        icon: SvgPicture.asset(iconUri,
-            color: changeColor
-                ? context.watch<AppThemeBloc>().state.isDarkMode()
-                    ? Colors.white
-                    : Colors.black
-                : null,
-            width: ResponsiveBreakpoints.of(context).isMobile ? 35 : 50));
+    return BlocBuilder<AppThemeCubit,AppThemeState>(builder: (context, state) {
+      return  IconButton(
+          padding: const EdgeInsets.all(12),
+          iconSize: 30,
+          tooltip: tooltip,
+          color: color,
+          onPressed: () async {
+            await launch.loadLibrary();
+            await launch.launchUrl(uri);
+          },
+          icon: SvgPicture.asset(iconUri,
+              color: changeColor
+                  ? state.isDarkMode()
+                  ? Colors.white
+                  : Colors.black
+                  : null,
+              width: ResponsiveBreakpoints.of(context).isMobile ? 35 : 50));
+    },);
   }
 }
 
@@ -99,7 +102,7 @@ class ButtonSelect extends StatelessWidget {
               if (isSelect) {
                 return Colors.blueAccent.withOpacity(0.8);
               }
-              return context.watch<AppThemeBloc>().state.isDarkMode()
+              return context.watch<AppThemeCubit>().state.isDarkMode()
                   ? Colors.white70
                   : Colors.grey.shade100;
             }),
@@ -125,23 +128,21 @@ class ButtonSelect extends StatelessWidget {
 
 class ButtonDownloadPdf extends StatelessWidget {
   const ButtonDownloadPdf({super.key});
-  void downloadFile() async {
-    web.window.open('assets/pdf/Curriculum_Alejandro_Aguilar.pdf', '_blank');
-  }
+  void downloadFile() =>
+    web.window.open(kDebugMode?'assets/assets/pdf/Alejandro_Aguilar.pdf':'/Alejandro_Aguilar.pdf', '_blank');
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: () => downloadFile(),
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.blue,
-          shadowColor: Colors.blueAccent,
-          elevation: 5,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-        ),
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.blue,
+            shadowColor: Colors.blueAccent,
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15)),
         child: AutoSizeText(AppLocalizations.of(context)!.downloadCV,
             maxLines: 1, style: Theme.of(context).textTheme.labelLarge));
   }
@@ -164,7 +165,7 @@ class _ButtonSentEmailState extends State<ButtonSentEmail> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = context.watch<AppThemeBloc>().state.isDarkMode();
+    bool isDarkMode = context.watch<AppThemeCubit>().state.isDarkMode();
     return InkWell(
         mouseCursor:
             widget.isDesactivate ? MouseCursor.defer : SystemMouseCursors.click,

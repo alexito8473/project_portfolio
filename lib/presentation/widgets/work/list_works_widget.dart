@@ -6,7 +6,8 @@ import 'package:lottie/lottie.dart';
 import 'package:proyect_porfolio/presentation/widgets/work/works_widget.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:timeline_tile/timeline_tile.dart';
-import '../../../domain/blocs/appTheme/app_theme_bloc.dart';
+
+import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
 
 class WorkWidget extends StatelessWidget {
   const WorkWidget({super.key});
@@ -21,15 +22,14 @@ class WorkWidget extends StatelessWidget {
             spacing: responsiveBreakpoints.screenWidth * .08,
             children: [
               Container(
-                constraints: BoxConstraints(minWidth: 800),
-                  width: responsiveBreakpoints.screenWidth*0.5,
+                  constraints: const BoxConstraints(minWidth: 800),
+                  width: responsiveBreakpoints.screenWidth * 0.5,
                   child: Column(
                     children: [
                       Container(
-                          margin:  EdgeInsets.symmetric(
-                                  horizontal:
-                                      responsiveBreakpoints.screenWidth * 0.1),
-
+                          margin: EdgeInsets.symmetric(
+                              horizontal:
+                                  responsiveBreakpoints.screenWidth * 0.1),
                           color: Colors.transparent,
                           height: 120,
                           child: TimelineTile(
@@ -55,18 +55,17 @@ class WorkWidget extends StatelessWidget {
                                             ? 20
                                             : 35,
                                         color: context
-                                                .watch<AppThemeBloc>()
+                                                .watch<AppThemeCubit>()
                                                 .state
                                                 .isDarkMode()
                                             ? Colors.white
                                             : Colors.black),
                               ))),
-
                       Container(
                           height: 500,
-                          margin:  EdgeInsets.symmetric(
+                          margin: EdgeInsets.symmetric(
                               horizontal:
-                              responsiveBreakpoints.screenWidth * 0.1),
+                                  responsiveBreakpoints.screenWidth * 0.1),
                           color: Colors.transparent,
                           child: TimelineTile(
                               beforeLineStyle:
@@ -94,8 +93,8 @@ class WorkWidget extends StatelessWidget {
                   backgroundLoading: true,
                   reverse: true,
                   animate: true,
-                  filterQuality: FilterQuality.none,
-                  frameRate: FrameRate.max)
+                  frameRate: const FrameRate(27),
+                  filterQuality: FilterQuality.none)
             ]));
   }
 
@@ -103,7 +102,8 @@ class WorkWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     ResponsiveBreakpointsData responsiveBreakpoints =
         ResponsiveBreakpoints.of(context);
-    return responsiveBreakpoints.screenWidth<1200|| responsiveBreakpoints.screenHeight < 600
+    return responsiveBreakpoints.screenWidth < 1200 ||
+            responsiveBreakpoints.screenHeight < 600
         ? SliverToBoxAdapter(
             child: Padding(
                 padding: EdgeInsets.only(

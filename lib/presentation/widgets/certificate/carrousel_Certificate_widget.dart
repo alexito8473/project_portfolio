@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:proyect_porfolio/data/dataSource/certificate_data.dart';
+import 'package:proyect_porfolio/domain/cubits/appTheme/app_theme_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class CarrouselCertificate extends StatelessWidget {
@@ -20,20 +22,36 @@ class CarrouselCertificate extends StatelessWidget {
   }
 
   Widget buildCarrousel({required BuildContext context}) {
-    return FlutterCarousel(
-        items: List.generate(Certificate.values.length, (index) {
-          return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child:
-                  Image(image: AssetImage(Certificate.values[index].urlImg)));
-        }),
-        options: FlutterCarouselOptions(
-            enlargeCenterPage: true,
-            height: 500,
-            enlargeFactor: 0.5,
-            showIndicator: false,
-            viewportFraction: viewPort(context: context),
-            enableInfiniteScroll: true));
+    return BlocBuilder<AppThemeCubit, AppThemeState>(
+      builder: (context, state) {
+        return FlutterCarousel(
+            items: List.generate(Certificate.values.length, (index) {
+              return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Center(
+                      child: Container(
+                          decoration: BoxDecoration(boxShadow: [
+                            BoxShadow(
+                                color: state.isDarkMode()
+                                    ? Colors.white38
+                                    : Colors.black26,
+                                spreadRadius: 0.1,
+                                blurRadius: 20)
+                          ]),
+                          child: Image(
+                              filterQuality: FilterQuality.none,
+                              image: AssetImage(
+                                  Certificate.values[index].urlImg)))));
+            }),
+            options: FlutterCarouselOptions(
+                enlargeCenterPage: true,
+                height: 500,
+                enlargeFactor: 0.5,
+                showIndicator: false,
+                viewportFraction: viewPort(context: context),
+                enableInfiniteScroll: true));
+      },
+    );
   }
 
   @override

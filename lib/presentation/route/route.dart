@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyect_porfolio/presentation/pages/home_page.dart';
-import 'package:proyect_porfolio/presentation/pages/project_page.dart';
+import 'package:proyect_porfolio/presentation/pages/list_project_page.dart';
 
 final GoRouter router = GoRouter(routes: <RouteBase>[
   GoRoute(
@@ -10,6 +10,20 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
         return const HomePage();
       },
       routes: <RouteBase>[
+        GoRoute(
+            path: 'project/:project',
+            pageBuilder: (context, state) {
+              final project = state.pathParameters['project']!;
+              return CustomTransitionPage(
+                  key: state.pageKey,
+                  reverseTransitionDuration: const Duration(milliseconds: 400),
+                  maintainState: true,
+                  transitionDuration: const Duration(milliseconds: 400),
+                  child: const ProjectPage(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          FadeTransition(opacity: animation, child: child));
+            }),
         GoRoute(
             path: 'projects',
             pageBuilder: (context, state) => CustomTransitionPage(
@@ -20,10 +34,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
                 child: const ProjectPage(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  );
+                  return FadeTransition(opacity: animation, child: child);
                 }))
       ])
 ]);

@@ -45,7 +45,7 @@ flutter:
   generate: true
   assets:
     - .env
-    - assets/pdf/
+    - assets/pdf/Alejandro_Aguilar.pdf
 
     - assets/svg/
     - assets/svg/programLanguage/

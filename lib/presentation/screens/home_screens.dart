@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:animated_background/animated_background.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../widgets/header/header_widegt.dart';
 
@@ -32,9 +35,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: AnimatedBackground(
+    return Material(
+        child: AnimatedBackground(
             behaviour: RandomParticleBehaviour(
                 paint: Paint(), options: particleOptions),
             vsync: vsync,
@@ -44,6 +46,7 @@ class HomeScreen extends StatelessWidget {
                   Positioned.fill(
                       child: CustomScrollView(
                           controller: scrollController,
+                          physics: const RangeMaintainingScrollPhysics(),
                           slivers: List.generate(listWidgetHome.length,
                               (index) => listWidgetHome[index]))),
                   Positioned(
@@ -59,3 +62,4 @@ class HomeScreen extends StatelessWidget {
                 ]))));
   }
 }
+

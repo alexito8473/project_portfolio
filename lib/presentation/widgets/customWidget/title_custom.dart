@@ -14,18 +14,19 @@ class TitleHome extends StatelessWidget {
       required this.subIcon,
       this.haveWidth = true});
 
-  double? width(BuildContext context) {
+  double? width(ResponsiveBreakpointsData data) {
     if (!haveWidth) return 200;
-    return ResponsiveBreakpoints.of(context).isMobile
-        ? ResponsiveBreakpoints.of(context).screenWidth * 0.8
-        : ResponsiveBreakpoints.of(context).screenWidth * 0.7;
+    return data.isMobile
+        ? data.screenWidth * 0.8
+        : data.screenWidth * 0.7;
   }
 
   @override
   Widget build(BuildContext context) {
+    ResponsiveBreakpointsData data= ResponsiveBreakpoints.of(context);
     return Container(
         margin: const EdgeInsets.only(bottom: 50),
-        width: width(context),
+        width: width(data),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -34,7 +35,7 @@ class TitleHome extends StatelessWidget {
             Expanded(
                 child: AutoSizeText(title,
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        fontSize: ResponsiveBreakpoints.of(context).isMobile
+                        fontSize:data.isMobile
                             ? 30
                             : 30),
                     maxLines: 1))

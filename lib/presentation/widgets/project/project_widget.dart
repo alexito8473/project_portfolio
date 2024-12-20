@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:masonry_grid/masonry_grid.dart';
+import 'package:proyect_porfolio/domain/cubits/appTheme/app_theme_cubit.dart';
 import 'package:proyect_porfolio/presentation/widgets/customWidget/title_custom.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../data/dataSource/menu_items.dart';
 import '../../../data/dataSource/project_data.dart';
-import '../../../domain/blocs/appTheme/app_theme_bloc.dart';
 import '../customWidget/custom_button_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -105,7 +105,7 @@ class MasonrySliver extends StatelessWidget {
 class BannerPro extends StatefulWidget {
   final ProjectRelease projectRelease;
   final double height;
-  const BannerPro({super.key, required this.projectRelease, this.height = 520});
+  const BannerPro({super.key, required this.projectRelease, this.height = 570});
 
   @override
   State<BannerPro> createState() => _BannerProState();
@@ -130,7 +130,7 @@ class _BannerProState extends State<BannerPro>
   Widget bannerTitle() {
     return Padding(
         padding: const EdgeInsets.only(right: 10, left: 10, top: 10),
-        child: Wrap(alignment: WrapAlignment.spaceBetween, children: [
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           AutoSizeText(
               maxLines: 1,
               widget.projectRelease.project.name,
@@ -144,6 +144,8 @@ class _BannerProState extends State<BannerPro>
                 ButtonNavigation(
                     uri: Uri.parse(widget.projectRelease.project.urlPage!),
                     urlSvg: "assets/svg/web.svg"),
+              if (widget.projectRelease.project.urlPage != null)
+                const SizedBox(width: 5),
               ButtonNavigation(
                   uri: Uri.parse(widget.projectRelease.project.repositoryUrl),
                   urlSvg: "assets/svg/github.svg")
@@ -157,7 +159,10 @@ class _BannerProState extends State<BannerPro>
         child: Padding(
             padding: const EdgeInsets.all(10),
             child: AutoSizeText(widget.projectRelease.getDescription(context),
-                style: Theme.of(context).textTheme.bodyLarge)));
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(color: Colors.white))));
   }
 
   Widget animatedTop() {
@@ -204,58 +209,60 @@ class _BannerProState extends State<BannerPro>
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-        tag: widget.projectRelease.project.name,
-        child: Material(
-            color: Colors.transparent,
-            child: RepaintBoundary(
-                child: MouseRegion(
-                    onHover: (event) {
-                      if (isHover) return;
-                      _controller.forward();
-                      setState(() {
-                        isHover = true;
-                      });
-                    },
-                    onExit: (event) {
-                      if (!isHover) return;
-                      _controller.reverse();
-                      setState(() {
-                        isHover = false;
-                      });
-                    },
-                    child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 700),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color:
-                                context.watch<AppThemeBloc>().state.isDarkMode()
-                                    ? Colors.black
-                                    : Colors.grey[900],
-                            boxShadow: [
-                              context.watch<AppThemeBloc>().state.isDarkMode()
-                                  ? BoxShadow(
-                                      color: Colors.white.withOpacity(0.5),
-                                      blurRadius: 15)
-                                  : BoxShadow(
-                                      color: Colors.blueAccent.withOpacity(0.8),
-                                      blurRadius: 15)
-                            ]),
-                        height: widget.height,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              animatedTop(),
-                              Expanded(
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            bannerTitle(),
-                                            contentTitle()
-                                          ])))
-                            ]))))));
+    return BlocBuilder<AppThemeCubit,AppThemeState>(builder: (context, state) {
+      return Hero(
+          tag: widget.projectRelease.project.name,
+          child: Material(
+              color: Colors.transparent,
+              child: RepaintBoundary(
+                  child: MouseRegion(
+                      onHover: (event) {
+                        if (isHover) return;
+                        _controller.forward();
+                        setState(() {
+                          isHover = true;
+                        });
+                      },
+                      onExit: (event) {
+                        if (!isHover) return;
+                        _controller.reverse();
+                        setState(() {
+                          isHover = false;
+                        });
+                      },
+                      child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 700),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color:
+                              state.isDarkMode()?
+                              Colors.black:
+                              Colors.grey.shade900,
+                              boxShadow: [
+                                state.isDarkMode()
+                                    ? BoxShadow(
+                                    color: Colors.white.withOpacity(0.5),
+                                    blurRadius: 15)
+                                    : BoxShadow(
+                                    color: Colors.blueAccent.withOpacity(0.7),
+                                    blurRadius: 15)
+                              ]),
+                          height: widget.height,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                animatedTop(),
+                                Expanded(
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                            children: [
+                                              bannerTitle(),
+                                              contentTitle()
+                                            ])))
+                              ]))))));
+    },) ;
   }
 }
