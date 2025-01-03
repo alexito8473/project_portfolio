@@ -21,34 +21,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final SharedPreferences prefs;
-  MyApp({super.key, required this.prefs});
-  final ThemeData lightTheme = ThemeData.from(
-      useMaterial3: true,
-      textTheme: GoogleFonts.ralewayTextTheme(Typography.blackMountainView),
-      colorScheme: const ColorScheme(
-          brightness: Brightness.light,
-          primary: Colors.blueAccent,
-          onPrimary: Colors.blue,
-          secondary: Colors.blue,
-          primaryContainer: Colors.blueAccent,
-          onSecondary: Colors.blue,
-          error: Colors.white,
-          onError: Colors.white,
-          surface: Colors.white,
-          onSurface: Colors.black));
-  final ThemeData darkTheme = ThemeData.from(
-      useMaterial3: true,
-      textTheme: GoogleFonts.ralewayTextTheme(Typography.whiteMountainView),
-      colorScheme: const ColorScheme(
-          brightness: Brightness.dark,
-          primary: Colors.blueGrey,
-          onPrimary: Colors.blueAccent,
-          secondary: Colors.white,
-          onSecondary: Colors.white,
-          error: Colors.white,
-          onError: Colors.white,
-          surface: Colors.black,
-          onSurface: Colors.white));
+  const MyApp({super.key, required this.prefs});
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -74,10 +47,7 @@ class MyApp extends StatelessWidget {
               locale: context.watch<AppLocaleCubit>().state.locale.getLocal(),
               supportedLocales: const [Locale("en", ""), Locale("es", "")],
               title: 'Portfolio Alejandro',
-              checkerboardRasterCacheImages: true,
-              themeMode: state.isDarkMode() ? ThemeMode.dark : ThemeMode.light,
-              theme: lightTheme,
-              darkTheme: darkTheme,
+              theme: state.appTheme.getThemeData(),
               routerConfig: router,
               builder: (context, child) =>
                   ResponsiveBreakpoints.builder(child: child!, breakpoints: [

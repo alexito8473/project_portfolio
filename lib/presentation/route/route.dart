@@ -11,20 +11,6 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
       },
       routes: <RouteBase>[
         GoRoute(
-            path: 'project/:project',
-            pageBuilder: (context, state) {
-              final project = state.pathParameters['project']!;
-              return CustomTransitionPage(
-                  key: state.pageKey,
-                  reverseTransitionDuration: const Duration(milliseconds: 400),
-                  maintainState: true,
-                  transitionDuration: const Duration(milliseconds: 400),
-                  child: const ProjectPage(),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          FadeTransition(opacity: animation, child: child));
-            }),
-        GoRoute(
             path: 'projects',
             pageBuilder: (context, state) => CustomTransitionPage(
                 key: state.pageKey,

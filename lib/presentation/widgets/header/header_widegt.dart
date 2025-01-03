@@ -17,7 +17,7 @@ class HeaderWidget extends StatelessWidget {
       {super.key, required this.assetImageUser, required this.activationKey});
 
   Color textColorSubTitle(BuildContext context) =>
-      context.watch<AppThemeCubit>().state.isDarkMode()
+      context.watch<AppThemeCubit>().state.appTheme.isDarkMode()
           ? Colors.greenAccent
           : Colors.green;
 
@@ -28,7 +28,7 @@ class HeaderWidget extends StatelessWidget {
       responsiveBreakpoints.isMobile ? 26 : 40;
 
   Color iconColorGitHub(BuildContext context) =>
-      context.watch<AppThemeCubit>().state.isDarkMode()
+      context.watch<AppThemeCubit>().state.appTheme.isDarkMode()
           ? Colors.white
           : Colors.black;
 
@@ -219,13 +219,13 @@ class CustomAppBar extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
-                                            color: state.isDarkMode()
+                                            color: state.appTheme.isDarkMode()
                                                 ? Colors.white.withOpacity(0.4)
                                                 : Colors.black.withOpacity(0.8),
                                             blurRadius: 10,
                                             spreadRadius: 1)
                                       ],
-                                      color: state.isDarkMode()
+                                      color: state.appTheme.isDarkMode()
                                           ? Colors.grey[900]
                                           : Colors.grey[100],
                                       borderRadius: BorderRadius.circular(40)),
@@ -261,9 +261,15 @@ class CustomAppBar extends StatelessWidget {
                                                         Icons.lock_reset)),
                                               IconButton(
                                                   onPressed: () => context
-                                                      .read<AppLocaleCubit>().changeLocal(),
+                                                      .read<AppLocaleCubit>()
+                                                      .changeLocal(),
                                                   icon: Text(
-                                                    context.watch<AppLocaleCubit>().state.locale.getLenguajeCode(),
+                                                      context
+                                                          .watch<
+                                                              AppLocaleCubit>()
+                                                          .state
+                                                          .locale
+                                                          .getLenguajeCode(),
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .bodyLarge)),
@@ -273,7 +279,8 @@ class CustomAppBar extends StatelessWidget {
                                                           right: 5, left: 5),
                                                   child: IconButton(
                                                       onPressed: () => context
-                                                          .read<AppThemeCubit>().changeTheme(),
+                                                          .read<AppThemeCubit>()
+                                                          .changeTheme(),
                                                       icon: state.appTheme
                                                           .getIcon())),
                                               if (changeScroll != null)
@@ -297,7 +304,7 @@ class CustomAppBar extends StatelessWidget {
                                                             width: 180,
                                                             useSafeArea: true,
                                                             padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
-                                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: state.isDarkMode() ? Colors.grey.shade800 : Colors.blueAccent))))
+                                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: state.appTheme.isDarkMode() ? Colors.grey.shade800 : Colors.blueAccent))))
                                             ])
                                       ]))))))));
     });

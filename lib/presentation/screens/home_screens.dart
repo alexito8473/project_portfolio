@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:animated_background/animated_background.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../widgets/header/header_widegt.dart';
 
@@ -62,4 +59,3 @@ class HomeScreen extends StatelessWidget {
                 ]))));
   }
 }
-

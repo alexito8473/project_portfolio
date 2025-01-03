@@ -6,14 +6,16 @@ import 'package:proyect_porfolio/domain/cubits/appTheme/app_theme_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:animated_background/animated_background.dart'
     deferred as background_animated;
+import 'dart:ui' as ui;
 import '../../data/dataSource/menu_items.dart' deferred as menu_items;
+import '../../data/dataSource/project_data.dart' deferred as project;
 import '../screens/home_screens.dart' deferred as home;
 import '../widgets/certificate/carrousel_Certificate_widget.dart'
     deferred as certificate;
-import '../widgets/contacMe/contact_me_widget.dart' deferred as contact_me;
+import '../widgets/contact/contact_me_widget.dart' deferred as contact_me;
 import '../widgets/customWidget/title_custom.dart' deferred as title;
 import '../widgets/footer/footer_widget.dart' deferred as footer;
-import '../widgets/header/about_me_widget.dart' deferred as about_me;
+import '../widgets/aboutMe/about_me_widget.dart' deferred as about_me;
 import '../widgets/header/header_widegt.dart' deferred as header;
 import '../widgets/project/project_widget.dart' deferred as projects;
 import '../widgets/technology/list_technology_widget.dart'
@@ -32,10 +34,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final GlobalKey _headerKey = GlobalKey();
   late final List<GlobalKey> _listGlobalKey;
   late final List<Widget> _listWidgetHome;
-  bool isComplete = false;
+
+  bool _isComplete = false;
   bool _changeTop = false;
-  bool moveTop = false;
-  bool isActiveMove = false;
+  bool _moveTop = false;
+  bool _isActiveMove = false;
   Offset _mousePosition = Offset.zero;
   Offset? _mousePositionSecond;
 
@@ -56,13 +59,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void _reset() => setState(() {
         _mousePositionSecond = null;
         _mousePosition = Offset.zero;
-        moveTop = false;
-        isActiveMove = false;
+        _moveTop = false;
+        _isActiveMove = false;
       });
 
   void _onResize() {
-    if (!isActiveMove) return;
-    if (ResponsiveBreakpoints.of(context).isMobile && isActiveMove) {
+    if (!_isActiveMove) return;
+    if (ResponsiveBreakpoints.of(context).isMobile && _isActiveMove) {
       _reset();
     } else {
       setState(() {
@@ -82,12 +85,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void _onDobleTap() {
     if (ResponsiveBreakpoints.of(context).isMobile) return;
     if (_mousePositionSecond == null) return;
-    if (!isActiveMove) {
-      isActiveMove = true;
+    if (!_isActiveMove) {
+      _isActiveMove = true;
     }
     setState(() {
       _mousePosition = _mousePositionSecond!;
-      moveTop = !moveTop;
+      _moveTop = !_moveTop;
     });
   }
 
@@ -95,7 +98,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (ResponsiveBreakpoints.of(context).isMobile) return;
     _mousePositionSecond =
         Offset(event.position.dx - 100, event.position.dy - 50);
-    if (!moveTop) return;
+    if (!_moveTop) return;
     setState(() {
       _mousePosition = Offset(event.position.dx - 100, event.position.dy - 50);
     });
@@ -110,7 +113,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Future<void> _initializePage() async {
-    if (isComplete) return;
+    if (_isComplete) return;
     await Future.wait([
       background_animated.loadLibrary(),
       home.loadLibrary(),
@@ -123,7 +126,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       contact_me.loadLibrary(),
       title.loadLibrary(),
       certificate.loadLibrary(),
-      menu_items.loadLibrary()
+      menu_items.loadLibrary(),
+      project.loadLibrary()
     ]);
     _listGlobalKey = [
       GlobalKey(),
@@ -133,6 +137,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       GlobalKey(),
       GlobalKey()
     ];
+
     _listWidgetHome = [
       header.HeaderWidget(
           assetImageUser: const AssetImage("assets/images/personal.webp"),
@@ -159,7 +164,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     web.window.addEventListener(
         'resize',
         () {
-          if (isComplete) return;
           _callUpdateNavigation();
           _onResize();
         }.toJS);
@@ -167,8 +171,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       _callUpdateNavigation();
       _scrollListener();
     });
+       ;
     setState(() {
-      isComplete = true;
+      _isComplete = true;
     });
   }
 
@@ -176,13 +181,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return BlocBuilder<AppThemeCubit, AppThemeState>(
       builder: (context, state) {
-        return isComplete
+        return _isComplete
             ? home.HomeScreen(
                 particleOptions: background_animated.ParticleOptions(
                     baseColor: Colors.blue,
                     opacityChangeRate: 0.30,
-                    minOpacity: state.isDarkMode() ? 0.11 : 0.08,
-                    maxOpacity: state.isDarkMode() ? 0.45 : 0.13,
+                    minOpacity: state.appTheme.isDarkMode() ? 0.11 : 0.08,
+                    maxOpacity: state.appTheme.isDarkMode() ? 0.45 : 0.13,
                     spawnMinSpeed: 20.0,
                     spawnMaxSpeed: 30.0,
                     spawnMinRadius: 7.0,
@@ -198,16 +203,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 },
                 vsync: this,
                 changeTop: _changeTop,
-                moveTop: moveTop,
-                isActiveMove: isActiveMove,
+                moveTop: _moveTop,
+                isActiveMove: _isActiveMove,
                 mousePosition: _mousePosition,
-                reset: isActiveMove ? () => _reset() : null,
+                reset: _isActiveMove ? () => _reset() : null,
                 onDobleTap: () => _onDobleTap(),
                 onHover: (event) => _onHover(event))
             : FutureBuilder<void>(
                 future: _initializePage(),
-                builder: (context, snapshot) => const Scaffold(
-                    body: Center(child: CircularProgressIndicator())));
+                builder: (context, snapshot) =>  Scaffold(
+                  backgroundColor: state.isDarkModeColor(),
+                    body: const Center(child: CircularProgressIndicator())));
       },
     );
   }

@@ -15,11 +15,10 @@ class TopBannerListProjectWidget extends StatelessWidget {
   const TopBannerListProjectWidget({super.key});
   @override
   Widget build(BuildContext context) {
+    ResponsiveBreakpointsData data = ResponsiveBreakpoints.of(context);
     return SliverToBoxAdapter(
         child: Container(
-            padding: EdgeInsets.symmetric(
-                horizontal:
-                    ResponsiveBreakpoints.of(context).screenWidth * .15),
+            padding: EdgeInsets.symmetric(horizontal: data.screenWidth * .15),
             child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.start,
                 alignment: WrapAlignment.spaceBetween,
@@ -29,10 +28,8 @@ class TopBannerListProjectWidget extends StatelessWidget {
                       subIcon: MenuItems.PROJECT.getIcon(size: 40),
                       haveWidth: false),
                   Padding(
-                      padding: EdgeInsets.only(
-                          bottom:
-                              ResponsiveBreakpoints.of(context).screenHeight *
-                                  0.05),
+                      padding:
+                          EdgeInsets.only(bottom: data.screenHeight * 0.05),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
@@ -105,6 +102,7 @@ class MasonrySliver extends StatelessWidget {
 class BannerPro extends StatefulWidget {
   final ProjectRelease projectRelease;
   final double height;
+
   const BannerPro({super.key, required this.projectRelease, this.height = 570});
 
   @override
@@ -115,7 +113,9 @@ class _BannerProState extends State<BannerPro>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  bool isHover = false;
+
+  final ValueNotifier<bool> _isHover = ValueNotifier<bool>(false);
+
   @override
   void initState() {
     super.initState();
@@ -129,15 +129,18 @@ class _BannerProState extends State<BannerPro>
 
   Widget bannerTitle() {
     return Padding(
-        padding: const EdgeInsets.only(right: 10, left: 10, top: 10),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      padding: const EdgeInsets.only(right: 10, left: 10, top: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           AutoSizeText(
-              maxLines: 1,
-              widget.projectRelease.project.name,
-              style: const TextStyle(
-                  fontSize: 25,
-                  color: Colors.blueAccent,
-                  fontWeight: FontWeight.bold)),
+            maxLines: 1,
+            widget.projectRelease.project.name,
+            style: const TextStyle(
+                fontSize: 25,
+                color: Colors.blueAccent,
+                fontWeight: FontWeight.bold),
+          ),
           Row(
             children: [
               if (widget.projectRelease.project.urlPage != null)
@@ -148,121 +151,143 @@ class _BannerProState extends State<BannerPro>
                 const SizedBox(width: 5),
               ButtonNavigation(
                   uri: Uri.parse(widget.projectRelease.project.repositoryUrl),
-                  urlSvg: "assets/svg/github.svg")
+                  urlSvg: "assets/svg/github.svg"),
             ],
           )
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget contentTitle() {
     return Expanded(
-        child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: AutoSizeText(widget.projectRelease.getDescription(context),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: Colors.white))));
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: AutoSizeText(
+          widget.projectRelease.getDescription(context),
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge
+              ?.copyWith(color: Colors.white),
+        ),
+      ),
+    );
   }
 
   Widget animatedTop() {
     return AnimatedContainer(
-        duration: const Duration(milliseconds: 700),
-        decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-            gradient: LinearGradient(
-                begin: isHover ? Alignment.topRight : Alignment.topLeft,
-                end: isHover ? Alignment.centerLeft : Alignment.centerRight,
-                colors: widget.projectRelease.listBackgroundNoActive())),
-        alignment: Alignment.bottomRight,
-        height: 250,
-        child: ClipRRect(
-            borderRadius: const BorderRadius.only(topLeft: Radius.circular(40)),
-            child: AnimatedBuilder(
-                animation: _animation,
-                builder: (context, child) {
-                  return Image(
-                      image: AssetImage(widget.projectRelease.project.imgUrl),
-                      colorBlendMode: BlendMode.darken,
-                      color: Colors.black.withOpacity(_animation.value),
-                      frameBuilder:
-                          (context, child, frame, wasSynchronouslyLoaded) {
-                        if (frame == null) {
-                          return const CircularProgressIndicator();
-                        }
-                        return child;
-                      },
-                      filterQuality: FilterQuality.none,
-                      height: 200,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topLeft,
-                      width: 250);
-                })));
+      duration: const Duration(milliseconds: 700),
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          gradient: LinearGradient(
+              begin: _isHover.value ? Alignment.topRight : Alignment.topLeft,
+              end: _isHover.value ? Alignment.centerLeft : Alignment.centerRight,
+              colors: widget.projectRelease.listBackgroundNoActive())),
+      alignment: Alignment.bottomRight,
+      height: 250,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(topLeft: Radius.circular(40)),
+        child: AnimatedBuilder(
+          animation: _animation,
+          builder: (context, child) {
+            return Image(
+              image: AssetImage(widget.projectRelease.project.imgUrl),
+              colorBlendMode: BlendMode.darken,
+              color: Colors.black.withOpacity(_animation.value),
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (frame == null) {
+                  return const CircularProgressIndicator();
+                }
+                return child;
+              },
+              filterQuality: FilterQuality.none,
+              height: 200,
+              fit: BoxFit.cover,
+              alignment: Alignment.topLeft,
+              width: 250,
+            );
+          },
+        ),
+      ),
+    );
   }
 
   @override
   void dispose() {
-    _controller.dispose(); // Libera recursos del controlador
+    _controller.dispose();
+    _isHover.dispose(); // Liberar ValueNotifier
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppThemeCubit,AppThemeState>(builder: (context, state) {
-      return Hero(
+    return BlocBuilder<AppThemeCubit, AppThemeState>(
+      builder: (context, state) {
+        return Hero(
           tag: widget.projectRelease.project.name,
           child: Material(
-              color: Colors.transparent,
-              child: RepaintBoundary(
-                  child: MouseRegion(
-                      onHover: (event) {
-                        if (isHover) return;
-                        _controller.forward();
-                        setState(() {
-                          isHover = true;
-                        });
-                      },
-                      onExit: (event) {
-                        if (!isHover) return;
-                        _controller.reverse();
-                        setState(() {
-                          isHover = false;
-                        });
-                      },
-                      child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 700),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color:
-                              state.isDarkMode()?
-                              Colors.black:
-                              Colors.grey.shade900,
-                              boxShadow: [
-                                state.isDarkMode()
-                                    ? BoxShadow(
-                                    color: Colors.white.withOpacity(0.5),
-                                    blurRadius: 15)
-                                    : BoxShadow(
-                                    color: Colors.blueAccent.withOpacity(0.7),
-                                    blurRadius: 15)
-                              ]),
-                          height: widget.height,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                animatedTop(),
-                                Expanded(
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              bannerTitle(),
-                                              contentTitle()
-                                            ])))
-                              ]))))));
-    },) ;
+            color: Colors.transparent,
+            child: RepaintBoundary(
+              child: MouseRegion(
+                onHover: (event) {
+                  if (_isHover.value) return;
+                  _controller.forward();
+                  _isHover.value = true;
+                },
+                onExit: (event) {
+                  if (!_isHover.value) return;
+                  _controller.reverse();
+                  _isHover.value = false;
+                },
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: _isHover,
+                  builder: (context, hoverValue, child) {
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 700),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: state.appTheme.isDarkMode()
+                            ? Colors.black
+                            : Colors.grey.shade900,
+                        boxShadow: [
+                          state.appTheme.isDarkMode()
+                              ? BoxShadow(
+                              color: Colors.white.withOpacity(0.5),
+                              blurRadius: 15)
+                              : BoxShadow(
+                              color: Colors.blueAccent.withOpacity(0.7),
+                              blurRadius: 15)
+                        ],
+                      ),
+                      height: widget.height,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          animatedTop(),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  bannerTitle(),
+                                  contentTitle(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
+

@@ -35,14 +35,9 @@ class ListTechnology extends StatelessWidget {
   }
 }
 
-class AnimatedListTechnology extends StatefulWidget {
+class AnimatedListTechnology extends StatelessWidget {
   const AnimatedListTechnology({super.key});
 
-  @override
-  State<AnimatedListTechnology> createState() => _AnimatedListTechnologyState();
-}
-
-class _AnimatedListTechnologyState extends State<AnimatedListTechnology> {
   void createDialogTechnology(
       BuildContext context, Knowledge know, bool isMobile) {
     showDialog(
@@ -50,9 +45,9 @@ class _AnimatedListTechnologyState extends State<AnimatedListTechnology> {
       builder: (BuildContext context) {
         return BlocBuilder<AppThemeCubit, AppThemeState>(
             builder: (context, state) {
-          Color background = state.isDarkMode() ? Colors.black : Colors.white;
+          Color background = state.appTheme.isDarkMode() ? Colors.black : Colors.white;
           return AlertDialog(
-              shadowColor: state.isDarkMode() ? Colors.white10 : Colors.black12,
+              shadowColor: state.appTheme.isDarkMode() ? Colors.white10 : Colors.black12,
               content: Container(
                   width: 350,
                   height: !isMobile ? 380 : 430,
@@ -107,7 +102,7 @@ class _AnimatedListTechnologyState extends State<AnimatedListTechnology> {
                             alignment: Alignment.bottomLeft,
                             child: SvgPicture.asset(know.technology.urlIcon,
                                 color: know.technology.changeColor
-                                    ? state.isDarkMode()
+                                    ? state.appTheme.isDarkMode()
                                         ? Colors.white
                                         : Colors.black
                                     : null,
@@ -122,19 +117,19 @@ class _AnimatedListTechnologyState extends State<AnimatedListTechnology> {
     );
   }
 
-  void onTap(Knowledge know) {
+  void _onTap(BuildContext context,Knowledge know) {
     createDialogTechnology(
         context, know, ResponsiveBreakpoints.of(context).isMobile);
   }
 
-  Color colorActive() {
-    return context.watch<AppThemeCubit>().state.isDarkMode()
+  Color colorActive(BuildContext context) {
+    return context.watch<AppThemeCubit>().state.appTheme.isDarkMode()
         ? Colors.white38
         : Colors.black54;
   }
 
-  Color colorNoActive() {
-    return context.watch<AppThemeCubit>().state.isDarkMode()
+  Color colorNoActive(BuildContext context) {
+    return context.watch<AppThemeCubit>().state.appTheme.isDarkMode()
         ? Colors.white10
         : Colors.black12;
   }
@@ -153,7 +148,7 @@ class _AnimatedListTechnologyState extends State<AnimatedListTechnology> {
                 curve: Curves.linear,
                 child: TechnologyWidget(
                     knowledge: state.listFiltered[index],
-                    onTap: onTap,
+                    onTap: _onTap,
                     colorActive: colorActive,
                     colorNoActive: colorNoActive));
           }));

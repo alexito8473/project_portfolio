@@ -56,7 +56,8 @@ class WorksWidget extends StatelessWidget {
     ResponsiveBreakpointsData responsiveBreakpoints =
         ResponsiveBreakpoints.of(context);
 
-    String stringLocal=context.watch<AppLocaleCubit>().state.locale.getLocal().toString();
+    String stringLocal =
+        context.watch<AppLocaleCubit>().state.locale.getLocal().toString();
     return Padding(
         padding: const EdgeInsets.only(top: 120),
         child: Column(
@@ -118,7 +119,11 @@ class NoWorkWidget extends StatelessWidget {
         alignment: Alignment.topLeft,
         decoration: BoxDecoration(
             image: DecorationImage(
-                colorFilter: context.watch<AppThemeCubit>().state.isDarkMode()
+                colorFilter: context
+                        .watch<AppThemeCubit>()
+                        .state
+                        .appTheme
+                        .isDarkMode()
                     ? ColorFilter.mode(
                         Colors.black.withOpacity(0.7), BlendMode.darken)
                     : const ColorFilter.mode(Colors.black54, BlendMode.darken),

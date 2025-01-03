@@ -57,6 +57,7 @@ class WorkWidget extends StatelessWidget {
                                         color: context
                                                 .watch<AppThemeCubit>()
                                                 .state
+                                                .appTheme
                                                 .isDarkMode()
                                             ? Colors.white
                                             : Colors.black),

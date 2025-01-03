@@ -31,8 +31,8 @@ class _ProjectPageState extends State<ProjectPage>
                         options: ParticleOptions(
                             baseColor: Colors.green,
                             opacityChangeRate: 0.25,
-                            minOpacity: state.isDarkMode() ? 0.11 : 0.08,
-                            maxOpacity: state.isDarkMode() ? 0.45 : 0.13,
+                            minOpacity: state.appTheme.isDarkMode() ? 0.11 : 0.08,
+                            maxOpacity: state.appTheme.isDarkMode() ? 0.45 : 0.13,
                             spawnMinSpeed: 20.0,
                             spawnMaxSpeed: 30.0,
                             spawnMinRadius: 7.0,

@@ -32,7 +32,7 @@ class CarrouselCertificate extends StatelessWidget {
                       child: Container(
                           decoration: BoxDecoration(boxShadow: [
                             BoxShadow(
-                                color: state.isDarkMode()
+                                color: state.appTheme.isDarkMode()
                                     ? Colors.white38
                                     : Colors.black26,
                                 spreadRadius: 0.1,

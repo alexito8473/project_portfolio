@@ -35,7 +35,7 @@ class ButtonIconSvg extends StatelessWidget {
         message: tooltip,
         child: SvgPicture.asset(iconUri,
             color: changeColor
-                ? context.watch<AppThemeCubit>().state.isDarkMode()
+                ? context.watch<AppThemeCubit>().state.appTheme.isDarkMode()
                     ? Colors.white
                     : Colors.black
                 : null,
@@ -62,24 +62,26 @@ class IconButtonNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppThemeCubit,AppThemeState>(builder: (context, state) {
-      return  IconButton(
-          padding: const EdgeInsets.all(12),
-          iconSize: 30,
-          tooltip: tooltip,
-          color: color,
-          onPressed: () async {
-            await launch.loadLibrary();
-            await launch.launchUrl(uri);
-          },
-          icon: SvgPicture.asset(iconUri,
-              color: changeColor
-                  ? state.isDarkMode()
-                  ? Colors.white
-                  : Colors.black
-                  : null,
-              width: ResponsiveBreakpoints.of(context).isMobile ? 35 : 50));
-    },);
+    return BlocBuilder<AppThemeCubit, AppThemeState>(
+      builder: (context, state) {
+        return IconButton(
+            padding: const EdgeInsets.all(12),
+            iconSize: 30,
+            tooltip: tooltip,
+            color: color,
+            onPressed: () async {
+              await launch.loadLibrary();
+              await launch.launchUrl(uri);
+            },
+            icon: SvgPicture.asset(iconUri,
+                color: changeColor
+                    ? state.appTheme.isDarkMode()
+                        ? Colors.white
+                        : Colors.black
+                    : null,
+                width: ResponsiveBreakpoints.of(context).isMobile ? 35 : 50));
+      },
+    );
   }
 }
 
@@ -102,7 +104,7 @@ class ButtonSelect extends StatelessWidget {
               if (isSelect) {
                 return Colors.blueAccent.withOpacity(0.8);
               }
-              return context.watch<AppThemeCubit>().state.isDarkMode()
+              return context.watch<AppThemeCubit>().state.appTheme.isDarkMode()
                   ? Colors.white70
                   : Colors.grey.shade100;
             }),
@@ -128,8 +130,11 @@ class ButtonSelect extends StatelessWidget {
 
 class ButtonDownloadPdf extends StatelessWidget {
   const ButtonDownloadPdf({super.key});
-  void downloadFile() =>
-    web.window.open(kDebugMode?'assets/assets/pdf/Alejandro_Aguilar.pdf':'/Alejandro_Aguilar.pdf', '_blank');
+  void downloadFile() => web.window.open(
+      kDebugMode
+          ? 'assets/assets/pdf/Alejandro_Aguilar.pdf'
+          : '/Alejandro_Aguilar.pdf',
+      '_blank');
 
   @override
   Widget build(BuildContext context) {
@@ -148,62 +153,53 @@ class ButtonDownloadPdf extends StatelessWidget {
   }
 }
 
-class ButtonSentEmail extends StatefulWidget {
+class ButtonSentEmail extends StatelessWidget {
   final bool isDesactivate;
   final Function sendEmail;
 
-  const ButtonSentEmail(
+  ButtonSentEmail(
       {super.key, required this.isDesactivate, required this.sendEmail});
 
-  @override
-  State<ButtonSentEmail> createState() => _ButtonSentEmailState();
-}
-
-class _ButtonSentEmailState extends State<ButtonSentEmail> {
-  bool _changeBackground = false;
-  double _elevation = 2.0;
+  final ValueNotifier<bool> _changeBackground = ValueNotifier<bool>(false);
+  final ValueNotifier<double> _elevation = ValueNotifier<double>(2.0);
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = context.watch<AppThemeCubit>().state.isDarkMode();
+    bool isDarkMode = context.watch<AppThemeCubit>().state.appTheme.isDarkMode();
     return InkWell(
         mouseCursor:
-            widget.isDesactivate ? MouseCursor.defer : SystemMouseCursors.click,
+            isDesactivate ? MouseCursor.defer : SystemMouseCursors.click,
         onTap: () {
-          if (!widget.isDesactivate) {
-            widget.sendEmail();
+          if (!isDesactivate) {
+            sendEmail();
           }
         },
         child: MouseRegion(
             onEnter: (event) {
-              if (!widget.isDesactivate) {
-                setState(() {
-                  _changeBackground = true;
-                  _elevation = 5;
-                });
+              if (!isDesactivate) {
+                _changeBackground.value = true;
+                _elevation.value = 5;
               }
             },
             onExit: (event) {
-              if (!widget.isDesactivate) {
-                setState(() {
-                  _changeBackground = false;
-                  _elevation = 2;
-                });
+              if (!isDesactivate) {
+                  _changeBackground.value = false;
+                  _elevation.value = 2;
               }
             },
             child: Material(
-                elevation: _elevation,
+                elevation: _elevation.value,
                 borderRadius: BorderRadius.circular(10),
                 child: AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     width: 120,
                     height: 40,
                     decoration: BoxDecoration(
-                        color: widget.isDesactivate
+                        color:isDesactivate
                             ? isDarkMode
                                 ? Colors.grey.withOpacity(0.2)
                                 : Colors.grey
-                            : _changeBackground
+                            : _changeBackground.value
                                 ? Colors.lightBlueAccent
                                 : Colors.blueAccent,
                         borderRadius: BorderRadius.circular(10)),

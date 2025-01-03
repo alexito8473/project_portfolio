@@ -13,10 +13,10 @@ class TechnologyWidget extends StatefulWidget {
   final Function colorNoActive;
   const TechnologyWidget(
       {super.key,
-      required this.knowledge,
-      required this.onTap,
-      required this.colorActive,
-      required this.colorNoActive});
+        required this.knowledge,
+        required this.onTap,
+        required this.colorActive,
+        required this.colorNoActive});
   @override
   State<TechnologyWidget> createState() => _TechnologyWidget();
 }
@@ -26,7 +26,6 @@ class _TechnologyWidget extends State<TechnologyWidget> {
   bool isActivate = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _svgFuture = _preloadSvg(widget.knowledge.technology.urlIcon);
   }
@@ -52,13 +51,13 @@ class _TechnologyWidget extends State<TechnologyWidget> {
           });
         },
         child: GestureDetector(
-            onTap: () => widget.onTap(widget.knowledge),
+            onTap: () => widget.onTap(context,widget.knowledge),
             child: AnimatedContainer(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: isActivate
-                        ? widget.colorActive()
-                        : widget.colorNoActive()),
+                        ? widget.colorActive(context)
+                        : widget.colorNoActive(context)),
                 width: 90,
                 height: 90,
                 alignment: Alignment.center,
@@ -76,14 +75,15 @@ class _TechnologyWidget extends State<TechnologyWidget> {
                       return SvgPicture.string(snapshot.data!,
                           color: widget.knowledge.technology.changeColor
                               ? context
-                                  .watch<AppThemeCubit>()
-                                  .state
-                                  .isDarkModeColor()
+                              .watch<AppThemeCubit>()
+                              .state
+                              .isDarkModeColor()
                               : null,
                           width: 60);
                     }))));
   }
 }
+
 
 class SingleChoice extends StatelessWidget {
   const SingleChoice({super.key});
