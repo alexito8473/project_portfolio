@@ -1,12 +1,12 @@
 import 'dart:js_interop';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyect_porfolio/data/dataSource/work_data.dart';
 import 'package:proyect_porfolio/domain/cubits/appBannerTop/app_banner_top_cubit.dart';
 import 'package:proyect_porfolio/domain/cubits/appTheme/app_theme_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:animated_background/animated_background.dart'
     deferred as background_animated;
-import 'dart:ui' as ui;
 import '../../data/dataSource/menu_items.dart' deferred as menu_items;
 import '../../data/dataSource/project_data.dart' deferred as project;
 import '../screens/home_screens.dart' deferred as home;
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           activationKey: _headerKey),
       title.SliverTitleHome(
           key: _listGlobalKey[0], menuItem: menu_items.MenuItems.EXPERIENCE),
-      list_work.WorkWidget(),
+      list_work.WorkWidget(listWork: WorkData.generateWorks()),
       title.SliverTitleHome(
           key: _listGlobalKey[1], menuItem: menu_items.MenuItems.CERTIFICATE),
       certificate.CarrouselCertificate(),
@@ -171,7 +171,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       _callUpdateNavigation();
       _scrollListener();
     });
-       ;
     setState(() {
       _isComplete = true;
     });

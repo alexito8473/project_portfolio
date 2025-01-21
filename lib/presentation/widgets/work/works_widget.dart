@@ -5,10 +5,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:proyect_porfolio/domain/cubits/appLocale/app_locale_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import '../../../data/models/work.dart';
 import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
 
 class WorksWidget extends StatelessWidget {
-  const WorksWidget({super.key});
+  final Work work;
+  const WorksWidget({super.key, required this.work});
 
   double titleFontSize(
       {required ResponsiveBreakpointsData responsiveBreakpoints}) {
@@ -37,9 +39,6 @@ class WorksWidget extends StatelessWidget {
     if (responsiveBreakpoints.isMobile) {
       return 20;
     }
-    if (responsiveBreakpoints.isTablet) {
-      return 25;
-    }
     return 25;
   }
 
@@ -48,6 +47,9 @@ class WorksWidget extends StatelessWidget {
     if (responsiveBreakpoints.isMobile) {
       return 18;
     }
+    if (responsiveBreakpoints.isTablet) {
+      return 20;
+    }
     return 23;
   }
 
@@ -55,56 +57,54 @@ class WorksWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     ResponsiveBreakpointsData responsiveBreakpoints =
         ResponsiveBreakpoints.of(context);
-
     String stringLocal =
         context.watch<AppLocaleCubit>().state.locale.getLocal().toString();
-    return Padding(
-        padding: const EdgeInsets.only(top: 120),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AutoSizeText(
-                  "${DateFormat("MMMM yyyy", stringLocal).format(DateTime.utc(2024, 4))} - ${DateFormat("MMMM yyyy", stringLocal).format(DateTime.utc(2024, 6))}",
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: Colors.grey,
-                      fontSize: timeFontSize(
-                          responsiveBreakpoints: responsiveBreakpoints))),
-              AutoSizeText(AppLocalizations.of(context)!.practices,
-                  maxLines: 2,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontSize: titleFontSize(
-                          responsiveBreakpoints: responsiveBreakpoints),
-                      color: Colors.blueAccent)),
-              AutoSizeText("NextPort AI",
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontSize: secondTileFontSize(
-                          responsiveBreakpoints: responsiveBreakpoints),
-                      color: Colors.blue)),
-              Expanded(
-                  child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppLocalizations.of(context)!.practicesNextPort1,
-                            AppLocalizations.of(context)!.practicesNextPort2,
-                            AppLocalizations.of(context)!.practicesNextPort3,
-                          ]
-                              .map((message) => AutoSizeText(message,
-                                  maxLines: 2,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium
-                                      ?.copyWith(
-                                          fontSize: descriptionFontSize(
-                                              responsiveBreakpoints:
-                                                  responsiveBreakpoints))))
-                              .toList())))
-            ]));
+    return  Container(
+      alignment: Alignment.center,
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          spacing: 5,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AutoSizeText(
+                "${DateFormat("MMMM yyyy", stringLocal).format(work.initDay)} - ${work.finishDay==null?"Actualidad":DateFormat("MMMM yyyy", stringLocal).format(work.finishDay!)}",
+                maxLines: 1,
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: Colors.grey,
+                    fontSize: timeFontSize(
+                        responsiveBreakpoints: responsiveBreakpoints))),
+            AutoSizeText( work.workData.getTitle(context: context),
+                maxLines: 2,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    fontSize: titleFontSize(
+                        responsiveBreakpoints: responsiveBreakpoints),
+                    color: Colors.blueAccent)),
+            AutoSizeText(work.title,
+                maxLines: 1,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    fontSize: secondTileFontSize(
+                        responsiveBreakpoints: responsiveBreakpoints),
+                    color: Colors.greenAccent)),
+            Expanded(
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: work.workData.getListWork(context: context)
+                            .map((message) => AutoSizeText(message,
+                            maxLines: 2,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(
+                                fontSize: descriptionFontSize(
+                                    responsiveBreakpoints:
+                                    responsiveBreakpoints))))
+                            .toList())))
+          ])
+    );
   }
 }
 

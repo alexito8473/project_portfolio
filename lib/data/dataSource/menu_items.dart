@@ -27,6 +27,7 @@ enum MenuItems {
     }
   }
 
+
   StatelessWidget getIcon({double size = 25}) {
     switch (this) {
       case MenuItems.ABOUT_ME:

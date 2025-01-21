@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:proyect_porfolio/domain/blocs/appSendMessage/app_send_message_bloc.dart';
 import 'package:proyect_porfolio/domain/cubits/appBannerTop/app_banner_top_cubit.dart';
 import 'package:proyect_porfolio/domain/cubits/appLocale/app_locale_cubit.dart';
@@ -15,8 +14,9 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
-  runApp(MyApp(prefs: await SharedPreferences.getInstance()));
+  var results = await Future.wait(
+      [dotenv.load(fileName: ".env"), SharedPreferences.getInstance()]);
+  runApp(MyApp(prefs: results[1] as SharedPreferences));
 }
 
 class MyApp extends StatelessWidget {

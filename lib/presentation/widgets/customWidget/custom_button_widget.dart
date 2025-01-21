@@ -132,8 +132,8 @@ class ButtonDownloadPdf extends StatelessWidget {
   const ButtonDownloadPdf({super.key});
   void downloadFile() => web.window.open(
       kDebugMode
-          ? 'assets/assets/pdf/Alejandro_Aguilar.pdf'
-          : '/Alejandro_Aguilar.pdf',
+          ? 'assets/assets/pdf/Curriculum_Alejandro_Aguilar_Alba.pdf'
+          : '/Curriculum_Alejandro_Aguilar_Alba.pdf',
       '_blank');
 
   @override
