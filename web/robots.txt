@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://alejandroaguilaralbadev.web.app/sitemap.xml

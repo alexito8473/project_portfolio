@@ -3,11 +3,11 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyect_porfolio/data/models/message.dart';
 import 'package:proyect_porfolio/domain/blocs/appSendMessage/app_send_message_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
+import '../../../l10n/app_localizations.dart';
 import '../customWidget/custom_button_widget.dart';
 
 class ContactToMeWidget extends StatelessWidget {
@@ -48,7 +48,7 @@ class ContactToMeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context);
+    final AppLocalizations locale=AppLocalizations.of(context)!;
     final responsiveBreakpoints = ResponsiveBreakpoints.of(context);
     final isDarkMode = context.watch<AppThemeCubit>().state.appTheme.isDarkMode();
     return BlocBuilder<AppSendMessageBloc, AppSendMessageState>(
@@ -84,25 +84,25 @@ class ContactToMeWidget extends StatelessWidget {
                         ContactToMeFormField(
                             myController: _controllerName,
                             icon: const Icon(Icons.person),
-                            title: appLocalizations!.formName,
+                            title: locale.formName,
                             isBigMessage: false,
                             checkIsDesactivateButton: checkIsDesactivateButton),
                         ContactToMeFormField(
                             myController: _controllerEmail,
                             icon: const Icon(Icons.email),
-                            title: appLocalizations.formEmail,
+                            title: locale.formEmail,
                             isBigMessage: false,
                             checkIsDesactivateButton: checkIsDesactivateButton),
                         ContactToMeFormField(
                             myController: _controllerSubject,
-                            title: appLocalizations.formSubject,
+                            title: locale.formSubject,
                             isBigMessage: false,
                             checkIsDesactivateButton: checkIsDesactivateButton,
                             icon: const Icon(Icons.subject)),
                         ContactToMeFormField(
                             myController: _controllerMessage,
                             icon: const Icon(CupertinoIcons.pen),
-                            title: appLocalizations.formMessage,
+                            title: locale.formMessage,
                             isBigMessage: true,
                             checkIsDesactivateButton: checkIsDesactivateButton),
                         ValueListenableBuilder<bool>(
@@ -124,9 +124,9 @@ class ContactToMeWidget extends StatelessWidget {
                                               const EdgeInsets.only(right: 15),
                                               child: AutoSizeText(
                                                 state.sentSuccessfully
-                                                    ? appLocalizations
+                                                    ? locale
                                                     .formRequestCorrect
-                                                    : appLocalizations
+                                                    : locale
                                                     .formRequestInCorrect,
                                                 maxLines: 3,
                                                 style:

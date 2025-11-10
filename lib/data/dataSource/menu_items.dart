@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg_icons/flutter_svg_icons.dart';
+
+import '../../l10n/app_localizations.dart';
 
 enum MenuItems {
   EXPERIENCE,
@@ -10,23 +11,22 @@ enum MenuItems {
   ABOUT_ME,
   CONTACT_ME;
 
-  String getTitle(BuildContext context) {
+  String getTitle(AppLocalizations locale) {
     switch (this) {
       case MenuItems.ABOUT_ME:
-        return AppLocalizations.of(context)!.aboutMe;
+        return locale.aboutMe;
       case MenuItems.KNOWLEDGE:
-        return AppLocalizations.of(context)!.knowledge;
+        return locale.knowledge;
       case MenuItems.EXPERIENCE:
-        return AppLocalizations.of(context)!.experience;
+        return locale.experience;
       case MenuItems.PROJECT:
-        return AppLocalizations.of(context)!.projects;
+        return locale.projects;
       case MenuItems.CONTACT_ME:
-        return AppLocalizations.of(context)!.contact_me;
+        return locale.contact_me;
       case MenuItems.CERTIFICATE:
-        return AppLocalizations.of(context)!.certificate;
+        return locale.certificate;
     }
   }
-
 
   StatelessWidget getIcon({double size = 25}) {
     switch (this) {
@@ -52,7 +52,10 @@ enum MenuItems {
         getIcon(),
         const SizedBox(width: 5),
         Expanded(
-            child: Text(getTitle(context),
-                style:Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold)))
+            child: Text(getTitle(AppLocalizations.of(context)!),
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(fontWeight: FontWeight.bold)))
       ]);
 }

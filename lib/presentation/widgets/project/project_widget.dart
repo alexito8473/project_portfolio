@@ -8,14 +8,14 @@ import 'package:proyect_porfolio/presentation/widgets/customWidget/title_custom.
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../data/dataSource/menu_items.dart';
 import '../../../data/dataSource/project_data.dart';
+import '../../../l10n/app_localizations.dart';
 import '../customWidget/custom_button_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 class TopBannerListProjectWidget extends StatelessWidget {
   const TopBannerListProjectWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    ResponsiveBreakpointsData data = ResponsiveBreakpoints.of(context);
+    final ResponsiveBreakpointsData data = ResponsiveBreakpoints.of(context);
+    final AppLocalizations locale=AppLocalizations.of(context)!;
     return SliverToBoxAdapter(
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: data.screenWidth * .15),
@@ -24,7 +24,7 @@ class TopBannerListProjectWidget extends StatelessWidget {
                 alignment: WrapAlignment.spaceBetween,
                 children: [
                   TitleHome(
-                      title: MenuItems.PROJECT.getTitle(context),
+                      title: MenuItems.PROJECT.getTitle(locale),
                       subIcon: MenuItems.PROJECT.getIcon(size: 40),
                       haveWidth: false),
                   Padding(
@@ -42,7 +42,7 @@ class TopBannerListProjectWidget extends StatelessWidget {
                                   horizontal: 15, vertical: 15)),
                           onPressed: () => context.go("/projects"),
                           child: AutoSizeText(
-                              AppLocalizations.of(context)!.see_project,
+                              locale.see_project,
                               style: Theme.of(context).textTheme.labelLarge,
                               maxLines: 1)))
                 ])));
@@ -160,11 +160,12 @@ class _BannerProState extends State<BannerPro>
   }
 
   Widget contentTitle() {
+    final AppLocalizations locale=AppLocalizations.of(context)!;
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: AutoSizeText(
-          widget.projectRelease.getDescription(context),
+          widget.projectRelease.getDescription(locale),
           style: Theme.of(context)
               .textTheme
               .bodyLarge

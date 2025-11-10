@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                      http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+    <!-- Página principal -->
+    <url>
+        <loc>https://alejandroaguilaralbadev.web.app/</loc>
+        <lastmod>2025-10-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Página de proyectos -->
+    <url>
+        <loc>https://alejandroaguilaralbadev.web.app/projects</loc>
+        <lastmod>2025-10-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Página sobre mí -->
+    <url>
+        <loc>https://alejandroaguilaralbadev.web.app/certificate/CERTIFICATE_INTRODUCTION_DATA_SCIENCE</loc>
+        <lastmod>2025-10-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Página de contacto -->
+    <url>
+        <loc>https://alejandroaguilaralbadev.web.app/certificate/AWARD_ALGECIRAS</loc>
+        <lastmod>2025-10-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://alejandroaguilaralbadev.web.app/certificate/AWARD_ALGECIRAS</loc>
+        <lastmod>2025-10-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://alejandroaguilaralbadev.web.app/certificate/CERTIFICATE_FLUTTER_REST_APP</loc>
+        <lastmod>2025-10-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://alejandroaguilaralbadev.web.app/certificate/CERTIFICATE_FLUTTER_ZERO_TO_FULL_PROJECT</loc>
+        <lastmod>2025-10-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://alejandroaguilaralbadev.web.app/certificate/JAVA</loc>
+        <lastmod>2025-10-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://alejandroaguilaralbadev.web.app/certificate/ESTRUCTURE_BLOC</loc>
+        <lastmod>2025-10-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://alejandroaguilaralbadev.web.app/certificate/REACT_AI</loc>
+        <lastmod>2025-10-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://alejandroaguilaralbadev.web.app/certificate/SPRING_AI</loc>
+        <lastmod>2025-10-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+</urlset>

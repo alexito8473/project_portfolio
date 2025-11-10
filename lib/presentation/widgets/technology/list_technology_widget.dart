@@ -8,14 +8,16 @@ import 'package:proyect_porfolio/presentation/widgets/technology/technology_widg
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../data/dataSource/tecnology_data.dart';
 import '../../../domain/cubits/listTechnology/list_technology_cubit.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../l10n/app_localizations.dart';
 
 class ListTechnology extends StatelessWidget {
   const ListTechnology({super.key});
 
   @override
   Widget build(BuildContext context) {
-    ResponsiveBreakpointsData data = ResponsiveBreakpoints.of(context);
+    final ResponsiveBreakpointsData data = ResponsiveBreakpoints.of(context);
+
     return SliverToBoxAdapter(
         child: Container(
             alignment: Alignment.center,
@@ -40,14 +42,17 @@ class AnimatedListTechnology extends StatelessWidget {
 
   void createDialogTechnology(
       BuildContext context, Knowledge know, bool isMobile) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return BlocBuilder<AppThemeCubit, AppThemeState>(
             builder: (context, state) {
-          Color background = state.appTheme.isDarkMode() ? Colors.black : Colors.white;
+          Color background =
+              state.appTheme.isDarkMode() ? Colors.black : Colors.white;
           return AlertDialog(
-              shadowColor: state.appTheme.isDarkMode() ? Colors.white10 : Colors.black12,
+              shadowColor:
+                  state.appTheme.isDarkMode() ? Colors.white10 : Colors.black12,
               content: Container(
                   width: 350,
                   height: !isMobile ? 380 : 430,
@@ -81,7 +86,7 @@ class AnimatedListTechnology extends StatelessWidget {
                               Expanded(
                                 child: AutoSizeText(
                                   maxLines: 2,
-                                  '${AppLocalizations.of(context)!.myExperience} ${know.technology.name}',
+                                  '${locale.myExperience} ${know.technology.name}',
                                   style: const TextStyle(fontSize: 20),
                                 ),
                               ),
@@ -93,7 +98,7 @@ class AnimatedListTechnology extends StatelessWidget {
                             child: Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: AutoSizeText(
-                                  know.getDescription(context),
+                                  know.getDescription(locale),
                                   style: const TextStyle(fontSize: 15),
                                   textAlign: TextAlign.justify,
                                 ))),
@@ -117,7 +122,7 @@ class AnimatedListTechnology extends StatelessWidget {
     );
   }
 
-  void _onTap(BuildContext context,Knowledge know) {
+  void _onTap(BuildContext context, Knowledge know) {
     createDialogTechnology(
         context, know, ResponsiveBreakpoints.of(context).isMobile);
   }

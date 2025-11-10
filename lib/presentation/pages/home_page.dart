@@ -10,7 +10,7 @@ import 'package:animated_background/animated_background.dart'
 import '../../data/dataSource/menu_items.dart' deferred as menu_items;
 import '../../data/dataSource/project_data.dart' deferred as project;
 import '../screens/home_screens.dart' deferred as home;
-import '../widgets/certificate/carrousel_Certificate_widget.dart'
+import '../widgets/certificate/type_carrousel_certificate_widget.dart'
     deferred as certificate;
 import '../widgets/contact/contact_me_widget.dart' deferred as contact_me;
 import '../widgets/customWidget/title_custom.dart' deferred as title;
@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       list_work.WorkWidget(listWork: WorkData.generateWorks()),
       title.SliverTitleHome(
           key: _listGlobalKey[1], menuItem: menu_items.MenuItems.CERTIFICATE),
-      certificate.CarrouselCertificate(),
+      certificate.TypeCarrouselCertificate(),
       projects.TopBannerListProjectWidget(key: _listGlobalKey[2]),
       projects.MasonrySliver(),
       title.SliverTitleHome(

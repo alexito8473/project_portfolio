@@ -1,33 +1,31 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import '../../l10n/app_localizations.dart';
 import '../models/work.dart';
 enum WorkData{
   NEXT_PORT,
   SPAIN_SUR;
 
-  String getTitle({required BuildContext context}){
+  String getTitle({required AppLocalizations locale}){
     switch(this){
       case WorkData.NEXT_PORT:
-        return AppLocalizations.of(context)!.practices;
+        return locale.practices;
       case WorkData.SPAIN_SUR:
-       return AppLocalizations.of(context)!.programmerSpain;
+       return locale.programmerSpain;
     }
   }
 
-  List<String> getListWork({required BuildContext context}){
+  List<String> getListWork({required AppLocalizations locale}){
     switch(this){
       case WorkData.NEXT_PORT:
         return   [
-          AppLocalizations.of(context)!.practicesNextPort1,
-          AppLocalizations.of(context)!.practicesNextPort2,
-          AppLocalizations.of(context)!.practicesNextPort3,
+          locale.practicesNextPort1,
+          locale.practicesNextPort2,
+          locale.practicesNextPort3,
         ];
       case WorkData.SPAIN_SUR:
      return [
-       AppLocalizations.of(context)!.programadorSpainSur1,
-       AppLocalizations.of(context)!.programadorSpainSur2,
-       AppLocalizations.of(context)!.programadorSpainSur3,
+       locale.programadorSpainSur1,
+       locale.programadorSpainSur2,
+       locale.programadorSpainSur3,
      ];
     }
   }

@@ -2,7 +2,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:proyect_porfolio/domain/blocs/appSendMessage/app_send_message_bloc.dart';
 import 'package:proyect_porfolio/domain/cubits/appBannerTop/app_banner_top_cubit.dart';
@@ -13,9 +12,14 @@ import 'package:proyect_porfolio/presentation/route/route.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'l10n/app_localizations.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
+
 void main() async {
+  usePathUrlStrategy();
   var results = await Future.wait(
-      [dotenv.load(fileName: ".env"), SharedPreferences.getInstance()]);
+      [dotenv.load(fileName: ".env"),
+        SharedPreferences.getInstance()]);
   runApp(MyApp(prefs: results[1] as SharedPreferences));
 }
 
@@ -46,7 +50,7 @@ class MyApp extends StatelessWidget {
               ],
               locale: context.watch<AppLocaleCubit>().state.locale.getLocal(),
               supportedLocales: const [Locale("en", ""), Locale("es", "")],
-              title: 'Portfolio Alejandro',
+              title: 'Portafolio de Alejandro Aguilar Alba | Desarrollador Full Stack & Mobile',
               theme: state.appTheme.getThemeData(),
               routerConfig: router,
               builder: (context, child) =>

@@ -2,12 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyect_porfolio/domain/cubits/appLocale/app_locale_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:widget_circular_animator/widget_circular_animator.dart';
 import '../../../data/dataSource/menu_items.dart';
 import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
+import '../../../l10n/app_localizations.dart';
 import '../customWidget/custom_button_widget.dart';
 
 class HeaderWidget extends StatelessWidget {
@@ -39,6 +39,7 @@ class HeaderWidget extends StatelessWidget {
   Widget builderHeader(
       {required ResponsiveBreakpointsData responsiveBreakpoints,
       required BuildContext context}) {
+    final AppLocalizations locale=AppLocalizations.of(context)!;
     return Align(
         alignment: Alignment.center,
         child: Wrap(
@@ -97,7 +98,7 @@ class HeaderWidget extends StatelessWidget {
                             width: 500,
                             height: 80,
                             child: AutoSizeText(
-                                AppLocalizations.of(context)!.descriptionHeader,
+                                locale.descriptionHeader,
                                 maxLines: 3,
                                 minFontSize: 2,
                                 maxFontSize: 28,

@@ -1,13 +1,18 @@
 {
-    "name": "project_porfolio",
-    "short_name": "project_porfolio",
-    "start_url": ".",
+    "name": "Portafolio de Alejandro Aguilar Alba",
+    "short_name": "Portfolio",
+    "description": "Explora el portafolio de Alejandro Aguilar Alba, desarrollador full stack y mobile especializado en Flutter, React y tecnologías modernas.",
+    "lang": "es",
+    "dir": "ltr",
+    "start_url": "./",
+    "scope": "./",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": ".",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
+    "iarc_rating_id": "e10+",
+    "categories": ["portfolio", "business", "technology", "developer", "personal"]
     "icons": [
         {
             "src": "icons/Icon-192.png",
@@ -30,6 +35,18 @@
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "screenshots/homepage.png",
+            "sizes": "1080x1920",
+            "type": "image/png"
+        },
+        {
+            "src": "screenshots/projects.png",
+            "sizes": "1080x1920",
+            "type": "image/png"
         }
     ]
 }

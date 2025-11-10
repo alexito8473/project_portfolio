@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../data/dataSource/menu_items.dart';
+import '../../../l10n/app_localizations.dart';
 
 class TitleHome extends StatelessWidget {
   final String title;
@@ -55,12 +56,13 @@ class SliverTitleHome extends StatelessWidget {
       this.sizeIcon = 40});
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale=AppLocalizations.of(context)!;
     return SliverToBoxAdapter(
         child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: ResponsiveBreakpoints.of(context).screenWidth * 0.15),
             child: TitleHome(
-                title: menuItem.getTitle(context),
+                title: menuItem.getTitle(locale),
                 subIcon: menuItem.getIcon(size: sizeIcon),
                 haveWidth: haveWidth)));
   }

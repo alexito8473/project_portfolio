@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:proyect_porfolio/domain/cubits/listTechnology/list_technology_cubit.dart';
+import 'package:proyect_porfolio/l10n/app_localizations.dart';
 import '../../../data/dataSource/tecnology_data.dart';
 import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
 import '../customWidget/custom_button_widget.dart';
@@ -89,6 +90,7 @@ class SingleChoice extends StatelessWidget {
   const SingleChoice({super.key});
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale= AppLocalizations.of(context)!;
     return Wrap(
         spacing: 20,
         runSpacing: 10,
@@ -96,7 +98,7 @@ class SingleChoice extends StatelessWidget {
         children: List.generate(
             TypeLanguage.values.length,
             (index) => ButtonSelect(
-                title: TypeLanguage.values[index].getTitle(context),
+                title: TypeLanguage.values[index].getTitle(locale),
                 onPressed: () => context
                     .read<ListTechnologyCubit>()
                     .changeListFiltered(TypeLanguage.values[index]),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import '../../l10n/app_localizations.dart';
 import '../models/project.dart';
 
 enum ProjectRelease {
@@ -134,27 +133,27 @@ enum ProjectRelease {
     }
   }
 
-  String getDescription(BuildContext context) {
+  String getDescription(AppLocalizations locale) {
     switch (this) {
       case ProjectRelease.TASTYDASH:
-        return AppLocalizations.of(context)!.descriptionTasty;
+        return locale.descriptionTasty;
       case ProjectRelease.GOMOKU:
-        return AppLocalizations.of(context)!.descriptionGomoku;
+        return locale.descriptionGomoku;
       case ProjectRelease.OTELO:
-        return AppLocalizations.of(context)!.descriptionOtelo;
+        return locale.descriptionOtelo;
       case ProjectRelease.APP_TEACHER:
-        return AppLocalizations.of(context)!.descriptionAppTeacher;
+        return locale.descriptionAppTeacher;
       case ProjectRelease.APP_STUDENT:
-        return AppLocalizations.of(context)!.descriptionAppStudent;
+        return locale.descriptionAppStudent;
       case ProjectRelease.ULTRA_RESTAURANT:
-        return AppLocalizations.of(context)!.descriptionUltraRestaurant;
+        return locale.descriptionUltraRestaurant;
       case ProjectRelease.IMC_CALCULATOR:
-        return AppLocalizations.of(context)!.descriptionImcCalculator;
+        return locale.descriptionImcCalculator;
       case ProjectRelease.PAINT_VANILLA:
-        return AppLocalizations.of(context)!.descriptionProjectPaint;
+        return locale.descriptionProjectPaint;
       case ProjectRelease.TIC_TAC_TOE:
-        return AppLocalizations.of(context)!.descriptionTicTacToe;
+        return locale.descriptionTicTacToe;
       case ProjectRelease.POKE_API:
-        return AppLocalizations.of(context)!.descriptionPokeApi;}
+        return locale.descriptionPokeApi;}
   }
 }

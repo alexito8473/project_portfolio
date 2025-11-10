@@ -2,13 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher.dart' deferred as launch;
 import 'package:web/web.dart' as web;
 
 import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ButtonIconSvg extends StatelessWidget {
   final Uri uri;
@@ -138,6 +138,7 @@ class ButtonDownloadPdf extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale=AppLocalizations.of(context)!;
     return ElevatedButton(
         onPressed: () => downloadFile(),
         style: ElevatedButton.styleFrom(
@@ -148,7 +149,7 @@ class ButtonDownloadPdf extends StatelessWidget {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15)),
-        child: AutoSizeText(AppLocalizations.of(context)!.downloadCV,
+        child: AutoSizeText(locale.downloadCV,
             maxLines: 1, style: Theme.of(context).textTheme.labelLarge));
   }
 }
@@ -165,6 +166,7 @@ class ButtonSentEmail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale=AppLocalizations.of(context)!;
     bool isDarkMode = context.watch<AppThemeCubit>().state.appTheme.isDarkMode();
     return InkWell(
         mouseCursor:
@@ -204,7 +206,7 @@ class ButtonSentEmail extends StatelessWidget {
                                 : Colors.blueAccent,
                         borderRadius: BorderRadius.circular(10)),
                     alignment: Alignment.center,
-                    child: Text(AppLocalizations.of(context)!.sendEmail)))));
+                    child: Text(locale.sendEmail)))));
   }
 }
 

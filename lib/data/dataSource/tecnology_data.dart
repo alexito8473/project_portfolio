@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import '../../l10n/app_localizations.dart';
 import '../models/technology.dart';
 enum TypeLanguage {
   ALL,
@@ -10,20 +9,20 @@ enum TypeLanguage {
   SERVERS,
   TOOLS;
 
-  String getTitle(BuildContext context) {
+  String getTitle(AppLocalizations locale) {
     switch (this) {
       case TypeLanguage.BACKEND:
         return "Backend";
       case TypeLanguage.FRONTEND:
         return "Frontend";
       case TypeLanguage.MOBILE:
-        return AppLocalizations.of(context)!.mobile;
+        return locale.mobile;
       case TypeLanguage.TOOLS:
-        return AppLocalizations.of(context)!.tools;
+        return locale.tools;
       case TypeLanguage.SERVERS:
-        return AppLocalizations.of(context)!.server;
+        return locale.server;
       case TypeLanguage.ALL:
-        return AppLocalizations.of(context)!.all;
+        return locale.all;
     }
   }
 }
@@ -107,38 +106,38 @@ enum Knowledge {
       typeLanguage: TypeLanguage.FRONTEND));
   final Technology technology;
   const Knowledge({required this.technology});
-  String getDescription(BuildContext context) {
+  String getDescription(AppLocalizations locale) {
     switch (this) {
       case Knowledge.JAVA:
-        return AppLocalizations.of(context)!.javaExperience;
+        return locale.javaExperience;
       case Knowledge.FLUTTER:
-        return AppLocalizations.of(context)!.flutterExperience;
+        return locale.flutterExperience;
       case Knowledge.PHP:
-        return AppLocalizations.of(context)!.phpExperience;
+        return locale.phpExperience;
       case Knowledge.NET_MAUI:
-        return AppLocalizations.of(context)!.netMauiExperience;
+        return locale.netMauiExperience;
       case Knowledge.ANDROID:
-        return AppLocalizations.of(context)!.androidExperience;
+        return locale.androidExperience;
       case Knowledge.KOTLIN:
-        return AppLocalizations.of(context)!.kotlinExperience;
+        return locale.kotlinExperience;
       case Knowledge.HTML:
-        return AppLocalizations.of(context)!.htmlExperience;
+        return locale.htmlExperience;
       case Knowledge.CSS:
-        return AppLocalizations.of(context)!.cssExperience;
+        return locale.cssExperience;
       case Knowledge.MYSQL:
-        return AppLocalizations.of(context)!.mysqlExperience;
+        return locale.mysqlExperience;
       case Knowledge.MONGO_DB:
-        return AppLocalizations.of(context)!.mongoExperience;
+        return locale.mongoExperience;
       case Knowledge.FIREBASE:
-        return AppLocalizations.of(context)!.firebaseExperience;
+        return locale.firebaseExperience;
       case Knowledge.GIT:
-        return AppLocalizations.of(context)!.gitExperience;
+        return locale.gitExperience;
       case Knowledge.GITHUB:
-        return AppLocalizations.of(context)!.gitHubExperience;
+        return locale.gitHubExperience;
       case Knowledge.SPRING:
-        return AppLocalizations.of(context)!.springExperience;
+        return locale.springExperience;
       case Knowledge.JAVASCRIPT:
-        return AppLocalizations.of(context)!.javaScriptExperience;
+        return locale.javaScriptExperience;
     }
   }
 }

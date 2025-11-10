@@ -70,8 +70,9 @@ class WorkWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ResponsiveBreakpointsData responsiveBreakpoints =
+    final ResponsiveBreakpointsData responsiveBreakpoints =
         ResponsiveBreakpoints.of(context);
+
     return SliverToBoxAdapter(
       child: Padding(
           padding:
