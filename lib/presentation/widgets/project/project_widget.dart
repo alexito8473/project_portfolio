@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:masonry_grid/masonry_grid.dart';
 import 'package:proyect_porfolio/domain/cubits/appTheme/app_theme_cubit.dart';
+import 'package:proyect_porfolio/presentation/utils/calculate_size.dart';
 import 'package:proyect_porfolio/presentation/widgets/customWidget/title_custom.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import '../../../data/dataSource/menu_items.dart';
 import '../../../data/dataSource/project_data.dart';
 import '../../../l10n/app_localizations.dart';
@@ -14,11 +14,11 @@ class TopBannerListProjectWidget extends StatelessWidget {
   const TopBannerListProjectWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    final ResponsiveBreakpointsData data = ResponsiveBreakpoints.of(context);
     final AppLocalizations locale=AppLocalizations.of(context)!;
+    final Size size=MediaQuery.sizeOf(context);
     return SliverToBoxAdapter(
         child: Container(
-            padding: EdgeInsets.symmetric(horizontal: data.screenWidth * .15),
+            padding: EdgeInsets.symmetric(horizontal: size.width * .15),
             child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.start,
                 alignment: WrapAlignment.spaceBetween,
@@ -29,7 +29,7 @@ class TopBannerListProjectWidget extends StatelessWidget {
                       haveWidth: false),
                   Padding(
                       padding:
-                          EdgeInsets.only(bottom: data.screenHeight * 0.05),
+                          EdgeInsets.only(bottom: size.height * 0.05),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
@@ -52,31 +52,30 @@ class TopBannerListProjectWidget extends StatelessWidget {
 class MasonrySliver extends StatelessWidget {
   const MasonrySliver({super.key});
 
-  int countColumns({required BuildContext context}) {
-    if (ResponsiveBreakpoints.of(context).screenWidth < 770) return 1;
-    if (ResponsiveBreakpoints.of(context).screenWidth < 1300) return 2;
-    if (ResponsiveBreakpoints.of(context).screenWidth < 2000) return 3;
-    if (ResponsiveBreakpoints.of(context).isDesktop) return 4;
+  int countColumns({required Size size}) {
+    if (size.width < 770) return 1;
+    if (size.width < 1300) return 2;
+    if (size.width < 2000) return 3;
+    if (CalculateSize.isDesktop(size)) return 4;
     return 1;
   }
 
-  double viewportFraction({required BuildContext context}) =>
-      ResponsiveBreakpoints.of(context).isTablet
-          ? 0.55
-          : ResponsiveBreakpoints.of(context).isMobile
-              ? 0.75
+  double viewportFraction({required Size size}) => CalculateSize.isTablet(size)
+      ? 0.55
+      : CalculateSize.isMobile(size)
+          ? 0.75
               : 0.32;
 
-  double aspectRatio({required BuildContext context}) =>
-      ResponsiveBreakpoints.of(context).isTablet
+  double aspectRatio({required Size size}) =>
+      CalculateSize.isTablet(size)
           ? 1.6
-          : ResponsiveBreakpoints.of(context).isMobile
+          :CalculateSize.isMobile(size)
               ? 0.8
               : 2.2;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    int countColum = countColumns(context: context);
+    final Size size = MediaQuery.sizeOf(context);
+    int countColum = countColumns(size:size);
     return SliverToBoxAdapter(
         child: Container(
             constraints: BoxConstraints(minHeight: size.height * 1),

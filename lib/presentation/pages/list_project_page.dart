@@ -2,7 +2,8 @@ import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:responsive_framework/responsive_framework.dart';
+import 'package:proyect_porfolio/presentation/utils/calculate_size.dart';
+
 import '../../data/dataSource/project_data.dart';
 import '../../domain/cubits/appTheme/app_theme_cubit.dart';
 import '../widgets/header/header_widegt.dart';
@@ -17,8 +18,12 @@ class ProjectPage extends StatefulWidget {
 
 class _ProjectPageState extends State<ProjectPage>
     with SingleTickerProviderStateMixin {
+
+
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.sizeOf(context);
+    final bool isMobile = CalculateSize.isMobile(size);
     return BlocBuilder<AppThemeCubit, AppThemeState>(builder: (context, state) {
       return Scaffold(
           body: Stack(children: [
@@ -35,9 +40,7 @@ class _ProjectPageState extends State<ProjectPage>
                         spawnMaxSpeed: 30.0,
                         spawnMinRadius: 7.0,
                         spawnMaxRadius: 30.0,
-                        particleCount:
-                            ResponsiveBreakpoints.of(context).isMobile
-                                ? 6
+                        particleCount: isMobile ? 6
                                 : 10)),
                 vsync: this,
                 child: MasonryGridView.builder(
@@ -46,22 +49,16 @@ class _ProjectPageState extends State<ProjectPage>
                             maxCrossAxisExtent: 500),
                     addRepaintBoundaries: true,
                     itemCount: ProjectRelease.values.length,
-                    mainAxisSpacing:
-                        ResponsiveBreakpoints.of(context).screenHeight * 0.01,
-                    crossAxisSpacing:
-                        ResponsiveBreakpoints.of(context).screenWidth * 0.01,
+                    mainAxisSpacing: size.height * 0.01,
+                    crossAxisSpacing: size.width * 0.01,
                     padding: EdgeInsets.only(
-                        left: ResponsiveBreakpoints.of(context).screenWidth *
-                            0.08,
-                        right: ResponsiveBreakpoints.of(context).screenWidth *
-                            0.08,
-                        top: ResponsiveBreakpoints.of(context).screenHeight *
-                            0.15),
+                        left: size.width * 0.08,
+                        right: size.width * 0.08,
+                        top: size.height * 0.15),
                     itemBuilder: (context, index) {
                       return BannerPro(
                           projectRelease: ProjectRelease.values[index],
-                          height: ResponsiveBreakpoints.of(context).isMobile
-                              ? 700
+                          height: isMobile ? 700
                               : (index % 2 + 4) * 130);
                     }))),
         Positioned(

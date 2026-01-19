@@ -1,15 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 part 'app_banner_top_state.dart';
 
 class AppBannerTopCubit extends Cubit<AppBannerTopState> {
   AppBannerTopCubit() : super(AppBannerTopState.init());
-  void updateNavigationEvent({required ResponsiveBreakpointsData data,required GlobalKey headerKey}) {
+  void updateNavigationEvent({required Size size,required GlobalKey headerKey}) {
 
-    if (!state.isActiveBannerTop && data.screenWidth < 430) return;
-    if (data.screenWidth < 430) {
+    if (!state.isActiveBannerTop && size.width< 430) return;
+    if (size.width < 430) {
       emit(state.copyWitch(isActiveBannerTop: false));
     } else {
       RenderBox? box =
@@ -17,7 +16,7 @@ class AppBannerTopCubit extends Cubit<AppBannerTopState> {
       if (box != null) {
         Offset position = box.localToGlobal(Offset.zero);
         // Obtén las dimensiones visibles del área de scroll
-        double screenHeight = data.screenHeight;
+        double screenHeight = size.height;
         // Verifica si el widget está dentro del rango visible
         // true cuando esta renderizado y false cuando no.
         if (position.dy < screenHeight && position.dy + box.size.height > 0) {

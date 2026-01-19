@@ -1,27 +1,25 @@
 import 'dart:js_interop';
+
+import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyect_porfolio/data/dataSource/work_data.dart';
 import 'package:proyect_porfolio/domain/cubits/appBannerTop/app_banner_top_cubit.dart';
 import 'package:proyect_porfolio/domain/cubits/appTheme/app_theme_cubit.dart';
-import 'package:responsive_framework/responsive_framework.dart';
-import 'package:animated_background/animated_background.dart'
-    deferred as background_animated;
-import '../../data/dataSource/menu_items.dart' deferred as menu_items;
-import '../../data/dataSource/project_data.dart' deferred as project;
-import '../screens/home_screens.dart' deferred as home;
-import '../widgets/certificate/type_carrousel_certificate_widget.dart'
-    deferred as certificate;
-import '../widgets/contact/contact_me_widget.dart' deferred as contact_me;
-import '../widgets/customWidget/title_custom.dart' deferred as title;
-import '../widgets/footer/footer_widget.dart' deferred as footer;
-import '../widgets/aboutMe/about_me_widget.dart' deferred as about_me;
-import '../widgets/header/header_widegt.dart' deferred as header;
-import '../widgets/project/project_widget.dart' deferred as projects;
-import '../widgets/technology/list_technology_widget.dart'
-    deferred as list_technology;
-import '../widgets/work/list_works_widget.dart' deferred as list_work;
+import 'package:proyect_porfolio/presentation/utils/calculate_size.dart';
 import 'package:web/web.dart' as web;
+
+import '../../data/dataSource/menu_items.dart';
+import '../screens/home_screens.dart';
+import '../widgets/aboutMe/about_me_widget.dart';
+import '../widgets/certificate/type_carrousel_certificate_widget.dart';
+import '../widgets/contact/contact_me_widget.dart';
+import '../widgets/customWidget/title_custom.dart';
+import '../widgets/footer/footer_widget.dart';
+import '../widgets/header/header_widegt.dart';
+import '../widgets/project/project_widget.dart';
+import '../widgets/technology/list_technology_widget.dart';
+import '../widgets/work/list_works_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -42,9 +40,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Offset _mousePosition = Offset.zero;
   Offset? _mousePositionSecond;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    _initializePage();
+  }
+
   void _callUpdateNavigation() =>
       context.read<AppBannerTopCubit>().updateNavigationEvent(
-          data: ResponsiveBreakpoints.of(context), headerKey: _headerKey);
+          size: MediaQuery.sizeOf(context), headerKey: _headerKey);
 
   void _scrollListener() {
     if (_changeTop ==
@@ -65,7 +69,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   void _onResize() {
     if (!_isActiveMove) return;
-    if (ResponsiveBreakpoints.of(context).isMobile && _isActiveMove) {
+    if (CalculateSize.isMobile(MediaQuery.sizeOf(context)) && _isActiveMove) {
       _reset();
     } else {
       setState(() {
@@ -83,7 +87,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           duration: const Duration(milliseconds: 500), curve: Curves.linear);
 
   void _onDobleTap() {
-    if (ResponsiveBreakpoints.of(context).isMobile) return;
+    if (CalculateSize.isMobile(MediaQuery.sizeOf(context))) return;
     if (_mousePositionSecond == null) return;
     if (!_isActiveMove) {
       _isActiveMove = true;
@@ -95,7 +99,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   void _onHover(dynamic event) {
-    if (ResponsiveBreakpoints.of(context).isMobile) return;
+    if (CalculateSize.isMobile(MediaQuery.sizeOf(context))) return;
     _mousePositionSecond =
         Offset(event.position.dx - 100, event.position.dy - 50);
     if (!_moveTop) return;
@@ -114,21 +118,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> _initializePage() async {
     if (_isComplete) return;
-    await Future.wait([
-      background_animated.loadLibrary(),
-      home.loadLibrary(),
-      list_work.loadLibrary(),
-      list_technology.loadLibrary(),
-      projects.loadLibrary(),
-      header.loadLibrary(),
-      about_me.loadLibrary(),
-      footer.loadLibrary(),
-      contact_me.loadLibrary(),
-      title.loadLibrary(),
-      certificate.loadLibrary(),
-      menu_items.loadLibrary(),
-      project.loadLibrary()
-    ]);
     _listGlobalKey = [
       GlobalKey(),
       GlobalKey(),
@@ -139,27 +128,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     ];
 
     _listWidgetHome = [
-      header.HeaderWidget(
+      HeaderWidget(
           assetImageUser: const AssetImage("assets/images/personal.webp"),
           activationKey: _headerKey),
-      title.SliverTitleHome(
-          key: _listGlobalKey[0], menuItem: menu_items.MenuItems.EXPERIENCE),
-      list_work.WorkWidget(listWork: WorkData.generateWorks()),
-      title.SliverTitleHome(
-          key: _listGlobalKey[1], menuItem: menu_items.MenuItems.CERTIFICATE),
-      certificate.TypeCarrouselCertificate(),
-      projects.TopBannerListProjectWidget(key: _listGlobalKey[2]),
-      projects.MasonrySliver(),
-      title.SliverTitleHome(
-          key: _listGlobalKey[3], menuItem: menu_items.MenuItems.KNOWLEDGE),
-      list_technology.ListTechnology(),
-      title.SliverTitleHome(
-          menuItem: menu_items.MenuItems.ABOUT_ME, key: _listGlobalKey[4]),
-      about_me.AboutMeWidget(),
-      title.SliverTitleHome(
-          menuItem: menu_items.MenuItems.CONTACT_ME, key: _listGlobalKey[5]),
-      contact_me.ContactToMeWidget(),
-      footer.FooterWidget()
+      SliverTitleHome(key: _listGlobalKey[0], menuItem: MenuItems.EXPERIENCE),
+      WorkWidget(listWork: WorkData.generateWorks()),
+      SliverTitleHome(key: _listGlobalKey[1], menuItem: MenuItems.CERTIFICATE),
+      TypeCarrouselCertificate(),
+      TopBannerListProjectWidget(key: _listGlobalKey[2]),
+      MasonrySliver(),
+      SliverTitleHome(key: _listGlobalKey[3], menuItem: MenuItems.KNOWLEDGE),
+      ListTechnology(),
+      SliverTitleHome(menuItem: MenuItems.ABOUT_ME, key: _listGlobalKey[4]),
+      AboutMeWidget(),
+      SliverTitleHome(menuItem: MenuItems.CONTACT_ME, key: _listGlobalKey[5]),
+      ContactToMeWidget(),
+      FooterWidget()
     ];
     web.window.addEventListener(
         'resize',
@@ -180,20 +164,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return BlocBuilder<AppThemeCubit, AppThemeState>(
       builder: (context, state) {
-        return _isComplete
-            ? home.HomeScreen(
-                particleOptions: background_animated.ParticleOptions(
-                    baseColor: Colors.blue,
-                    opacityChangeRate: 0.30,
+        return HomeScreen(
+            particleOptions: ParticleOptions(
+                baseColor: Colors.blue,
+                opacityChangeRate: 0.30,
                     minOpacity: state.appTheme.isDarkMode() ? 0.11 : 0.08,
                     maxOpacity: state.appTheme.isDarkMode() ? 0.45 : 0.13,
                     spawnMinSpeed: 20.0,
                     spawnMaxSpeed: 30.0,
                     spawnMinRadius: 7.0,
                     spawnMaxRadius: 30.0,
-                    particleCount:
-                        ResponsiveBreakpoints.of(context).isMobile ? 5 : 7),
-                scrollController: _scrollController,
+                    particleCount: CalculateSize.isMobile(MediaQuery.sizeOf(context)) ? 5 : 7),
+            scrollController: _scrollController,
                 listWidgetHome: _listWidgetHome,
                 scrollNavigation: (value) {
                   if (value != null) {
@@ -207,12 +189,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 mousePosition: _mousePosition,
                 reset: _isActiveMove ? () => _reset() : null,
                 onDobleTap: () => _onDobleTap(),
-                onHover: (event) => _onHover(event))
-            : FutureBuilder<void>(
-                future: _initializePage(),
-                builder: (context, snapshot) =>  Scaffold(
-                  backgroundColor: state.isDarkModeColor(),
-                    body: const Center(child: CircularProgressIndicator())));
+            onHover: (event) => _onHover(event));
       },
     );
   }

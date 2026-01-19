@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
-
 import '../../../data/dataSource/certificate_data.dart';
 import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
 

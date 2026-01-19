@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:proyect_porfolio/domain/cubits/appTheme/app_theme_cubit.dart';
+import 'package:proyect_porfolio/presentation/utils/calculate_size.dart';
 import 'package:proyect_porfolio/presentation/widgets/technology/technology_widget.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import '../../../data/dataSource/tecnology_data.dart';
 import '../../../domain/cubits/listTechnology/list_technology_cubit.dart';
 
@@ -16,20 +16,19 @@ class ListTechnology extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ResponsiveBreakpointsData data = ResponsiveBreakpoints.of(context);
-
+    final Size size=MediaQuery.sizeOf(context);
     return SliverToBoxAdapter(
         child: Container(
             alignment: Alignment.center,
-            constraints: BoxConstraints(minHeight: data.screenHeight * 0.65),
-            margin: EdgeInsets.only(bottom: data.screenHeight * 0.2),
+            constraints: BoxConstraints(minHeight: size.height * 0.65),
+            margin: EdgeInsets.only(bottom: size.height * 0.2),
             padding: EdgeInsets.symmetric(
-                horizontal: data.isMobile
-                    ? data.screenWidth * 0.05
-                    : data.screenWidth * 0.1),
+                horizontal: CalculateSize.isMobile(size)
+                    ? size.width * 0.05
+                    : size.width * 0.1),
             child: Column(children: [
               const SliverSingleChoice(),
-              SizedBox(height: data.screenHeight * 0.05),
+              SizedBox(height:size.height * 0.05),
               Container(
                   constraints: const BoxConstraints(minHeight: 400),
                   child: const AnimatedListTechnology())
@@ -124,7 +123,7 @@ class AnimatedListTechnology extends StatelessWidget {
 
   void _onTap(BuildContext context, Knowledge know) {
     createDialogTechnology(
-        context, know, ResponsiveBreakpoints.of(context).isMobile);
+        context, know, CalculateSize.isMobile(MediaQuery.sizeOf(context)));
   }
 
   Color colorActive(BuildContext context) {

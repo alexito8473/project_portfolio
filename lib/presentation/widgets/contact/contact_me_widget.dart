@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyect_porfolio/data/models/message.dart';
 import 'package:proyect_porfolio/domain/blocs/appSendMessage/app_send_message_bloc.dart';
-import 'package:responsive_framework/responsive_framework.dart';
+import 'package:proyect_porfolio/presentation/utils/calculate_size.dart';
 import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../customWidget/custom_button_widget.dart';
@@ -46,25 +46,27 @@ class ContactToMeWidget extends StatelessWidget {
             name: name, subject: subject, message: message, email: email)));
   }
 
+
   @override
   Widget build(BuildContext context) {
     final AppLocalizations locale=AppLocalizations.of(context)!;
-    final responsiveBreakpoints = ResponsiveBreakpoints.of(context);
+    final Size size=MediaQuery.sizeOf(context);
+    final bool isMobile=CalculateSize.isMobile(size);
     final isDarkMode = context.watch<AppThemeCubit>().state.appTheme.isDarkMode();
     return BlocBuilder<AppSendMessageBloc, AppSendMessageState>(
         builder: (context, state) {
           return SliverToBoxAdapter(
               child: Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: responsiveBreakpoints.isMobile
-                          ? responsiveBreakpoints.screenWidth * 0.1
-                          : responsiveBreakpoints.screenWidth * 0.15),
+                      horizontal: isMobile
+                          ? size.width * 0.1
+                          : size.width* 0.15),
                   padding: EdgeInsets.symmetric(
-                      vertical: responsiveBreakpoints.screenHeight * 0.02,
-                      horizontal: responsiveBreakpoints.screenWidth * 0.08),
-                  width: responsiveBreakpoints.isMobile
-                      ? responsiveBreakpoints.screenWidth * .8
-                      : responsiveBreakpoints.screenWidth * .6,
+                      vertical: size.width * 0.02,
+                      horizontal: size.width * 0.08),
+                  width: isMobile
+                      ? size.width * .8
+                      : size.width * .6,
                   height: 520,
                   decoration: BoxDecoration(
                       boxShadow: [

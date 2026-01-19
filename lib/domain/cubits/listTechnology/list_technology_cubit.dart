@@ -8,7 +8,6 @@ class ListTechnologyCubit extends Cubit<ListTechnologyState> {
   ListTechnologyCubit() : super(ListTechnologyState.init());
 
   void changeListFiltered(TypeLanguage type) {
-
     List<Knowledge> listTypes = List.of(type==TypeLanguage.ALL
         ? Knowledge.values
         : Knowledge.values
@@ -16,7 +15,7 @@ class ListTechnologyCubit extends Cubit<ListTechnologyState> {
         .toList()) ;
 
     emit(state.copyWitch(
-      lengthListLate: 0,
+        lengthListLate: 0,
         listFiltered: listTypes,
         currentTypeLanguage: type));
     Future.delayed(const Duration(milliseconds: 100)).whenComplete(() {

@@ -3,10 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher.dart' deferred as launch;
 import 'package:web/web.dart' as web;
-
 import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -35,9 +33,13 @@ class ButtonIconSvg extends StatelessWidget {
         message: tooltip,
         child: SvgPicture.asset(iconUri,
             color: changeColor
-                ? context.watch<AppThemeCubit>().state.appTheme.isDarkMode()
-                    ? Colors.white
-                    : Colors.black
+                ? context
+                .watch<AppThemeCubit>()
+                .state
+                .appTheme
+                .isDarkMode()
+                ? Colors.white
+                : Colors.black
                 : null,
             width: 33),
       ),
@@ -60,8 +62,12 @@ class IconButtonNavigator extends StatelessWidget {
       this.changeColor = false,
       required this.color});
 
+  bool isMobile(Size size){
+    return size.width>0&&size.width<=600;
+  }
   @override
   Widget build(BuildContext context) {
+    final Size size=MediaQuery.sizeOf(context);
     return BlocBuilder<AppThemeCubit, AppThemeState>(
       builder: (context, state) {
         return IconButton(
@@ -76,10 +82,10 @@ class IconButtonNavigator extends StatelessWidget {
             icon: SvgPicture.asset(iconUri,
                 color: changeColor
                     ? state.appTheme.isDarkMode()
-                        ? Colors.white
-                        : Colors.black
+                    ? Colors.white
+                    : Colors.black
                     : null,
-                width: ResponsiveBreakpoints.of(context).isMobile ? 35 : 50));
+                width:isMobile(size) ? 35 : 50));
       },
     );
   }

@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_framework.dart';
-
+import 'package:proyect_porfolio/presentation/utils/calculate_size.dart';
 import '../../../data/dataSource/menu_items.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -15,19 +14,20 @@ class TitleHome extends StatelessWidget {
       required this.subIcon,
       this.haveWidth = true});
 
-  double? width(ResponsiveBreakpointsData data) {
+
+  double? width(Size size) {
     if (!haveWidth) return 200;
-    return data.isMobile
-        ? data.screenWidth * 0.8
-        : data.screenWidth * 0.7;
+    return CalculateSize.isMobile(size)
+        ? size.width * 0.8
+        : size.width * 0.7;
   }
 
   @override
   Widget build(BuildContext context) {
-    ResponsiveBreakpointsData data= ResponsiveBreakpoints.of(context);
+    final Size size=MediaQuery.sizeOf(context);
     return Container(
         margin: const EdgeInsets.only(bottom: 50),
-        width: width(data),
+        width: width(size),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -36,7 +36,7 @@ class TitleHome extends StatelessWidget {
             Expanded(
                 child: AutoSizeText(title,
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        fontSize:data.isMobile
+                        fontSize:CalculateSize.isMobile(size)
                             ? 30
                             : 30),
                     maxLines: 1))
@@ -49,18 +49,22 @@ class SliverTitleHome extends StatelessWidget {
   final MenuItems menuItem;
   final double sizeIcon;
   final bool haveWidth;
+
   const SliverTitleHome(
       {super.key,
       this.haveWidth = true,
       required this.menuItem,
       this.sizeIcon = 40});
+
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations locale=AppLocalizations.of(context)!;
+    final AppLocalizations locale = AppLocalizations.of(context)!;
+    final Size size =
+        MediaQuery.sizeOf(context);
     return SliverToBoxAdapter(
         child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: ResponsiveBreakpoints.of(context).screenWidth * 0.15),
+            padding: EdgeInsets.symmetric(horizontal:
+            size.width * 0.15),
             child: TitleHome(
                 title: menuItem.getTitle(locale),
                 subIcon: menuItem.getIcon(size: sizeIcon),

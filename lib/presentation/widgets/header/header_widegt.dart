@@ -3,7 +3,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyect_porfolio/domain/cubits/appLocale/app_locale_cubit.dart';
-import 'package:responsive_framework/responsive_framework.dart';
+import 'package:proyect_porfolio/presentation/utils/calculate_size.dart';
 import 'package:widget_circular_animator/widget_circular_animator.dart';
 import '../../../data/dataSource/menu_items.dart';
 import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
@@ -21,32 +21,28 @@ class HeaderWidget extends StatelessWidget {
           ? Colors.greenAccent
           : Colors.green;
 
-  double textFontSubTitle(ResponsiveBreakpointsData responsiveBreakpoints) =>
-      responsiveBreakpoints.isMobile ? 24 : 28;
+  double textFontSubTitle(Size size) => CalculateSize.isMobile(size) ? 24 : 28;
 
-  double textFontTitle(ResponsiveBreakpointsData responsiveBreakpoints) =>
-      responsiveBreakpoints.isMobile ? 26 : 40;
+  double textFontTitle(Size size) => CalculateSize.isMobile(size) ? 26 : 40;
 
   Color iconColorGitHub(BuildContext context) =>
       context.watch<AppThemeCubit>().state.appTheme.isDarkMode()
           ? Colors.white
           : Colors.black;
 
-  BoxConstraints? haveBoxConstraint(
-          ResponsiveBreakpointsData responsiveBreakpoints, double height) =>
-      responsiveBreakpoints.isMobile ? BoxConstraints(minHeight: height) : null;
+  BoxConstraints? haveBoxConstraint(Size size, double height) =>
+      CalculateSize.isMobile(size) ? BoxConstraints(minHeight: height) : null;
 
-  Widget builderHeader(
-      {required ResponsiveBreakpointsData responsiveBreakpoints,
-      required BuildContext context}) {
+  Widget builderHeader({required Size size, required BuildContext context}) {
     final AppLocalizations locale=AppLocalizations.of(context)!;
+    final bool isMobile = CalculateSize.isMobile(size);
     return Align(
         alignment: Alignment.center,
         child: Wrap(
             direction: Axis.horizontal,
-            runSpacing: responsiveBreakpoints.screenHeight * .1,
+            runSpacing: size.height * .1,
             crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: responsiveBreakpoints.screenWidth * .1,
+            spacing: size.width * .1,
             alignment: WrapAlignment.center,
             children: [
               SizedBox(
@@ -54,11 +50,11 @@ class HeaderWidget extends StatelessWidget {
                 child: WidgetCircularAnimator(
                     outerColor: Colors.blueAccent,
                     innerColor: Colors.blueGrey,
-                    size: responsiveBreakpoints.isMobile ? 250 : 350,
+                    size: isMobile ? 250 : 350,
                     child: ClipOval(
                         child: Image(
                             image: assetImageUser,
-                            isAntiAlias: true,
+                            isAntiAlias: false,
                             frameBuilder: (context, child, frame,
                                 wasSynchronouslyLoaded) {
                               if (frame == null) {
@@ -67,13 +63,12 @@ class HeaderWidget extends StatelessWidget {
                               }
                               return child;
                             },
-                            filterQuality: FilterQuality.high,
+                            filterQuality: FilterQuality.none,
                             width: 300))),
               ),
               Container(
-                  margin: responsiveBreakpoints.isMobile
-                      ? EdgeInsets.symmetric(
-                          horizontal: responsiveBreakpoints.screenWidth * 0.1)
+                  margin: isMobile
+                      ? EdgeInsets.symmetric(horizontal: size.width * 0.1)
                       : null,
                   key: activationKey,
                   width: 500,
@@ -92,8 +87,7 @@ class HeaderWidget extends StatelessWidget {
                                     ?.copyWith(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.blueAccent,
-                                        fontSize: textFontTitle(
-                                            responsiveBreakpoints)))),
+                                        fontSize: textFontTitle(size)))),
                         SizedBox(
                             width: 500,
                             height: 80,
@@ -106,12 +100,11 @@ class HeaderWidget extends StatelessWidget {
                                     .textTheme
                                     .titleMedium
                                     ?.copyWith(
-                                        fontSize: textFontSubTitle(
-                                            responsiveBreakpoints),
+                                        fontSize: textFontSubTitle(size),
                                         color: textColorSubTitle(context)))),
                         Wrap(
                             alignment: WrapAlignment.center,
-                            spacing: responsiveBreakpoints.isMobile ? 0 : 30,
+                            spacing: isMobile ? 0 : 30,
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
                               IconButtonNavigator(
@@ -133,25 +126,20 @@ class HeaderWidget extends StatelessWidget {
             ]));
   }
 
+
   @override
   Widget build(BuildContext context) {
-    ResponsiveBreakpointsData responsiveBreakpoints =
-        ResponsiveBreakpoints.of(context);
-    return responsiveBreakpoints.isMobile ||
-            responsiveBreakpoints.screenHeight < 600
+    final Size size = MediaQuery.sizeOf(context);
+    final bool isMobile=CalculateSize.isMobile(size);
+    return isMobile || size.height < 600
         ? SliverToBoxAdapter(
             child: Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: responsiveBreakpoints.isMobile
-                        ? responsiveBreakpoints.screenHeight * 0.1
-                        : responsiveBreakpoints.screenHeight * 0.3),
-                child: builderHeader(
-                    responsiveBreakpoints: responsiveBreakpoints,
-                    context: context)))
+                    vertical:
+                    isMobile ? size.height * 0.1 : size.height * 0.3),
+                child: builderHeader(size: size, context: context)))
         : SliverFillRemaining(
-            child: builderHeader(
-                responsiveBreakpoints: responsiveBreakpoints,
-                context: context));
+            child: builderHeader(size: size, context: context));
   }
 }
 
@@ -171,34 +159,31 @@ class CustomAppBar extends StatelessWidget {
       required this.canNotTapButton,
       this.reset});
 
-  int _countWidgetInPage(
-      {required ResponsiveBreakpointsData responsiveBreakpoints}) {
-    if (responsiveBreakpoints.screenWidth < 430) return 0;
-    if (responsiveBreakpoints.screenWidth < 500) return 1;
-    if (responsiveBreakpoints.screenWidth < 550) return 2;
-    if (responsiveBreakpoints.screenWidth < 750) return 3;
-    if (responsiveBreakpoints.screenWidth < 800) return 4;
+  int _countWidgetInPage({required Size size}) {
+    if (size.width < 430) return 0;
+    if (size.width < 500) return 1;
+    if (size.width < 550) return 2;
+    if (size.width < 750) return 3;
+    if (size.width < 800) return 4;
     return 5;
   }
 
-  double _widthAppBar(
-      {required ResponsiveBreakpointsData responsiveBreakpoints}) {
-    if (responsiveBreakpoints.screenWidth < 430) return 220;
-    if (responsiveBreakpoints.screenWidth < 500) return 400;
-    if (responsiveBreakpoints.screenWidth < 550) {
+  double _widthAppBar({required Size size}) {
+    if (size.width < 430) return 220;
+    if (size.width < 500) return 400;
+    if (size.width < 550) {
       return reset != null ? 450 : 430;
     }
-    if (responsiveBreakpoints.screenWidth < 750) {
+    if (size.width < 750) {
       return reset != null ? 490 : 450;
     }
-    if (responsiveBreakpoints.screenWidth < 800) return 700;
+    if (size.width < 800) return 700;
     return 750;
   }
 
   @override
   Widget build(BuildContext context) {
-    ResponsiveBreakpointsData responsiveBreakpoints =
-        ResponsiveBreakpoints.of(context);
+    Size size = MediaQuery.sizeOf(context);
     return BlocBuilder<AppThemeCubit, AppThemeState>(builder: (context, state) {
       return RepaintBoundary(
           child: Center(
@@ -237,9 +222,7 @@ class CustomAppBar extends StatelessWidget {
                                       ? reset == null
                                           ? 220
                                           : 260
-                                      : _widthAppBar(
-                                          responsiveBreakpoints:
-                                              responsiveBreakpoints),
+                                      : _widthAppBar(size: size),
                                   child: Row(
                                       mainAxisAlignment: changeTop
                                           ? MainAxisAlignment.spaceBetween
@@ -248,9 +231,8 @@ class CustomAppBar extends StatelessWidget {
                                         if (learning != null) learning!,
                                         HeaderTop(
                                             initAnimation: changeTop,
-                                            countWidget: _countWidgetInPage(
-                                                responsiveBreakpoints:
-                                                    responsiveBreakpoints)),
+                                            countWidget:
+                                                _countWidgetInPage(size: size)),
                                         Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:proyect_porfolio/domain/cubits/appLocale/app_locale_cubit.dart';
-import 'package:responsive_framework/responsive_framework.dart';
+import 'package:proyect_porfolio/presentation/utils/calculate_size.dart';
 import '../../../data/models/work.dart';
 import '../../../domain/cubits/appTheme/app_theme_cubit.dart';
 import '../../../l10n/app_localizations.dart';
@@ -13,42 +13,38 @@ class WorksWidget extends StatelessWidget {
 
   const WorksWidget({super.key, required this.work});
 
-  double titleFontSize(
-      {required ResponsiveBreakpointsData responsiveBreakpoints}) {
-    if (responsiveBreakpoints.isMobile) {
+  double titleFontSize({required Size size}) {
+    if (CalculateSize.isMobile(size)) {
       return 20;
     }
-    if (responsiveBreakpoints.isTablet) {
+    if (CalculateSize.isTablet(size)) {
       return 25;
     }
     return 32;
   }
 
-  double secondTileFontSize(
-      {required ResponsiveBreakpointsData responsiveBreakpoints}) {
-    if (responsiveBreakpoints.isMobile) {
+  double secondTileFontSize({required Size size}) {
+    if (CalculateSize.isMobile(size)) {
       return 20;
     }
-    if (responsiveBreakpoints.isTablet) {
+    if (CalculateSize.isTablet(size)) {
       return 25;
     }
     return 28;
   }
 
-  double timeFontSize(
-      {required ResponsiveBreakpointsData responsiveBreakpoints}) {
-    if (responsiveBreakpoints.isMobile) {
+  double timeFontSize({required Size size}) {
+    if (CalculateSize.isTablet(size)) {
       return 20;
     }
     return 25;
   }
 
-  double descriptionFontSize(
-      {required ResponsiveBreakpointsData responsiveBreakpoints}) {
-    if (responsiveBreakpoints.isMobile) {
+  double descriptionFontSize({required Size size}) {
+    if (CalculateSize.isMobile(size)) {
       return 18;
     }
-    if (responsiveBreakpoints.isTablet) {
+    if (CalculateSize.isTablet(size)) {
       return 20;
     }
     return 23;
@@ -56,8 +52,7 @@ class WorksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ResponsiveBreakpointsData responsiveBreakpoints =
-        ResponsiveBreakpoints.of(context);
+    final Size size = MediaQuery.sizeOf(context);
     final AppLocalizations locale = AppLocalizations.of(context)!;
     String stringLocal =
         context.watch<AppLocaleCubit>().state.locale.getLocal().toString();
@@ -73,20 +68,16 @@ class WorksWidget extends StatelessWidget {
                   "${DateFormat("MMMM yyyy", stringLocal).format(work.initDay)} - ${work.finishDay == null ? "Actualidad" : DateFormat("MMMM yyyy", stringLocal).format(work.finishDay!)}",
                   maxLines: 1,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: Colors.grey,
-                      fontSize: timeFontSize(
-                          responsiveBreakpoints: responsiveBreakpoints))),
+                      color: Colors.grey, fontSize: timeFontSize(size: size))),
               AutoSizeText(work.workData.getTitle(locale: locale),
                   maxLines: 2,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontSize: titleFontSize(
-                          responsiveBreakpoints: responsiveBreakpoints),
+                      fontSize: titleFontSize(size: size),
                       color: Colors.blueAccent)),
               AutoSizeText(work.title,
                   maxLines: 1,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontSize: secondTileFontSize(
-                          responsiveBreakpoints: responsiveBreakpoints),
+                      fontSize: secondTileFontSize(size: size),
                       color: Colors.greenAccent)),
               Expanded(
                   child: Align(
@@ -102,9 +93,7 @@ class WorksWidget extends StatelessWidget {
                                       .textTheme
                                       .labelMedium
                                       ?.copyWith(
-                                          fontSize: descriptionFontSize(
-                                              responsiveBreakpoints:
-                                                  responsiveBreakpoints))))
+                                          fontSize: descriptionFontSize(size: size))))
                               .toList())))
             ]));
   }

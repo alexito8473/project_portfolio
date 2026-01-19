@@ -54,14 +54,19 @@ class AppThemeState {
 
   const AppThemeState({required this.appTheme});
 
-  factory AppThemeState.init({required SharedPreferences prefs}) {
+  factory AppThemeState.init({ SharedPreferences? prefs}) {
     AppTheme appTheme;
-    switch (prefs.getBool('isLightMode')) {
-      case true:
-        appTheme = AppTheme.LIGHT;
-      case false || null:
-        appTheme = AppTheme.DARK;
+    if(prefs==null){
+      appTheme = AppTheme.DARK;
+    }else{
+      switch (prefs.getBool('isLightMode')) {
+        case true:
+          appTheme = AppTheme.LIGHT;
+        case false || null:
+          appTheme = AppTheme.DARK;
+      }
     }
+
     return AppThemeState(appTheme: appTheme);
   }
   Color isDarkModeColor() =>
