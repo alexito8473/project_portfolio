@@ -9,41 +9,32 @@ import '../../data/dataSource/certificate_data.dart';
 final GoRouter router = GoRouter(routes: <RouteBase>[
   GoRoute(
       path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const HomePage();
-      },
+      builder: (BuildContext context, GoRouterState state) => const HomePage(),
       routes: <RouteBase>[
         GoRoute(
             path: 'projects',
             pageBuilder: (context, state) => CustomTransitionPage(
-                key: state.pageKey,
-                reverseTransitionDuration: const Duration(milliseconds: 400),
-                maintainState: true,
-                transitionDuration: const Duration(milliseconds: 400),
-                child: const ProjectPage(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return FadeTransition(opacity: animation, child: child);
-                })),
+                    key: state.pageKey,
+                    reverseTransitionDuration: const Duration(milliseconds: 400),
+                    maintainState: true,
+                    transitionDuration: const Duration(milliseconds: 400),
+                    child: const ProjectPage(),
+                    transitionsBuilder: (context, animation, _, child) => FadeTransition(opacity: animation, child: child))),
         GoRoute(
             path: 'certificate/:cert',
             pageBuilder: (context, state) {
               final certName = state.pathParameters['cert']!;
               final cert = Certificate.values.firstWhere(
-                (e) => e.name == certName,
+                    (e) => e.name == certName,
                 orElse: () => Certificate.AWARD_ALGECIRAS, // valor por defecto
               );
               return CustomTransitionPage(
-                key: state.pageKey,
-                reverseTransitionDuration: const Duration(milliseconds: 400),
-                maintainState: true,
-                transitionDuration: const Duration(milliseconds: 400),
-                child: CertificatePage(certificate: cert),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-              );
+                  key: state.pageKey,
+                  reverseTransitionDuration: const Duration(milliseconds: 400),
+                  maintainState: true,
+                  transitionDuration: const Duration(milliseconds: 400),
+                  child: CertificatePage(certificate: cert),
+                  transitionsBuilder: (context, animation, _, child) => FadeTransition(opacity: animation, child: child));
             })
       ])
 ]);

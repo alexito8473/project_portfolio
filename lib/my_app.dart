@@ -25,20 +25,12 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => AppSendMessageBloc()),
           BlocProvider(create: (context) => ListTechnologyCubit()),
           BlocProvider(create: (context) => AppThemeCubit(prefs: prefs)),
-          BlocProvider(
-              create: (context) => AppLocaleCubit(
-                  locale: AppLocale.selectAppLocale(
-                      ui.PlatformDispatcher.instance.locale)))
+          BlocProvider(create: (context) => AppLocaleCubit(locale: AppLocale.selectAppLocale(ui.PlatformDispatcher.instance.locale)))
         ],
         child: BlocBuilder<AppThemeCubit, AppThemeState>(
             builder: (context, state) {
           return MaterialApp.router(
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate
-              ],
+              localizationsDelegates: const [AppLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
               locale: context.watch<AppLocaleCubit>().state.locale.getLocal(),
               supportedLocales: const [Locale("en", ""), Locale("es", "")],
               title:

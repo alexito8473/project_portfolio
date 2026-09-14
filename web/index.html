@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <meta name="google-site-verification" content="Dwd6R7LqVJTTLcEHYyuwYyxPaU9ggRykNAhugZ7NT5Q" />
   <base href="/">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
   <meta name="theme-color" content="#000000">
 
   <!-- 🔹 SEO -->
@@ -66,8 +68,43 @@
       }
     }
   </script>
+
+  <style>
+    body { background-color: #000000; margin: 0; padding: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; color: #ffffff; font-family: 'Raleway', sans-serif; }
+    #splash-container { text-align: center; transition: opacity 0.4s ease-out; display: flex; flex-direction: column; align-items: center; }
+    .title { font-size: 24px; font-weight: 600; letter-spacing: 1.1px; margin-bottom: 8px; }
+    .subtitle { font-size: 13px; color: #607D8B; margin: 2px 0; font-weight: 400; }
+    .progress-container { width: 120px; height: 2px; background-color: rgba(255, 255, 255, 0.1); margin-top: 24px; overflow: hidden; position: relative; }
+    .progress-bar { width: 100%; height: 100%; background-color: #607D8B; position: absolute; animation: loading 1.5s infinite ease-in-out; transform-origin: 0% 50%; }
+    @keyframes loading { 0% { transform: translateX(-100%) scaleX(0.1); } 50% { transform: translateX(0) scaleX(0.4); } 100% { transform: translateX(100%) scaleX(0.1); } }
+    .fade-out { opacity: 0; pointer-events: none; }
+  </style>
+
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+
+  <script src="flutter_bootstrap.js" async></script>
 </head>
 <body>
-<script src="flutter_bootstrap.js" defer></script>
+
+<div id="splash-container">
+  <div class="title">Alejandro Aguilar Alba</div>
+  <div class="subtitle">Full Stack & Mobile Developer</div>
+  <div class="subtitle">@ Flutter</div>
+  <div class="progress-container">
+    <div class="progress-bar"></div>
+  </div>
+</div>
+
+<script>
+  // Esta función la llama automáticamente flutter_bootstrap.js cuando está listo
+  window.addEventListener('flutter-first-frame', function () {
+    var loadingIndicator = document.getElementById('splash-container');
+    loadingIndicator.classList.add('fade-out');
+    setTimeout(function () {
+      loadingIndicator.remove();
+    }, 400);
+  });
+</script>
+
 </body>
 </html>

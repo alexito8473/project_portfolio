@@ -6,9 +6,11 @@ import '../../../data/models/work.dart';
 
 class WorkWidget extends StatelessWidget {
   final List<Work> listWork;
+
   const WorkWidget({super.key, required this.listWork});
+
   Widget createListWork({required Size size,
-      required BuildContext context}) {
+    required BuildContext context}) {
     return Wrap(
         alignment: WrapAlignment.spaceEvenly,
         crossAxisAlignment: WrapCrossAlignment.center,
@@ -21,33 +23,33 @@ class WorkWidget extends StatelessWidget {
               child: Column(children: [
                 Expanded(
                     child: Row(children: [
-                  Container(
-                      margin: EdgeInsets.only(right: size.width * 0.03),
-                      width: 60,
-                      child: Column(children: [
-                        const Icon(Icons.home_repair_service, size: 40),
-                        Expanded(
-                            child: Container(
-                                decoration: const BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius:
+                      Container(
+                          margin: EdgeInsets.only(right: size.width * 0.03),
+                          width: 60,
+                          child: Column(children: [
+                            const Icon(Icons.home_repair_service, size: 40),
+                            Expanded(
+                                child: Container(
+                                    decoration: const BoxDecoration(
+                                        color: Colors.blue,
+                                        borderRadius:
                                         BorderRadius.all(Radius.circular(100))),
-                                width: 6))
-                      ])),
-                  Expanded(child: WorksWidget(work: listWork[0]))
-                ])),
+                                    width: 6))
+                          ])),
+                      Expanded(child: WorksWidget(work: listWork[0]))
+                    ])),
                 Expanded(
                     child: Row(children: [
-                  Container(
-                      margin: EdgeInsets.only(right: size.width * 0.03),
-                      width: 60,
-                      child: const Column(children: [
-                        Padding(
-                            padding: EdgeInsets.only(top: 10),
-                            child: Icon(Icons.directions_boat, size: 40))
-                      ])),
+                      Container(
+                          margin: EdgeInsets.only(right: size.width * 0.03),
+                          width: 60,
+                          child: const Column(children: [
+                            Padding(
+                                padding: EdgeInsets.only(top: 10),
+                                child: Icon(Icons.directions_boat, size: 40))
+                          ])),
                       Expanded(child: WorksWidget(work: listWork[1]))
-                ]))
+                    ]))
               ])),
           Lottie.network(
               "https://lottie.host/f6217d7d-3b90-47fb-b522-d31ee895ff63/1PBguv1ZIv.json",

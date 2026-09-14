@@ -12,7 +12,7 @@
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "iarc_rating_id": "e10+",
-    "categories": ["portfolio", "business", "technology", "developer", "personal"]
+    "categories": ["portfolio", "business", "technology", "developer", "personal"],
     "icons": [
         {
             "src": "icons/Icon-192.png",

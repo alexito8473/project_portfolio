@@ -16,7 +16,7 @@ pubspec.lock
 doc/api/
 
 # dotenv environment variables file
-.env*
+assets/.env
 
 # Avoid committing generated Javascript files:
 *.dart.js
@@ -32,7 +32,7 @@ doc/api/
 
 ### Dart Patch ###
 # dotenv environment variables file
-.env
+assets/.env
 
 ### Flutter ###
 # Flutter/Dart/Pub related
@@ -93,3 +93,5 @@ coverage/
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
 # End of https://www.toptal.com/developers/gitignore/api/dart,flutter
+# Widget Preview related
+.widget_preview/

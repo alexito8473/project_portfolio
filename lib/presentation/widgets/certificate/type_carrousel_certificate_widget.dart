@@ -8,8 +8,6 @@ import 'carrousel_cerrtificate_widget.dart';
 class TypeCarrouselCertificate extends StatelessWidget {
   const TypeCarrouselCertificate({super.key});
 
-
-
   double _viewPort({required Size size}) {
     if (CalculateSize.isMobile(size)) {
       return 0.9;
@@ -23,25 +21,18 @@ class TypeCarrouselCertificate extends StatelessWidget {
     return 0.4;
   }
 
-  void _navigateToCertificatePage(BuildContext context,
-      Certificate certificate) {
-    context.go('/certificate/${certificate.name}');
-  }
+  void _navigateToCertificatePage(BuildContext context, Certificate certificate) => context.go('/certificate/${certificate.name}');
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     final double port = _viewPort(size: size);
     return CalculateSize.isMobile(size) || size.height < 600
-        ? SliverToBoxAdapter(child: CarrouselCertificateWidget(
-        onPressedCertificate: ({required certificate}) {
-          _navigateToCertificatePage(context, certificate);
-        },
-        viewPort: port))
-        : SliverFillRemaining(child: CarrouselCertificateWidget(
-        onPressedCertificate: ({required certificate}) {
-          _navigateToCertificatePage(context, certificate);
-        },
-        viewPort: port));
+        ? SliverToBoxAdapter(
+            child: CarrouselCertificateWidget(
+                onPressedCertificate: ({required certificate}) => _navigateToCertificatePage(context, certificate), viewPort: port))
+        : SliverFillRemaining(
+            child: CarrouselCertificateWidget(
+                onPressedCertificate: ({required certificate}) => _navigateToCertificatePage(context, certificate), viewPort: port));
   }
 }

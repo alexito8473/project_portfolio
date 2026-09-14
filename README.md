@@ -1,7 +1,5 @@
 # Personal Portfolio - Alejandro Aguilar Alba
 
-![Flutter](https://img.shields.io/badge/Flutter-v3.0-blue.svg)
-![Dart](https://img.shields.io/badge/Dart-v2.18-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
 Bienvenidos a mi portafolio personal. Este proyecto está desarrollado en **Flutter** y está diseñado para ser una página web interactiva donde presento mis habilidades, proyectos y experiencia como desarrollador.

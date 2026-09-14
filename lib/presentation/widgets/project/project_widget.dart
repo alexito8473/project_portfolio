@@ -175,6 +175,8 @@ class _BannerProState extends State<BannerPro>
   }
 
   Widget animatedTop() {
+    final cacheWidth =
+        (250 * MediaQuery.devicePixelRatioOf(context)).round();
     return AnimatedContainer(
       duration: const Duration(milliseconds: 700),
       decoration: BoxDecoration(
@@ -192,7 +194,9 @@ class _BannerProState extends State<BannerPro>
           animation: _animation,
           builder: (context, child) {
             return Image(
-              image: AssetImage(widget.projectRelease.project.imgUrl),
+              image: ResizeImage(
+                  AssetImage(widget.projectRelease.project.imgUrl),
+                  width: cacheWidth),
               colorBlendMode: BlendMode.darken,
               color: Colors.black.withOpacity(_animation.value),
               frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
@@ -290,4 +294,3 @@ class _BannerProState extends State<BannerPro>
     );
   }
 }
-

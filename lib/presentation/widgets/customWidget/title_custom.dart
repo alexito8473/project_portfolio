@@ -59,8 +59,7 @@ class SliverTitleHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations locale = AppLocalizations.of(context)!;
-    final Size size =
-        MediaQuery.sizeOf(context);
+    final Size size = MediaQuery.sizeOf(context);
     return SliverToBoxAdapter(
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal:

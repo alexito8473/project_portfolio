@@ -48,12 +48,14 @@ enum MenuItems {
     }
   }
 
-  Widget buildItem(BuildContext context) => Row(children: [
+  Widget buildItem(BuildContext context) =>
+      Row(children: [
         getIcon(),
         const SizedBox(width: 5),
         Expanded(
             child: Text(getTitle(AppLocalizations.of(context)!),
-                style: Theme.of(context)
+                style: Theme
+                    .of(context)
                     .textTheme
                     .labelMedium
                     ?.copyWith(fontWeight: FontWeight.bold)))

@@ -55,7 +55,12 @@ class WorksWidget extends StatelessWidget {
     final Size size = MediaQuery.sizeOf(context);
     final AppLocalizations locale = AppLocalizations.of(context)!;
     String stringLocal =
-        context.watch<AppLocaleCubit>().state.locale.getLocal().toString();
+    context
+        .watch<AppLocaleCubit>()
+        .state
+        .locale
+        .getLocal()
+        .toString();
     return Container(
         alignment: Alignment.center,
         child: Column(
@@ -67,16 +72,28 @@ class WorksWidget extends StatelessWidget {
               AutoSizeText(
                   "${DateFormat("MMMM yyyy", stringLocal).format(work.initDay)} - ${work.finishDay == null ? "Actualidad" : DateFormat("MMMM yyyy", stringLocal).format(work.finishDay!)}",
                   maxLines: 1,
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .labelMedium
+                      ?.copyWith(
                       color: Colors.grey, fontSize: timeFontSize(size: size))),
               AutoSizeText(work.workData.getTitle(locale: locale),
                   maxLines: 2,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .labelLarge
+                      ?.copyWith(
                       fontSize: titleFontSize(size: size),
                       color: Colors.blueAccent)),
               AutoSizeText(work.title,
                   maxLines: 1,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .labelLarge
+                      ?.copyWith(
                       fontSize: secondTileFontSize(size: size),
                       color: Colors.greenAccent)),
               Expanded(

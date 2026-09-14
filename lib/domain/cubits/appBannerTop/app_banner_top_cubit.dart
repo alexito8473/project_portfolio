@@ -5,9 +5,9 @@ part 'app_banner_top_state.dart';
 
 class AppBannerTopCubit extends Cubit<AppBannerTopState> {
   AppBannerTopCubit() : super(AppBannerTopState.init());
-  void updateNavigationEvent({required Size size,required GlobalKey headerKey}) {
 
-    if (!state.isActiveBannerTop && size.width< 430) return;
+  void updateNavigationEvent({required Size size,required GlobalKey headerKey}) {
+    if (!state.isActiveBannerTop && size.width < 430) return;
     if (size.width < 430) {
       emit(state.copyWitch(isActiveBannerTop: false));
     } else {
