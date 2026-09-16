@@ -24,11 +24,12 @@ class CarrouselCertificateWidget extends StatelessWidget {
                             BoxDecoration(boxShadow: [BoxShadow(color: state ? Colors.white38 : Colors.black26, spreadRadius: 0.1, blurRadius: 20)]),
                         child: InkWell(
                             onTap: () => onPressedCertificate(certificate: Certificate.values[index]),
-                            child: RepaintBoundary(
-                                child: Image(
-                                filterQuality: FilterQuality.none,
-                                image: ResizeImage(AssetImage(Certificate.values[index].urlImg), width: 400)))),
-                      )));
+                            child:Image.asset(
+                              Certificate.values[index].urlImg,
+                              cacheWidth: 600,
+                              filterQuality: FilterQuality.medium,
+                            ))),
+                      ));
                 }),
                 options: FlutterCarouselOptions(
                     enlargeCenterPage: true,

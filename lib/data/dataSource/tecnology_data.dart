@@ -95,6 +95,12 @@ enum Knowledge {
           name: "JavaScript",
           urlIcon: "assets/svg/programLanguage/javascript.svg",
           color: Color.fromRGBO(214, 186, 50, 1),
+          typeLanguage: TypeLanguage.FRONTEND)),
+  ANGULAR(
+      technology: Technology(
+          name: "Angular",
+          urlIcon: "assets/svg/programLanguage/angular.svg",
+          color: Color.fromRGBO(221, 0, 49, 1),
           typeLanguage: TypeLanguage.FRONTEND));
 
   final Technology technology;
@@ -131,6 +137,8 @@ enum Knowledge {
         return locale.springExperience;
       case Knowledge.JAVASCRIPT:
         return locale.javaScriptExperience;
+      case Knowledge.ANGULAR:
+        return locale.angularExperience;
     }
   }
 }

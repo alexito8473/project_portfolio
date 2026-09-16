@@ -10,42 +10,31 @@ import '../../../data/dataSource/menu_items.dart';
 import '../../../data/dataSource/project_data.dart';
 import '../../../l10n/app_localizations.dart';
 import '../customWidget/custom_button_widget.dart';
+
 class TopBannerListProjectWidget extends StatelessWidget {
   const TopBannerListProjectWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations locale=AppLocalizations.of(context)!;
-    final Size size=MediaQuery.sizeOf(context);
+    final AppLocalizations locale = AppLocalizations.of(context)!;
+    final Size size = MediaQuery.sizeOf(context);
     return SliverToBoxAdapter(
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: size.width * .15),
-            child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.start,
-                alignment: WrapAlignment.spaceBetween,
-                children: [
-                  TitleHome(
-                      title: MenuItems.PROJECT.getTitle(locale),
-                      subIcon: MenuItems.PROJECT.getIcon(size: 40),
-                      haveWidth: false),
-                  Padding(
-                      padding:
-                          EdgeInsets.only(bottom: size.height * 0.05),
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.green,
-                              shadowColor: Colors.greenAccent,
-                              elevation: 5,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0)),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 15)),
-                          onPressed: () => context.go("/projects"),
-                          child: AutoSizeText(
-                              locale.see_project,
-                              style: Theme.of(context).textTheme.labelLarge,
-                              maxLines: 1)))
-                ])));
+            child: Wrap(crossAxisAlignment: WrapCrossAlignment.start, alignment: WrapAlignment.spaceBetween, children: [
+              TitleHome(title: MenuItems.PROJECT.getTitle(locale), subIcon: MenuItems.PROJECT.getIcon(size: 40), haveWidth: false),
+              Padding(
+                  padding: EdgeInsets.only(bottom: size.height * 0.05),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.green,
+                          shadowColor: Colors.greenAccent,
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15)),
+                      onPressed: () => context.go("/projects"),
+                      child: AutoSizeText(locale.see_project, style: Theme.of(context).textTheme.labelLarge, maxLines: 1)))
+            ])));
   }
 }
 
@@ -64,18 +53,17 @@ class MasonrySliver extends StatelessWidget {
       ? 0.55
       : CalculateSize.isMobile(size)
           ? 0.75
-              : 0.32;
+          : 0.32;
 
-  double aspectRatio({required Size size}) =>
-      CalculateSize.isTablet(size)
-          ? 1.6
-          :CalculateSize.isMobile(size)
-              ? 0.8
-              : 2.2;
+  double aspectRatio({required Size size}) => CalculateSize.isTablet(size)
+      ? 1.6
+      : CalculateSize.isMobile(size)
+          ? 0.8
+          : 2.2;
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.sizeOf(context);
-    int countColum = countColumns(size:size);
+    int countColum = countColumns(size: size);
     return SliverToBoxAdapter(
         child: Container(
             constraints: BoxConstraints(minHeight: size.height * 1),
@@ -89,12 +77,8 @@ class MasonrySliver extends StatelessWidget {
                 children: List.generate(
                     countColum > 3 ? countColum : 3,
                     (index) => Padding(
-                        padding: index < countColum
-                            ? EdgeInsets.only(
-                                top: index == 0 ? 0 : (index % 2 + 0.5) * 70)
-                            : EdgeInsets.zero,
-                        child: BannerPro(
-                            projectRelease: ProjectRelease.values[index]))))));
+                        padding: index < countColum ? EdgeInsets.only(top: index == 0 ? 0 : (index % 2 + 0.5) * 70) : EdgeInsets.zero,
+                        child: BannerPro(projectRelease: ProjectRelease.values[index]))))));
   }
 }
 
@@ -108,8 +92,7 @@ class BannerPro extends StatefulWidget {
   State<BannerPro> createState() => _BannerProState();
 }
 
-class _BannerProState extends State<BannerPro>
-    with SingleTickerProviderStateMixin {
+class _BannerProState extends State<BannerPro> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -118,12 +101,8 @@ class _BannerProState extends State<BannerPro>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 700));
-    _animation = Tween<double>(begin: 0.7, end: 0.0).animate(CurvedAnimation(
-        reverseCurve: Curves.linear,
-        parent: _controller,
-        curve: Curves.linear));
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
+    _animation = Tween<double>(begin: 0.7, end: 0.0).animate(CurvedAnimation(reverseCurve: Curves.linear, parent: _controller, curve: Curves.linear));
   }
 
   Widget bannerTitle() {
@@ -135,22 +114,14 @@ class _BannerProState extends State<BannerPro>
           AutoSizeText(
             maxLines: 1,
             widget.projectRelease.project.name,
-            style: const TextStyle(
-                fontSize: 25,
-                color: Colors.blueAccent,
-                fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 25, color: Colors.blueAccent, fontWeight: FontWeight.bold),
           ),
           Row(
             children: [
               if (widget.projectRelease.project.urlPage != null)
-                ButtonNavigation(
-                    uri: Uri.parse(widget.projectRelease.project.urlPage!),
-                    urlSvg: "assets/svg/web.svg"),
-              if (widget.projectRelease.project.urlPage != null)
-                const SizedBox(width: 5),
-              ButtonNavigation(
-                  uri: Uri.parse(widget.projectRelease.project.repositoryUrl),
-                  urlSvg: "assets/svg/github.svg"),
+                ButtonNavigation(uri: Uri.parse(widget.projectRelease.project.urlPage!), urlSvg: "assets/svg/web.svg"),
+              if (widget.projectRelease.project.urlPage != null) const SizedBox(width: 5),
+              ButtonNavigation(uri: Uri.parse(widget.projectRelease.project.repositoryUrl), urlSvg: "assets/svg/github.svg"),
             ],
           )
         ],
@@ -159,61 +130,58 @@ class _BannerProState extends State<BannerPro>
   }
 
   Widget contentTitle() {
-    final AppLocalizations locale=AppLocalizations.of(context)!;
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: AutoSizeText(
           widget.projectRelease.getDescription(locale),
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
         ),
       ),
     );
   }
 
   Widget animatedTop() {
-    final cacheWidth =
-        (250 * MediaQuery.devicePixelRatioOf(context)).round();
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 700),
-      decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          gradient: LinearGradient(
-              begin: _isHover.value ? Alignment.topRight : Alignment.topLeft,
-              end: _isHover.value ? Alignment.centerLeft : Alignment.centerRight,
-              colors: widget.projectRelease.listBackgroundNoActive())),
-      alignment: Alignment.bottomRight,
-      height: 250,
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(topLeft: Radius.circular(40)),
-        child: AnimatedBuilder(
-          animation: _animation,
-          builder: (context, child) {
-            return Image(
-              image: ResizeImage(
-                  AssetImage(widget.projectRelease.project.imgUrl),
-                  width: cacheWidth),
-              colorBlendMode: BlendMode.darken,
-              color: Colors.black.withOpacity(_animation.value),
-              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                if (frame == null) {
-                  return const CircularProgressIndicator();
-                }
-                return child;
+    return ValueListenableBuilder<bool>(
+      valueListenable: _isHover,
+      builder: (context, value, child) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 700),
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              gradient: LinearGradient(
+                  begin: value ? Alignment.topRight : Alignment.topLeft,
+                  end: value ? Alignment.centerLeft : Alignment.centerRight,
+                  colors: widget.projectRelease.listBackgroundNoActive())),
+          alignment: Alignment.bottomRight,
+          height: 250,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(40)),
+            child: AnimatedBuilder(
+              animation: _animation,
+              builder: (context, child) {
+                return Image(
+                  image: ResizeImage(AssetImage(widget.projectRelease.project.imgUrl), width: 400),
+                  colorBlendMode: BlendMode.darken,
+                  color: Colors.black.withOpacity(_animation.value),
+                  frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                    if (frame == null) {
+                      return const CircularProgressIndicator();
+                    }
+                    return child;
+                  },
+                  filterQuality: FilterQuality.none,
+                  height: 200,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topLeft,
+                  width: 250,
+                );
               },
-              filterQuality: FilterQuality.none,
-              height: 200,
-              fit: BoxFit.cover,
-              alignment: Alignment.topLeft,
-              width: 250,
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -251,17 +219,11 @@ class _BannerProState extends State<BannerPro>
                       duration: const Duration(milliseconds: 700),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: state.appTheme.isDarkMode()
-                            ? Colors.black
-                            : Colors.grey.shade900,
+                        color: state.appTheme.isDarkMode() ? Colors.black : Colors.grey.shade900,
                         boxShadow: [
                           state.appTheme.isDarkMode()
-                              ? BoxShadow(
-                              color: Colors.white.withOpacity(0.5),
-                              blurRadius: 15)
-                              : BoxShadow(
-                              color: Colors.blueAccent.withOpacity(0.7),
-                              blurRadius: 15)
+                              ? BoxShadow(color: Colors.white.withOpacity(0.5), blurRadius: 15)
+                              : BoxShadow(color: Colors.blueAccent.withOpacity(0.7), blurRadius: 15)
                         ],
                       ),
                       height: widget.height,

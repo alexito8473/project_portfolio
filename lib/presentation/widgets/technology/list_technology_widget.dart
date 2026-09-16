@@ -16,22 +16,17 @@ class ListTechnology extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size=MediaQuery.sizeOf(context);
+    final Size size = MediaQuery.sizeOf(context);
     return SliverToBoxAdapter(
         child: Container(
             alignment: Alignment.center,
             constraints: BoxConstraints(minHeight: size.height * 0.65),
             margin: EdgeInsets.only(bottom: size.height * 0.2),
-            padding: EdgeInsets.symmetric(
-                horizontal: CalculateSize.isMobile(size)
-                    ? size.width * 0.05
-                    : size.width * 0.1),
+            padding: EdgeInsets.symmetric(horizontal: CalculateSize.isMobile(size) ? size.width * 0.05 : size.width * 0.1),
             child: Column(children: [
               const SliverSingleChoice(),
-              SizedBox(height:size.height * 0.05),
-              Container(
-                  constraints: const BoxConstraints(minHeight: 400),
-                  child: const AnimatedListTechnology())
+              SizedBox(height: size.height * 0.05),
+              Container(constraints: const BoxConstraints(minHeight: 400), child: const AnimatedListTechnology())
             ])));
   }
 }
@@ -39,25 +34,19 @@ class ListTechnology extends StatelessWidget {
 class AnimatedListTechnology extends StatelessWidget {
   const AnimatedListTechnology({super.key});
 
-  void createDialogTechnology(
-      BuildContext context, Knowledge know, bool isMobile) {
+  void createDialogTechnology(BuildContext context, Knowledge know, bool isMobile) {
     final AppLocalizations locale = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return BlocBuilder<AppThemeCubit, AppThemeState>(
-            builder: (context, state) {
-          Color background =
-              state.appTheme.isDarkMode() ? Colors.black : Colors.white;
+        return BlocBuilder<AppThemeCubit, AppThemeState>(builder: (context, state) {
+          Color background = state.appTheme.isDarkMode() ? Colors.black : Colors.white;
           return AlertDialog(
-              shadowColor:
-                  state.appTheme.isDarkMode() ? Colors.white10 : Colors.black12,
+              shadowColor: state.appTheme.isDarkMode() ? Colors.white10 : Colors.black12,
               content: Container(
                   width: 350,
                   height: !isMobile ? 380 : 430,
-                  decoration: BoxDecoration(
-                      color: background,
-                      borderRadius: BorderRadius.circular(10)),
+                  decoration: BoxDecoration(color: background, borderRadius: BorderRadius.circular(10)),
                   child: Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -66,18 +55,8 @@ class AnimatedListTechnology extends StatelessWidget {
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                               transform: const GradientRotation(0.3),
-                              stops: const [
-                                0.85,
-                                0.85,
-                                1,
-                                1
-                              ],
-                              colors: [
-                                background,
-                                know.technology.color.withOpacity(0.5),
-                                know.technology.color.withOpacity(0.5),
-                                background
-                              ])),
+                              stops: const [0.85, 0.85, 1, 1],
+                              colors: [background, know.technology.color.withOpacity(0.5), know.technology.color.withOpacity(0.5), background])),
                       child: Column(children: [
                         SizedBox(
                             height: 40,
@@ -89,9 +68,7 @@ class AnimatedListTechnology extends StatelessWidget {
                                   style: const TextStyle(fontSize: 20),
                                 ),
                               ),
-                              IconButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  icon: const Icon(Icons.close))
+                              IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close))
                             ])),
                         Expanded(
                             child: Padding(
@@ -113,8 +90,7 @@ class AnimatedListTechnology extends StatelessWidget {
                                 width: 60))
                       ]))),
               backgroundColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0.0)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
               elevation: 24.0);
         });
       },
@@ -122,26 +98,12 @@ class AnimatedListTechnology extends StatelessWidget {
   }
 
   void _onTap(BuildContext context, Knowledge know) {
-    createDialogTechnology(
-        context, know, CalculateSize.isMobile(MediaQuery.sizeOf(context)));
-  }
-
-  Color colorActive(BuildContext context) {
-    return context.watch<AppThemeCubit>().state.appTheme.isDarkMode()
-        ? Colors.white38
-        : Colors.black54;
-  }
-
-  Color colorNoActive(BuildContext context) {
-    return context.watch<AppThemeCubit>().state.appTheme.isDarkMode()
-        ? Colors.white10
-        : Colors.black12;
+    createDialogTechnology(context, know, CalculateSize.isMobile(MediaQuery.sizeOf(context)));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ListTechnologyCubit, ListTechnologyState>(
-        builder: (context, state) {
+    return BlocBuilder<ListTechnologyCubit, ListTechnologyState>(builder: (context, state) {
       return Wrap(
           runSpacing: 20,
           spacing: 20,
@@ -150,11 +112,7 @@ class AnimatedListTechnology extends StatelessWidget {
             return FadeInLeft(
                 duration: Duration(milliseconds: 800 + (index * 50)),
                 curve: Curves.linear,
-                child: TechnologyWidget(
-                    knowledge: state.listFiltered[index],
-                    onTap: _onTap,
-                    colorActive: colorActive,
-                    colorNoActive: colorNoActive));
+                child: TechnologyWidget(knowledge: state.listFiltered[index], onTap: _onTap));
           }));
     });
   }

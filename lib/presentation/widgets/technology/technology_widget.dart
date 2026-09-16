@@ -10,21 +10,14 @@ import '../customWidget/custom_button_widget.dart';
 class TechnologyWidget extends StatefulWidget {
   final Knowledge knowledge;
   final Function onTap;
-  final Function colorActive;
-  final Function colorNoActive;
-  const TechnologyWidget(
-      {super.key,
-        required this.knowledge,
-        required this.onTap,
-        required this.colorActive,
-        required this.colorNoActive});
+  const TechnologyWidget({super.key, required this.knowledge, required this.onTap});
   @override
   State<TechnologyWidget> createState() => _TechnologyWidget();
 }
 
 class _TechnologyWidget extends State<TechnologyWidget> {
   late Future<String> _svgFuture;
-  bool isActivate = false;
+  final ValueNotifier<bool> isActivate = ValueNotifier(false);
   @override
   void initState() {
     super.initState();
@@ -34,79 +27,80 @@ class _TechnologyWidget extends State<TechnologyWidget> {
   Future<String> _preloadSvg(String assetPath) async {
     return await DefaultAssetBundle.of(context).loadString(assetPath);
   }
+  Color colorActive(bool isDarkMode) {
+    return isDarkMode ? Colors.white38 : Colors.black54;
+  }
+  Color colorNoActive(bool isDarkMode) {
+    return isDarkMode ? Colors.white10 : Colors.black12;
+  }
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
         cursor: SystemMouseCursors.click,
         onEnter: (event) {
-          if (isActivate) return;
-          setState(() {
-            isActivate = true;
-          });
+          if (isActivate.value) return;
+          isActivate.value = true;
         },
         onExit: (event) {
-          if (!isActivate) return;
-          setState(() {
-            isActivate = false;
-          });
+          if (!isActivate.value) return;
+          isActivate.value = false;
         },
         child: GestureDetector(
-            onTap: () => widget.onTap(context,widget.knowledge),
-            child: AnimatedContainer(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: isActivate
-                        ? widget.colorActive(context)
-                        : widget.colorNoActive(context)),
-                width: 90,
-                height: 90,
-                alignment: Alignment.center,
-                duration: const Duration(milliseconds: 600),
-                child: FutureBuilder<String>(
-                    future: _svgFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        return const CircularProgressIndicator(
-                          color: Colors.red,
-                        );
-                      }
-                      return SvgPicture.string(snapshot.data!,
-                          color: widget.knowledge.technology.changeColor
-                              ? context
-                              .watch<AppThemeCubit>()
-                              .state
-                              .isDarkModeColor()
-                              : null,
-                          width: 60);
-                    }))));
+            onTap: () => widget.onTap(context, widget.knowledge),
+            child: ValueListenableBuilder<bool>(
+              valueListenable: isActivate,
+              builder: (context, value, child) {
+                return BlocBuilder<AppThemeCubit,AppThemeState>(builder: (context, state) {
+                  return AnimatedContainer(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: value ? colorActive(state.appTheme.isDarkMode()) : colorNoActive(state.appTheme.isDarkMode())),
+                      width: 90,
+                      height: 90,
+                      alignment: Alignment.center,
+                      duration: const Duration(milliseconds: 600),
+                      child: FutureBuilder<String>(
+                          future: _svgFuture,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              return const CircularProgressIndicator(
+                                color: Colors.red,
+                              );
+                            }
+                            if (widget.knowledge.technology.changeColor) {
+                              return BlocSelector<AppThemeCubit, AppThemeState, Color>(
+                                  selector: (state) => state.isDarkModeColor(),
+                                  builder: (context, state) => SvgPicture.string(snapshot.data!, color: state, width: 60));
+                            }
+                            return SvgPicture.string(snapshot.data!, width: 60);
+                          }));
+                },);
+
+              },
+            )));
   }
 }
-
 
 class SingleChoice extends StatelessWidget {
   const SingleChoice({super.key});
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations locale= AppLocalizations.of(context)!;
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return Wrap(
         spacing: 20,
         runSpacing: 10,
         alignment: WrapAlignment.center,
         children: List.generate(
             TypeLanguage.values.length,
-            (index) => ButtonSelect(
-                title: TypeLanguage.values[index].getTitle(locale),
-                onPressed: () => context
-                    .read<ListTechnologyCubit>()
-                    .changeListFiltered(TypeLanguage.values[index]),
-                isSelect: TypeLanguage.values[index] ==
-                    context
-                        .watch<ListTechnologyCubit>()
-                        .state
-                        .currentTypeLanguage)));
+            (index) => BlocSelector<ListTechnologyCubit, ListTechnologyState, TypeLanguage>(
+                selector: (state) => state.currentTypeLanguage,
+                builder: (context, state) => ButtonSelect(
+                    title: TypeLanguage.values[index].getTitle(locale),
+                    onPressed: () => context.read<ListTechnologyCubit>().changeListFiltered(TypeLanguage.values[index]),
+                    isSelect: TypeLanguage.values[index] == state))));
   }
 }
 

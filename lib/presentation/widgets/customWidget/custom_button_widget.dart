@@ -14,12 +14,7 @@ class ButtonIconSvg extends StatelessWidget {
   final String iconUri;
   final bool changeColor;
 
-  const ButtonIconSvg(
-      {super.key,
-      required this.uri,
-      required this.tooltip,
-      required this.iconUri,
-      this.changeColor = false});
+  const ButtonIconSvg({super.key, required this.uri, required this.tooltip, required this.iconUri, this.changeColor = false});
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +25,13 @@ class ButtonIconSvg extends StatelessWidget {
       },
       mouseCursor: SystemMouseCursors.click,
       child: Tooltip(
-        message: tooltip,
-        child: SvgPicture.asset(iconUri,
-            color: changeColor
-                ? context
-                .watch<AppThemeCubit>()
-                .state
-                .appTheme
-                .isDarkMode()
-                ? Colors.white
-                : Colors.black
-                : null,
-            width: 33),
-      ),
+          message: tooltip,
+          child: !changeColor
+              ? SvgPicture.asset(iconUri, width: 33,color: null,)
+              : BlocSelector<AppThemeCubit, AppThemeState, bool>(
+                  selector: (state) => state.appTheme.isDarkMode(),
+                  builder: (context, state) => SvgPicture.asset(iconUri, color: state ? Colors.white : Colors.black, width: 33),
+                )),
     );
   }
 }
@@ -55,19 +44,15 @@ class IconButtonNavigator extends StatelessWidget {
   final bool changeColor;
 
   const IconButtonNavigator(
-      {super.key,
-      required this.uri,
-      required this.tooltip,
-      required this.iconUri,
-      this.changeColor = false,
-      required this.color});
+      {super.key, required this.uri, required this.tooltip, required this.iconUri, this.changeColor = false, required this.color});
 
-  bool isMobile(Size size){
-    return size.width>0&&size.width<=600;
+  bool isMobile(Size size) {
+    return size.width > 0 && size.width <= 600;
   }
+
   @override
   Widget build(BuildContext context) {
-    final Size size=MediaQuery.sizeOf(context);
+    final Size size = MediaQuery.sizeOf(context);
     return BlocBuilder<AppThemeCubit, AppThemeState>(
       builder: (context, state) {
         return IconButton(
@@ -82,10 +67,10 @@ class IconButtonNavigator extends StatelessWidget {
             icon: SvgPicture.asset(iconUri,
                 color: changeColor
                     ? state.appTheme.isDarkMode()
-                    ? Colors.white
-                    : Colors.black
+                        ? Colors.white
+                        : Colors.black
                     : null,
-                width:isMobile(size) ? 35 : 50));
+                width: isMobile(size) ? 35 : 50));
       },
     );
   }
@@ -95,56 +80,44 @@ class ButtonSelect extends StatelessWidget {
   final Function onPressed;
   final bool isSelect;
   final String title;
-  const ButtonSelect(
-      {super.key,
-      required this.onPressed,
-      required this.isSelect,
-      required this.title});
+  const ButtonSelect({super.key, required this.onPressed, required this.isSelect, required this.title});
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.resolveWith<Color>(
-                (Set<WidgetState> states) {
-              if (isSelect) {
-                return Colors.blueAccent.withOpacity(0.8);
-              }
-              return context.watch<AppThemeCubit>().state.appTheme.isDarkMode()
-                  ? Colors.white70
-                  : Colors.grey.shade100;
-            }),
-            foregroundColor:
-                WidgetStateProperty.resolveWith<Color>((Set states) {
-              if (states.contains(WidgetState.selected)) {
-                return Colors.white;
-              }
-              return Colors.black87;
-            }),
-            overlayColor: WidgetStateProperty.resolveWith<Color>(
-                (states) => Colors.black12),
-            shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)))),
-        onPressed: () => onPressed(),
-        child: Container(
-            alignment: Alignment.center,
-            width: 90,
-            height: 40,
-            child: AutoSizeText(title, maxLines: 1)));
+    return BlocSelector<AppThemeCubit, AppThemeState, bool>(
+      selector: (state) => state.appTheme.isDarkMode(),
+      builder: (context, state) {
+        return ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+                  if (isSelect) {
+                    return Colors.blueAccent.withOpacity(0.8);
+                  }
+                  return state ? Colors.white70 : Colors.grey.shade100;
+                }),
+                foregroundColor: WidgetStateProperty.resolveWith<Color>((Set states) {
+                  if (states.contains(WidgetState.selected)) {
+                    return Colors.white;
+                  }
+                  return Colors.black87;
+                }),
+                overlayColor: WidgetStateProperty.resolveWith<Color>((states) => Colors.black12),
+                shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
+            onPressed: () => onPressed(),
+            child: Container(alignment: Alignment.center, width: 90, height: 40, child: AutoSizeText(title, maxLines: 1)));
+      },
+    );
   }
 }
 
 class ButtonDownloadPdf extends StatelessWidget {
   const ButtonDownloadPdf({super.key});
-  void downloadFile() => web.window.open(
-      kDebugMode
-          ? 'assets/assets/pdf/Curriculum_Alejandro_Aguilar_Alba.pdf'
-          : '/Curriculum_Alejandro_Aguilar_Alba.pdf',
-      '_blank');
+  void downloadFile() =>
+      web.window.open(kDebugMode ? 'assets/assets/pdf/Curriculum_Alejandro_Aguilar_Alba.pdf' : '/Curriculum_Alejandro_Aguilar_Alba.pdf', '_blank');
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations locale=AppLocalizations.of(context)!;
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return ElevatedButton(
         onPressed: () => downloadFile(),
         style: ElevatedButton.styleFrom(
@@ -152,11 +125,9 @@ class ButtonDownloadPdf extends StatelessWidget {
             backgroundColor: Colors.blue,
             shadowColor: Colors.blueAccent,
             elevation: 5,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15)),
-        child: AutoSizeText(locale.downloadCV,
-            maxLines: 1, style: Theme.of(context).textTheme.labelLarge));
+        child: AutoSizeText(locale.downloadCV, maxLines: 1, style: Theme.of(context).textTheme.labelLarge));
   }
 }
 
@@ -164,19 +135,16 @@ class ButtonSentEmail extends StatelessWidget {
   final bool isDesactivate;
   final Function sendEmail;
 
-  ButtonSentEmail(
-      {super.key, required this.isDesactivate, required this.sendEmail});
+  ButtonSentEmail({super.key, required this.isDesactivate, required this.sendEmail});
 
   final ValueNotifier<bool> _changeBackground = ValueNotifier<bool>(false);
   final ValueNotifier<double> _elevation = ValueNotifier<double>(2.0);
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations locale=AppLocalizations.of(context)!;
-    bool isDarkMode = context.watch<AppThemeCubit>().state.appTheme.isDarkMode();
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return InkWell(
-        mouseCursor:
-            isDesactivate ? MouseCursor.defer : SystemMouseCursors.click,
+        mouseCursor: isDesactivate ? MouseCursor.defer : SystemMouseCursors.click,
         onTap: () {
           if (!isDesactivate) {
             sendEmail();
@@ -191,28 +159,33 @@ class ButtonSentEmail extends StatelessWidget {
             },
             onExit: (event) {
               if (!isDesactivate) {
-                  _changeBackground.value = false;
-                  _elevation.value = 2;
+                _changeBackground.value = false;
+                _elevation.value = 2;
               }
             },
             child: Material(
                 elevation: _elevation.value,
                 borderRadius: BorderRadius.circular(10),
-                child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    width: 120,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        color:isDesactivate
-                            ? isDarkMode
-                                ? Colors.grey.withOpacity(0.2)
-                                : Colors.grey
-                            : _changeBackground.value
-                                ? Colors.lightBlueAccent
-                                : Colors.blueAccent,
-                        borderRadius: BorderRadius.circular(10)),
-                    alignment: Alignment.center,
-                    child: Text(locale.sendEmail)))));
+                child: BlocSelector<AppThemeCubit, AppThemeState, bool>(
+                  selector: (state) => state.appTheme.isDarkMode(),
+                  builder: (context, state) {
+                    return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        width: 120,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            color: isDesactivate
+                                ? state
+                                    ? Colors.grey.withOpacity(0.2)
+                                    : Colors.grey
+                                : _changeBackground.value
+                                    ? Colors.lightBlueAccent
+                                    : Colors.blueAccent,
+                            borderRadius: BorderRadius.circular(10)),
+                        alignment: Alignment.center,
+                        child: Text(locale.sendEmail));
+                  },
+                ))));
   }
 }
 
@@ -230,8 +203,7 @@ class ButtonNavigation extends StatelessWidget {
                 backgroundColor: Colors.blueGrey.shade700.withOpacity(0.7),
                 shadowColor: Colors.blueGrey.shade700,
                 elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10))),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
             onPressed: () async {
               await launch.loadLibrary();
               await launch.launchUrl(uri);

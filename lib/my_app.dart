@@ -27,17 +27,27 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => AppThemeCubit(prefs: prefs)),
           BlocProvider(create: (context) => AppLocaleCubit(locale: AppLocale.selectAppLocale(ui.PlatformDispatcher.instance.locale)))
         ],
-        child: BlocBuilder<AppThemeCubit, AppThemeState>(
-            builder: (context, state) {
-          return MaterialApp.router(
-              localizationsDelegates: const [AppLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
-              locale: context.watch<AppLocaleCubit>().state.locale.getLocal(),
-              supportedLocales: const [Locale("en", ""), Locale("es", "")],
-              title:
-                  'Portafolio de Alejandro Aguilar Alba | Desarrollador Full Stack & Mobile',
-              theme: state.appTheme.getThemeData(),
-              routerConfig: router,
-              builder: (context, child) => child!);
-        }));
+        child: BlocSelector<AppThemeCubit, AppThemeState, AppTheme>(
+            selector: (state) => state.appTheme,
+            builder: (context, theme) {
+              return BlocSelector<AppLocaleCubit, AppLocaleState, AppLocale>(
+                selector: (state) => state.locale,
+                builder: (context, locale) {
+                  return MaterialApp.router(
+                      localizationsDelegates: const [
+                        AppLocalizations.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate
+                      ],
+                      locale: locale.getLocal(),
+                      supportedLocales: const [Locale("en", ""), Locale("es", "")],
+                      title: 'Portafolio de Alejandro Aguilar Alba | Desarrollador Full Stack & Mobile',
+                      theme: theme.getThemeData(),
+                      routerConfig: router,
+                      builder: (context, child) => child!);
+                },
+              );
+            }));
   }
 }

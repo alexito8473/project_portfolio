@@ -199,8 +199,9 @@ class CustomAppBar extends StatelessWidget {
                                           if (reset != null) IconButton(onPressed: () => reset!(), icon: const Icon(Icons.lock_reset)),
                                           IconButton(
                                               onPressed: () => context.read<AppLocaleCubit>().changeLocal(),
-                                              icon: Text(context.watch<AppLocaleCubit>().state.locale.getLenguajeCode(),
-                                                  style: Theme.of(context).textTheme.bodyLarge)),
+                                              icon: BlocSelector<AppLocaleCubit, AppLocaleState, String>(
+                                                  selector: (state) => state.locale.getLenguajeCode(),
+                                                  builder: (context, state) => Text(state, style: Theme.of(context).textTheme.bodyLarge))),
                                           Padding(
                                               padding: const EdgeInsets.only(right: 5, left: 5),
                                               child: IconButton(onPressed: () => context.read<AppThemeCubit>().changeTheme(), icon: state.getIcon())),
@@ -285,7 +286,10 @@ class HeaderTop extends StatelessWidget {
                   : 0
               : 0,
           child: ButtonIconSvg(
-              uri: Uri.parse('https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'), tooltip: 'Linkedin', iconUri: 'assets/svg/linkedin.svg')),
+              uri: Uri.parse('https://www.linkedin.com/in/alejandro-aguilar-83b0b6220/'),
+              changeColor: false,
+              tooltip: 'Linkedin',
+              iconUri: 'assets/svg/linkedin.svg')),
       AnimatedContainer(
           duration: initAnimation ? const Duration(milliseconds: 1200) : const Duration(milliseconds: 600),
           width: countWidget > 0
